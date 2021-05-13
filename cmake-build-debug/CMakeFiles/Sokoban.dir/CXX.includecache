@@ -1,0 +1,46 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/actor.cpp
+actor.hpp
+/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/actor.hpp
+
+/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/actor.hpp
+
+/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/box.cpp
+box.hpp
+/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/box.hpp
+
+/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/box.hpp
+
+/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/player.cpp
+player.hpp
+/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/player.hpp
+
+/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/player.hpp
+actor.hpp
+/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/actor.hpp
+
+/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/wall.cpp
+wall.hpp
+/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/wall.hpp
+
+/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/wall.hpp
+actor.hpp
+/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/actor.hpp
+
+/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/main.cpp
+main.hpp
+/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/main.hpp
+iostream
+-
+
+/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/main.hpp
+core/player.hpp
+/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/player.hpp
+
