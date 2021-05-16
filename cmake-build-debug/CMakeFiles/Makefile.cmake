@@ -25,12 +25,19 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/opt/clion/bin/cmake/linux/share/cmake-3.19/Modules/Compiler/GNU-C.cmake"
   "/opt/clion/bin/cmake/linux/share/cmake-3.19/Modules/Compiler/GNU-CXX.cmake"
   "/opt/clion/bin/cmake/linux/share/cmake-3.19/Modules/Compiler/GNU.cmake"
+  "/opt/clion/bin/cmake/linux/share/cmake-3.19/Modules/FindOpenGL.cmake"
+  "/opt/clion/bin/cmake/linux/share/cmake-3.19/Modules/FindPackageHandleStandardArgs.cmake"
+  "/opt/clion/bin/cmake/linux/share/cmake-3.19/Modules/FindPackageMessage.cmake"
   "/opt/clion/bin/cmake/linux/share/cmake-3.19/Modules/Platform/Linux-GNU-C.cmake"
   "/opt/clion/bin/cmake/linux/share/cmake-3.19/Modules/Platform/Linux-GNU-CXX.cmake"
   "/opt/clion/bin/cmake/linux/share/cmake-3.19/Modules/Platform/Linux-GNU.cmake"
   "/opt/clion/bin/cmake/linux/share/cmake-3.19/Modules/Platform/Linux.cmake"
   "/opt/clion/bin/cmake/linux/share/cmake-3.19/Modules/Platform/UnixPaths.cmake"
   "/opt/clion/bin/cmake/linux/share/cmake-3.19/Modules/ProcessorCount.cmake"
+  "/usr/lib64/cmake/glfw3/glfw3Config.cmake"
+  "/usr/lib64/cmake/glfw3/glfw3ConfigVersion.cmake"
+  "/usr/lib64/cmake/glfw3/glfw3Targets-release.cmake"
+  "/usr/lib64/cmake/glfw3/glfw3Targets.cmake"
   )
 
 # The corresponding makefile is:

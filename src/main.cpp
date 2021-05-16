@@ -2,7 +2,8 @@
 
 #include <iostream>
 
-using namespace com::masticass::sokoban::core;
+using namespace sokoban::core;
+using namespace sokoban::ui;
 
 int main( int argc, char *argv[] )
 {
@@ -11,5 +12,7 @@ int main( int argc, char *argv[] )
     Actor *p = new Player( 10, -5 );
 
     std::cout << "X: " << p->getX() << " Y: " << p->getY() << std::endl;
+
+    Menu *menu = new Menu();
     return 0;
 }

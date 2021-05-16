@@ -3,25 +3,19 @@
 
 #include "actor.hpp"
 
-namespace com
+namespace sokoban
 {
-    namespace masticass
+    namespace core
     {
-        namespace sokoban
+        class Platform : public Actor
         {
-            namespace core
-            {
-                class Platform : public Actor
-                {
-                private:
-                    void init_platform();
+        private:
+            void init_platform();
 
-                public:
-                    Platform( int x, int y );
-                    ~Platform();
-                };
-            }
-        }
+        public:
+            Platform( int x, int y );
+            ~Platform() override;
+        };
     }
 }
 

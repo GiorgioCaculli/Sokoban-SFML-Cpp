@@ -3,26 +3,20 @@
 
 #include "actor.hpp"
 
-namespace com
+namespace sokoban
 {
-    namespace masticass
+    namespace core
     {
-        namespace sokoban
+        class Wall : public Actor
         {
-            namespace core
-            {
-                class Wall : public Actor
-                {
-                private:
-                    void init_wall();
+        private:
+            void init_wall();
 
-                public:
-                    Wall( int x, int y );
+        public:
+            Wall( int x, int y );
 
-                    ~Wall() override;
-                };
-            }
-        }
+            ~Wall() override;
+        };
     }
 }
 

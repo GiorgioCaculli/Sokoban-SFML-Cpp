@@ -1,6 +1,6 @@
 #include "actor.hpp"
 
-using namespace com::masticass::sokoban::core;
+using namespace sokoban::core;
 
 Actor::Actor( int x, int y )
 {
@@ -31,22 +31,22 @@ int Actor::getY() const
     return _y;
 }
 
-bool Actor::is_left_collision( Actor *actor )
+bool Actor::is_left_collision( Actor *actor ) const
 {
     return getX() - SPACE == actor->getX() && getY() == actor->getY();
 }
 
-bool Actor::is_right_collision( Actor *actor )
+bool Actor::is_right_collision( Actor *actor ) const
 {
     return getX() + SPACE == actor->getX() && getY() == actor->getY();
 }
 
-bool Actor::is_top_collision( Actor *actor )
+bool Actor::is_top_collision( Actor *actor ) const
 {
     return getY() - SPACE == actor->getY() && getX() == actor->getX();
 }
 
-bool Actor::is_bottom_collision( Actor *actor )
+bool Actor::is_bottom_collision( Actor *actor ) const
 {
     return getY() + SPACE == actor->getY() && getX() == actor->getX();
 }

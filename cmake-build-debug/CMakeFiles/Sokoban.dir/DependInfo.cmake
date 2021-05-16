@@ -10,6 +10,8 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/player.cpp" "/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/cmake-build-debug/CMakeFiles/Sokoban.dir/src/core/player.cpp.o"
   "/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/wall.cpp" "/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/cmake-build-debug/CMakeFiles/Sokoban.dir/src/core/wall.cpp.o"
   "/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/main.cpp" "/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/cmake-build-debug/CMakeFiles/Sokoban.dir/src/main.cpp.o"
+  "/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/ui/gui/main_frame.cpp" "/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/cmake-build-debug/CMakeFiles/Sokoban.dir/src/ui/gui/main_frame.cpp.o"
+  "/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/ui/menu.cpp" "/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/cmake-build-debug/CMakeFiles/Sokoban.dir/src/ui/menu.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

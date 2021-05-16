@@ -3,28 +3,22 @@
 
 #include "actor.hpp"
 
-namespace com
+namespace sokoban
 {
-    namespace masticass
+    namespace core
     {
-        namespace sokoban
+        class Player : public Actor
         {
-            namespace core
-            {
-                class Player : public Actor
-                {
-                private:
-                    void init_player();
+        private:
+            void init_player();
 
-                public:
-                    Player( int x, int y );
+        public:
+            Player( int x, int y );
 
-                    ~Player() override;
+            ~Player() override;
 
-                    void move( int x, int y );
-                };
-            }
-        }
+            void move( int x, int y );
+        };
     }
 }
 

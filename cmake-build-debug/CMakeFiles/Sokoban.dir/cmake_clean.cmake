@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/Sokoban.dir/src/core/player.cpp.o"
   "CMakeFiles/Sokoban.dir/src/core/wall.cpp.o"
   "CMakeFiles/Sokoban.dir/src/main.cpp.o"
+  "CMakeFiles/Sokoban.dir/src/ui/gui/main_frame.cpp.o"
+  "CMakeFiles/Sokoban.dir/src/ui/menu.cpp.o"
   "Sokoban"
   "Sokoban.pdb"
 )

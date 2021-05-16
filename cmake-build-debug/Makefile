@@ -304,6 +304,60 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sokoban.dir/build.make CMakeFiles/Sokoban.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/ui/gui/main_frame.o: src/ui/gui/main_frame.cpp.o
+
+.PHONY : src/ui/gui/main_frame.o
+
+# target to build an object file
+src/ui/gui/main_frame.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sokoban.dir/build.make CMakeFiles/Sokoban.dir/src/ui/gui/main_frame.cpp.o
+.PHONY : src/ui/gui/main_frame.cpp.o
+
+src/ui/gui/main_frame.i: src/ui/gui/main_frame.cpp.i
+
+.PHONY : src/ui/gui/main_frame.i
+
+# target to preprocess a source file
+src/ui/gui/main_frame.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sokoban.dir/build.make CMakeFiles/Sokoban.dir/src/ui/gui/main_frame.cpp.i
+.PHONY : src/ui/gui/main_frame.cpp.i
+
+src/ui/gui/main_frame.s: src/ui/gui/main_frame.cpp.s
+
+.PHONY : src/ui/gui/main_frame.s
+
+# target to generate assembly for a file
+src/ui/gui/main_frame.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sokoban.dir/build.make CMakeFiles/Sokoban.dir/src/ui/gui/main_frame.cpp.s
+.PHONY : src/ui/gui/main_frame.cpp.s
+
+src/ui/menu.o: src/ui/menu.cpp.o
+
+.PHONY : src/ui/menu.o
+
+# target to build an object file
+src/ui/menu.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sokoban.dir/build.make CMakeFiles/Sokoban.dir/src/ui/menu.cpp.o
+.PHONY : src/ui/menu.cpp.o
+
+src/ui/menu.i: src/ui/menu.cpp.i
+
+.PHONY : src/ui/menu.i
+
+# target to preprocess a source file
+src/ui/menu.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sokoban.dir/build.make CMakeFiles/Sokoban.dir/src/ui/menu.cpp.i
+.PHONY : src/ui/menu.cpp.i
+
+src/ui/menu.s: src/ui/menu.cpp.s
+
+.PHONY : src/ui/menu.s
+
+# target to generate assembly for a file
+src/ui/menu.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Sokoban.dir/build.make CMakeFiles/Sokoban.dir/src/ui/menu.cpp.s
+.PHONY : src/ui/menu.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -331,6 +385,12 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/ui/gui/main_frame.o"
+	@echo "... src/ui/gui/main_frame.i"
+	@echo "... src/ui/gui/main_frame.s"
+	@echo "... src/ui/menu.o"
+	@echo "... src/ui/menu.i"
+	@echo "... src/ui/menu.s"
 .PHONY : help
 
 

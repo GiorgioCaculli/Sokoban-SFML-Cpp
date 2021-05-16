@@ -1,6 +1,6 @@
 #include "player.hpp"
 
-using namespace com::masticass::sokoban::core;
+using namespace sokoban::core;
 
 Player::Player( int x, int y )
         : Actor( x, y )

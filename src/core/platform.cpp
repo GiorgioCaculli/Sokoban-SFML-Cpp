@@ -1,6 +1,6 @@
 #include "platform.hpp"
 
-using namespace com::masticass::sokoban::core;
+using namespace sokoban::core;
 
 Platform::Platform( int x, int y )
 : Actor( x, y )

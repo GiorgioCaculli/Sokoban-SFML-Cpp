@@ -5,7 +5,7 @@
 		<Option title="Sokoban"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\usr\lib64\;CMake Files\..\..\..\..\..\usr\lib64\cmake\;CMake Files\..\..\..\..\..\usr\lib64\cmake\glfw3\;"/>
 		<Build>
 			<Target title="all">
 				<Option working_dir="/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/cmake-build-debug"/>
@@ -120,8 +120,32 @@
 		<Unit filename="/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/main.hpp">
 			<Option target="Sokoban"/>
 		</Unit>
+		<Unit filename="/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/ui/gui/main_frame.cpp">
+			<Option target="Sokoban"/>
+		</Unit>
+		<Unit filename="/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/ui/gui/main_frame.hpp">
+			<Option target="Sokoban"/>
+		</Unit>
+		<Unit filename="/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/ui/menu.cpp">
+			<Option target="Sokoban"/>
+		</Unit>
+		<Unit filename="/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/ui/menu.hpp">
+			<Option target="Sokoban"/>
+		</Unit>
 		<Unit filename="/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/../../../../../usr/lib64/cmake/glfw3/glfw3Config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib64\cmake\glfw3\"/>
+		</Unit>
+		<Unit filename="/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/../../../../../usr/lib64/cmake/glfw3/glfw3ConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib64\cmake\glfw3\"/>
+		</Unit>
+		<Unit filename="/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/../../../../../usr/lib64/cmake/glfw3/glfw3Targets-release.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib64\cmake\glfw3\"/>
+		</Unit>
+		<Unit filename="/mnt/sd1/Projects/Sokoban/Sokoban-Cpp/../../../../../usr/lib64/cmake/glfw3/glfw3Targets.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib64\cmake\glfw3\"/>
 		</Unit>
 	</Project>
 </CodeBlocks_project_file>

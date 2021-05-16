@@ -1,6 +1,6 @@
 #include "box.hpp"
 
-using namespace com::masticass::sokoban::core;
+using namespace sokoban::core;
 
 Box::Box( int x, int y ) :
         Actor( x, y )
