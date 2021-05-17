@@ -11,7 +11,10 @@ namespace sokoban
         {
         public:
             Menu();
+
             virtual ~Menu();
+
+            int launch_application() const;
 
         private:
             gui::MainFrame *main_frame;

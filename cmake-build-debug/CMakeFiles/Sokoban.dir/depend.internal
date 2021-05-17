@@ -5,8 +5,13 @@ CMakeFiles/Sokoban.dir/src/core/actor.cpp.o
  /mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/actor.cpp
  /mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/actor.hpp
 CMakeFiles/Sokoban.dir/src/core/box.cpp.o
+ /mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/actor.hpp
  /mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/box.cpp
  /mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/box.hpp
+CMakeFiles/Sokoban.dir/src/core/platform.cpp.o
+ /mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/actor.hpp
+ /mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/platform.cpp
+ /mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/platform.hpp
 CMakeFiles/Sokoban.dir/src/core/player.cpp.o
  /mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/actor.hpp
  /mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/player.cpp
@@ -20,3 +25,12 @@ CMakeFiles/Sokoban.dir/src/main.cpp.o
  /mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/core/player.hpp
  /mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/main.cpp
  /mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/main.hpp
+ /mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/ui/gui/main_frame.hpp
+ /mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/ui/menu.hpp
+CMakeFiles/Sokoban.dir/src/ui/gui/main_frame.cpp.o
+ /mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/ui/gui/main_frame.cpp
+ /mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/ui/gui/main_frame.hpp
+CMakeFiles/Sokoban.dir/src/ui/menu.cpp.o
+ /mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/ui/gui/main_frame.hpp
+ /mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/ui/menu.cpp
+ /mnt/sd1/Projects/Sokoban/Sokoban-Cpp/src/ui/menu.hpp

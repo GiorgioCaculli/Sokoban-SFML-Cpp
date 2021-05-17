@@ -4,8 +4,13 @@
 CMakeFiles/Sokoban.dir/src/core/actor.cpp.o: ../src/core/actor.cpp
 CMakeFiles/Sokoban.dir/src/core/actor.cpp.o: ../src/core/actor.hpp
 
+CMakeFiles/Sokoban.dir/src/core/box.cpp.o: ../src/core/actor.hpp
 CMakeFiles/Sokoban.dir/src/core/box.cpp.o: ../src/core/box.cpp
 CMakeFiles/Sokoban.dir/src/core/box.cpp.o: ../src/core/box.hpp
+
+CMakeFiles/Sokoban.dir/src/core/platform.cpp.o: ../src/core/actor.hpp
+CMakeFiles/Sokoban.dir/src/core/platform.cpp.o: ../src/core/platform.cpp
+CMakeFiles/Sokoban.dir/src/core/platform.cpp.o: ../src/core/platform.hpp
 
 CMakeFiles/Sokoban.dir/src/core/player.cpp.o: ../src/core/actor.hpp
 CMakeFiles/Sokoban.dir/src/core/player.cpp.o: ../src/core/player.cpp
@@ -19,4 +24,13 @@ CMakeFiles/Sokoban.dir/src/main.cpp.o: ../src/core/actor.hpp
 CMakeFiles/Sokoban.dir/src/main.cpp.o: ../src/core/player.hpp
 CMakeFiles/Sokoban.dir/src/main.cpp.o: ../src/main.cpp
 CMakeFiles/Sokoban.dir/src/main.cpp.o: ../src/main.hpp
+CMakeFiles/Sokoban.dir/src/main.cpp.o: ../src/ui/gui/main_frame.hpp
+CMakeFiles/Sokoban.dir/src/main.cpp.o: ../src/ui/menu.hpp
+
+CMakeFiles/Sokoban.dir/src/ui/gui/main_frame.cpp.o: ../src/ui/gui/main_frame.cpp
+CMakeFiles/Sokoban.dir/src/ui/gui/main_frame.cpp.o: ../src/ui/gui/main_frame.hpp
+
+CMakeFiles/Sokoban.dir/src/ui/menu.cpp.o: ../src/ui/gui/main_frame.hpp
+CMakeFiles/Sokoban.dir/src/ui/menu.cpp.o: ../src/ui/menu.cpp
+CMakeFiles/Sokoban.dir/src/ui/menu.cpp.o: ../src/ui/menu.hpp
 

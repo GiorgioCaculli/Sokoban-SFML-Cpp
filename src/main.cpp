@@ -14,5 +14,5 @@ int main( int argc, char *argv[] )
     std::cout << "X: " << p->getX() << " Y: " << p->getY() << std::endl;
 
     Menu *menu = new Menu();
-    return 0;
+    return menu->launch_application();
 }

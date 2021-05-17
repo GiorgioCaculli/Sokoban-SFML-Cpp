@@ -14,6 +14,7 @@ namespace sokoban
 
         public:
             Platform( int x, int y );
+
             ~Platform() override;
         };
     }

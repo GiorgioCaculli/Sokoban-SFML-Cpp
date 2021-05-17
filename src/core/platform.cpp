@@ -3,7 +3,7 @@
 using namespace sokoban::core;
 
 Platform::Platform( int x, int y )
-: Actor( x, y )
+        : Actor( x, y )
 {
     init_platform();
 }
