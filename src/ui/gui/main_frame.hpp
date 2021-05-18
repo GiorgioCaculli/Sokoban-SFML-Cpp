@@ -1,5 +1,6 @@
 #ifndef SOKOBAN_MAIN_FRAME_HPP
 #define SOKOBAN_MAIN_FRAME_HPP
+#include "../../util/logger.hpp"
 
 #include <GLFW/glfw3.h>
 
@@ -9,6 +10,7 @@ namespace sokoban
     {
         namespace gui
         {
+            using namespace sokoban::util;
             class MainFrame
             {
             private:
@@ -16,10 +18,13 @@ namespace sokoban
                 int _width{};
                 int _height{};
                 int _result_code{};
+                Logger *logger{};
             public:
                 MainFrame( int width, int height );
 
                 MainFrame();
+
+                ~MainFrame();
 
                 void set_width( int width );
 
@@ -29,7 +34,7 @@ namespace sokoban
 
                 int get_height() const;
 
-                int glfw_result_code() const;
+                int launch() const;
             };
         }
     }

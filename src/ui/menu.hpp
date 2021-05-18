@@ -2,11 +2,14 @@
 #define SOKOBAN_MENU_HPP
 
 #include "gui/main_frame.hpp"
+#include "../util/logger.hpp"
 
 namespace sokoban
 {
     namespace ui
     {
+        using namespace sokoban::ui::gui;
+        using namespace sokoban::util;
         class Menu
         {
         public:
@@ -17,7 +20,8 @@ namespace sokoban
             int launch_application() const;
 
         private:
-            gui::MainFrame *main_frame;
+            MainFrame *main_frame;
+            Logger *logger{};
         };
     }
 }

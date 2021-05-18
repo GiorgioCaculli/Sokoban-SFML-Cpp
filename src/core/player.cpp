@@ -1,5 +1,7 @@
 #include "player.hpp"
 
+#include <iostream>
+
 using namespace sokoban::core;
 
 Player::Player( int x, int y )
@@ -20,4 +22,6 @@ void Player::move( int x, int y )
 }
 
 Player::~Player()
-= default;
+{
+    std::cout << "Player deletion" << std::endl;
+};

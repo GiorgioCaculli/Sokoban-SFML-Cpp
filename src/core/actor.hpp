@@ -1,17 +1,20 @@
 #ifndef SOKOBAN_CPP_ACTOR_HPP
 #define SOKOBAN_CPP_ACTOR_HPP
 
+#include "../util/logger.hpp"
+
 namespace sokoban
 {
     namespace core
     {
+        using namespace sokoban::util;
         class Actor
         {
         private:
             const int SPACE = 20;
             int _x{};
             int _y{};
-
+            Logger *logger{};
         public:
             Actor( int x, int y );
 

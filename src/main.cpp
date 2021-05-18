@@ -1,18 +1,23 @@
 #include "main.hpp"
 
+#include "ui/menu.hpp"
+#include "util/logger.hpp"
+
 #include <iostream>
 
-using namespace sokoban::core;
 using namespace sokoban::ui;
+using namespace sokoban::util;
 
 int main( int argc, char *argv[] )
 {
-    std::cout << "Hello, World!" << std::endl;
-
-    Actor *p = new Player( 10, -5 );
-
-    std::cout << "X: " << p->getX() << " Y: " << p->getY() << std::endl;
-
+    Logger *logger = new Logger( "main" );
+    remove( logger->get_file_name().c_str() );
     Menu *menu = new Menu();
-    return menu->launch_application();
+
+    int res = menu->launch_application();
+
+    delete menu;
+    delete logger;
+
+    return res;
 }
