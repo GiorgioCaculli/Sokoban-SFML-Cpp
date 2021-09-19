@@ -2,7 +2,8 @@
 
 using namespace sokoban::core;
 
-Box::Box( int x, int y ) :
+Box::Box( int x, int y )
+        :
         Actor( x, y )
 {
     init_box();

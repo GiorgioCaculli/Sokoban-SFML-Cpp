@@ -3,6 +3,8 @@
 
 #include "actor.hpp"
 
+#include <SFML/Graphics.hpp>
+
 namespace sokoban
 {
     namespace core
@@ -10,10 +12,11 @@ namespace sokoban
         class Wall : public Actor
         {
         private:
+            sf::Texture *texture;
             void init_wall();
 
         public:
-            Wall( int x, int y );
+            Wall( float x, float y );
 
             ~Wall() override;
         };

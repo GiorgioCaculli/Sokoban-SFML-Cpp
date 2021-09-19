@@ -20,7 +20,7 @@ Menu::~Menu()
     delete logger;
 }
 
-int Menu::launch_application() const
+unsigned short Menu::launch_application() const
 {
-    return main_frame->launch();
+    return main_frame->run();
 }

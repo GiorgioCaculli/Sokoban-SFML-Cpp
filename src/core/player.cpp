@@ -5,7 +5,7 @@
 using namespace sokoban::core;
 
 Player::Player( int x, int y )
-        : Actor( x, y )
+        :Actor( x, y )
 {
     init_player();
 }

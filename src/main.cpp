@@ -3,21 +3,25 @@
 #include "ui/menu.hpp"
 #include "util/logger.hpp"
 
+#include "core/board.hpp"
+
 #include <iostream>
 
 using namespace sokoban::ui;
 using namespace sokoban::util;
 
-int main( int argc, char *argv[] )
+int main( int argc, char* argv[] )
 {
     Logger *logger = new Logger( "main" );
-    remove( logger->get_file_name().c_str() );
-    Menu *menu = new Menu();
+    remove( logger->get_file_name().c_str());
+    Menu* menu = new Menu();
 
     int res = menu->launch_application();
 
     delete menu;
     delete logger;
+
+    sokoban::core::Board *b = new sokoban::core::Board();
 
     return res;
 }

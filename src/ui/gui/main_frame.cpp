@@ -4,94 +4,187 @@
 
 using namespace sokoban::ui::gui;
 
-void framebuffer_size_callback( GLFWwindow *window, int width, int height );
+const sf::Time MainFrame::time_per_frame = sf::seconds( 1.f / 60.f );
+const float MainFrame::player_speed = 100.f;
 
-void process_input( GLFWwindow *window );
-
-MainFrame::MainFrame( int width, int height )
+MainFrame::MainFrame( unsigned short width, unsigned short height )
 {
     logger = new Logger( "Main frame" );
     logger->log( LoggerLevel::INFO, "Init Window" );
 
-    set_width( width );
-    set_height( height );
+    player_is_moving_up = false;
+    player_is_moving_down = false;
+    player_is_moving_left = false;
+    player_is_moving_right = false;
 
-    glfwInit();
-    glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 3 );
-    glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 3 );
-    glfwWindowHint( GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE );
-    glfwWindowHint( GLFW_RESIZABLE, GL_FALSE );
-#ifdef __APPLE__
-    glfwWindowHint( GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE );
-#endif
-    window = glfwCreateWindow( get_width(), get_height(), "Sokoban", nullptr, nullptr );
+    window = new sf::RenderWindow( sf::VideoMode( width, height ), "Sokoban" );
+    window->requestFocus();
+
+    player = new sf::Sprite();
+    player_texture = new sf::Texture();
+
+    player_texture->loadFromFile( "assets/images/PNG/Character4.png" );
+    player->setTexture( *player_texture );
+    player->setPosition( 100.f, 100.f );
 }
 
 MainFrame::MainFrame()
-        : MainFrame( 800, 600 )
+        :MainFrame( 1024, 768 )
 {
 
 }
 
 MainFrame::~MainFrame()
+= default;
+
+void MainFrame::handle_player_input( sf::Keyboard::Key key, bool is_pressed )
 {
-    delete logger;
+    if ( key == sf::Keyboard::Z )
+    {
+        player_is_moving_up = is_pressed;
+    }
+    else if ( key == sf::Keyboard::S )
+    {
+        player_is_moving_down = is_pressed;
+    }
+    else if ( key == sf::Keyboard::Q )
+    {
+        player_is_moving_left = is_pressed;
+    }
+    else if ( key == sf::Keyboard::D )
+    {
+        player_is_moving_right = is_pressed;
+    }
 }
 
-void MainFrame::set_width( int width )
+void MainFrame::process_events()
+{
+    sf::Event event{};
+    while ( window->pollEvent( event ))
+    {
+        switch ( event.type )
+        {
+        case sf::Event::KeyPressed:
+            handle_player_input( event.key.code, true );
+            break;
+        case sf::Event::KeyReleased:
+            handle_player_input( event.key.code, false );
+            break;
+        case sf::Event::Closed:
+            window->close();
+            break;
+        case sf::Event::Resized:
+            break;
+        case sf::Event::LostFocus:
+            break;
+        case sf::Event::GainedFocus:
+            break;
+        case sf::Event::TextEntered:
+            break;
+        case sf::Event::MouseWheelMoved:
+            break;
+        case sf::Event::MouseWheelScrolled:
+            break;
+        case sf::Event::MouseButtonPressed:
+            break;
+        case sf::Event::MouseButtonReleased:
+            break;
+        case sf::Event::MouseMoved:
+            break;
+        case sf::Event::MouseEntered:
+            break;
+        case sf::Event::MouseLeft:
+            break;
+        case sf::Event::JoystickButtonPressed:
+            break;
+        case sf::Event::JoystickButtonReleased:
+            break;
+        case sf::Event::JoystickMoved:
+            break;
+        case sf::Event::JoystickConnected:
+            break;
+        case sf::Event::JoystickDisconnected:
+            break;
+        case sf::Event::TouchBegan:
+            break;
+        case sf::Event::TouchMoved:
+            break;
+        case sf::Event::TouchEnded:
+            break;
+        case sf::Event::SensorChanged:
+            break;
+        case sf::Event::Count:
+            break;
+        }
+    }
+}
+
+void MainFrame::update( sf::Time delta_time )
+{
+    sf::Vector2f movement( 0.f, 0.f );
+
+    if ( player_is_moving_up )
+    {
+        movement.y -= player_speed;
+    }
+    if ( player_is_moving_down )
+    {
+        movement.y += player_speed;
+    }
+    if ( player_is_moving_left )
+    {
+        movement.x -= player_speed;
+    }
+    if ( player_is_moving_right )
+    {
+        movement.x += player_speed;
+    }
+
+    player->move( movement * delta_time.asSeconds());
+}
+
+void MainFrame::render()
+{
+    window->clear();
+    window->draw( *player );
+    window->display();
+}
+
+void MainFrame::set_width( unsigned short width )
 {
     this->_width = width;
 }
 
-int MainFrame::get_width() const
+unsigned short MainFrame::get_width() const
 {
     return _width;
 }
 
-void MainFrame::set_height( int height )
+void MainFrame::set_height( unsigned short height )
 {
     this->_height = height;
 }
 
-int MainFrame::get_height() const
+unsigned short MainFrame::get_height() const
 {
     return _height;
 }
 
-int MainFrame::launch() const
+unsigned short MainFrame::run()
 {
-    if ( window == nullptr )
+    sf::Clock clock;
+    sf::Time time_since_last_update = sf::Time::Zero;
+    while ( window->isOpen())
     {
-        std::cout << "Failed to create GLFW window" << std::endl;
-        glfwTerminate();
-        return -1;
+        sf::Time elapsed_time = clock.restart();
+        time_since_last_update += elapsed_time;
+        while ( time_since_last_update > time_per_frame )
+        {
+            time_since_last_update -= time_per_frame;
+            process_events();
+            update( time_per_frame );
+        }
+        render();
     }
-
-    glfwMakeContextCurrent( window );
-    glfwSetFramebufferSizeCallback( window, framebuffer_size_callback );
-
-    while ( !glfwWindowShouldClose( window ))
-    {
-        process_input( window );
-        glClearColor( 0.2f, 0.3f, 0.3f, 1.0f );
-        glClear( GL_COLOR_BUFFER_BIT );
-        glfwSwapBuffers( window );
-        glfwPollEvents();
-    }
-
-    glfwTerminate();
     return 0;
-}
-
-void process_input( GLFWwindow *window )
-{
-    if ( glfwGetKey( window, GLFW_KEY_ESCAPE ) == GLFW_PRESS )
-    {
-        glfwSetWindowShouldClose( window, true );
-    }
-}
-
-void framebuffer_size_callback( GLFWwindow *window, int width, int height )
-{
-    glViewport( 0, 0, width, height );
 }

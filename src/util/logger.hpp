@@ -23,9 +23,9 @@ namespace sokoban
             std::string _id;
             std::string _file_name;
         public:
-            Logger( const std::string &id, const std::string &file_name );
+            Logger( const std::string& id, const std::string& file_name );
 
-            explicit Logger( const std::string &id );
+            explicit Logger( const std::string& id );
 
             ~Logger();
 
@@ -33,10 +33,9 @@ namespace sokoban
 
             std::string get_file_name();
 
-            void log( int level, const std::string &log_message );
+            void log( int level, const std::string& log_message );
         };
     }
 }
-
 
 #endif //SOKOBAN_LOGGER_HPP
