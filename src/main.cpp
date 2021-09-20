@@ -3,8 +3,6 @@
 #include "ui/menu.hpp"
 #include "util/logger.hpp"
 
-#include "core/board.hpp"
-
 #include <iostream>
 
 using namespace sokoban::ui;
@@ -20,7 +18,6 @@ int main( int argc, char* argv[] )
 
     delete menu;
     delete logger;
-
 
     return res;
 }
