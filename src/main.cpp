@@ -21,7 +21,6 @@ int main( int argc, char* argv[] )
     delete menu;
     delete logger;
 
-    sokoban::core::Board *b = new sokoban::core::Board();
 
     return res;
 }
