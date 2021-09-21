@@ -13,15 +13,42 @@
 
 #include <array>
 
+namespace sf
+{
+    class RenderWindow;
+}
+
 namespace sokoban
 {
     namespace ui
     {
         namespace gui
         {
-            class World
+            class World : private sf::NonCopyable
             {
-
+            public:
+                explicit World( sf::RenderWindow &window );
+                void update( sf::Time dt );
+                void draw();
+            private:
+                sf::RenderWindow &window;
+                sf::View world_view;
+                TextureHolder textures;
+                SceneNode scene_graph;
+                std::array< SceneNode *, LayerCount > scene_layers;
+                sf::FloatRect world_bounds;
+                sf::Vector2f spawn_position;
+                float scroll_speed;
+                Player *player;
+            private:
+                enum
+                {
+                    BACKGROUND,
+                    LAYER_COUNT
+                };
+            private:
+                void load_textures();
+                void build_scene();
             };
         }
     }

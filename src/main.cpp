@@ -21,8 +21,5 @@ int main( int argc, char* argv[] )
     delete menu;
     delete logger;
 
-    int n;
-    char c;
-
     return res;
 }
