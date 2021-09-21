@@ -1,3 +1,3 @@
-#include "resource_holder.hpp"
+#include "world.hpp"
 
 using namespace sokoban::ui::gui;
