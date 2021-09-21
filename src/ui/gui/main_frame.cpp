@@ -20,12 +20,14 @@ MainFrame::MainFrame( unsigned short width, unsigned short height )
     window = new sf::RenderWindow( sf::VideoMode( width, height ), "Sokoban" );
     window->requestFocus();
 
+    /*
     player = new sf::Sprite();
     player_texture = new sf::Texture();
 
     player_texture->loadFromFile( "assets/images/PNG/Character4.png" );
     player->setTexture( *player_texture );
     player->setPosition( 100.f, 100.f );
+     */
 }
 
 MainFrame::MainFrame()
@@ -59,8 +61,8 @@ void MainFrame::handle_player_input( sf::Keyboard::Key key, bool is_pressed )
 
 void MainFrame::process_events()
 {
-    sf::Event event{};
-    while ( window->pollEvent( event ))
+    sf::Event event {};
+    while ( window->pollEvent( event ) )
     {
         switch ( event.type )
         {
@@ -140,7 +142,7 @@ void MainFrame::update( sf::Time delta_time )
         movement.x += player_speed;
     }
 
-    player->move( movement * delta_time.asSeconds());
+    player->move( movement * delta_time.asSeconds() );
 }
 
 void MainFrame::render()
@@ -174,7 +176,7 @@ unsigned short MainFrame::run()
 {
     sf::Clock clock;
     sf::Time time_since_last_update = sf::Time::Zero;
-    while ( window->isOpen())
+    while ( window->isOpen() )
     {
         sf::Time elapsed_time = clock.restart();
         time_since_last_update += elapsed_time;

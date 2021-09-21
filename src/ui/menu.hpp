@@ -22,7 +22,7 @@ namespace sokoban
 
         private:
             MainFrame* main_frame;
-            Logger* logger{};
+            Logger* logger {};
         };
     }
 }

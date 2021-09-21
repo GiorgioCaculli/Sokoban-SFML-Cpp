@@ -14,12 +14,14 @@ namespace sokoban
             class SpriteNode : public SceneNode
             {
             public:
-                explicit SpriteNode( const sf::Texture &texture );
-                SpriteNode( const sf::Texture &texture, const sf::IntRect &textureRect );
+                explicit SpriteNode( const sf::Texture& texture );
+
+                SpriteNode( const sf::Texture& texture, const sf::IntRect& textureRect );
+
             private:
                 sf::Sprite sprite;
             private:
-                virtual void draw_current( sf::RenderTarget &target, sf::RenderStates states ) const;
+                virtual void draw_current( sf::RenderTarget& target, sf::RenderStates states ) const;
             };
         }
     }

@@ -20,9 +20,9 @@
 using namespace sokoban::util;
 namespace logging = boost::log;
 
-template<typename CharT, typename TraitsT>
-inline std::basic_ostream<CharT, TraitsT>& operator<<(
-        std::basic_ostream<CharT, TraitsT>& strm, logging::trivial::severity_level lvl )
+template< typename CharT, typename TraitsT >
+inline std::basic_ostream< CharT, TraitsT >& operator<<(
+        std::basic_ostream< CharT, TraitsT >& strm, logging::trivial::severity_level lvl )
 {
     static const char* const str[] =
             {
@@ -33,7 +33,7 @@ inline std::basic_ostream<CharT, TraitsT>& operator<<(
                     "error",
                     "fatal"
             };
-    if ( static_cast< std::size_t >(lvl) < ( sizeof( str ) / sizeof( *str )))
+    if ( static_cast< std::size_t >(lvl) < ( sizeof( str ) / sizeof( *str ) ) )
         strm << str[ lvl ];
     else
         strm << static_cast< int >(lvl);
@@ -48,7 +48,7 @@ Logger::Logger( const std::string& id, const std::string& file_name )
     this->_id = id;
     this->_file_name = file_name;
 
-    boost::shared_ptr<logging::sinks::synchronous_sink<logging::sinks::text_file_backend> > sink = logging::add_file_log
+    boost::shared_ptr< logging::sinks::synchronous_sink< logging::sinks::text_file_backend > > sink = logging::add_file_log
             (
                     logging::keywords::file_name = get_file_name(),
                     logging::keywords::rotation_size = 10 * 1024 * 1024,

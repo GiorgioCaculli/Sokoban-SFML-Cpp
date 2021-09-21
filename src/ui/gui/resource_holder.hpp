@@ -18,11 +18,15 @@ namespace sokoban
             class ResourceHolder
             {
             public:
-                void load( Identifier id, const std::string &file_name );
+                void load( Identifier id, const std::string& file_name );
+
                 template< typename Parameter >
-                void load( Identifier id, const std::string &file_name, const Parameter &second_param );
-                Resource &get( Identifier id );
-                const Resource &get( Identifier id ) const;
+                void load( Identifier id, const std::string& file_name, const Parameter& second_param );
+
+                Resource& get( Identifier id );
+
+                const Resource& get( Identifier id ) const;
+
             private:
                 std::map< Identifier, std::unique_ptr< Resource > > resource_map;
             private:

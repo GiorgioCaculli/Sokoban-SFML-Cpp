@@ -17,9 +17,9 @@ namespace sokoban
             class MainFrame
             {
             private:
-                unsigned short _width{};
-                unsigned short _height{};
-                Logger* logger{};
+                unsigned short _width {};
+                unsigned short _height {};
+                Logger* logger {};
                 sf::RenderWindow* window;
                 sf::Sprite* player;
                 sf::Texture* player_texture;

@@ -12,8 +12,8 @@ using namespace sokoban::util;
 
 int main( int argc, char* argv[] )
 {
-    Logger *logger = new Logger( "main" );
-    remove( logger->get_file_name().c_str());
+    Logger* logger = new Logger( "main" );
+    remove( logger->get_file_name().c_str() );
     Menu* menu = new Menu();
 
     int res = menu->launch_application();

@@ -21,20 +21,30 @@ namespace sokoban
                 typedef std::unique_ptr< SceneNode > Ptr;
             public:
                 SceneNode();
+
                 void attach_child( Ptr child );
-                Ptr detach_child( const SceneNode &node );
+
+                Ptr detach_child( const SceneNode& node );
+
                 void update( sf::Time dt );
+
                 sf::Vector2f get_world_position() const;
+
                 sf::Transform get_world_transform() const;
+
             private:
-                std::vector<Ptr> children;
-                SceneNode *parent;
+                std::vector< Ptr > children;
+                SceneNode* parent;
             private:
                 virtual void update_current( sf::Time dt );
+
                 void update_children( sf::Time dt );
-                virtual void draw( sf::RenderTarget &target, sf::RenderStates states ) const;
-                virtual void draw_current( sf::RenderTarget &target, sf::RenderStates states ) const;
-                void draw_children( sf::RenderTarget &target, sf::RenderStates states ) const;
+
+                virtual void draw( sf::RenderTarget& target, sf::RenderStates states ) const;
+
+                virtual void draw_current( sf::RenderTarget& target, sf::RenderStates states ) const;
+
+                void draw_children( sf::RenderTarget& target, sf::RenderStates states ) const;
             };
         }
     }
