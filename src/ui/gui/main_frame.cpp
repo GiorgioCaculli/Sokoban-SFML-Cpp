@@ -61,7 +61,7 @@ void MainFrame::handle_player_input( sf::Keyboard::Key key, bool is_pressed )
 
 void MainFrame::process_events()
 {
-    sf::Event event {};
+    sf::Event event{};
     while ( window->pollEvent( event ) )
     {
         switch ( event.type )

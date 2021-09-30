@@ -15,7 +15,8 @@ namespace Textures
         Player_North,
         Player_South,
         Player_East,
-        Player_West
+        Player_West,
+        Background
     };
 }
 

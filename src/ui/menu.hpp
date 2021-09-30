@@ -21,8 +21,8 @@ namespace sokoban
             unsigned short launch_application() const;
 
         private:
-            MainFrame* main_frame;
-            Logger* logger {};
+            MainFrame *main_frame;
+            Logger *logger{};
         };
     }
 }

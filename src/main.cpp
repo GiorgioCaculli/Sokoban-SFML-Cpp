@@ -10,11 +10,11 @@
 using namespace sokoban::ui;
 using namespace sokoban::util;
 
-int main( int argc, char* argv[] )
+int main( int argc, char *argv[] )
 {
-    Logger* logger = new Logger( "main" );
+    Logger *logger = new Logger( "main" );
     remove( logger->get_file_name().c_str() );
-    Menu* menu = new Menu();
+    Menu *menu = new Menu();
 
     int res = menu->launch_application();
 

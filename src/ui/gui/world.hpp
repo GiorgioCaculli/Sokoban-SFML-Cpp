@@ -26,29 +26,30 @@ namespace sokoban
         {
             class World : private sf::NonCopyable
             {
+            private:
+                enum
+                {
+                    Background,
+                    Floor,
+                    LayerCount
+                };
             public:
-                explicit World( sf::RenderWindow& window );
+                explicit World( sf::RenderWindow &window );
 
                 void update( sf::Time dt );
 
                 void draw();
 
             private:
-                sf::RenderWindow& window;
+                sf::RenderWindow &window;
                 sf::View world_view;
                 TextureHolder textures;
                 SceneNode scene_graph;
-                std::array< SceneNode*, LayerCount > scene_layers;
+                std::array< SceneNode *, LayerCount > scene_layers;
                 sf::FloatRect world_bounds;
                 sf::Vector2f spawn_position;
                 float scroll_speed;
-                Player* player;
-            private:
-                enum
-                {
-                    BACKGROUND,
-                    LAYER_COUNT
-                };
+                Player *player;
             private:
                 void load_textures();
 

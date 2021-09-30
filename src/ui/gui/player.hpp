@@ -23,13 +23,13 @@ namespace sokoban
                     West
                 };
             public:
-                Player( Face face, const TextureHolder& textures );
+                Player( Face face, const TextureHolder &textures );
 
             private:
                 Face face;
                 sf::Sprite sprite;
             private:
-                virtual void draw_current( sf::RenderTarget& target, sf::RenderStates states ) const;
+                virtual void draw_current( sf::RenderTarget &target, sf::RenderStates states ) const;
             };
         }
     }

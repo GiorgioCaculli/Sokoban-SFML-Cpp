@@ -24,7 +24,7 @@ namespace sokoban
 
                 void attach_child( Ptr child );
 
-                Ptr detach_child( const SceneNode& node );
+                Ptr detach_child( const SceneNode &node );
 
                 void update( sf::Time dt );
 
@@ -34,17 +34,17 @@ namespace sokoban
 
             private:
                 std::vector< Ptr > children;
-                SceneNode* parent;
+                SceneNode *parent;
             private:
                 virtual void update_current( sf::Time dt );
 
                 void update_children( sf::Time dt );
 
-                virtual void draw( sf::RenderTarget& target, sf::RenderStates states ) const;
+                virtual void draw( sf::RenderTarget &target, sf::RenderStates states ) const;
 
-                virtual void draw_current( sf::RenderTarget& target, sf::RenderStates states ) const;
+                virtual void draw_current( sf::RenderTarget &target, sf::RenderStates states ) const;
 
-                void draw_children( sf::RenderTarget& target, sf::RenderStates states ) const;
+                void draw_children( sf::RenderTarget &target, sf::RenderStates states ) const;
             };
         }
     }

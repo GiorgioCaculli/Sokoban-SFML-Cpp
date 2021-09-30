@@ -17,12 +17,12 @@ namespace sokoban
             class MainFrame
             {
             private:
-                unsigned short _width {};
-                unsigned short _height {};
-                Logger* logger {};
-                sf::RenderWindow* window;
-                sf::Sprite* player;
-                sf::Texture* player_texture;
+                unsigned short _width{};
+                unsigned short _height{};
+                Logger *logger{};
+                sf::RenderWindow *window;
+                sf::Sprite *player;
+                sf::Texture *player_texture;
                 bool player_is_moving_up;
                 bool player_is_moving_down;
                 bool player_is_moving_left;

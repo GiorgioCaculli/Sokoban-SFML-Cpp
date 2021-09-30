@@ -18,24 +18,23 @@ namespace sokoban
             class ResourceHolder
             {
             public:
-                void load( Identifier id, const std::string& file_name );
+                void load( Identifier id, const std::string &file_name );
 
                 template< typename Parameter >
-                void load( Identifier id, const std::string& file_name, const Parameter& second_param );
+                void load( Identifier id, const std::string &file_name, const Parameter &second_param );
 
-                Resource& get( Identifier id );
+                Resource &get( Identifier id );
 
-                const Resource& get( Identifier id ) const;
+                const Resource &get( Identifier id ) const;
 
             private:
                 std::map< Identifier, std::unique_ptr< Resource > > resource_map;
             private:
-                void init_resource( Identifier id, std::unique_ptr< Resource > resource );
+                void insert_resource( Identifier id, std::unique_ptr< Resource > resource );
             };
         }
     }
 }
-
 #include "resource_holder.inl"
 
 #endif //SOKOBAN_RESOURCE_HOLDER_HPP
