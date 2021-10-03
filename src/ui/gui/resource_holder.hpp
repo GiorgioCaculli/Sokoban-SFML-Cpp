@@ -6,7 +6,6 @@
 #include <memory>
 #include <stdexcept>
 #include <cassert>
-#include <ostream>
 
 namespace sokoban
 {
@@ -15,26 +14,27 @@ namespace sokoban
         namespace gui
         {
             template< typename Resource, typename Identifier >
-            class ResourceHolder
-            {
-            public:
-                void load( Identifier id, const std::string &file_name );
+                class ResourceHolder
+                {
+                private:
+                    std::map< Identifier, std::unique_ptr< Resource > > resource_map;
 
-                template< typename Parameter >
-                void load( Identifier id, const std::string &file_name, const Parameter &second_param );
+                    void insert_resource( Identifier id, std::unique_ptr< Resource > resource );
 
-                Resource &get( Identifier id );
+                public:
+                    void load( Identifier id, const std::string &file_name );
 
-                const Resource &get( Identifier id ) const;
+                    template< typename Parameter >
+                        void load( Identifier id, const std::string &file_name, const Parameter &second_param );
 
-            private:
-                std::map< Identifier, std::unique_ptr< Resource > > resource_map;
-            private:
-                void insert_resource( Identifier id, std::unique_ptr< Resource > resource );
-            };
+                    Resource &get( Identifier id );
+
+                    const Resource &get( Identifier id ) const;
+                };
         }
     }
 }
+
 #include "resource_holder.inl"
 
 #endif //SOKOBAN_RESOURCE_HOLDER_HPP

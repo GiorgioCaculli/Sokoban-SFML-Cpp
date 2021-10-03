@@ -10,13 +10,9 @@
 #include <SFML/System/NonCopyable.hpp>
 #include <SFML/Graphics/View.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 #include <array>
-
-namespace sf
-{
-    class RenderWindow;
-}
 
 namespace sokoban
 {
@@ -24,23 +20,16 @@ namespace sokoban
     {
         namespace gui
         {
-            class World : private sf::NonCopyable
+            class World
+                    : private sf::NonCopyable
             {
             private:
-                enum
+                enum Layer
                 {
                     Background,
-                    Floor,
+                    Air,
                     LayerCount
                 };
-            public:
-                explicit World( sf::RenderWindow &window );
-
-                void update( sf::Time dt );
-
-                void draw();
-
-            private:
                 sf::RenderWindow &window;
                 sf::View world_view;
                 TextureHolder textures;
@@ -50,10 +39,17 @@ namespace sokoban
                 sf::Vector2f spawn_position;
                 float scroll_speed;
                 Player *player;
-            private:
+
                 void load_textures();
 
                 void build_scene();
+
+            public:
+                explicit World( sf::RenderWindow &window );
+
+                void update( sf::Time dt );
+
+                void draw();
             };
         }
     }

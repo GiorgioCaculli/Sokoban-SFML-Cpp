@@ -3,8 +3,13 @@
 
 #include "../../util/logger.hpp"
 
-#include <SFML/Audio.hpp>
-#include <SFML/Graphics.hpp>
+#include "world.hpp"
+
+#include <SFML/System/Time.hpp>
+#include <SFML/Window/Keyboard.hpp>
+#include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 namespace sokoban
 {
@@ -15,23 +20,25 @@ namespace sokoban
             using namespace sokoban::util;
 
             class MainFrame
+                    : private sf::NonCopyable
             {
             private:
-                unsigned short _width{};
-                unsigned short _height{};
-                Logger *logger{};
-                sf::RenderWindow *window;
-                sf::Sprite *player;
-                sf::Texture *player_texture;
+                Logger *logger {};
+                static const sf::Time time_per_frame;
+                sf::RenderWindow window;
+                World world;
+                sf::Font font;
+                sf::Text statistics_text;
+                sf::Time statistics_update_time;
+                std::size_t statistics_num_frames;
                 bool player_is_moving_up;
                 bool player_is_moving_down;
                 bool player_is_moving_left;
                 bool player_is_moving_right;
-                static const sf::Time time_per_frame;
-                static const float player_speed;
 
-            private:
                 void handle_player_input( sf::Keyboard::Key key, bool is_pressed );
+
+                void update_statistics( sf::Time elapsed_time );
 
                 void process_events();
 
@@ -40,19 +47,9 @@ namespace sokoban
                 void render();
 
             public:
-                MainFrame( unsigned short width, unsigned short height );
-
                 MainFrame();
 
                 ~MainFrame();
-
-                void set_width( unsigned short width );
-
-                unsigned short get_width() const;
-
-                void set_height( unsigned short height );
-
-                unsigned short get_height() const;
 
                 unsigned short run();
             };

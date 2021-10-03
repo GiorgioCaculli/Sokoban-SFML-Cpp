@@ -5,6 +5,7 @@
 
 #include "ui/gui/player.hpp"
 
+#include <stdexcept>
 #include <iostream>
 
 using namespace sokoban::ui;
@@ -16,7 +17,15 @@ int main( int argc, char *argv[] )
     remove( logger->get_file_name().c_str() );
     Menu *menu = new Menu();
 
-    int res = menu->launch_application();
+    int res = -1;
+
+    try
+    {
+        res = menu->launch_application();
+    } catch ( std::exception& e )
+    {
+        logger->log( LoggerLevel::FATAL, e.what() );
+    }
 
     delete menu;
     delete logger;

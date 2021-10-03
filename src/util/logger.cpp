@@ -21,24 +21,23 @@ using namespace sokoban::util;
 namespace logging = boost::log;
 
 template< typename CharT, typename TraitsT >
-inline std::basic_ostream< CharT, TraitsT > &operator <<(
-        std::basic_ostream< CharT, TraitsT > &strm, logging::trivial::severity_level lvl )
-{
-    static const char *const str[] =
-            {
-                    "trace",
-                    "debug",
-                    "info",
-                    "warning",
-                    "error",
-                    "fatal"
-            };
-    if ( static_cast< std::size_t >(lvl) < ( sizeof( str ) / sizeof( *str ) ) )
-        strm << str[ lvl ];
-    else
-        strm << static_cast< int >(lvl);
-    return strm;
-}
+    inline std::basic_ostream< CharT, TraitsT > &operator<<(
+            std::basic_ostream< CharT, TraitsT > &strm, logging::trivial::severity_level lvl )
+    {
+        static const char *const str[] =
+                {
+                        "trace", "debug", "info", "warning", "error", "fatal"
+                };
+        if ( static_cast< std::size_t >(lvl) < ( sizeof( str ) / sizeof( *str ) ) )
+        {
+            strm << str[ lvl ];
+        }
+        else
+        {
+            strm << static_cast< int >(lvl);
+        }
+        return strm;
+    }
 
 BOOST_LOG_ATTRIBUTE_KEYWORD( severity, "Severity", logging::trivial::severity_level )
 BOOST_LOG_ATTRIBUTE_KEYWORD( timestamp, "TimeStamp", boost::posix_time::ptime )
@@ -72,7 +71,7 @@ Logger::Logger( const std::string &id, const std::string &file_name )
 }
 
 Logger::Logger( const std::string &id )
-        :Logger( id, "sokoban.log" )
+        : Logger( id, "sokoban.log" )
 {
 
 }

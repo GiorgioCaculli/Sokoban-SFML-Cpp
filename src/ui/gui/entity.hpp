@@ -10,6 +10,7 @@ namespace sokoban
         namespace gui
         {
             class Entity
+                    : public SceneNode
             {
             public:
                 void set_velocity( sf::Vector2f velocity );
@@ -20,7 +21,7 @@ namespace sokoban
 
             private:
                 sf::Vector2f velocity;
-            private:
+
                 virtual void update_current( sf::Time dt );
             };
         }

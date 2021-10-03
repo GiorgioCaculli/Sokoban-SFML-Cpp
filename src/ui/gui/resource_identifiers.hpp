@@ -1,24 +1,7 @@
 #ifndef SOKOBAN_RESOURCE_IDENTIFIERS_HPP
 #define SOKOBAN_RESOURCE_IDENTIFIERS_HPP
 
-namespace sf
-{
-    class Texture;
-}
-namespace Textures
-{
-    enum ID
-    {
-        Wall,
-        Box,
-        Platform,
-        Player_North,
-        Player_South,
-        Player_East,
-        Player_West,
-        Background
-    };
-}
+#include <SFML/Graphics/Texture.hpp>
 
 namespace sokoban
 {
@@ -26,8 +9,23 @@ namespace sokoban
     {
         namespace gui
         {
+            namespace Textures
+            {
+                enum ID
+                {
+                    Wall,
+                    Box,
+                    Platform,
+                    Player_North,
+                    Player_South,
+                    Player_East,
+                    Player_West,
+                    Floor
+                };
+            }
+
             template< typename Resource, typename Identifier >
-            class ResourceHolder;
+                class ResourceHolder;
 
             typedef ResourceHolder< sf::Texture, Textures::ID > TextureHolder;
         }

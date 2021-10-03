@@ -11,7 +11,8 @@ namespace sokoban
     {
         namespace gui
         {
-            class SpriteNode : public SceneNode
+            class SpriteNode
+                    : public SceneNode
             {
             public:
                 explicit SpriteNode( const sf::Texture &texture );
@@ -20,7 +21,7 @@ namespace sokoban
 
             private:
                 sf::Sprite sprite;
-            private:
+
                 virtual void draw_current( sf::RenderTarget &target, sf::RenderStates states ) const;
             };
         }

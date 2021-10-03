@@ -12,23 +12,24 @@ namespace sokoban
     {
         namespace gui
         {
-            class Player : public Entity
+            class Player
+                    : public Entity
             {
             public:
                 enum Face
                 {
-                    North,
-                    South,
-                    East,
-                    West
+                    Player_North,
+                    Player_South,
+                    Player_East,
+                    Player_West
                 };
-            public:
+
                 Player( Face face, const TextureHolder &textures );
 
             private:
                 Face face;
                 sf::Sprite sprite;
-            private:
+
                 virtual void draw_current( sf::RenderTarget &target, sf::RenderStates states ) const;
             };
         }

@@ -1,13 +1,19 @@
 #include "main_frame.hpp"
 
 #include <iostream>
+#include <SFML/Window/Event.hpp>
 
 using namespace sokoban::ui::gui;
 
 const sf::Time MainFrame::time_per_frame = sf::seconds( 1.f / 60.f );
-const float MainFrame::player_speed = 100.f;
 
-MainFrame::MainFrame( unsigned short width, unsigned short height )
+MainFrame::MainFrame()
+        : window( sf::VideoMode( 1024, 768 ), "Sokoban", sf::Style::Close )
+          , world( window )
+          , font()
+          , statistics_text()
+          , statistics_update_time()
+          , statistics_num_frames( 0 )
 {
     logger = new Logger( "Main frame" );
     logger->log( LoggerLevel::INFO, "Init Window" );
@@ -16,24 +22,6 @@ MainFrame::MainFrame( unsigned short width, unsigned short height )
     player_is_moving_down = false;
     player_is_moving_left = false;
     player_is_moving_right = false;
-
-    window = new sf::RenderWindow( sf::VideoMode( width, height ), "Sokoban" );
-    window->requestFocus();
-
-    /*
-    player = new sf::Sprite();
-    player_texture = new sf::Texture();
-
-    player_texture->loadFromFile( "assets/images/PNG/Character4.png" );
-    player->setTexture( *player_texture );
-    player->setPosition( 100.f, 100.f );
-     */
-}
-
-MainFrame::MainFrame()
-        :MainFrame( 1024, 768 )
-{
-
 }
 
 MainFrame::~MainFrame()
@@ -59,10 +47,25 @@ void MainFrame::handle_player_input( sf::Keyboard::Key key, bool is_pressed )
     }
 }
 
+void MainFrame::update_statistics( sf::Time elapsed_time )
+{
+    statistics_update_time += elapsed_time;
+    statistics_num_frames += 1;
+    if( statistics_update_time >= sf::seconds( 1.0f ) )
+    {
+        statistics_text.setString(
+                "Frames / Second = " + std::to_string( statistics_num_frames ) + "\n" +
+                "Time / Update = " + std::to_string( statistics_update_time.asMicroseconds() / statistics_num_frames) + "us"
+                );
+        statistics_update_time -= sf::seconds( 1.0f );
+        statistics_num_frames = 0;
+    }
+}
+
 void MainFrame::process_events()
 {
-    sf::Event event{};
-    while ( window->pollEvent( event ) )
+    sf::Event event {};
+    while ( window.pollEvent( event ) )
     {
         switch ( event.type )
         {
@@ -73,7 +76,7 @@ void MainFrame::process_events()
             handle_player_input( event.key.code, false );
             break;
         case sf::Event::Closed:
-            window->close();
+            window.close();
             break;
         case sf::Event::Resized:
             break;
@@ -123,60 +126,23 @@ void MainFrame::process_events()
 
 void MainFrame::update( sf::Time delta_time )
 {
-    sf::Vector2f movement( 0.f, 0.f );
-
-    if ( player_is_moving_up )
-    {
-        movement.y -= player_speed;
-    }
-    if ( player_is_moving_down )
-    {
-        movement.y += player_speed;
-    }
-    if ( player_is_moving_left )
-    {
-        movement.x -= player_speed;
-    }
-    if ( player_is_moving_right )
-    {
-        movement.x += player_speed;
-    }
-
-    player->move( movement * delta_time.asSeconds() );
+    world.update( delta_time );
 }
 
 void MainFrame::render()
 {
-    window->clear();
-    window->draw( *player );
-    window->display();
-}
-
-void MainFrame::set_width( unsigned short width )
-{
-    this->_width = width;
-}
-
-unsigned short MainFrame::get_width() const
-{
-    return _width;
-}
-
-void MainFrame::set_height( unsigned short height )
-{
-    this->_height = height;
-}
-
-unsigned short MainFrame::get_height() const
-{
-    return _height;
+    window.clear();
+    world.draw();
+    window.setView( window.getDefaultView() );
+    window.draw( statistics_text );
+    window.display();
 }
 
 unsigned short MainFrame::run()
 {
     sf::Clock clock;
     sf::Time time_since_last_update = sf::Time::Zero;
-    while ( window->isOpen() )
+    while ( window.isOpen() )
     {
         sf::Time elapsed_time = clock.restart();
         time_since_last_update += elapsed_time;
@@ -186,6 +152,7 @@ unsigned short MainFrame::run()
             process_events();
             update( time_per_frame );
         }
+        update_statistics( elapsed_time );
         render();
     }
     return 0;

@@ -6,7 +6,8 @@
 using namespace sokoban::ui::gui;
 
 SceneNode::SceneNode()
-        :children(), parent( nullptr )
+        : children()
+          , parent( nullptr )
 {
 
 }
