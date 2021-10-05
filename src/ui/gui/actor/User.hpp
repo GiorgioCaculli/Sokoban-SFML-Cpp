@@ -1,8 +1,8 @@
-#ifndef SOKOBAN_PLAYER_HPP
-#define SOKOBAN_PLAYER_HPP
+#ifndef SOKOBAN_USER_HPP
+#define SOKOBAN_USER_HPP
 
 #include "entity.hpp"
-#include "resource_identifiers.hpp"
+#include "../resource_identifiers.hpp"
 
 #include <SFML/Graphics/Sprite.hpp>
 
@@ -12,7 +12,7 @@ namespace sokoban
     {
         namespace gui
         {
-            class Player
+            class User
                     : public Entity
             {
             public:
@@ -23,17 +23,14 @@ namespace sokoban
                     Player_East,
                     Player_West
                 };
-
-                Player( Face face, const TextureHolder &textures );
-
+                User( Face face, const TextureHolder &textures );
             private:
                 Face face;
                 sf::Sprite sprite;
-
                 virtual void draw_current( sf::RenderTarget &target, sf::RenderStates states ) const;
             };
         }
     }
 }
 
-#endif //SOKOBAN_PLAYER_HPP
+#endif //SOKOBAN_USER_HPP

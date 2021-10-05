@@ -23,7 +23,6 @@ namespace sokoban
                     Floor
                 };
             }
-
             template< typename Resource, typename Identifier >
                 class ResourceHolder;
 

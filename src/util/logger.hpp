@@ -24,15 +24,10 @@ namespace sokoban
             std::string _file_name;
         public:
             Logger( const std::string &id, const std::string &file_name );
-
             explicit Logger( const std::string &id );
-
             ~Logger();
-
             std::string get_id();
-
             std::string get_file_name();
-
             void log( int level, const std::string &log_message );
         };
     }

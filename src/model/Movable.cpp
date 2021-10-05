@@ -1,0 +1,27 @@
+#include "Movable.hpp"
+
+using namespace sokoban::model;
+
+Movable::Movable( int x, int y )
+        : Actor( x, y )
+{
+
+}
+Movable::Movable( const Movable &movable )
+        : Actor( movable )
+{
+
+}
+Movable::~Movable() = default;
+
+void Movable::move( int x, int y )
+{
+    set_x( get_x() + x );
+    set_y( get_y() + y );
+}
+
+std::ostream &sokoban::model::operator<<( std::ostream &os, const Movable &movable )
+{
+    os << static_cast<const Actor &>(movable);
+    return os;
+}

@@ -16,12 +16,9 @@ namespace sokoban
             {
             public:
                 explicit SpriteNode( const sf::Texture &texture );
-
                 SpriteNode( const sf::Texture &texture, const sf::IntRect &textureRect );
-
             private:
                 sf::Sprite sprite;
-
                 virtual void draw_current( sf::RenderTarget &target, sf::RenderStates states ) const;
             };
         }

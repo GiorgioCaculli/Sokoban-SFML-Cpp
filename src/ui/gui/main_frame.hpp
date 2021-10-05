@@ -3,7 +3,7 @@
 
 #include "../../util/logger.hpp"
 
-#include "world.hpp"
+#include "actor/world.hpp"
 
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Keyboard.hpp>
@@ -35,22 +35,14 @@ namespace sokoban
                 bool player_is_moving_down;
                 bool player_is_moving_left;
                 bool player_is_moving_right;
-
                 void handle_player_input( sf::Keyboard::Key key, bool is_pressed );
-
                 void update_statistics( sf::Time elapsed_time );
-
                 void process_events();
-
                 void update( sf::Time delta_time );
-
                 void render();
-
             public:
                 MainFrame();
-
                 ~MainFrame();
-
                 unsigned short run();
             };
         }

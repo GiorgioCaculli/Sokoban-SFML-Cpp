@@ -68,9 +68,9 @@ void World::build_scene()
     background_sprite->setPosition( world_bounds.left, world_bounds.top );
     scene_layers[ Background ]->attach_child( std::move( background_sprite ) );
 
-    std::unique_ptr< Player > player1( new Player( Player::Player_South, textures ) );
+    std::unique_ptr< User > player1( new User( User::Player_South, textures ) );
     player = player1.get();
     player->setPosition( spawn_position );
     player->set_velocity( 40.f, scroll_speed );
-    scene_layers[ Air ]->attach_child( std::move( player1 ) );
+    scene_layers[ Actor ]->attach_child( std::move( player1 ) );
 }

@@ -15,11 +15,8 @@ namespace sokoban
         {
         public:
             Menu();
-
             virtual ~Menu();
-
             unsigned short launch_application() const;
-
         private:
             MainFrame *main_frame;
             Logger *logger {};

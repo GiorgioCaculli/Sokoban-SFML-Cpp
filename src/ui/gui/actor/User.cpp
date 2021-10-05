@@ -1,28 +1,28 @@
-#include "player.hpp"
-#include "resource_holder.hpp"
+#include "User.hpp"
+#include "../resource_holder.hpp"
 
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 
 using namespace sokoban::ui::gui;
 
-Textures::ID to_texture_id( Player::Face face )
+Textures::ID to_texture_id( User::Face face )
 {
     switch ( face )
     {
-    case Player::Player_North:
+    case User::Player_North:
         return Textures::Player_North;
-    case Player::Player_South:
+    case User::Player_South:
         return Textures::Player_South;
-    case Player::Player_East:
+    case User::Player_East:
         return Textures::Player_East;
-    case Player::Player_West:
+    case User::Player_West:
         return Textures::Player_West;
     }
     return Textures::Player_South;
 }
 
-Player::Player( Player::Face face, const TextureHolder &textures )
+User::User( User::Face face, const TextureHolder &textures )
         : face( face )
           , sprite( textures.get( to_texture_id( face ) ) )
 {
@@ -30,7 +30,7 @@ Player::Player( Player::Face face, const TextureHolder &textures )
     sprite.setOrigin( bounds.width / 2.f, bounds.height / 2.f );
 }
 
-void Player::draw_current( sf::RenderTarget &target, sf::RenderStates states ) const
+void User::draw_current( sf::RenderTarget &target, sf::RenderStates states ) const
 {
     target.draw( sprite, states );
 }

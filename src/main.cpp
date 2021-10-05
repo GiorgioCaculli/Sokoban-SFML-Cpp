@@ -2,13 +2,16 @@
 
 #include "ui/menu.hpp"
 #include "util/logger.hpp"
+#include "model/Board.hpp"
+#include "model/Box.hpp"
+#include "model/Platform.hpp"
+#include "model/Player.hpp"
+#include "model/Wall.hpp"
 
-#include "ui/gui/player.hpp"
-
-#include <stdexcept>
 #include <iostream>
 
 using namespace sokoban::ui;
+using namespace sokoban::model;
 using namespace sokoban::util;
 
 int main( int argc, char *argv[] )
@@ -17,12 +20,18 @@ int main( int argc, char *argv[] )
     remove( logger->get_file_name().c_str() );
     Menu *menu = new Menu();
 
-    int res = -1;
+    Board *board = new Board();
+
+    std::cout << *board << std::endl;
+
+    delete board;
+
+    int res = 0;
 
     try
     {
         res = menu->launch_application();
-    } catch ( std::exception& e )
+    } catch ( std::exception &e )
     {
         logger->log( LoggerLevel::FATAL, e.what() );
     }

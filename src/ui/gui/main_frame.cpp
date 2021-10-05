@@ -6,9 +6,11 @@
 using namespace sokoban::ui::gui;
 
 const sf::Time MainFrame::time_per_frame = sf::seconds( 1.f / 60.f );
+const int WIDTH = 1024;
+const int HEIGHT = WIDTH / 4 * 3;
 
 MainFrame::MainFrame()
-        : window( sf::VideoMode( 1024, 768 ), "Sokoban", sf::Style::Close )
+        : window( sf::VideoMode( WIDTH, HEIGHT ), "Sokoban", sf::Style::Titlebar | sf::Style::Close )
           , world( window )
           , font()
           , statistics_text()
@@ -51,12 +53,12 @@ void MainFrame::update_statistics( sf::Time elapsed_time )
 {
     statistics_update_time += elapsed_time;
     statistics_num_frames += 1;
-    if( statistics_update_time >= sf::seconds( 1.0f ) )
+    if ( statistics_update_time >= sf::seconds( 1.0f ) )
     {
         statistics_text.setString(
                 "Frames / Second = " + std::to_string( statistics_num_frames ) + "\n" +
-                "Time / Update = " + std::to_string( statistics_update_time.asMicroseconds() / statistics_num_frames) + "us"
-                );
+                        "Time / Update = " + std::to_string( statistics_update_time.asMicroseconds() / statistics_num_frames ) + "us"
+        );
         statistics_update_time -= sf::seconds( 1.0f );
         statistics_num_frames = 0;
     }

@@ -1,11 +1,11 @@
 #ifndef SOKOBAN_WORLD_HPP
 #define SOKOBAN_WORLD_HPP
 
-#include "resource_holder.hpp"
-#include "resource_identifiers.hpp"
-#include "scene_node.hpp"
-#include "sprite_node.hpp"
-#include "player.hpp"
+#include "../resource_holder.hpp"
+#include "../resource_identifiers.hpp"
+#include "../scene_node.hpp"
+#include "../sprite_node.hpp"
+#include "User.hpp"
 
 #include <SFML/System/NonCopyable.hpp>
 #include <SFML/Graphics/View.hpp>
@@ -27,7 +27,7 @@ namespace sokoban
                 enum Layer
                 {
                     Background,
-                    Air,
+                    Actor,
                     LayerCount
                 };
                 sf::RenderWindow &window;
@@ -38,17 +38,12 @@ namespace sokoban
                 sf::FloatRect world_bounds;
                 sf::Vector2f spawn_position;
                 float scroll_speed;
-                Player *player;
-
+                User *player;
                 void load_textures();
-
                 void build_scene();
-
             public:
                 explicit World( sf::RenderWindow &window );
-
                 void update( sf::Time dt );
-
                 void draw();
             };
         }

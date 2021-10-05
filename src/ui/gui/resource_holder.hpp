@@ -18,17 +18,12 @@ namespace sokoban
                 {
                 private:
                     std::map< Identifier, std::unique_ptr< Resource > > resource_map;
-
                     void insert_resource( Identifier id, std::unique_ptr< Resource > resource );
-
                 public:
                     void load( Identifier id, const std::string &file_name );
-
                     template< typename Parameter >
                         void load( Identifier id, const std::string &file_name, const Parameter &second_param );
-
                     Resource &get( Identifier id );
-
                     const Resource &get( Identifier id ) const;
                 };
         }
