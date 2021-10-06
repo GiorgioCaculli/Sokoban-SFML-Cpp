@@ -6,9 +6,16 @@
 
 using namespace sokoban::model;
 
-const int OFFSET = 30;
-const int SPACE = 20;
+const int OFFSET = 64;
+const int SPACE = 64;
 std::string level;
+
+Board::Board( std::string lvl )
+{
+    level = std::move( lvl );
+    init_board();
+    is_completed = false;
+}
 
 Board::Board()
 {
@@ -26,6 +33,7 @@ Board::Board()
     ss << "    ########\n";
     level = ss.str();
     init_board();
+    is_completed = false;
 }
 
 Board::Board( const Board &board )
@@ -36,27 +44,15 @@ Board::Board( const Board &board )
 {
 
 }
+
 Board::~Board()
 {
-    for ( Box *boxe: *boxes )
+    for( Actor *actor : *world )
     {
-        delete boxe;
+        delete actor;
     }
-    delete boxes;
 
-    for ( Wall *wall: *walls )
-    {
-        delete wall;
-    }
-    delete walls;
-
-    for ( Platform *platform: *platforms )
-    {
-        delete platform;
-    }
-    delete platforms;
-
-    delete player;
+    delete world;
 }
 
 void Board::init_board()
@@ -113,12 +109,39 @@ void Board::init_world()
         default:
             break;
         }
+        height = y;
     }
+    build_world();
 }
 
 void Board::build_world()
 {
-
+    world = new std::vector< Actor * >();
+    for( Wall *wall : *walls )
+    {
+        world->insert( world->begin(), wall );
+    }
+    for( Platform *platform : *platforms )
+    {
+        world->insert( world->begin(), platform );
+    }
+    for( Box *box : *boxes )
+    {
+        world->insert( world->begin(), box );
+    }
+    world->insert( world->begin(), player );
+    for( Actor *actor : *world)
+    {
+        if( actor->get_type() == Actor::PLAYER || actor->get_type() == Actor::BOX )
+        {
+        }
+        else
+        {
+        }
+        if( is_completed )
+        {
+        }
+    }
 }
 
 bool Board::check_wall_collision( Actor *actor, int type )
@@ -141,7 +164,7 @@ int Board::get_board_height() const
     return height;
 }
 
-void Board::is_completed() const
+void Board::completed() const
 {
 
 }
@@ -156,4 +179,9 @@ std::ostream &sokoban::model::operator<<( std::ostream &os, const Board &board )
     os << level;
     /* os << "boxes: " << board.boxes << " walls: " << board.walls << " platforms: " << board.platforms << " player: " << board.player << " width: " << board.width << " height: " << board.height;*/
     return os;
+}
+
+std::vector< Actor * > *Board::get_world()
+{
+    return world;
 }

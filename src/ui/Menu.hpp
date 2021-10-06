@@ -1,7 +1,7 @@
 #ifndef SOKOBAN_MENU_HPP
 #define SOKOBAN_MENU_HPP
 
-#include "gui/main_frame.hpp"
+#include "gui/Main_Window.hpp"
 #include "../util/logger.hpp"
 
 namespace sokoban

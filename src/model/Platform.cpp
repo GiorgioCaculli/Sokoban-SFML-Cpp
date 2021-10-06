@@ -4,8 +4,10 @@
 
 using namespace sokoban::model;
 
+const std::string platform_asset = "assets/images/PNG/EndPoint_Purple.png";
+
 Platform::Platform( int x, int y )
-        : Actor( x, y )
+        : Actor( x, y, platform_asset )
 {
 
 }
@@ -23,4 +25,9 @@ std::ostream &sokoban::model::operator<<( std::ostream &os, const Platform &plat
 {
     os << static_cast<const Actor &>(platform);
     return os;
+}
+
+Actor::ID Platform::get_type() const
+{
+    return Actor::PLATFORM;
 }

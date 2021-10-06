@@ -7,7 +7,9 @@
 #include <SFML/Graphics/Drawable.hpp>
 
 #include <vector>
+#include <set>
 #include <memory>
+#include <utility>
 
 namespace sokoban
 {
@@ -16,9 +18,9 @@ namespace sokoban
         namespace gui
         {
             class SceneNode
-                    : public sf::Transformable
-                      , public sf::Drawable
-                      , private sf::NonCopyable
+                    : public sf::Transformable,
+                            public sf::Drawable,
+                            private sf::NonCopyable
             {
             public:
                 typedef std::unique_ptr< SceneNode > Ptr;
@@ -31,11 +33,6 @@ namespace sokoban
             private:
                 std::vector< Ptr > children;
                 SceneNode *parent;
-                virtual void update_current( sf::Time dt );
-                void update_children( sf::Time dt );
-                virtual void draw( sf::RenderTarget &target, sf::RenderStates states ) const;
-                virtual void draw_current( sf::RenderTarget &target, sf::RenderStates states ) const;
-                void draw_children( sf::RenderTarget &target, sf::RenderStates states ) const;
             };
         }
     }

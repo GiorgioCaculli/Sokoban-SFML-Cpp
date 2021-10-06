@@ -1,9 +1,9 @@
-#ifndef SOKOBAN_MAIN_FRAME_HPP
-#define SOKOBAN_MAIN_FRAME_HPP
+#ifndef SOKOBAN_MAIN_WINDOW_HPP
+#define SOKOBAN_MAIN_WINDOW_HPP
 
 #include "../../util/logger.hpp"
-
-#include "actor/world.hpp"
+#include "../../model/Board.hpp"
+#include "Game_Scene_Node.hpp"
 
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Keyboard.hpp>
@@ -18,6 +18,7 @@ namespace sokoban
         namespace gui
         {
             using namespace sokoban::util;
+            using namespace sokoban::model;
 
             class MainFrame
                     : private sf::NonCopyable
@@ -26,7 +27,7 @@ namespace sokoban
                 Logger *logger {};
                 static const sf::Time time_per_frame;
                 sf::RenderWindow window;
-                World world;
+                GameSceneNode *game;
                 sf::Font font;
                 sf::Text statistics_text;
                 sf::Time statistics_update_time;
@@ -49,4 +50,4 @@ namespace sokoban
     }
 }
 
-#endif //SOKOBAN_MAIN_FRAME_HPP
+#endif //SOKOBAN_MAIN_WINDOW_HPP

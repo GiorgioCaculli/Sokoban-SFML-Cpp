@@ -15,6 +15,7 @@ namespace sokoban
             Wall( int x, int y );
             Wall( const Wall &wall );
             ~Wall();
+            ID get_type() const;
             friend std::ostream &operator<<( std::ostream &os, const Wall &wall );
         };
     }

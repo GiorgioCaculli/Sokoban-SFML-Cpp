@@ -1,9 +1,11 @@
 #include "Movable.hpp"
 
+#include <utility>
+
 using namespace sokoban::model;
 
-Movable::Movable( int x, int y )
-        : Actor( x, y )
+Movable::Movable( int x, int y, std::string asset )
+        : Actor( x, y, std::move( asset ) )
 {
 
 }
@@ -24,4 +26,9 @@ std::ostream &sokoban::model::operator<<( std::ostream &os, const Movable &movab
 {
     os << static_cast<const Actor &>(movable);
     return os;
+}
+
+Actor::ID Movable::get_type() const
+{
+    return Actor::PLAYER;
 }

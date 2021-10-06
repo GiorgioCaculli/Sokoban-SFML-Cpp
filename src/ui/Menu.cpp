@@ -1,4 +1,4 @@
-#include "menu.hpp"
+#include "Menu.hpp"
 #include "../util/logger.hpp"
 
 using namespace sokoban::ui;

@@ -15,6 +15,7 @@ namespace sokoban
             Box( int x, int y );
             Box( const Box &box );
             ~Box();
+            ID get_type() const;
             friend std::ostream &operator<<( std::ostream &os, const Box &box );
         };
     }

@@ -1,14 +1,7 @@
 #include "main.hpp"
 
-#include "ui/menu.hpp"
+#include "ui/Menu.hpp"
 #include "util/logger.hpp"
-#include "model/Board.hpp"
-#include "model/Box.hpp"
-#include "model/Platform.hpp"
-#include "model/Player.hpp"
-#include "model/Wall.hpp"
-
-#include <iostream>
 
 using namespace sokoban::ui;
 using namespace sokoban::model;
@@ -19,12 +12,6 @@ int main( int argc, char *argv[] )
     Logger *logger = new Logger( "main" );
     remove( logger->get_file_name().c_str() );
     Menu *menu = new Menu();
-
-    Board *board = new Board();
-
-    std::cout << *board << std::endl;
-
-    delete board;
 
     int res = 0;
 

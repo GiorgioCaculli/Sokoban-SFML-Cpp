@@ -2,6 +2,7 @@
 #define SOKOBAN_MOVABLE_HPP
 
 #include <ostream>
+#include <string>
 #include "Actor.hpp"
 
 namespace sokoban
@@ -12,10 +13,11 @@ namespace sokoban
                 : public Actor
         {
         public:
-            Movable( int x, int y );
+            Movable( int x, int y, std::string asset );
             Movable( const Movable &movable );
             virtual ~Movable();
             void move( int x, int y );
+            virtual ID get_type() const;
             friend std::ostream &operator<<( std::ostream &os, const Movable &movable );
         };
     }

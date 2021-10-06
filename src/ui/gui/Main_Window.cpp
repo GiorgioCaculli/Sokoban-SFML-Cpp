@@ -1,4 +1,4 @@
-#include "main_frame.hpp"
+#include "Main_Window.hpp"
 
 #include <iostream>
 #include <SFML/Window/Event.hpp>
@@ -6,12 +6,11 @@
 using namespace sokoban::ui::gui;
 
 const sf::Time MainFrame::time_per_frame = sf::seconds( 1.f / 60.f );
-const int WIDTH = 1024;
-const int HEIGHT = WIDTH / 4 * 3;
+const int WIDTH = 1440;
+const int HEIGHT = WIDTH / 16 * 9;
 
 MainFrame::MainFrame()
         : window( sf::VideoMode( WIDTH, HEIGHT ), "Sokoban", sf::Style::Titlebar | sf::Style::Close )
-          , world( window )
           , font()
           , statistics_text()
           , statistics_update_time()
@@ -24,10 +23,14 @@ MainFrame::MainFrame()
     player_is_moving_down = false;
     player_is_moving_left = false;
     player_is_moving_right = false;
+
+    game = new GameSceneNode( window );
 }
 
 MainFrame::~MainFrame()
-= default;
+{
+    delete game;
+}
 
 void MainFrame::handle_player_input( sf::Keyboard::Key key, bool is_pressed )
 {
@@ -128,13 +131,13 @@ void MainFrame::process_events()
 
 void MainFrame::update( sf::Time delta_time )
 {
-    world.update( delta_time );
+    game->update( delta_time );
 }
 
 void MainFrame::render()
 {
     window.clear();
-    world.draw();
+    game->draw();
     window.setView( window.getDefaultView() );
     window.draw( statistics_text );
     window.display();

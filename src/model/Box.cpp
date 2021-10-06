@@ -4,8 +4,10 @@
 
 using namespace sokoban::model;
 
+const std::string box_asset = "assets/images/PNG/Crate_Brown.png";
+
 Box::Box( int x, int y )
-        : Movable( x, y )
+        : Movable( x, y, box_asset )
 {
 
 }
@@ -23,4 +25,9 @@ std::ostream &sokoban::model::operator<<( std::ostream &os, const Box &box )
 {
     os << static_cast<const Movable &>(box);
     return os;
+}
+
+Actor::ID Box::get_type() const
+{
+    return Actor::BOX;
 }
