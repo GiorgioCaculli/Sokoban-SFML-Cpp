@@ -47,7 +47,7 @@ Board::Board( const Board &board )
 
 Board::~Board()
 {
-    for( Actor *actor : *world )
+    for ( Actor *actor: *world )
     {
         delete actor;
     }
@@ -117,28 +117,28 @@ void Board::init_world()
 void Board::build_world()
 {
     world = new std::vector< Actor * >();
-    for( Wall *wall : *walls )
+    for ( Wall *wall: *walls )
     {
         world->insert( world->begin(), wall );
     }
-    for( Platform *platform : *platforms )
+    for ( Platform *platform: *platforms )
     {
         world->insert( world->begin(), platform );
     }
-    for( Box *box : *boxes )
+    for ( Box *box: *boxes )
     {
         world->insert( world->begin(), box );
     }
     world->insert( world->begin(), player );
-    for( Actor *actor : *world)
+    for ( Actor *actor: *world )
     {
-        if( actor->get_type() == Actor::PLAYER || actor->get_type() == Actor::BOX )
+        if ( actor->get_type() == Actor::PLAYER || actor->get_type() == Actor::BOX )
         {
         }
         else
         {
         }
-        if( is_completed )
+        if ( is_completed )
         {
         }
     }
