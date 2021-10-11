@@ -47,6 +47,10 @@ void World_Node::update( sf::Time dt )
 void World_Node::draw()
 {
     window.setView( world_view );
+    for( SceneNode *node : *scene_layers )
+    {
+        window.draw( *node );
+    }
 }
 
 void World_Node::load_textures()
@@ -69,7 +73,6 @@ void World_Node::build_scene()
         Logger::log( LoggerLevel::DEBUG, ss.str() );
         SceneNode *layer = new SceneNode();
         scene_layers->insert( scene_layers->begin(), layer );
-        scene_graph.attach_child( layer );
     }
 
     int layers = 0;

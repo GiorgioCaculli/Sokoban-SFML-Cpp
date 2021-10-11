@@ -139,6 +139,7 @@ void MainFrame::update( sf::Time delta_time )
 
 void MainFrame::render()
 {
+    window.clear();
     game->draw();
     window.setView( window.getDefaultView() );
     window.draw( statistics_text );
@@ -147,7 +148,6 @@ void MainFrame::render()
 
 unsigned short MainFrame::run()
 {
-    window.clear();
     sf::Clock clock;
     sf::Time time_since_last_update = sf::Time::Zero;
     while ( window.isOpen() )
