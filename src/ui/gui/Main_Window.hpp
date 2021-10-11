@@ -1,7 +1,7 @@
 #ifndef SOKOBAN_MAIN_WINDOW_HPP
 #define SOKOBAN_MAIN_WINDOW_HPP
 
-#include "../../util/logger.hpp"
+#include "../../util/Logger.hpp"
 #include "../../model/Board.hpp"
 #include "Game_Scene_Node.hpp"
 
@@ -24,7 +24,6 @@ namespace sokoban
                     : private sf::NonCopyable
             {
             private:
-                Logger *logger {};
                 static const sf::Time time_per_frame;
                 sf::RenderWindow window;
                 GameSceneNode *game;

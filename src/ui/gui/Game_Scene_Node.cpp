@@ -3,29 +3,35 @@
 #include <string>
 #include <utility>
 
+#include "../../util/Logger.hpp"
+
 using namespace sokoban::ui::gui;
+using namespace sokoban::util;
 
 GameSceneNode::GameSceneNode( sf::RenderWindow &window, std::string level )
-        : window( window )
-          , world( window, std::move( level ) )
 {
+    Logger::log( LoggerLevel::INFO, "Initializing world..." );
+    world = new World_Node( window, std::move( level ) );
 }
 
 GameSceneNode::GameSceneNode( sf::RenderWindow &window )
-        : window( window )
-          , world( window )
 {
+    Logger::log( LoggerLevel::INFO, "Initializing world..." );
+    world = new World_Node( window );
 }
 
 GameSceneNode::~GameSceneNode()
-= default;
+{
+    Logger::log( LoggerLevel::INFO, "Deleting world..." );
+    delete world;
+}
 
 void GameSceneNode::update( sf::Time dt )
 {
-    world.update( dt );
+    world->update( dt );
 }
 
 void GameSceneNode::draw()
 {
-    world.draw();
+    world->draw();
 }

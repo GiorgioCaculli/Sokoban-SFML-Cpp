@@ -28,7 +28,7 @@ namespace sokoban
             ~Logger();
             std::string get_id();
             std::string get_file_name();
-            void log( int level, const std::string &log_message );
+            static void log( int level, const std::string &log_message );
         };
     }
 }

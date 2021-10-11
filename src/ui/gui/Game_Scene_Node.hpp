@@ -16,8 +16,7 @@ namespace sokoban
                     : private sf::NonCopyable
             {
             private:
-                sf::RenderWindow &window;
-                World_Node world;
+                World_Node *world;
             public:
                 GameSceneNode( sf::RenderWindow &window, std::string level );
                 explicit GameSceneNode( sf::RenderWindow &window );

@@ -23,16 +23,15 @@ namespace sokoban
                       , private sf::NonCopyable
             {
             public:
-                typedef std::unique_ptr< SceneNode > Ptr;
                 SceneNode();
                 virtual ~SceneNode();
-                void attach_child( Ptr child );
-                Ptr detach_child( const SceneNode &node );
+                void attach_child( SceneNode *child );
+                SceneNode *detach_child( const SceneNode *node );
                 void update( sf::Time dt );
                 sf::Vector2f get_world_position() const;
                 sf::Transform get_world_transform() const;
             private:
-                std::vector< Ptr > children;
+                std::vector< SceneNode * > *children;
                 SceneNode *parent;
                 virtual void update_current( sf::Time dt );
                 void update_children( sf::Time dt );

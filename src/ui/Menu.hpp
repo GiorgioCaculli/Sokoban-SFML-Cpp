@@ -2,7 +2,6 @@
 #define SOKOBAN_MENU_HPP
 
 #include "gui/Main_Window.hpp"
-#include "../util/logger.hpp"
 
 namespace sokoban
 {
@@ -19,7 +18,6 @@ namespace sokoban
             unsigned short launch_application() const;
         private:
             MainFrame *main_frame;
-            Logger *logger {};
         };
     }
 }
