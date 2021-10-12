@@ -3,6 +3,10 @@
 #include <iostream>
 #include <SFML/Window/Event.hpp>
 
+#include <SFML/Audio/Music.hpp>
+#include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
+
 #include "../../util/Logger.hpp"
 
 using namespace sokoban::ui::gui;
@@ -11,6 +15,7 @@ using namespace sokoban::util;
 const sf::Time MainFrame::time_per_frame = sf::seconds( 1.f / 60.f );
 const int WIDTH = 1440;
 const int HEIGHT = WIDTH / 16 * 10;
+sf::Music *music;
 
 MainFrame::MainFrame()
         : window( sf::VideoMode( WIDTH, HEIGHT ), "Sokoban", sf::Style::Titlebar | sf::Style::Close )
@@ -27,12 +32,18 @@ MainFrame::MainFrame()
     player_is_moving_right = false;
 
     Logger::log( LoggerLevel::INFO, "Initializing game..." );
+    music = new sf::Music();
+    music->openFromFile( "assets/music/Town_-_Tavern_Tune.ogg" );
+    music->play();
+    music->setVolume( 10 );
+    music->setLoop( true );
     game = new GameSceneNode( window );
 }
 
 MainFrame::~MainFrame()
 {
     delete game;
+    delete music;
 }
 
 void MainFrame::handle_player_input( sf::Keyboard::Key key, bool is_pressed )

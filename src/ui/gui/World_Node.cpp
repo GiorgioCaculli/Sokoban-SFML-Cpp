@@ -101,6 +101,20 @@ void World_Node::build_scene()
         sprite_texture->loadFromFile( actor->get_asset() );
         SpriteNode *actor_sprite = new SpriteNode( *sprite_texture );
         actor_sprite->setPosition( actor->get_x(), actor->get_y() );
+        if( actor->get_type() == actor->PLAYER )
+        {
+            actor_sprite->setOrigin(
+                    -( sprite_texture->getSize().x / 4.f ),
+                    0.f
+                    );
+        }
+        if( actor->get_type() == actor->PLATFORM )
+        {
+            actor_sprite->setOrigin(
+                    -( sprite_texture->getSize().x / 2.f ),
+                    -( sprite_texture->getSize().y / 2.f )
+                    );
+        }
         scene_layers->at( layers )->attach_child( actor_sprite );
         layers++;
     }
