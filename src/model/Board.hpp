@@ -28,13 +28,20 @@ namespace sokoban
             void init_board();
             void init_world();
             void build_world();
-            bool check_wall_collision( Actor *actor, int type );
-            bool check_bag_collision( int type );
         public:
-            Board( std::string lvl );
+            enum
+            {
+                LEFT_COLLISION,
+                RIGHT_COLLISION,
+                TOP_COLLISION,
+                BOTTOM_COLLISION
+            };
+            explicit Board( std::string lvl );
             Board();
             Board( const Board &board );
             ~Board();
+            bool check_wall_collision( Actor *actor, int type );
+            bool check_bag_collision( int type );
             int get_board_width() const;
             int get_board_height() const;
             void completed() const;

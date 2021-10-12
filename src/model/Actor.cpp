@@ -4,6 +4,8 @@
 
 using namespace sokoban::model;
 
+const int SPACE = 64;
+
 Actor::Actor( int x, int y, std::string asset )
         : x( x )
           , y( y )
@@ -36,17 +38,6 @@ void Actor::set_y( int y )
     this->y = y;
 }
 
-std::ostream &sokoban::model::operator<<( std::ostream &os, const Actor &actor )
-{
-    os << "x: " << actor.x << " y: " << actor.y;
-    return os;
-}
-
-Actor::ID Actor::get_type() const
-{
-    return Actor::PLAYER;
-}
-
 std::string Actor::get_asset() const
 {
     return asset;
@@ -55,4 +46,35 @@ std::string Actor::get_asset() const
 void Actor::set_asset( std::string asset )
 {
     this->asset = std::move( asset );
+}
+
+Actor::ID Actor::get_type() const
+{
+    return Actor::PLAYER;
+}
+
+bool Actor::is_left_collision( const Actor *actor ) const
+{
+    return get_x() - SPACE == actor->get_x() && get_y() == actor->get_y();
+}
+
+bool Actor::is_right_collision( const Actor *actor ) const
+{
+    return get_x() + SPACE == actor->get_x() && get_y() == actor->get_y();
+}
+
+bool Actor::is_top_collision( const Actor *actor ) const
+{
+    return get_y() - SPACE == actor->get_y() && get_x() == actor->get_x();
+}
+
+bool Actor::is_bottom_collision( const Actor *actor ) const
+{
+    return get_y() + SPACE == actor->get_y() && get_x() == actor->get_x();
+}
+
+std::ostream &sokoban::model::operator<<( std::ostream &os, const Actor &actor )
+{
+    os << "x: " << actor.x << " y: " << actor.y;
+    return os;
 }

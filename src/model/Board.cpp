@@ -130,27 +130,101 @@ void Board::build_world()
         world->insert( world->begin(), box );
     }
     world->insert( world->begin(), player );
-    for ( Actor *actor: *world )
-    {
-        if ( actor->get_type() == Actor::PLAYER || actor->get_type() == Actor::BOX )
-        {
-        }
-        else
-        {
-        }
-        if ( is_completed )
-        {
-        }
-    }
 }
 
 bool Board::check_wall_collision( Actor *actor, int type )
 {
+    switch ( type )
+    {
+    case LEFT_COLLISION:
+        for( const Wall *wall : *walls )
+        {
+            if( actor->is_left_collision( wall ) )
+            {
+                return true;
+            }
+        }
+        return false;
+    case RIGHT_COLLISION:
+        for( const Wall *wall : *walls )
+        {
+            if( actor->is_right_collision( wall ) )
+            {
+                return true;
+            }
+        }
+        return false;
+    case TOP_COLLISION:
+        for( const Wall *wall : *walls )
+        {
+            if( actor->is_top_collision( wall ) )
+            {
+                return true;
+            }
+        }
+        return false;
+    case BOTTOM_COLLISION:
+        for( const Wall *wall : *walls )
+        {
+            if( actor->is_bottom_collision( wall ) )
+            {
+                return true;
+            }
+        }
+        return false;
+    default:
+        break;
+    }
     return false;
 }
 
 bool Board::check_bag_collision( int type )
 {
+    switch ( type )
+    {
+    case LEFT_COLLISION:
+        for( Box *box : *boxes )
+        {
+            if( player->is_left_collision( box ) )
+            {
+                /* TODO: missing code! */
+                box->move( -SPACE, 0 );
+            }
+        }
+        return false;
+    case RIGHT_COLLISION:
+        for( Box *box : *boxes )
+        {
+            if( player->is_right_collision( box ) )
+            {
+                /* TODO: missing code! */
+                box->move( SPACE, 0 );
+            }
+        }
+        return false;
+    case TOP_COLLISION:
+        for( Box *box : *boxes )
+        {
+            if( player->is_top_collision( box ) )
+            {
+                /* TODO: missing code! */
+                box->move( 0, -SPACE );
+            }
+        }
+        return false;
+    case BOTTOM_COLLISION:
+        for( Box *box : *boxes )
+        {
+            if( player->is_bottom_collision( box ) )
+            {
+                /* TODO: missing code! */
+                box->move( 0, SPACE );
+            }
+        }
+        return false;
+    default:
+        break;
+    }
     return false;
 }
 

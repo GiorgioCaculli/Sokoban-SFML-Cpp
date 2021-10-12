@@ -11,8 +11,6 @@
 using namespace sokoban::ui::gui;
 using namespace sokoban::util;
 
-/*std::vector< sf::Sprite * > *sprites;*/
-
 World_Node::World_Node( sf::RenderWindow &window )
         : window( window )
           , world_view( window.getDefaultView() )
@@ -24,7 +22,6 @@ World_Node::World_Node( sf::RenderWindow &window )
     board = new model::Board();
     Logger::log( LoggerLevel::INFO, "Board size: " + std::to_string( board->get_world()->size() ) );
     scene_graph = new SceneNode();
-    /*sprites = new std::vector< sf::Sprite * >();*/
     load_textures();
     build_scene();
 }
@@ -35,7 +32,11 @@ World_Node::World_Node( sf::RenderWindow &window, std::string level )
           , scene_layers()
           , world_bounds( 0.f, 0.f, world_view.getSize().x, world_view.getSize().y )
 {
+    Logger::log( LoggerLevel::INFO, "World Node init" );
+    Logger::log( LoggerLevel::INFO, "Loading board..." );
     board = new model::Board( std::move( level ) );
+    Logger::log( LoggerLevel::INFO, "Board size: " + std::to_string( board->get_world()->size() ) );
+    scene_graph = new SceneNode();
     load_textures();
     build_scene();
 }
@@ -45,11 +46,6 @@ World_Node::~World_Node()
     delete board;
     delete scene_layers;
     delete scene_graph;
-    /*for( sf::Sprite *sprite : *sprites )
-    {
-        delete sprite;
-    }
-    delete sprites;*/
 }
 
 void World_Node::update( sf::Time dt )

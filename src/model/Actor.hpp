@@ -32,6 +32,10 @@ namespace sokoban
             std::string get_asset() const;
             void set_asset( std::string asset );
             virtual ID get_type() const;
+            bool is_left_collision( const Actor *actor ) const;
+            bool is_right_collision( const Actor *actor ) const;
+            bool is_top_collision( const Actor *actor ) const;
+            bool is_bottom_collision( const Actor *actor ) const;
             friend std::ostream &operator<<( std::ostream &os, const Actor &actor );
         };
     }
