@@ -31,6 +31,7 @@ namespace sokoban
             private:
                 sf::RenderWindow &window;
                 sf::View world_view;
+                SceneNode *scene_graph;
                 std::vector< SceneNode * > *scene_layers;
                 sf::FloatRect world_bounds;
                 model::Board *board;

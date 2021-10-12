@@ -2,11 +2,16 @@
 
 #include <utility>
 #include <sstream>
+#include <iostream>
+
+#include <SFML/Graphics/Text.hpp>
 
 #include "../../util/Logger.hpp"
 
 using namespace sokoban::ui::gui;
 using namespace sokoban::util;
+
+/*std::vector< sf::Sprite * > *sprites;*/
 
 World_Node::World_Node( sf::RenderWindow &window )
         : window( window )
@@ -18,6 +23,8 @@ World_Node::World_Node( sf::RenderWindow &window )
     Logger::log( LoggerLevel::INFO, "Loading board..." );
     board = new model::Board();
     Logger::log( LoggerLevel::INFO, "Board size: " + std::to_string( board->get_world()->size() ) );
+    scene_graph = new SceneNode();
+    /*sprites = new std::vector< sf::Sprite * >();*/
     load_textures();
     build_scene();
 }
@@ -37,6 +44,12 @@ World_Node::~World_Node()
 {
     delete board;
     delete scene_layers;
+    delete scene_graph;
+    /*for( sf::Sprite *sprite : *sprites )
+    {
+        delete sprite;
+    }
+    delete sprites;*/
 }
 
 void World_Node::update( sf::Time dt )
@@ -47,16 +60,14 @@ void World_Node::update( sf::Time dt )
 void World_Node::draw()
 {
     window.setView( world_view );
-    for( SceneNode *node : *scene_layers )
-    {
-        window.draw( *node );
-    }
+    window.draw( *scene_graph );
 }
 
 void World_Node::load_textures()
 {
     Logger::log( LoggerLevel::INFO, "Loading Textures..." );
 }
+
 
 void World_Node::build_scene()
 {
@@ -72,16 +83,17 @@ void World_Node::build_scene()
         ss << "Initializing fictional node #" << std::to_string( i ) << "...\n";
         Logger::log( LoggerLevel::DEBUG, ss.str() );
         SceneNode *layer = new SceneNode();
-        scene_layers->insert( scene_layers->begin(), layer );
+        scene_layers->push_back( layer );
+        scene_graph->attach_child( layer );
     }
 
     int layers = 0;
-    sf::Texture backgroundTexture = sf::Texture();
+    sf::Texture *backgroundTexture = new sf::Texture();
     sf::IntRect textureRect( world_bounds );
-    backgroundTexture.loadFromFile( "assets/images/PNG/GroundGravel_Concrete.png" );
-    backgroundTexture.setRepeated( true );
+    backgroundTexture->loadFromFile( "assets/images/PNG/GroundGravel_Sand.png" );
+    backgroundTexture->setRepeated( true );
 
-    SpriteNode *backgroundSprite = new SpriteNode( backgroundTexture, textureRect );
+    SpriteNode *backgroundSprite = new SpriteNode( *backgroundTexture, textureRect );
     backgroundSprite->setPosition( world_bounds.left, world_bounds.top );
     scene_layers->at( layers )->attach_child( backgroundSprite );
 
@@ -89,9 +101,9 @@ void World_Node::build_scene()
 
     for ( const model::Actor *actor: *board->get_world() )
     {
-        sf::Texture sprite_texture = sf::Texture();
-        sprite_texture.loadFromFile( actor->get_asset() );
-        SpriteNode *actor_sprite = new SpriteNode( sprite_texture );
+        sf::Texture *sprite_texture = new sf::Texture();
+        sprite_texture->loadFromFile( actor->get_asset() );
+        SpriteNode *actor_sprite = new SpriteNode( *sprite_texture );
         actor_sprite->setPosition( actor->get_x(), actor->get_y() );
         scene_layers->at( layers )->attach_child( actor_sprite );
         layers++;
