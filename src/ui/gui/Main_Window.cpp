@@ -1,7 +1,6 @@
 #include "Main_Window.hpp"
 
 #include <iostream>
-#include <SFML/Window/Event.hpp>
 
 #include <SFML/Audio/Music.hpp>
 #include <SFML/Audio/Sound.hpp>
@@ -26,11 +25,6 @@ MainFrame::MainFrame()
 {
     Logger::log( LoggerLevel::INFO, "Init Window" );
 
-    player_is_moving_up = false;
-    player_is_moving_down = false;
-    player_is_moving_left = false;
-    player_is_moving_right = false;
-
     Logger::log( LoggerLevel::INFO, "Initializing game..." );
     music = new sf::Music();
     music->openFromFile( "assets/music/Town_-_Tavern_Tune.ogg" );
@@ -46,26 +40,6 @@ MainFrame::~MainFrame()
     delete music;
 }
 
-void MainFrame::handle_player_input( sf::Keyboard::Key key, bool is_pressed )
-{
-    if ( key == sf::Keyboard::Z )
-    {
-        player_is_moving_up = is_pressed;
-    }
-    else if ( key == sf::Keyboard::S )
-    {
-        player_is_moving_down = is_pressed;
-    }
-    else if ( key == sf::Keyboard::Q )
-    {
-        player_is_moving_left = is_pressed;
-    }
-    else if ( key == sf::Keyboard::D )
-    {
-        player_is_moving_right = is_pressed;
-    }
-}
-
 void MainFrame::update_statistics( sf::Time elapsed_time )
 {
     statistics_update_time += elapsed_time;
@@ -78,68 +52,6 @@ void MainFrame::update_statistics( sf::Time elapsed_time )
         );
         statistics_update_time -= sf::seconds( 1.0f );
         statistics_num_frames = 0;
-    }
-}
-
-void MainFrame::process_events()
-{
-    sf::Event event {};
-    while ( window.pollEvent( event ) )
-    {
-        switch ( event.type )
-        {
-        case sf::Event::KeyPressed:
-            handle_player_input( event.key.code, true );
-            break;
-        case sf::Event::KeyReleased:
-            handle_player_input( event.key.code, false );
-            break;
-        case sf::Event::Closed:
-            window.close();
-            break;
-        case sf::Event::Resized:
-            break;
-        case sf::Event::LostFocus:
-            break;
-        case sf::Event::GainedFocus:
-            break;
-        case sf::Event::TextEntered:
-            break;
-        case sf::Event::MouseWheelMoved:
-            break;
-        case sf::Event::MouseWheelScrolled:
-            break;
-        case sf::Event::MouseButtonPressed:
-            break;
-        case sf::Event::MouseButtonReleased:
-            break;
-        case sf::Event::MouseMoved:
-            break;
-        case sf::Event::MouseEntered:
-            break;
-        case sf::Event::MouseLeft:
-            break;
-        case sf::Event::JoystickButtonPressed:
-            break;
-        case sf::Event::JoystickButtonReleased:
-            break;
-        case sf::Event::JoystickMoved:
-            break;
-        case sf::Event::JoystickConnected:
-            break;
-        case sf::Event::JoystickDisconnected:
-            break;
-        case sf::Event::TouchBegan:
-            break;
-        case sf::Event::TouchMoved:
-            break;
-        case sf::Event::TouchEnded:
-            break;
-        case sf::Event::SensorChanged:
-            break;
-        case sf::Event::Count:
-            break;
-        }
     }
 }
 
@@ -168,7 +80,7 @@ unsigned short MainFrame::run()
         while ( time_since_last_update > time_per_frame )
         {
             time_since_last_update -= time_per_frame;
-            process_events();
+            game->process_events();
             update( time_per_frame );
         }
         update_statistics( elapsed_time );

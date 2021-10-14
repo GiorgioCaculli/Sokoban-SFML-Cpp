@@ -35,3 +35,8 @@ void GameSceneNode::draw()
 {
     world->draw();
 }
+
+void GameSceneNode::process_events()
+{
+    world->process_events();
+}

@@ -23,6 +23,7 @@ namespace sokoban
                 ~GameSceneNode();
                 void update( sf::Time dt );
                 void draw();
+                void process_events();
             };
         }
     }

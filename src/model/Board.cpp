@@ -14,7 +14,7 @@ Board::Board( std::string lvl )
 {
     level = std::move( lvl );
     init_board();
-    is_completed = false;
+    completed = false;
 }
 
 Board::Board()
@@ -33,7 +33,7 @@ Board::Board()
     ss << "    ########\n";
     level = ss.str();
     init_board();
-    is_completed = false;
+    completed = false;
 }
 
 Board::Board( const Board &board )
@@ -178,7 +178,7 @@ bool Board::check_wall_collision( Actor *actor, int type )
     return false;
 }
 
-bool Board::check_bag_collision( int type )
+bool Board::check_box_collision( int type )
 {
     switch ( type )
     {
@@ -187,8 +187,22 @@ bool Board::check_bag_collision( int type )
         {
             if( player->is_left_collision( box ) )
             {
-                /* TODO: missing code! */
+                for( Box *item : *boxes )
+                {
+                    if( box != item )
+                    {
+                        if( box->is_left_collision( item ) )
+                        {
+                            return true;
+                        }
+                    }
+                    if( check_wall_collision( box, LEFT_COLLISION ) )
+                    {
+                        return true;
+                    }
+                }
                 box->move( -SPACE, 0 );
+                is_completed();
             }
         }
         return false;
@@ -197,8 +211,22 @@ bool Board::check_bag_collision( int type )
         {
             if( player->is_right_collision( box ) )
             {
-                /* TODO: missing code! */
+                for( Box *item : *boxes )
+                {
+                    if( box != item )
+                    {
+                        if( box->is_right_collision( item ) )
+                        {
+                            return true;
+                        }
+                    }
+                    if( check_wall_collision( box, RIGHT_COLLISION ) )
+                    {
+                        return true;
+                    }
+                }
                 box->move( SPACE, 0 );
+                is_completed();
             }
         }
         return false;
@@ -207,8 +235,22 @@ bool Board::check_bag_collision( int type )
         {
             if( player->is_top_collision( box ) )
             {
-                /* TODO: missing code! */
+                for( Box *item : *boxes )
+                {
+                    if( box != item )
+                    {
+                        if( box->is_top_collision( item ) )
+                        {
+                            return true;
+                        }
+                    }
+                    if( check_wall_collision( box, TOP_COLLISION ) )
+                    {
+                        return true;
+                    }
+                }
                 box->move( 0, -SPACE );
+                is_completed();
             }
         }
         return false;
@@ -217,8 +259,22 @@ bool Board::check_bag_collision( int type )
         {
             if( player->is_bottom_collision( box ) )
             {
-                /* TODO: missing code! */
+                for( Box *item : *boxes )
+                {
+                    if( box != item )
+                    {
+                        if( box->is_bottom_collision( item ) )
+                        {
+                            return true;
+                        }
+                    }
+                    if( check_wall_collision( box, BOTTOM_COLLISION ) )
+                    {
+                        return true;
+                    }
+                }
                 box->move( 0, SPACE );
+                is_completed();
             }
         }
         return false;
@@ -238,9 +294,9 @@ int Board::get_board_height() const
     return height;
 }
 
-void Board::completed() const
+bool Board::is_completed() const
 {
-
+    return completed;
 }
 
 void Board::restart_level() const

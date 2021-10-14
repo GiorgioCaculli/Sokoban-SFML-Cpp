@@ -78,3 +78,15 @@ std::ostream &sokoban::model::operator<<( std::ostream &os, const Actor &actor )
     os << "x: " << actor.x << " y: " << actor.y;
     return os;
 }
+
+bool Actor::operator==( const Actor &actor ) const
+{
+    return x == actor.x &&
+            y == actor.y &&
+            asset == actor.asset;
+}
+
+bool Actor::operator!=( const Actor &actor ) const
+{
+    return !( actor == *this );
+}
