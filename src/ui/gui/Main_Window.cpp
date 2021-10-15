@@ -11,7 +11,7 @@
 using namespace sokoban::ui::gui;
 using namespace sokoban::util;
 
-const sf::Time MainFrame::time_per_frame = sf::seconds( 1.f / 60.f );
+const sf::Time MainFrame::time_per_frame = sf::seconds( 1.f / 15.f );
 const int WIDTH = 1440;
 const int HEIGHT = WIDTH / 16 * 10;
 sf::Music *music;

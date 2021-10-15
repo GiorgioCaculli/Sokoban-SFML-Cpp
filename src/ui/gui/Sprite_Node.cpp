@@ -8,9 +8,11 @@
 using namespace sokoban::ui::gui;
 using namespace sokoban::util;
 
-SpriteNode::SpriteNode( const sf::Texture &texture, const sf::IntRect &textureRect )
-        : sprite( texture, textureRect )
+SpriteNode::SpriteNode( const sf::Texture *texture, const sf::IntRect &textureRect )
 {
+    sprite = new sf::Sprite();
+    sprite->setTexture( *texture );
+    sprite->setTextureRect( textureRect );
     std::stringstream ss;
     ss << "SpriteNode init";
     ss << " X: " << this->getPosition().x;
@@ -18,9 +20,10 @@ SpriteNode::SpriteNode( const sf::Texture &texture, const sf::IntRect &textureRe
     Logger::log( LoggerLevel::DEBUG, ss.str() );
 }
 
-SpriteNode::SpriteNode( const sf::Texture &texture )
-        : sprite( texture )
+SpriteNode::SpriteNode( const sf::Texture *texture )
 {
+    sprite = new sf::Sprite();
+    sprite->setTexture( *texture );
     std::stringstream ss;
     ss << "SpriteNode init";
     ss << " X: " << this->getPosition().x;
@@ -30,8 +33,15 @@ SpriteNode::SpriteNode( const sf::Texture &texture )
 
 void SpriteNode::draw_current( sf::RenderTarget &target, sf::RenderStates states ) const
 {
-    target.draw( sprite, states );
+    target.draw( *sprite, states );
+}
+
+void SpriteNode::set_texture( sf::Texture *texture )
+{
+    sprite->setTexture( *texture );
 }
 
 SpriteNode::~SpriteNode()
-= default;
+{
+    delete sprite;
+}

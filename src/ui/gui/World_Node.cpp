@@ -12,6 +12,11 @@
 using namespace sokoban::ui::gui;
 using namespace sokoban::util;
 
+sf::Texture *player_texture_up;
+sf::Texture *player_texture_down;
+sf::Texture *player_texture_left;
+sf::Texture *player_texture_right;
+
 World_Node::World_Node( sf::RenderWindow &window )
         : window( window )
           , world_view( window.getDefaultView() )
@@ -29,6 +34,14 @@ World_Node::World_Node( sf::RenderWindow &window )
     scene_graph = new SceneNode();
     box_sprites = new std::vector< SpriteNode *>();
     box_actors = new std::vector< model::Actor * >();
+    player_texture_up = new sf::Texture();
+    player_texture_up->loadFromFile( "assets/images/PNG/Character7.png" );
+    player_texture_down = new sf::Texture();
+    player_texture_down->loadFromFile( "assets/images/PNG/Character4.png" );
+    player_texture_left = new sf::Texture();
+    player_texture_left->loadFromFile( "assets/images/PNG/Character1.png" );
+    player_texture_right = new sf::Texture();
+    player_texture_right->loadFromFile( "assets/images/PNG/Character2.png" );
     load_textures();
     build_scene();
 }
@@ -57,6 +70,10 @@ World_Node::~World_Node()
     delete board;
     delete scene_layers;
     delete scene_graph;
+    delete player_texture_up;
+    delete player_texture_down;
+    delete player_texture_left;
+    delete player_texture_right;
 }
 
 void World_Node::update( sf::Time dt )
@@ -64,72 +81,89 @@ void World_Node::update( sf::Time dt )
     float SPACE = 64.f;
     if( player_is_moving_up )
     {
+        player_sprite->set_texture( player_texture_up );
         if( board->check_wall_collision( board_player, board->TOP_COLLISION ) )
         {
             return;
         }
         if( board->check_box_collision( board->TOP_COLLISION ) )
         {
+            return;
+        }
+        else
+        {
             for( int i = 0; i < box_actors->size(); i++ )
             {
                 box_sprites->at( i )->setPosition( box_actors->at( i )->get_x(), box_actors->at( i )->get_y() );
             }
-            return;
         }
         player_sprite->move( 0.f, -SPACE );
         board_player->set_y( board_player->get_y() - SPACE );
     }
     if( player_is_moving_down )
     {
+        player_sprite->set_texture( player_texture_down );
         if( board->check_wall_collision( board_player, board->BOTTOM_COLLISION ) )
         {
             return;
         }
         if( board->check_box_collision( board->BOTTOM_COLLISION ) )
         {
+            return;
+        }
+        else
+        {
             for( int i = 0; i < box_actors->size(); i++ )
             {
                 box_sprites->at( i )->setPosition( box_actors->at( i )->get_x(), box_actors->at( i )->get_y() );
             }
-            return;
         }
         player_sprite->move( 0.f, +SPACE );
         board_player->set_y( board_player->get_y() + SPACE );
     }
     if( player_is_moving_left )
     {
+        player_sprite->set_texture( player_texture_left );
         if( board->check_wall_collision( board_player, board->LEFT_COLLISION ) )
         {
             return;
         }
         if( board->check_box_collision( board->LEFT_COLLISION ) )
         {
+            return;
+        }
+        else
+        {
             for( int i = 0; i < box_actors->size(); i++ )
             {
                 box_sprites->at( i )->setPosition( box_actors->at( i )->get_x(), box_actors->at( i )->get_y() );
             }
-            return;
         }
         player_sprite->move( -SPACE, 0.f );
         board_player->set_x( board_player->get_x() - SPACE );
     }
     if( player_is_moving_right )
     {
+        player_sprite->set_texture( player_texture_right );
         if( board->check_wall_collision( board_player, board->RIGHT_COLLISION ) )
         {
             return;
         }
         if( board->check_box_collision( board->RIGHT_COLLISION ) )
         {
+            return;
+        }
+        else
+        {
             for( int i = 0; i < box_actors->size(); i++ )
             {
                 box_sprites->at( i )->setPosition( box_actors->at( i )->get_x(), box_actors->at( i )->get_y() );
             }
-            return;
         }
         player_sprite->move( +SPACE, 0.f );
         board_player->set_x( board_player->get_x() + SPACE );
     }
+    scene_graph->update( dt );
 }
 
 void World_Node::draw()
@@ -168,7 +202,7 @@ void World_Node::build_scene()
     backgroundTexture->loadFromFile( "assets/images/PNG/GroundGravel_Sand.png" );
     backgroundTexture->setRepeated( true );
 
-    SpriteNode *backgroundSprite = new SpriteNode( *backgroundTexture, textureRect );
+    SpriteNode *backgroundSprite = new SpriteNode( backgroundTexture, textureRect );
     backgroundSprite->setPosition( world_bounds.left, world_bounds.top );
     scene_layers->at( layers )->attach_child( backgroundSprite );
 
@@ -178,7 +212,7 @@ void World_Node::build_scene()
     {
         sf::Texture *sprite_texture = new sf::Texture();
         sprite_texture->loadFromFile( actor->get_asset() );
-        SpriteNode *actor_sprite = new SpriteNode( *sprite_texture );
+        SpriteNode *actor_sprite = new SpriteNode( sprite_texture );
         actor_sprite->setPosition( actor->get_x(), actor->get_y() );
         if( actor->get_type() == actor->PLAYER )
         {

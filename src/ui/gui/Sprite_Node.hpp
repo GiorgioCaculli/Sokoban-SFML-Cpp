@@ -15,12 +15,13 @@ namespace sokoban
                     : public SceneNode
             {
             private:
-                sf::Sprite sprite;
+                sf::Sprite *sprite;
                 virtual void draw_current( sf::RenderTarget &target, sf::RenderStates states ) const;
             public:
-                explicit SpriteNode( const sf::Texture &texture );
-                SpriteNode( const sf::Texture &texture, const sf::IntRect &textureRect );
+                explicit SpriteNode( const sf::Texture *texture );
+                SpriteNode( const sf::Texture *texture, const sf::IntRect &textureRect );
                 virtual ~SpriteNode();
+                void set_texture( sf::Texture *texture );
             };
         }
     }
