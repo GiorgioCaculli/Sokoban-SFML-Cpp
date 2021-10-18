@@ -4,6 +4,11 @@
 #include <ostream>
 #include <string>
 
+/*
+ * Classe actor
+ * Cette classe est le parent de tous les objects.
+ * Bien des objects qui peuvent bouger, que ces qui sont fixes.
+ */
 namespace sokoban
 {
     namespace model
@@ -11,10 +16,17 @@ namespace sokoban
         class Actor
         {
         private:
-            int x;
-            int y;
-            std::string asset;
+            int x; /* La coordonnée X dans la board */
+            int y; /* La coordonnée Y dans la board */
+            std::string asset; /* L'asset par défault lors du chargement de l'image */
         public:
+            /*
+             * On considère 4 acteurs possibles dans le jeu
+             * - Une boîte
+             * - Une plateforme sur laquelle poser la boîte
+             * - Le joueur
+             * - Un mur
+             */
             enum ID
             {
                 BOX,

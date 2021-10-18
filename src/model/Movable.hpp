@@ -5,6 +5,10 @@
 #include <string>
 #include "Actor.hpp"
 
+/*
+ * Classe qui gère les acteurs capables de se déplacer.
+ * Cette classe hérite de la classe Actor
+ */
 namespace sokoban
 {
     namespace model

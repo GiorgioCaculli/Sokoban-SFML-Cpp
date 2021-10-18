@@ -6,6 +6,9 @@
 
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Event.hpp>
+#include <SFML/Audio/Music.hpp>
+#include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
 
 #include "../../util/Logger.hpp"
 
@@ -17,33 +20,42 @@ sf::Texture *player_texture_down;
 sf::Texture *player_texture_left;
 sf::Texture *player_texture_right;
 
+sokoban::model::Board *board_backup;
+sf::Music *music;
+sf::SoundBuffer *step_buffer;
+sf::Sound *step_sound;
+sf::SoundBuffer *box_move_buffer;
+sf::Sound *box_move_sound;
+float base_volume = 5.f;
+float unfocused_volume = base_volume / 3.f;
+
 World_Node::World_Node( sf::RenderWindow &window )
         : window( window )
           , world_view( window.getDefaultView() )
           , scene_layers()
           , world_bounds( 0.f, 0.f, world_view.getSize().x, world_view.getSize().y )
+          , player_is_moving_up( false )
+          , player_is_moving_down( false )
+          , player_is_moving_left( false )
+          , player_is_moving_right( false )
 {
-    player_is_moving_up = false;
-    player_is_moving_down = false;
-    player_is_moving_left = false;
-    player_is_moving_right = false;
-    Logger::log( LoggerLevel::INFO, "World Node init" );
-    Logger::log( LoggerLevel::INFO, "Loading board..." );
-    board = new model::Board();
-    Logger::log( LoggerLevel::INFO, "Board size: " + std::to_string( board->get_world()->size() ) );
-    scene_graph = new SceneNode();
-    box_sprites = new std::vector< SpriteNode *>();
-    box_actors = new std::vector< model::Actor * >();
-    player_texture_up = new sf::Texture();
-    player_texture_up->loadFromFile( "assets/images/PNG/Character7.png" );
-    player_texture_down = new sf::Texture();
-    player_texture_down->loadFromFile( "assets/images/PNG/Character4.png" );
-    player_texture_left = new sf::Texture();
-    player_texture_left->loadFromFile( "assets/images/PNG/Character1.png" );
-    player_texture_right = new sf::Texture();
-    player_texture_right->loadFromFile( "assets/images/PNG/Character2.png" );
+    music = new sf::Music();
+    music->openFromFile( "assets/music/Town_-_Tavern_Tune.ogg" );
+    music->play();
+    music->setVolume( base_volume );
+    music->setLoop( true );
+    step_buffer = new sf::SoundBuffer();
+    step_buffer->loadFromFile( "assets/sounds/footsteps_outdoor_boots.ogg" );
+    step_sound = new sf::Sound();
+    step_sound->setBuffer( *step_buffer );
+    step_sound->setVolume( base_volume );
+    box_move_buffer = new sf::SoundBuffer();
+    box_move_buffer->loadFromFile( "assets/sounds/wood_creak_01.ogg" );
+    box_move_sound = new sf::Sound();
+    box_move_sound->setBuffer( *box_move_buffer );
+    box_move_sound->setVolume( base_volume );
     load_textures();
-    build_scene();
+    build_scene( "" );
 }
 
 World_Node::World_Node( sf::RenderWindow &window, std::string level )
@@ -51,18 +63,13 @@ World_Node::World_Node( sf::RenderWindow &window, std::string level )
           , world_view( window.getDefaultView() )
           , scene_layers()
           , world_bounds( 0.f, 0.f, world_view.getSize().x, world_view.getSize().y )
+          , player_is_moving_up( false )
+          , player_is_moving_down( false )
+          , player_is_moving_left( false )
+          , player_is_moving_right( false )
 {
-    player_is_moving_up = false;
-    player_is_moving_down = false;
-    player_is_moving_left = false;
-    player_is_moving_right = false;
-    Logger::log( LoggerLevel::INFO, "World Node init" );
-    Logger::log( LoggerLevel::INFO, "Loading board..." );
-    board = new model::Board( std::move( level ) );
-    Logger::log( LoggerLevel::INFO, "Board size: " + std::to_string( board->get_world()->size() ) );
-    scene_graph = new SceneNode();
     load_textures();
-    build_scene();
+    build_scene( level );
 }
 
 World_Node::~World_Node()
@@ -74,6 +81,12 @@ World_Node::~World_Node()
     delete player_texture_down;
     delete player_texture_left;
     delete player_texture_right;
+    delete board_backup;
+    delete music;
+    delete step_sound;
+    delete step_buffer;
+    delete box_move_sound;
+    delete box_move_buffer;
 }
 
 void World_Node::update( sf::Time dt )
@@ -175,11 +188,34 @@ void World_Node::draw()
 void World_Node::load_textures()
 {
     Logger::log( LoggerLevel::INFO, "Loading Textures..." );
+    player_texture_up = new sf::Texture();
+    player_texture_up->loadFromFile( "assets/images/PNG/Character7.png" );
+    player_texture_down = new sf::Texture();
+    player_texture_down->loadFromFile( "assets/images/PNG/Character4.png" );
+    player_texture_left = new sf::Texture();
+    player_texture_left->loadFromFile( "assets/images/PNG/Character1.png" );
+    player_texture_right = new sf::Texture();
+    player_texture_right->loadFromFile( "assets/images/PNG/Character2.png" );
 }
 
 
-void World_Node::build_scene()
+void World_Node::build_scene( const std::string &level )
 {
+    Logger::log( LoggerLevel::INFO, "World Node init" );
+    Logger::log( LoggerLevel::INFO, "Loading board..." );
+    if( level.length() > 0 )
+    {
+        board = new model::Board( level );
+    }
+    else
+    {
+        board = new model::Board();
+    }
+    board_backup = new model::Board( *board );
+    Logger::log( LoggerLevel::INFO, "Board size: " + std::to_string( board->get_world()->size() ) );
+    scene_graph = new SceneNode();
+    box_sprites = new std::vector< SpriteNode *>();
+    box_actors = new std::vector< model::Actor * >();
     Logger::log( LoggerLevel::INFO, "Building Scene..." );
     std::size_t world_size = board->get_world()->size() + 1;
     scene_layers = new std::vector< SceneNode * >();
@@ -244,6 +280,14 @@ void World_Node::build_scene()
 
 void World_Node::handle_player_input( sf::Keyboard::Key key, bool is_pressed )
 {
+    if( is_pressed )
+    {
+        step_sound->play();
+    }
+    else
+    {
+        step_sound->stop();
+    }
     if ( key == sf::Keyboard::Up )
     {
         player_is_moving_up = is_pressed;
@@ -259,6 +303,18 @@ void World_Node::handle_player_input( sf::Keyboard::Key key, bool is_pressed )
     else if ( key == sf::Keyboard::Right )
     {
         player_is_moving_right = is_pressed;
+    }
+    else if ( key == sf::Keyboard::R )
+    {
+        window.clear();
+        delete board;
+        for( SceneNode *scene_node : *scene_layers )
+        {
+            delete scene_node;
+        }
+        delete scene_layers;
+        board = new model::Board( *board_backup );
+        build_scene( "" );
     }
 }
 
@@ -281,8 +337,10 @@ void World_Node::process_events()
         case sf::Event::Resized:
             break;
         case sf::Event::LostFocus:
+            music->setVolume( unfocused_volume );
             break;
         case sf::Event::GainedFocus:
+            music->setVolume( base_volume );
             break;
         case sf::Event::TextEntered:
             break;

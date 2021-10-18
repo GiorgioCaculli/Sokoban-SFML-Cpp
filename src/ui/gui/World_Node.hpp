@@ -47,7 +47,7 @@ namespace sokoban
                 std::vector< SpriteNode * > *box_sprites;
                 std::vector< model::Actor * > *box_actors;
                 void load_textures();
-                void build_scene();
+                void build_scene( const std::string &level );
             };
         }
     }
