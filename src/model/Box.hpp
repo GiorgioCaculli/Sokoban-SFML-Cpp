@@ -14,8 +14,9 @@ namespace sokoban
         public:
             Box( int x, int y );
             Box( const Box &box );
-            ~Box();
-            ID get_type() const;
+            Box &operator=( const Box &box );
+            ~Box() override;
+            ID get_type() const override;
             friend std::ostream &operator<<( std::ostream &os, const Box &box );
         };
     }

@@ -11,14 +11,22 @@ using namespace sokoban::model;
 Movable::Movable( int x, int y, std::string asset )
         : Actor( x, y, std::move( asset ) )
 {
-
 }
 Movable::Movable( const Movable &movable )
-        : Actor( movable )
+        : Movable( movable.get_x(), movable.get_y(), movable.get_asset() )
 {
-
 }
-Movable::~Movable() = default;
+
+Movable &Movable::operator=( const Movable &movable )
+{
+    if( &movable != this )
+    {
+        set_x( movable.get_x() );
+        set_y( movable.get_y() );
+        set_asset( movable.get_asset() );
+    }
+    return *this;
+}
 
 void Movable::move( int x, int y )
 {

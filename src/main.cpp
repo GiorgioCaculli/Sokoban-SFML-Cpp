@@ -14,7 +14,7 @@ int main( int argc, char *argv[] )
 
     Logger::log( LoggerLevel::INFO, "Starting menu..." );
 
-    Menu *menu = new Menu();
+    Menu menu;
 
     int res = 0;
 
@@ -22,13 +22,12 @@ int main( int argc, char *argv[] )
 
     try
     {
-        res = menu->launch_application();
+        res = menu.launch_application();
     } catch ( std::exception &e )
     {
         Logger::log( LoggerLevel::FATAL, e.what() );
+        res = -1;
     }
-
-    delete menu;
 
     Logger::log( LoggerLevel::INFO, "Closing Sokoban..." );
     return res;

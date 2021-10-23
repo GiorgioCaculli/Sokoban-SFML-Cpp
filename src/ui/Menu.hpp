@@ -17,7 +17,7 @@ namespace sokoban
             virtual ~Menu();
             unsigned short launch_application() const;
         private:
-            MainFrame *main_frame;
+            int res;
         };
     }
 }

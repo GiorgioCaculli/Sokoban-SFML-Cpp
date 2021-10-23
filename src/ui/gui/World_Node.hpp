@@ -24,7 +24,6 @@ namespace sokoban
                     : private sf::NonCopyable
             {
             public:
-                explicit World_Node( sf::RenderWindow &window );
                 World_Node( sf::RenderWindow &window, std::string level );
                 ~World_Node();
                 void update( sf::Time dt );
@@ -32,6 +31,7 @@ namespace sokoban
                 void process_events();
             private:
                 sf::RenderWindow &window;
+                const std::string _level;
                 bool player_is_moving_up;
                 bool player_is_moving_down;
                 bool player_is_moving_left;
@@ -41,7 +41,7 @@ namespace sokoban
                 SceneNode *scene_graph;
                 std::vector< SceneNode * > *scene_layers;
                 sf::FloatRect world_bounds;
-                model::Board *board;
+                model::Board board;
                 SpriteNode *player_sprite;
                 model::Actor *board_player;
                 std::vector< SpriteNode * > *box_sprites;

@@ -11,15 +11,14 @@ Menu::Menu()
     Logger::log( LoggerLevel::INFO, "Init Menu" );
 
     Logger::log( LoggerLevel::INFO, "Init Main Frame" );
-    main_frame = new MainFrame();
+    MainFrame main_frame;
+    res = main_frame.run();
 }
 
 Menu::~Menu()
-{
-    delete main_frame;
-}
+= default;
 
 unsigned short Menu::launch_application() const
 {
-    return main_frame->run();
+    return res;
 }

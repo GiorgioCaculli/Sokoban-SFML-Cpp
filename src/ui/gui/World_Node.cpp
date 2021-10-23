@@ -20,43 +20,14 @@ sf::Texture *player_texture_down;
 sf::Texture *player_texture_left;
 sf::Texture *player_texture_right;
 
-sokoban::model::Board *board_backup;
-sf::Music *music;
-sf::SoundBuffer *step_buffer;
-sf::Sound *step_sound;
-sf::SoundBuffer *box_move_buffer;
-sf::Sound *box_move_sound;
-float base_volume = 5.f;
+sf::Music music;
+sf::SoundBuffer step_buffer;
+sf::Sound step_sound;
+sf::SoundBuffer box_move_buffer;
+sf::Sound box_move_sound;
+float base_volume = 10.f;
 float unfocused_volume = base_volume / 3.f;
-
-World_Node::World_Node( sf::RenderWindow &window )
-        : window( window )
-          , world_view( window.getDefaultView() )
-          , scene_layers()
-          , world_bounds( 0.f, 0.f, world_view.getSize().x, world_view.getSize().y )
-          , player_is_moving_up( false )
-          , player_is_moving_down( false )
-          , player_is_moving_left( false )
-          , player_is_moving_right( false )
-{
-    music = new sf::Music();
-    music->openFromFile( "assets/music/Town_-_Tavern_Tune.ogg" );
-    music->play();
-    music->setVolume( base_volume );
-    music->setLoop( true );
-    step_buffer = new sf::SoundBuffer();
-    step_buffer->loadFromFile( "assets/sounds/footsteps_outdoor_boots.ogg" );
-    step_sound = new sf::Sound();
-    step_sound->setBuffer( *step_buffer );
-    step_sound->setVolume( base_volume );
-    box_move_buffer = new sf::SoundBuffer();
-    box_move_buffer->loadFromFile( "assets/sounds/wood_creak_01.ogg" );
-    box_move_sound = new sf::Sound();
-    box_move_sound->setBuffer( *box_move_buffer );
-    box_move_sound->setVolume( base_volume );
-    load_textures();
-    build_scene( "" );
-}
+std::vector< sf::Texture * > world_textures;
 
 World_Node::World_Node( sf::RenderWindow &window, std::string level )
         : window( window )
@@ -67,26 +38,38 @@ World_Node::World_Node( sf::RenderWindow &window, std::string level )
           , player_is_moving_down( false )
           , player_is_moving_left( false )
           , player_is_moving_right( false )
+          , board_player( nullptr )
+          , _level( level )
+          , board( _level )
 {
+    music.openFromFile( "assets/music/Town_-_Tavern_Tune.ogg" );
+    music.play();
+    music.setVolume( base_volume );
+    music.setLoop( true );
+    step_buffer.loadFromFile( "assets/sounds/footsteps_outdoor_boots.ogg" );
+    step_sound.setBuffer( step_buffer );
+    step_sound.setVolume( base_volume );
+    box_move_buffer.loadFromFile( "assets/sounds/wood_creak_01.ogg" );
+    box_move_sound.setBuffer( box_move_buffer );
+    box_move_sound.setVolume( base_volume );
     load_textures();
     build_scene( level );
 }
 
 World_Node::~World_Node()
 {
-    delete board;
     delete scene_layers;
     delete scene_graph;
     delete player_texture_up;
     delete player_texture_down;
     delete player_texture_left;
     delete player_texture_right;
-    delete board_backup;
-    delete music;
-    delete step_sound;
-    delete step_buffer;
-    delete box_move_sound;
-    delete box_move_buffer;
+    for( sf::Texture *texture : world_textures )
+    {
+        delete texture;
+    }
+    delete box_sprites;
+    delete box_actors;
 }
 
 void World_Node::update( sf::Time dt )
@@ -94,12 +77,12 @@ void World_Node::update( sf::Time dt )
     float SPACE = 64.f;
     if( player_is_moving_up )
     {
-        player_sprite->set_texture( player_texture_up );
-        if( board->check_wall_collision( board_player, board->TOP_COLLISION ) )
+        player_sprite->set_texture( *player_texture_up );
+        if( board.check_wall_collision( board_player, board.TOP_COLLISION ) )
         {
             return;
         }
-        if( board->check_box_collision( board->TOP_COLLISION ) )
+        if( board.check_box_collision( board.TOP_COLLISION ) )
         {
             return;
         }
@@ -115,12 +98,12 @@ void World_Node::update( sf::Time dt )
     }
     if( player_is_moving_down )
     {
-        player_sprite->set_texture( player_texture_down );
-        if( board->check_wall_collision( board_player, board->BOTTOM_COLLISION ) )
+        player_sprite->set_texture( *player_texture_down );
+        if( board.check_wall_collision( board_player, board.BOTTOM_COLLISION ) )
         {
             return;
         }
-        if( board->check_box_collision( board->BOTTOM_COLLISION ) )
+        if( board.check_box_collision( board.BOTTOM_COLLISION ) )
         {
             return;
         }
@@ -136,12 +119,12 @@ void World_Node::update( sf::Time dt )
     }
     if( player_is_moving_left )
     {
-        player_sprite->set_texture( player_texture_left );
-        if( board->check_wall_collision( board_player, board->LEFT_COLLISION ) )
+        player_sprite->set_texture( *player_texture_left );
+        if( board.check_wall_collision( board_player, board.LEFT_COLLISION ) )
         {
             return;
         }
-        if( board->check_box_collision( board->LEFT_COLLISION ) )
+        if( board.check_box_collision( board.LEFT_COLLISION ) )
         {
             return;
         }
@@ -157,12 +140,12 @@ void World_Node::update( sf::Time dt )
     }
     if( player_is_moving_right )
     {
-        player_sprite->set_texture( player_texture_right );
-        if( board->check_wall_collision( board_player, board->RIGHT_COLLISION ) )
+        player_sprite->set_texture( *player_texture_right );
+        if( board.check_wall_collision( board_player, board.RIGHT_COLLISION ) )
         {
             return;
         }
-        if( board->check_box_collision( board->RIGHT_COLLISION ) )
+        if( board.check_box_collision( board.RIGHT_COLLISION ) )
         {
             return;
         }
@@ -202,22 +185,18 @@ void World_Node::load_textures()
 void World_Node::build_scene( const std::string &level )
 {
     Logger::log( LoggerLevel::INFO, "World Node init" );
+
+
     Logger::log( LoggerLevel::INFO, "Loading board..." );
-    if( level.length() > 0 )
-    {
-        board = new model::Board( level );
-    }
-    else
-    {
-        board = new model::Board();
-    }
-    board_backup = new model::Board( *board );
-    Logger::log( LoggerLevel::INFO, "Board size: " + std::to_string( board->get_world()->size() ) );
+    world_textures.resize( board.get_world().size() + 1 );
+
+    Logger::log( LoggerLevel::INFO, "Board size: " + std::to_string( board.get_world().size() ) );
     scene_graph = new SceneNode();
     box_sprites = new std::vector< SpriteNode *>();
     box_actors = new std::vector< model::Actor * >();
+
     Logger::log( LoggerLevel::INFO, "Building Scene..." );
-    std::size_t world_size = board->get_world()->size() + 1;
+    std::size_t world_size = board.get_world().size() + 1;
     scene_layers = new std::vector< SceneNode * >();
     std::stringstream ss;
     ss << "Initializing " << std::to_string( world_size ) << " fictional Scene nodes...";
@@ -238,17 +217,22 @@ void World_Node::build_scene( const std::string &level )
     backgroundTexture->loadFromFile( "assets/images/PNG/GroundGravel_Sand.png" );
     backgroundTexture->setRepeated( true );
 
-    SpriteNode *backgroundSprite = new SpriteNode( backgroundTexture, textureRect );
+    world_textures.at( layers ) = backgroundTexture;
+
+    SpriteNode *backgroundSprite = new SpriteNode( *backgroundTexture, textureRect );
     backgroundSprite->setPosition( world_bounds.left, world_bounds.top );
     scene_layers->at( layers )->attach_child( backgroundSprite );
 
     layers++;
 
-    for ( model::Actor *actor: *board->get_world() )
+    for ( model::Actor *actor: board.get_world() )
     {
         sf::Texture *sprite_texture = new sf::Texture();
         sprite_texture->loadFromFile( actor->get_asset() );
-        SpriteNode *actor_sprite = new SpriteNode( sprite_texture );
+
+        world_textures.at( layers ) = sprite_texture;
+
+        SpriteNode *actor_sprite = new SpriteNode( *sprite_texture );
         actor_sprite->setPosition( actor->get_x(), actor->get_y() );
         if( actor->get_type() == actor->PLAYER )
         {
@@ -282,11 +266,11 @@ void World_Node::handle_player_input( sf::Keyboard::Key key, bool is_pressed )
 {
     if( is_pressed )
     {
-        step_sound->play();
+        step_sound.play();
     }
     else
     {
-        step_sound->stop();
+        step_sound.stop();
     }
     if ( key == sf::Keyboard::Up )
     {
@@ -307,14 +291,20 @@ void World_Node::handle_player_input( sf::Keyboard::Key key, bool is_pressed )
     else if ( key == sf::Keyboard::R )
     {
         window.clear();
-        delete board;
-        for( SceneNode *scene_node : *scene_layers )
-        {
-            delete scene_node;
-        }
         delete scene_layers;
-        board = new model::Board( *board_backup );
-        build_scene( "" );
+        delete scene_graph;
+        for( sf::Texture *texture : world_textures )
+        {
+            delete texture;
+        }
+        delete box_sprites;
+        delete box_actors;
+        for( model::Actor *actor : board.get_world() )
+        {
+            delete actor;
+        }
+        board = model::Board( _level );
+        build_scene( _level );
     }
 }
 
@@ -337,10 +327,10 @@ void World_Node::process_events()
         case sf::Event::Resized:
             break;
         case sf::Event::LostFocus:
-            music->setVolume( unfocused_volume );
+            music.setVolume( unfocused_volume );
             break;
         case sf::Event::GainedFocus:
-            music->setVolume( base_volume );
+            music.setVolume( base_volume );
             break;
         case sf::Event::TextEntered:
             break;

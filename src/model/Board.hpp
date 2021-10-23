@@ -17,11 +17,12 @@ namespace sokoban
         class Board
         {
         private:
-            std::vector< Box * > *boxes;
-            std::vector< Wall * > *walls;
-            std::vector< Platform * > *platforms;
+            std::string level;
+            std::vector< Box * > boxes;
+            std::vector< Wall * > walls;
+            std::vector< Platform * > platforms;
             Player *player;
-            std::vector< Actor * > *world;
+            std::vector< Actor * > world;
             int width;
             int height;
             bool completed;
@@ -37,16 +38,15 @@ namespace sokoban
                 BOTTOM_COLLISION
             };
             explicit Board( std::string lvl );
-            Board();
             Board( const Board &board );
+            Board &operator=( const Board &board );
             ~Board();
             bool check_wall_collision( Actor *actor, int type );
             bool check_box_collision( int type );
             int get_board_width() const;
             int get_board_height() const;
             bool is_completed() const;
-            void restart_level() const;
-            std::vector< Actor * > *get_world();
+            std::vector< Actor * > get_world();
             friend std::ostream &operator<<( std::ostream &os, const Board &board );
         };
     }

@@ -9,13 +9,24 @@ const std::string wall_asset = "assets/images/PNG/Wall_Gray.png";
 Wall::Wall( int x, int y )
         : Actor( x, y, wall_asset )
 {
-
 }
+
 Wall::Wall( const Wall &wall )
-        : Actor( wall )
+        : Wall( wall.get_x(), wall.get_y() )
 {
-
 }
+
+Wall &Wall::operator=( const Wall &wall )
+{
+    if( &wall != this )
+    {
+        set_x( wall.get_x() );
+        set_y( wall.get_y() );
+        set_asset( wall.get_asset() );
+    }
+    return *this;
+}
+
 Wall::~Wall()
 {
     std::cout << "Deletion Wall -> x: " << get_x() << " - y: " << get_y() << std::endl;

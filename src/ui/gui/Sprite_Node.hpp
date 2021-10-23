@@ -18,10 +18,10 @@ namespace sokoban
                 sf::Sprite *sprite;
                 virtual void draw_current( sf::RenderTarget &target, sf::RenderStates states ) const;
             public:
-                explicit SpriteNode( const sf::Texture *texture );
-                SpriteNode( const sf::Texture *texture, const sf::IntRect &textureRect );
+                explicit SpriteNode( sf::Texture &texture );
+                SpriteNode(sf::Texture &texture, const sf::IntRect &textureRect );
                 virtual ~SpriteNode();
-                void set_texture( sf::Texture *texture );
+                void set_texture( sf::Texture &texture );
             };
         }
     }

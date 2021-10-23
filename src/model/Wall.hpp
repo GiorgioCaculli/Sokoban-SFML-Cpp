@@ -14,8 +14,9 @@ namespace sokoban
         public:
             Wall( int x, int y );
             Wall( const Wall &wall );
-            ~Wall();
-            ID get_type() const;
+            Wall &operator=( const Wall &wall );
+            ~Wall() override;
+            ID get_type() const override;
             friend std::ostream &operator<<( std::ostream &os, const Wall &wall );
         };
     }

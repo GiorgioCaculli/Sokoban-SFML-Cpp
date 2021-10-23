@@ -14,8 +14,9 @@ namespace sokoban
         public:
             Platform( int x, int y );
             Platform( const Platform &platform );
-            ~Platform();
-            ID get_type() const;
+            Platform &operator=( const Platform &platform );
+            ~Platform() override;
+            ID get_type() const override;
             friend std::ostream &operator<<( std::ostream &os, const Platform &platform );
         };
     }

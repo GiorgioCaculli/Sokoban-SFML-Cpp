@@ -17,7 +17,7 @@ GameSceneNode::GameSceneNode( sf::RenderWindow &window, std::string level )
 GameSceneNode::GameSceneNode( sf::RenderWindow &window )
 {
     Logger::log( LoggerLevel::INFO, "Initializing world..." );
-    world = new World_Node( window );
+    world = new World_Node( window, "assets/levels/tutorial.lvl" );
 }
 
 GameSceneNode::~GameSceneNode()

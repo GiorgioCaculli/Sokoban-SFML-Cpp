@@ -19,9 +19,10 @@ namespace sokoban
         public:
             Movable( int x, int y, std::string asset );
             Movable( const Movable &movable );
-            virtual ~Movable();
+            Movable &operator=( const Movable &movable );
+            ~Movable() override = default;
             void move( int x, int y );
-            virtual ID get_type() const;
+            ID get_type() const override = 0;
             friend std::ostream &operator<<( std::ostream &os, const Movable &movable );
         };
     }

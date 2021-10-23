@@ -36,7 +36,8 @@ namespace sokoban
             };
             Actor( int x, int y, std::string asset );
             Actor( const Actor &actor );
-            virtual ~Actor();
+            Actor &operator=( const Actor &actor );
+            virtual ~Actor() = default;
             int get_x() const;
             void set_x( int x );
             int get_y() const;

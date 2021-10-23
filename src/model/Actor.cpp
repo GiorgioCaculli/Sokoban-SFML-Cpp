@@ -32,10 +32,16 @@ Actor::Actor( const Actor &actor )
 {
 }
 
-/*
- * Destructeur par défaut
- */
-Actor::~Actor() = default;
+Actor &Actor::operator=( const Actor &actor )
+{
+    if( &actor != this )
+    {
+        x = actor.x;
+        y = actor.y;
+        asset = actor.asset;
+    }
+    return *this;
+}
 
 /*
  * Getter pour la coordonnée X.
