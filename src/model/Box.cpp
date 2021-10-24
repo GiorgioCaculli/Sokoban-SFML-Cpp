@@ -1,13 +1,14 @@
 #include "Box.hpp"
 
 #include <iostream>
+#include <array>
 
 using namespace sokoban::model;
 
-const std::string box_asset = "assets/images/PNG/Crate_Brown.png";
+const std::array< int, 4 > box_brown_light_asset = { 192, 256, 64, 64 };
 
 Box::Box( int x, int y )
-        : Movable( x, y, box_asset )
+        : Movable( x, y, box_brown_light_asset )
 {
 }
 
@@ -22,14 +23,14 @@ Box &Box::operator=( const Box &box )
     {
         set_x( box.get_x() );
         set_y( box.get_y() );
-        set_asset( box.get_asset() );
+        set_asset_coords( box.get_asset_coords() );
     }
     return *this;
 }
 
 Box::~Box()
 {
-    std::cout << "Deletion Box -> x: " << get_x() << " - y: " << get_y() << std::endl;
+    std::cout << "Deletion Box -> _x: " << get_x() << " - y: " << get_y() << std::endl;
 }
 
 std::ostream &sokoban::model::operator<<( std::ostream &os, const Box &box )

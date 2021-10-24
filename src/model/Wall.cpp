@@ -1,13 +1,14 @@
 #include "Wall.hpp"
 
 #include <iostream>
+#include <array>
 
 using namespace sokoban::model;
 
-const std::string wall_asset = "assets/images/PNG/Wall_Gray.png";
+const std::array< int, 4 > wall_round_grey_asset = { 0, 0, 64, 64 };
 
 Wall::Wall( int x, int y )
-        : Actor( x, y, wall_asset )
+        : Actor( x, y, wall_round_grey_asset )
 {
 }
 
@@ -22,14 +23,14 @@ Wall &Wall::operator=( const Wall &wall )
     {
         set_x( wall.get_x() );
         set_y( wall.get_y() );
-        set_asset( wall.get_asset() );
+        set_asset_coords( wall.get_asset_coords() );
     }
     return *this;
 }
 
 Wall::~Wall()
 {
-    std::cout << "Deletion Wall -> x: " << get_x() << " - y: " << get_y() << std::endl;
+    std::cout << "Deletion Wall -> _x: " << get_x() << " - y: " << get_y() << std::endl;
 }
 
 std::ostream &sokoban::model::operator<<( std::ostream &os, const Wall &wall )

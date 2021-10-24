@@ -18,7 +18,7 @@ int main( int argc, char *argv[] )
 
     int res = 0;
 
-    Logger::log( LoggerLevel::INFO, "Running game..." );
+    Logger::log( LoggerLevel::INFO, "Running _game..." );
 
     try
     {

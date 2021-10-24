@@ -17,15 +17,15 @@ namespace sokoban
         class Board
         {
         private:
-            std::string level;
-            std::vector< Box * > boxes;
-            std::vector< Wall * > walls;
-            std::vector< Platform * > platforms;
-            Player *player;
-            std::vector< Actor * > world;
-            int width;
-            int height;
-            bool completed;
+            std::string _level;
+            std::vector< Box * > _boxes;
+            std::vector< Wall * > _walls;
+            std::vector< Platform * > _platforms;
+            Player *_player;
+            std::vector< Actor * > _world;
+            int _width;
+            int _height;
+            bool _completed;
             void init_board();
             void init_world();
             void build_world();

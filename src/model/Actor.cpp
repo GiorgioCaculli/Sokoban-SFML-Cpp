@@ -15,10 +15,10 @@ const int SPACE = 64;
  * Sa coordonnée Y.
  * L'asset pour le représenter graphiquement.
  */
-Actor::Actor( int x, int y, std::string asset )
-        : x( x )
-          , y( y )
-          , asset( std::move( asset ) )
+Actor::Actor( int x, int y, std::array< int, 4 > asset_coords )
+        : _x( x )
+          , _y( y )
+          , _asset_coords( asset_coords )
 {
 }
 
@@ -26,9 +26,9 @@ Actor::Actor( int x, int y, std::string asset )
  * Constructeur de copie
  */
 Actor::Actor( const Actor &actor )
-        : x( actor.x )
-          , y( actor.y )
-          , asset( actor.asset )
+        : _x( actor._x )
+          , _y( actor._y )
+          , _asset_coords( actor._asset_coords )
 {
 }
 
@@ -36,9 +36,9 @@ Actor &Actor::operator=( const Actor &actor )
 {
     if( &actor != this )
     {
-        x = actor.x;
-        y = actor.y;
-        asset = actor.asset;
+        _x = actor._x;
+        _y = actor._y;
+        _asset_coords = actor._asset_coords;
     }
     return *this;
 }
@@ -48,7 +48,7 @@ Actor &Actor::operator=( const Actor &actor )
  */
 int Actor::get_x() const
 {
-    return x;
+    return _x;
 }
 
 /*
@@ -56,7 +56,7 @@ int Actor::get_x() const
  */
 void Actor::set_x( int x )
 {
-    this->x = x;
+    this->_x = x;
 }
 
 /*
@@ -64,7 +64,7 @@ void Actor::set_x( int x )
  */
 int Actor::get_y() const
 {
-    return y;
+    return _y;
 }
 
 /*
@@ -72,23 +72,23 @@ int Actor::get_y() const
  */
 void Actor::set_y( int y )
 {
-    this->y = y;
+    this->_y = y;
 }
 
 /*
  * Getter pour l'asset.
  */
-std::string Actor::get_asset() const
+std::array< int, 4 > Actor::get_asset_coords() const
 {
-    return asset;
+    return _asset_coords;
 }
 
 /*
  * Setter pour l'asset.
  */
-void Actor::set_asset( std::string asset )
+void Actor::set_asset_coords( std::array< int, 4 > asset_coords )
 {
-    this->asset = std::move( asset );
+    this->_asset_coords = asset_coords;
 }
 
 /*
@@ -154,7 +154,7 @@ bool Actor::is_bottom_collision( const Actor *actor ) const
  */
 std::ostream &sokoban::model::operator<<( std::ostream &os, const Actor &actor )
 {
-    os << "x: " << actor.x << " y: " << actor.y;
+    os << "_x: " << actor._x << " y: " << actor._y;
     return os;
 }
 
@@ -164,9 +164,9 @@ std::ostream &sokoban::model::operator<<( std::ostream &os, const Actor &actor )
  */
 bool Actor::operator==( const Actor &actor ) const
 {
-    return x == actor.x &&
-            y == actor.y &&
-            asset == actor.asset;
+    return _x == actor._x &&
+            _y == actor._y &&
+            _asset_coords == actor._asset_coords;
 }
 
 /*

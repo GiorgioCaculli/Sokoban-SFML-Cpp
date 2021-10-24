@@ -26,9 +26,11 @@ namespace sokoban
             ID get_type() const override;
             void set_face( const Face &face );
             Face get_face() const;
+            std::array< std::array< int, 4 >, 10 > get_animations() const;
             friend std::ostream &operator<<( std::ostream &os, const Player &player );
         private:
-            Face current_face;
+            Face _current_face;
+            std::array< std::array< int, 4 >, 10 > _animations;
         };
     }
 }

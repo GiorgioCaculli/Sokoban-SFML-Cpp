@@ -1,13 +1,14 @@
 #include "Platform.hpp"
 
 #include <iostream>
+#include <array>
 
 using namespace sokoban::model;
 
-const std::string platform_asset = "assets/images/PNG/EndPoint_Purple.png";
+const std::array< int, 4 > platform_purple_asset = { 0, 384, 32, 32  };
 
 Platform::Platform( int x, int y )
-        : Actor( x, y, platform_asset )
+        : Actor( x, y, platform_purple_asset )
 {
 }
 
@@ -22,14 +23,14 @@ Platform &Platform::operator=( const Platform &platform )
     {
         set_x( platform.get_x() );
         set_y( platform.get_y() );
-        set_asset( platform.get_asset() );
+        set_asset_coords( platform.get_asset_coords() );
     }
     return *this;
 }
 
 Platform::~Platform()
 {
-    std::cout << "Deletion Platform -> x: " << get_x() << " - y: " << get_y() << std::endl;
+    std::cout << "Deletion Platform -> _x: " << get_x() << " - y: " << get_y() << std::endl;
 }
 
 std::ostream &sokoban::model::operator<<( std::ostream &os, const Platform &platform )

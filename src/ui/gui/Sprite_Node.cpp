@@ -36,9 +36,15 @@ void SpriteNode::draw_current( sf::RenderTarget &target, sf::RenderStates states
     target.draw( *sprite, states );
 }
 
-void SpriteNode::set_texture( sf::Texture &texture )
+void SpriteNode::update_texture( sf::Texture &texture )
 {
     sprite->setTexture( texture );
+}
+
+void SpriteNode::update_texture( sf::Texture &texture, sf::IntRect &textureRect )
+{
+    sprite->setTexture( texture );
+    sprite->setTextureRect( textureRect );
 }
 
 SpriteNode::~SpriteNode()

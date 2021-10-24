@@ -15,10 +15,8 @@
 using namespace sokoban::ui::gui;
 using namespace sokoban::util;
 
-sf::Texture *player_texture_up;
-sf::Texture *player_texture_down;
-sf::Texture *player_texture_left;
-sf::Texture *player_texture_right;
+sf::Texture *base_sokoban_texture;
+sf::Texture *backgroundTexture;
 
 sf::Music music;
 sf::SoundBuffer step_buffer;
@@ -27,20 +25,19 @@ sf::SoundBuffer box_move_buffer;
 sf::Sound box_move_sound;
 float base_volume = 10.f;
 float unfocused_volume = base_volume / 3.f;
-std::vector< sf::Texture * > world_textures;
 
 World_Node::World_Node( sf::RenderWindow &window, std::string level )
-        : window( window )
-          , world_view( window.getDefaultView() )
-          , scene_layers()
-          , world_bounds( 0.f, 0.f, world_view.getSize().x, world_view.getSize().y )
-          , player_is_moving_up( false )
-          , player_is_moving_down( false )
-          , player_is_moving_left( false )
-          , player_is_moving_right( false )
-          , board_player( nullptr )
+        : _window( window )
+          , _world_view( window.getDefaultView() )
+          , _scene_layers()
+          , _world_bounds( 0.f, 0.f, _world_view.getSize().x, _world_view.getSize().y )
+          , _player_is_moving_up( false )
+          , _player_is_moving_down( false )
+          , _player_is_moving_left( false )
+          , _player_is_moving_right( false )
+          , _board_player( nullptr )
           , _level( level )
-          , board( _level )
+          , _board( _level )
 {
     music.openFromFile( "assets/music/Town_-_Tavern_Tune.ogg" );
     music.play();
@@ -58,127 +55,146 @@ World_Node::World_Node( sf::RenderWindow &window, std::string level )
 
 World_Node::~World_Node()
 {
-    delete scene_layers;
-    delete scene_graph;
-    delete player_texture_up;
-    delete player_texture_down;
-    delete player_texture_left;
-    delete player_texture_right;
-    for( sf::Texture *texture : world_textures )
-    {
-        delete texture;
-    }
-    delete box_sprites;
-    delete box_actors;
+    delete _scene_layers;
+    delete _scene_graph;
+    delete base_sokoban_texture;
+    delete backgroundTexture;
+    delete _box_sprites;
+    delete _box_actors;
 }
 
-void World_Node::update( sf::Time dt )
+void World_Node::update( const sf::Time &dt )
 {
     float SPACE = 64.f;
-    if( player_is_moving_up )
+    sf::IntRect player_assets_coords;
+    int player_x_coords;
+    int player_y_coords;
+    int player_width_coords;
+    int player_height_coords;
+    if( _player_is_moving_up )
     {
-        player_sprite->set_texture( *player_texture_up );
-        if( board.check_wall_collision( board_player, board.TOP_COLLISION ) )
+        _board_player->set_face( model::Player::NORTH );
+        player_x_coords = _board_player->get_asset_coords()[ 0 ];
+        player_y_coords = _board_player->get_asset_coords()[ 1 ];
+        player_width_coords = _board_player->get_asset_coords()[ 2 ];
+        player_height_coords = _board_player->get_asset_coords()[ 3 ];
+        player_assets_coords = sf::IntRect ( player_x_coords, player_y_coords, player_width_coords, player_height_coords );
+        _player_sprite->update_texture( *base_sokoban_texture, player_assets_coords );
+        if( _board.check_wall_collision( _board_player, _board.TOP_COLLISION ) )
         {
             return;
         }
-        if( board.check_box_collision( board.TOP_COLLISION ) )
+        if( _board.check_box_collision( _board.TOP_COLLISION ) )
         {
             return;
         }
         else
         {
-            for( int i = 0; i < box_actors->size(); i++ )
+            for( int i = 0; i < _box_actors->size(); i++ )
             {
-                box_sprites->at( i )->setPosition( box_actors->at( i )->get_x(), box_actors->at( i )->get_y() );
+                _box_sprites->at( i )->setPosition( _box_actors->at( i )->get_x(), _box_actors->at( i )->get_y() );
             }
         }
-        player_sprite->move( 0.f, -SPACE );
-        board_player->set_y( board_player->get_y() - SPACE );
+        _player_sprite->move( 0.f, -SPACE );
+        _board_player->set_y( _board_player->get_y() - SPACE );
     }
-    if( player_is_moving_down )
+    if( _player_is_moving_down )
     {
-        player_sprite->set_texture( *player_texture_down );
-        if( board.check_wall_collision( board_player, board.BOTTOM_COLLISION ) )
+        _board_player->set_face( model::Player::SOUTH );
+        player_x_coords = _board_player->get_asset_coords()[ 0 ];
+        player_y_coords = _board_player->get_asset_coords()[ 1 ];
+        player_width_coords = _board_player->get_asset_coords()[ 2 ];
+        player_height_coords = _board_player->get_asset_coords()[ 3 ];
+        player_assets_coords = sf::IntRect ( player_x_coords, player_y_coords, player_width_coords, player_height_coords );
+        _player_sprite->update_texture( *base_sokoban_texture, player_assets_coords );
+        if( _board.check_wall_collision( _board_player, _board.BOTTOM_COLLISION ) )
         {
             return;
         }
-        if( board.check_box_collision( board.BOTTOM_COLLISION ) )
+        if( _board.check_box_collision( _board.BOTTOM_COLLISION ) )
         {
             return;
         }
         else
         {
-            for( int i = 0; i < box_actors->size(); i++ )
+            for( int i = 0; i < _box_actors->size(); i++ )
             {
-                box_sprites->at( i )->setPosition( box_actors->at( i )->get_x(), box_actors->at( i )->get_y() );
+                _box_sprites->at( i )->setPosition( _box_actors->at( i )->get_x(), _box_actors->at( i )->get_y() );
             }
         }
-        player_sprite->move( 0.f, +SPACE );
-        board_player->set_y( board_player->get_y() + SPACE );
+        _player_sprite->move( 0.f, +SPACE );
+        _board_player->set_y( _board_player->get_y() + SPACE );
     }
-    if( player_is_moving_left )
+    if( _player_is_moving_left )
     {
-        player_sprite->set_texture( *player_texture_left );
-        if( board.check_wall_collision( board_player, board.LEFT_COLLISION ) )
+        _board_player->set_face( model::Player::EAST );
+        player_x_coords = _board_player->get_asset_coords()[ 0 ];
+        player_y_coords = _board_player->get_asset_coords()[ 1 ];
+        player_width_coords = _board_player->get_asset_coords()[ 2 ];
+        player_height_coords = _board_player->get_asset_coords()[ 3 ];
+        player_assets_coords = sf::IntRect ( player_x_coords, player_y_coords, player_width_coords, player_height_coords );
+        _player_sprite->update_texture( *base_sokoban_texture, player_assets_coords );
+        if( _board.check_wall_collision( _board_player, _board.LEFT_COLLISION ) )
         {
             return;
         }
-        if( board.check_box_collision( board.LEFT_COLLISION ) )
+        if( _board.check_box_collision( _board.LEFT_COLLISION ) )
         {
             return;
         }
         else
         {
-            for( int i = 0; i < box_actors->size(); i++ )
+            for( int i = 0; i < _box_actors->size(); i++ )
             {
-                box_sprites->at( i )->setPosition( box_actors->at( i )->get_x(), box_actors->at( i )->get_y() );
+                _box_sprites->at( i )->setPosition( _box_actors->at( i )->get_x(), _box_actors->at( i )->get_y() );
             }
         }
-        player_sprite->move( -SPACE, 0.f );
-        board_player->set_x( board_player->get_x() - SPACE );
+        _player_sprite->move( -SPACE, 0.f );
+        _board_player->set_x( _board_player->get_x() - SPACE );
     }
-    if( player_is_moving_right )
+    if( _player_is_moving_right )
     {
-        player_sprite->set_texture( *player_texture_right );
-        if( board.check_wall_collision( board_player, board.RIGHT_COLLISION ) )
+        _board_player->set_face( model::Player::WEST );
+        player_x_coords = _board_player->get_asset_coords()[ 0 ];
+        player_y_coords = _board_player->get_asset_coords()[ 1 ];
+        player_width_coords = _board_player->get_asset_coords()[ 2 ];
+        player_height_coords = _board_player->get_asset_coords()[ 3 ];
+        player_assets_coords = sf::IntRect ( player_x_coords, player_y_coords, player_width_coords, player_height_coords );
+        _player_sprite->update_texture( *base_sokoban_texture, player_assets_coords );
+        if( _board.check_wall_collision( _board_player, _board.RIGHT_COLLISION ) )
         {
             return;
         }
-        if( board.check_box_collision( board.RIGHT_COLLISION ) )
+        if( _board.check_box_collision( _board.RIGHT_COLLISION ) )
         {
             return;
         }
         else
         {
-            for( int i = 0; i < box_actors->size(); i++ )
+            for( int i = 0; i < _box_actors->size(); i++ )
             {
-                box_sprites->at( i )->setPosition( box_actors->at( i )->get_x(), box_actors->at( i )->get_y() );
+                _box_sprites->at( i )->setPosition( _box_actors->at( i )->get_x(), _box_actors->at( i )->get_y() );
             }
         }
-        player_sprite->move( +SPACE, 0.f );
-        board_player->set_x( board_player->get_x() + SPACE );
+        _player_sprite->move( +SPACE, 0.f );
+        _board_player->set_x( _board_player->get_x() + SPACE );
     }
-    scene_graph->update( dt );
+    _scene_graph->update( dt );
 }
 
 void World_Node::draw()
 {
-    window.setView( world_view );
-    window.draw( *scene_graph );
+    _window.setView( _world_view );
+    _window.draw( *_scene_graph );
 }
 
 void World_Node::load_textures()
 {
     Logger::log( LoggerLevel::INFO, "Loading Textures..." );
-    player_texture_up = new sf::Texture();
-    player_texture_up->loadFromFile( "assets/images/PNG/Character7.png" );
-    player_texture_down = new sf::Texture();
-    player_texture_down->loadFromFile( "assets/images/PNG/Character4.png" );
-    player_texture_left = new sf::Texture();
-    player_texture_left->loadFromFile( "assets/images/PNG/Character1.png" );
-    player_texture_right = new sf::Texture();
-    player_texture_right->loadFromFile( "assets/images/PNG/Character2.png" );
+    base_sokoban_texture = new sf::Texture();
+    base_sokoban_texture->loadFromFile( "assets/images/Spritesheet/sprites.png" );
+    backgroundTexture = new sf::Texture();
+    backgroundTexture->loadFromFile( "assets/images/PNG/GroundGravel_Sand.png" );
 }
 
 
@@ -186,18 +202,14 @@ void World_Node::build_scene( const std::string &level )
 {
     Logger::log( LoggerLevel::INFO, "World Node init" );
 
-
-    Logger::log( LoggerLevel::INFO, "Loading board..." );
-    world_textures.resize( board.get_world().size() + 1 );
-
-    Logger::log( LoggerLevel::INFO, "Board size: " + std::to_string( board.get_world().size() ) );
-    scene_graph = new SceneNode();
-    box_sprites = new std::vector< SpriteNode *>();
-    box_actors = new std::vector< model::Actor * >();
+    Logger::log( LoggerLevel::INFO, "Board size: " + std::to_string( _board.get_world().size() ) );
+    _scene_graph = new SceneNode();
+    _box_sprites = new std::vector< SpriteNode *>();
+    _box_actors = new std::vector< model::Box * >();
 
     Logger::log( LoggerLevel::INFO, "Building Scene..." );
-    std::size_t world_size = board.get_world().size() + 1;
-    scene_layers = new std::vector< SceneNode * >();
+    std::size_t world_size = _board.get_world().size() + 1;
+    _scene_layers = new std::vector< SceneNode * >();
     std::stringstream ss;
     ss << "Initializing " << std::to_string( world_size ) << " fictional Scene nodes...";
     Logger::log( LoggerLevel::DEBUG, ss.str() );
@@ -207,55 +219,53 @@ void World_Node::build_scene( const std::string &level )
         ss << "Initializing fictional node #" << std::to_string( i ) << "...\n";
         Logger::log( LoggerLevel::DEBUG, ss.str() );
         SceneNode *layer = new SceneNode();
-        scene_layers->push_back( layer );
-        scene_graph->attach_child( layer );
+        _scene_layers->push_back( layer );
+        _scene_graph->attach_child( layer );
     }
 
     int layers = 0;
-    sf::Texture *backgroundTexture = new sf::Texture();
-    sf::IntRect textureRect( world_bounds );
-    backgroundTexture->loadFromFile( "assets/images/PNG/GroundGravel_Sand.png" );
+    sf::IntRect textureRect( _world_bounds );
     backgroundTexture->setRepeated( true );
 
-    world_textures.at( layers ) = backgroundTexture;
-
     SpriteNode *backgroundSprite = new SpriteNode( *backgroundTexture, textureRect );
-    backgroundSprite->setPosition( world_bounds.left, world_bounds.top );
-    scene_layers->at( layers )->attach_child( backgroundSprite );
+    backgroundSprite->setPosition( _world_bounds.left, _world_bounds.top );
+    _scene_layers->at( layers )->attach_child( backgroundSprite );
 
     layers++;
 
-    for ( model::Actor *actor: board.get_world() )
+    for ( model::Actor *actor: _board.get_world() )
     {
-        sf::Texture *sprite_texture = new sf::Texture();
-        sprite_texture->loadFromFile( actor->get_asset() );
+        int asset_coord_x = actor->get_asset_coords().at( 0 );
+        int asset_coord_y = actor->get_asset_coords().at( 1 );
+        int asset_coord_width = actor->get_asset_coords().at( 2 );
+        int asset_coord_height = actor->get_asset_coords().at( 3 );
 
-        world_textures.at( layers ) = sprite_texture;
+        sf::IntRect asset_rect( asset_coord_x, asset_coord_y, asset_coord_width, asset_coord_height );
 
-        SpriteNode *actor_sprite = new SpriteNode( *sprite_texture );
+        SpriteNode *actor_sprite = new SpriteNode( *base_sokoban_texture, asset_rect );
         actor_sprite->setPosition( actor->get_x(), actor->get_y() );
         if( actor->get_type() == actor->PLAYER )
         {
-            board_player = actor;
-            player_sprite = actor_sprite;
+            _board_player = dynamic_cast< model::Player * >( actor );
+            _player_sprite = actor_sprite;
             actor_sprite->setOrigin(
-                    -( sprite_texture->getSize().x / 4.f ),
+                    -( asset_coord_width / 4.f ),
                     0.f
                     );
         }
         if( actor->get_type() == actor->PLATFORM )
         {
             actor_sprite->setOrigin(
-                    -( sprite_texture->getSize().x / 2.f ),
-                    -( sprite_texture->getSize().y / 2.f )
+                    -( asset_coord_width / 2.f ),
+                    -( asset_coord_height / 2.f )
                     );
         }
         if( actor->get_type() == actor->BOX )
         {
-            box_sprites->push_back( actor_sprite );
-            box_actors->push_back( actor );
+            _box_sprites->push_back( actor_sprite );
+            _box_actors->push_back( dynamic_cast< model::Box * >( actor ) );
         }
-        scene_layers->at( layers )->attach_child( actor_sprite );
+        _scene_layers->at( layers )->attach_child( actor_sprite );
         layers++;
     }
 
@@ -274,36 +284,32 @@ void World_Node::handle_player_input( sf::Keyboard::Key key, bool is_pressed )
     }
     if ( key == sf::Keyboard::Up )
     {
-        player_is_moving_up = is_pressed;
+        _player_is_moving_up = is_pressed;
     }
     else if ( key == sf::Keyboard::Down )
     {
-        player_is_moving_down = is_pressed;
+        _player_is_moving_down = is_pressed;
     }
     else if ( key == sf::Keyboard::Left )
     {
-        player_is_moving_left = is_pressed;
+        _player_is_moving_left = is_pressed;
     }
     else if ( key == sf::Keyboard::Right )
     {
-        player_is_moving_right = is_pressed;
+        _player_is_moving_right = is_pressed;
     }
     else if ( key == sf::Keyboard::R )
     {
-        window.clear();
-        delete scene_layers;
-        delete scene_graph;
-        for( sf::Texture *texture : world_textures )
-        {
-            delete texture;
-        }
-        delete box_sprites;
-        delete box_actors;
-        for( model::Actor *actor : board.get_world() )
+        _window.clear();
+        delete _scene_layers;
+        delete _scene_graph;
+        delete _box_sprites;
+        delete _box_actors;
+        for( model::Actor *actor : _board.get_world() )
         {
             delete actor;
         }
-        board = model::Board( _level );
+        _board = model::Board( _level );
         build_scene( _level );
     }
 }
@@ -311,7 +317,7 @@ void World_Node::handle_player_input( sf::Keyboard::Key key, bool is_pressed )
 void World_Node::process_events()
 {
     sf::Event event {};
-    while ( window.pollEvent( event ) )
+    while ( _window.pollEvent( event ) )
     {
         switch ( event.type )
         {
@@ -322,7 +328,7 @@ void World_Node::process_events()
             handle_player_input( event.key.code, false );
             break;
         case sf::Event::Closed:
-            window.close();
+            _window.close();
             break;
         case sf::Event::Resized:
             break;

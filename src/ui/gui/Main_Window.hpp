@@ -3,7 +3,7 @@
 
 #include "../../util/Logger.hpp"
 #include "../../model/Board.hpp"
-#include "Game_Scene_Node.hpp"
+#include "Game_State.hpp"
 
 #include <SFML/System/Time.hpp>
 #include <SFML/Graphics/Text.hpp>
@@ -23,15 +23,15 @@ namespace sokoban
                     : private sf::NonCopyable
             {
             private:
-                static const sf::Time time_per_frame;
-                sf::RenderWindow window;
-                GameSceneNode *game;
-                sf::Font font;
-                sf::Text statistics_text;
-                sf::Time statistics_update_time;
-                std::size_t statistics_num_frames;
+                static const sf::Time _time_per_frame;
+                sf::RenderWindow _window;
+                GameSceneNode *_game;
+                sf::Font _font;
+                sf::Text _statistics_text;
+                sf::Time _statistics_update_time;
+                std::size_t _statistics_num_frames;
                 void update_statistics( sf::Time elapsed_time );
-                void update( sf::Time delta_time );
+                void update( const sf::Time &delta_time );
                 void render();
             public:
                 MainFrame();

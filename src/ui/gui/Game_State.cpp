@@ -1,4 +1,4 @@
-#include "Game_Scene_Node.hpp"
+#include "Game_State.hpp"
 
 #include <string>
 #include <utility>
@@ -10,33 +10,33 @@ using namespace sokoban::util;
 
 GameSceneNode::GameSceneNode( sf::RenderWindow &window, std::string level )
 {
-    Logger::log( LoggerLevel::INFO, "Initializing world..." );
-    world = new World_Node( window, std::move( level ) );
+    Logger::log( LoggerLevel::INFO, "Initializing _world..." );
+    _world = new World_Node( window, std::move( level ) );
 }
 
 GameSceneNode::GameSceneNode( sf::RenderWindow &window )
 {
-    Logger::log( LoggerLevel::INFO, "Initializing world..." );
-    world = new World_Node( window, "assets/levels/tutorial.lvl" );
+    Logger::log( LoggerLevel::INFO, "Initializing _world..." );
+    _world = new World_Node( window, "assets/levels/tutorial.lvl" );
 }
 
 GameSceneNode::~GameSceneNode()
 {
-    Logger::log( LoggerLevel::INFO, "Deleting world..." );
-    delete world;
+    Logger::log( LoggerLevel::INFO, "Deleting _world..." );
+    delete _world;
 }
 
 void GameSceneNode::update( sf::Time dt )
 {
-    world->update( dt );
+    _world->update( dt );
 }
 
 void GameSceneNode::draw()
 {
-    world->draw();
+    _world->draw();
 }
 
 void GameSceneNode::process_events()
 {
-    world->process_events();
+    _world->process_events();
 }

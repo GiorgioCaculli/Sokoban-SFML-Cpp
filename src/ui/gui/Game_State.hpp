@@ -1,5 +1,5 @@
-#ifndef SOKOBAN_GAME_SCENE_NODE_HPP
-#define SOKOBAN_GAME_SCENE_NODE_HPP
+#ifndef SOKOBAN_GAME_STATE_HPP
+#define SOKOBAN_GAME_STATE_HPP
 
 #include "World_Node.hpp"
 
@@ -16,7 +16,7 @@ namespace sokoban
                     : private sf::NonCopyable
             {
             private:
-                World_Node *world;
+                World_Node *_world;
             public:
                 GameSceneNode( sf::RenderWindow &window, std::string level );
                 explicit GameSceneNode( sf::RenderWindow &window );
@@ -29,4 +29,4 @@ namespace sokoban
     }
 }
 
-#endif //SOKOBAN_GAME_SCENE_NODE_HPP
+#endif //SOKOBAN_GAME_STATE_HPP

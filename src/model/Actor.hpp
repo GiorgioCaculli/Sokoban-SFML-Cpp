@@ -2,11 +2,11 @@
 #define SOKOBAN_ACTOR_HPP
 
 #include <ostream>
-#include <string>
+#include <array>
 
 /*
  * Classe actor
- * Cette classe est le parent de tous les objects.
+ * Cette classe est le _parent de tous les objects.
  * Bien des objects qui peuvent bouger, que ces qui sont fixes.
  */
 namespace sokoban
@@ -16,9 +16,9 @@ namespace sokoban
         class Actor
         {
         private:
-            int x; /* La coordonnée X dans la board */
-            int y; /* La coordonnée Y dans la board */
-            std::string asset; /* L'asset par défault lors du chargement de l'image */
+            int _x; /* La coordonnée X dans la _board */
+            int _y; /* La coordonnée Y dans la _board */
+            std::array< int, 4 > _asset_coords;
         public:
             /*
              * On considère 4 acteurs possibles dans le jeu
@@ -34,7 +34,7 @@ namespace sokoban
                 PLAYER,
                 WALL
             };
-            Actor( int x, int y, std::string asset );
+            Actor( int x, int y, std::array< int, 4 > asset_coords );
             Actor( const Actor &actor );
             Actor &operator=( const Actor &actor );
             virtual ~Actor() = default;
@@ -42,8 +42,8 @@ namespace sokoban
             void set_x( int x );
             int get_y() const;
             void set_y( int y );
-            std::string get_asset() const;
-            void set_asset( std::string asset );
+            std::array< int, 4 > get_asset_coords() const;
+            void set_asset_coords( std::array< int, 4 > asset_coords );
             virtual ID get_type() const;
             bool is_left_collision( const Actor *actor ) const;
             bool is_right_collision( const Actor *actor ) const;

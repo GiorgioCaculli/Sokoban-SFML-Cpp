@@ -21,7 +21,8 @@ namespace sokoban
                 explicit SpriteNode( sf::Texture &texture );
                 SpriteNode(sf::Texture &texture, const sf::IntRect &textureRect );
                 virtual ~SpriteNode();
-                void set_texture( sf::Texture &texture );
+                void update_texture( sf::Texture &texture );
+                void update_texture( sf::Texture &texture, sf::IntRect &textureRect );
             };
         }
     }

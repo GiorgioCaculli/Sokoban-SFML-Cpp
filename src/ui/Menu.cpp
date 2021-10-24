@@ -12,7 +12,7 @@ Menu::Menu()
 
     Logger::log( LoggerLevel::INFO, "Init Main Frame" );
     MainFrame main_frame;
-    res = main_frame.run();
+    _res = main_frame.run();
 }
 
 Menu::~Menu()
@@ -20,5 +20,5 @@ Menu::~Menu()
 
 unsigned short Menu::launch_application() const
 {
-    return res;
+    return _res;
 }

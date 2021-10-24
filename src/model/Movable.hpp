@@ -2,7 +2,7 @@
 #define SOKOBAN_MOVABLE_HPP
 
 #include <ostream>
-#include <string>
+#include <array>
 #include "Actor.hpp"
 
 /*
@@ -17,7 +17,7 @@ namespace sokoban
                 : public Actor
         {
         public:
-            Movable( int x, int y, std::string asset );
+            Movable( int x, int y, std::array< int, 4 > asset_coords );
             Movable( const Movable &movable );
             Movable &operator=( const Movable &movable );
             ~Movable() override = default;

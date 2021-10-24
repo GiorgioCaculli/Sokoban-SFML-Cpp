@@ -8,12 +8,13 @@ using namespace sokoban::model;
  * Tout comme la classe Actor, l'objet 'moveable' doit aussi instancier les coordonnées X et Y
  * ainsi que l'asset qui le représentera graphiquement.
  */
-Movable::Movable( int x, int y, std::string asset )
-        : Actor( x, y, std::move( asset ) )
+Movable::Movable( int x, int y, std::array< int, 4 > asset_coords )
+        : Actor( x, y, asset_coords )
 {
 }
+
 Movable::Movable( const Movable &movable )
-        : Movable( movable.get_x(), movable.get_y(), movable.get_asset() )
+        : Movable( movable.get_x(), movable.get_y(), movable.get_asset_coords() )
 {
 }
 
@@ -23,7 +24,7 @@ Movable &Movable::operator=( const Movable &movable )
     {
         set_x( movable.get_x() );
         set_y( movable.get_y() );
-        set_asset( movable.get_asset() );
+        set_asset_coords( movable.get_asset_coords() );
     }
     return *this;
 }
