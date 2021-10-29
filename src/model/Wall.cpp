@@ -1,13 +1,14 @@
 #include "Wall.hpp"
 
-#include <iostream>
 #include <array>
+#include <sstream>
+#include <iostream>
 
 using namespace sokoban::model;
 
-const std::array< int, 4 > wall_round_grey_asset = { 0, 0, 64, 64 };
+const std::array< float, 4 > wall_round_grey_asset = { 0, 0, 64, 64 };
 
-Wall::Wall( int x, int y )
+Wall::Wall( float x, float y )
         : Actor( x, y, wall_round_grey_asset )
 {
 }
@@ -30,16 +31,23 @@ Wall &Wall::operator=( const Wall &wall )
 
 Wall::~Wall()
 {
-    std::cout << "Deletion Wall -> _x: " << get_x() << " - y: " << get_y() << std::endl;
-}
-
-std::ostream &sokoban::model::operator<<( std::ostream &os, const Wall &wall )
-{
-    os << static_cast<const Actor &>(wall);
-    return os;
+    std::cout << "Deletion " << Wall::to_string() << std::endl;
 }
 
 Actor::ID Wall::get_type() const
 {
     return Actor::WALL;
+}
+
+std::string Wall::to_string() const
+{
+    std::stringstream ss;
+    ss << "Wall: " << Actor::to_string();
+    return ss.str();
+}
+
+std::ostream &sokoban::model::operator<<( std::ostream &os, const Wall &wall )
+{
+    os << wall.to_string();
+    return os;
 }

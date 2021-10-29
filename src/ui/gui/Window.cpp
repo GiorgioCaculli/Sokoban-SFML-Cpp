@@ -1,4 +1,4 @@
-#include "Main_Window.hpp"
+#include "Window.hpp"
 
 #include <iostream>
 
@@ -21,7 +21,7 @@ MainFrame::MainFrame()
     Logger::log( LoggerLevel::INFO, "Init Window" );
 
     Logger::log( LoggerLevel::INFO, "Initializing _game..." );
-    _game = new GameSceneNode( _window );
+    _game = new State_Game( _window, "assets/levels/tutorial.lvl" );
 }
 
 MainFrame::~MainFrame()

@@ -33,6 +33,10 @@ Board::Board( std::string lvl )
     }
     _level = std::move( ss.str() );
     init_board();
+    for( Actor *actor : _world )
+    {
+        std::cout << *actor << std::endl;
+    }
 }
 
 Board::Board( const Board &board )

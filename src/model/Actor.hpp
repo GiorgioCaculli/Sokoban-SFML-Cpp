@@ -1,8 +1,9 @@
 #ifndef SOKOBAN_ACTOR_HPP
 #define SOKOBAN_ACTOR_HPP
 
-#include <ostream>
 #include <array>
+#include <string>
+#include <ostream>
 
 /*
  * Classe actor
@@ -16,9 +17,9 @@ namespace sokoban
         class Actor
         {
         private:
-            int _x; /* La coordonnée X dans la _board */
-            int _y; /* La coordonnée Y dans la _board */
-            std::array< int, 4 > _asset_coords;
+            float _x; /* La coordonnée X dans la _board */
+            float _y; /* La coordonnée Y dans la _board */
+            std::array< float, 4 > _asset_coords;
         public:
             /*
              * On considère 4 acteurs possibles dans le jeu
@@ -34,21 +35,22 @@ namespace sokoban
                 PLAYER,
                 WALL
             };
-            Actor( int x, int y, std::array< int, 4 > asset_coords );
+            Actor( float x, float y, std::array< float, 4 > asset_coords );
             Actor( const Actor &actor );
             Actor &operator=( const Actor &actor );
             virtual ~Actor() = default;
-            int get_x() const;
-            void set_x( int x );
-            int get_y() const;
-            void set_y( int y );
-            std::array< int, 4 > get_asset_coords() const;
-            void set_asset_coords( std::array< int, 4 > asset_coords );
+            float get_x() const;
+            void set_x( float x );
+            float get_y() const;
+            void set_y( float y );
+            std::array< float, 4 > get_asset_coords() const;
+            void set_asset_coords( std::array< float, 4 > asset_coords );
             virtual ID get_type() const;
             bool is_left_collision( const Actor *actor ) const;
             bool is_right_collision( const Actor *actor ) const;
             bool is_top_collision( const Actor *actor ) const;
             bool is_bottom_collision( const Actor *actor ) const;
+            virtual std::string to_string() const;
             friend std::ostream &operator<<( std::ostream &os, const Actor &actor );
             bool operator==( const Actor &actor ) const;
             bool operator!=( const Actor &actor ) const;

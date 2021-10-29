@@ -1,9 +1,9 @@
-#ifndef SOKOBAN_MAIN_WINDOW_HPP
-#define SOKOBAN_MAIN_WINDOW_HPP
+#ifndef SOKOBAN_WINDOW_HPP
+#define SOKOBAN_WINDOW_HPP
 
 #include "../../util/Logger.hpp"
 #include "../../model/Board.hpp"
-#include "Game_State.hpp"
+#include "State_Game.hpp"
 
 #include <SFML/System/Time.hpp>
 #include <SFML/Graphics/Text.hpp>
@@ -25,7 +25,7 @@ namespace sokoban
             private:
                 static const sf::Time _time_per_frame;
                 sf::RenderWindow _window;
-                GameSceneNode *_game;
+                State_Game *_game;
                 sf::Font _font;
                 sf::Text _statistics_text;
                 sf::Time _statistics_update_time;
@@ -42,4 +42,4 @@ namespace sokoban
     }
 }
 
-#endif //SOKOBAN_MAIN_WINDOW_HPP
+#endif //SOKOBAN_WINDOW_HPP

@@ -1,5 +1,6 @@
 #include "Movable.hpp"
 
+#include <sstream>
 #include <utility>
 
 using namespace sokoban::model;
@@ -8,7 +9,7 @@ using namespace sokoban::model;
  * Tout comme la classe Actor, l'objet 'moveable' doit aussi instancier les coordonnées X et Y
  * ainsi que l'asset qui le représentera graphiquement.
  */
-Movable::Movable( int x, int y, std::array< int, 4 > asset_coords )
+Movable::Movable( float x, float y, std::array< float , 4 > asset_coords )
         : Actor( x, y, asset_coords )
 {
 }
@@ -29,19 +30,21 @@ Movable &Movable::operator=( const Movable &movable )
     return *this;
 }
 
-void Movable::move( int x, int y )
+void Movable::move( float x, float y )
 {
     set_x( get_x() + x );
     set_y( get_y() + y );
 }
 
-std::ostream &sokoban::model::operator<<( std::ostream &os, const Movable &movable )
+std::string Movable::to_string() const
 {
-    os << static_cast<const Actor &>(movable);
-    return os;
+    std::stringstream ss;
+    ss << Actor::to_string();
+    return ss.str();
 }
 
-Actor::ID Movable::get_type() const
+std::ostream &sokoban::model::operator<<( std::ostream &os, const Movable &movable )
 {
-    return Actor::PLAYER;
+    os << movable.to_string();
+    return os;
 }

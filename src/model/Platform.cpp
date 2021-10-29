@@ -1,13 +1,14 @@
 #include "Platform.hpp"
 
-#include <iostream>
 #include <array>
+#include <sstream>
+#include <iostream>
 
 using namespace sokoban::model;
 
-const std::array< int, 4 > platform_purple_asset = { 0, 384, 32, 32  };
+const std::array< float, 4 > platform_purple_asset = { 0, 384, 32, 32  };
 
-Platform::Platform( int x, int y )
+Platform::Platform( float x, float y )
         : Actor( x, y, platform_purple_asset )
 {
 }
@@ -30,16 +31,23 @@ Platform &Platform::operator=( const Platform &platform )
 
 Platform::~Platform()
 {
-    std::cout << "Deletion Platform -> _x: " << get_x() << " - y: " << get_y() << std::endl;
-}
-
-std::ostream &sokoban::model::operator<<( std::ostream &os, const Platform &platform )
-{
-    os << static_cast<const Actor &>(platform);
-    return os;
+    std::cout << "Deletion " << Platform::to_string() << std::endl;
 }
 
 Actor::ID Platform::get_type() const
 {
     return Actor::PLATFORM;
+}
+
+std::string Platform::to_string() const
+{
+    std::stringstream ss;
+    ss << "Platform: " << Actor::to_string();
+    return ss.str();
+}
+
+std::ostream &sokoban::model::operator<<( std::ostream &os, const Platform &platform )
+{
+    os << platform.to_string();
+    return os;
 }

@@ -12,13 +12,13 @@ int main( int argc, char *argv[] )
     Logger logger( "main" );
     remove( logger.get_file_name().c_str() );
 
-    Logger::log( LoggerLevel::INFO, "Starting menu..." );
+    Logger::log( LoggerLevel::INFO, "Starting Menu..." );
 
     Menu menu;
 
     int res = 0;
 
-    Logger::log( LoggerLevel::INFO, "Running _game..." );
+    Logger::log( LoggerLevel::INFO, "Running Game..." );
 
     try
     {

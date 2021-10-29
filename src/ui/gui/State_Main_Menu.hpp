@@ -1,0 +1,9 @@
+#ifndef SOKOBAN_STATE_MAIN_MENU_HPP
+#define SOKOBAN_STATE_MAIN_MENU_HPP
+
+class State_Main_Menu
+{
+
+};
+
+#endif //SOKOBAN_STATE_MAIN_MENU_HPP

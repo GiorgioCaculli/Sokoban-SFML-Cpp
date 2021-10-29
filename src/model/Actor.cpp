@@ -1,13 +1,13 @@
 #include "Actor.hpp"
 
-#include <utility>
+#include <sstream>
 
 using namespace sokoban::model;
 
 /*
  * Dans ce cas, les images mesurent 64x64
  */
-const int SPACE = 64;
+const float SPACE = 64.f;
 
 /*
  * Ce constructeur va initialiser les différentes informations qui caractérisent notre acteur.
@@ -15,7 +15,7 @@ const int SPACE = 64;
  * Sa coordonnée Y.
  * L'asset pour le représenter graphiquement.
  */
-Actor::Actor( int x, int y, std::array< int, 4 > asset_coords )
+Actor::Actor( float x, float y, std::array< float, 4 > asset_coords )
         : _x( x )
           , _y( y )
           , _asset_coords( asset_coords )
@@ -26,9 +26,7 @@ Actor::Actor( int x, int y, std::array< int, 4 > asset_coords )
  * Constructeur de copie
  */
 Actor::Actor( const Actor &actor )
-        : _x( actor._x )
-          , _y( actor._y )
-          , _asset_coords( actor._asset_coords )
+        : Actor( actor._x, actor._y, actor._asset_coords )
 {
 }
 
@@ -46,7 +44,7 @@ Actor &Actor::operator=( const Actor &actor )
 /*
  * Getter pour la coordonnée X.
  */
-int Actor::get_x() const
+float Actor::get_x() const
 {
     return _x;
 }
@@ -54,7 +52,7 @@ int Actor::get_x() const
 /*
  * Setter pour la coordonnée X.
  */
-void Actor::set_x( int x )
+void Actor::set_x( float x )
 {
     this->_x = x;
 }
@@ -62,7 +60,7 @@ void Actor::set_x( int x )
 /*
  * Getter pour la coordonnée Y.
  */
-int Actor::get_y() const
+float Actor::get_y() const
 {
     return _y;
 }
@@ -70,7 +68,7 @@ int Actor::get_y() const
 /*
  * Setter pour la coordonnée Y.
  */
-void Actor::set_y( int y )
+void Actor::set_y( float y )
 {
     this->_y = y;
 }
@@ -78,7 +76,7 @@ void Actor::set_y( int y )
 /*
  * Getter pour l'asset.
  */
-std::array< int, 4 > Actor::get_asset_coords() const
+std::array< float, 4 > Actor::get_asset_coords() const
 {
     return _asset_coords;
 }
@@ -86,7 +84,7 @@ std::array< int, 4 > Actor::get_asset_coords() const
 /*
  * Setter pour l'asset.
  */
-void Actor::set_asset_coords( std::array< int, 4 > asset_coords )
+void Actor::set_asset_coords( std::array< float, 4 > asset_coords )
 {
     this->_asset_coords = asset_coords;
 }
@@ -148,13 +146,20 @@ bool Actor::is_bottom_collision( const Actor *actor ) const
     return get_y() + SPACE == actor->get_y() && get_x() == actor->get_x();
 }
 
+std::string Actor::to_string() const
+{
+    std::stringstream ss;
+    ss << "X: " << _x << " Y: " << _y;
+    return ss.str();
+}
+
 /*
  * Fonction qui sert à redéfinir l'operateur <<
  * Cette redéfinition nous permettra d'afficer directement l'ostream
  */
 std::ostream &sokoban::model::operator<<( std::ostream &os, const Actor &actor )
 {
-    os << "_x: " << actor._x << " y: " << actor._y;
+    os << actor.to_string();
     return os;
 }
 

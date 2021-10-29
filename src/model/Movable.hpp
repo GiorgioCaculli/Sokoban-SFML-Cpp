@@ -1,9 +1,11 @@
 #ifndef SOKOBAN_MOVABLE_HPP
 #define SOKOBAN_MOVABLE_HPP
 
-#include <ostream>
-#include <array>
 #include "Actor.hpp"
+
+#include <array>
+#include <string>
+#include <ostream>
 
 /*
  * Classe qui gère les acteurs capables de se déplacer.
@@ -17,12 +19,13 @@ namespace sokoban
                 : public Actor
         {
         public:
-            Movable( int x, int y, std::array< int, 4 > asset_coords );
+            Movable( float x, float y, std::array< float, 4 > asset_coords );
             Movable( const Movable &movable );
             Movable &operator=( const Movable &movable );
             ~Movable() override = default;
-            void move( int x, int y );
+            void move( float x, float y );
             ID get_type() const override = 0;
+            std::string to_string() const override;
             friend std::ostream &operator<<( std::ostream &os, const Movable &movable );
         };
     }
