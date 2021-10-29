@@ -13,7 +13,7 @@ Event_Info::Event_Info( int event )
 }
 
 Event_Details::Event_Details( const std::string &bind_name )
-: name( bind_name )
+        : name( bind_name )
 {
     clear();
 }
@@ -28,9 +28,9 @@ void Event_Details::clear()
 }
 
 Binding::Binding( const std::string &name )
-: name( name )
-, details( name )
-, c( 0 )
+        : name( name )
+          , details( name )
+          , c( 0 )
 {
 }
 
@@ -43,15 +43,15 @@ void Binding::bind_event( Event_Type type, Event_Info info )
 }
 
 Event_Manager::Event_Manager()
-: _current_state( State_Type( 0 ) )
-, _has_focus( true )
+        : _current_state( State_Type( 0 ) )
+          , _has_focus( true )
 {
     load_bindings();
 }
 
 Event_Manager::~Event_Manager()
 {
-    for( auto &itr : _bindings )
+    for ( auto &itr: _bindings )
     {
         delete itr.second;
     }
@@ -59,7 +59,7 @@ Event_Manager::~Event_Manager()
 
 bool Event_Manager::add_binding( Binding *binding )
 {
-    if( _bindings.find( binding->name ) != _bindings.end() )
+    if ( _bindings.find( binding->name ) != _bindings.end() )
     {
         return false;
     }
@@ -70,7 +70,7 @@ bool Event_Manager::add_binding( Binding *binding )
 bool Event_Manager::remove_binding( std::string name )
 {
     auto itr = _bindings.find( name );
-    if( itr == _bindings.end() )
+    if ( itr == _bindings.end() )
     {
         return false;
     }
@@ -91,21 +91,21 @@ void Event_Manager::set_focus( const bool &focus )
 
 void Event_Manager::handle_event( sf::Event &event )
 {
-    for( auto &binding_itr : _bindings )
+    for ( auto &binding_itr: _bindings )
     {
         Binding *bind = binding_itr.second;
-        for( auto event_itr : bind->events )
+        for ( auto event_itr: bind->events )
         {
             Event_Type sfml_event = ( Event_Type ) event.type;
-            if( event_itr.first != sfml_event )
+            if ( event_itr.first != sfml_event )
             {
                 continue;
             }
-            if( sfml_event == Event_Type::Key_Down || sfml_event == Event_Type::Key_Up )
+            if ( sfml_event == Event_Type::Key_Down || sfml_event == Event_Type::Key_Up )
             {
-                if( event_itr.second.code == event.key.code )
+                if ( event_itr.second.code == event.key.code )
                 {
-                    if( bind->details.key_code != -1 )
+                    if ( bind->details.key_code != -1 )
                     {
                         bind->details.key_code = event_itr.second.code;
                     }
@@ -113,13 +113,13 @@ void Event_Manager::handle_event( sf::Event &event )
                     break;
                 }
             }
-            else if( sfml_event == Event_Type::Mouse_Button_Down || sfml_event == Event_Type::Mouse_Button_Up )
+            else if ( sfml_event == Event_Type::Mouse_Button_Down || sfml_event == Event_Type::Mouse_Button_Up )
             {
-                if( event_itr.second.code == event.mouseButton.button )
+                if ( event_itr.second.code == event.mouseButton.button )
                 {
                     bind->details.mouse.x = event.mouseButton.x;
                     bind->details.mouse.y = event.mouseButton.y;
-                    if( bind->details.key_code != -1 )
+                    if ( bind->details.key_code != -1 )
                     {
                         bind->details.key_code = event_itr.second.code;
                     }
@@ -129,16 +129,16 @@ void Event_Manager::handle_event( sf::Event &event )
             }
             else
             {
-                if( sfml_event == Event_Type::Mouse_Wheel )
+                if ( sfml_event == Event_Type::Mouse_Wheel )
                 {
                     bind->details.mouse_wheel_delta = event.mouseWheel.delta;
                 }
-                else if( sfml_event == Event_Type::Window_Resized )
+                else if ( sfml_event == Event_Type::Window_Resized )
                 {
                     bind->details.size.x = event.size.width;
                     bind->details.size.y = event.size.height;
                 }
-                else if( sfml_event == Event_Type::Text_Entered )
+                else if ( sfml_event == Event_Type::Text_Entered )
                 {
                     bind->details.text_entered = event.text.unicode;
                 }
@@ -150,21 +150,21 @@ void Event_Manager::handle_event( sf::Event &event )
 
 void Event_Manager::update()
 {
-    if( !_has_focus )
+    if ( !_has_focus )
     {
         return;
     }
-    for( auto &binding_itr : _bindings )
+    for ( auto &binding_itr: _bindings )
     {
         Binding *bind = binding_itr.second;
-        for( auto &event_itr : bind->events )
+        for ( auto &event_itr: bind->events )
         {
             switch ( event_itr.first )
             {
             case Event_Type::Keyboard:
-                if( sf::Keyboard::isKeyPressed( sf::Keyboard::Key( event_itr.second.code ) ) )
+                if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Key( event_itr.second.code ) ) )
                 {
-                    if( bind->details.key_code != -1 )
+                    if ( bind->details.key_code != -1 )
                     {
                         bind->details.key_code = event_itr.second.code;
                     }
@@ -172,9 +172,9 @@ void Event_Manager::update()
                 }
                 break;
             case Event_Type::Mouse:
-                if( sf::Mouse::isButtonPressed( sf::Mouse::Button( event_itr.second.code ) ) )
+                if ( sf::Mouse::isButtonPressed( sf::Mouse::Button( event_itr.second.code ) ) )
                 {
-                    if( bind->details.key_code != -1 )
+                    if ( bind->details.key_code != -1 )
                     {
                         bind->details.key_code = event_itr.second.code;
                     }
@@ -185,23 +185,23 @@ void Event_Manager::update()
                 break;
             }
         }
-        if( bind->events.size() == bind->c )
+        if ( bind->events.size() == bind->c )
         {
             auto state_callbacks = _callbacks.find( _current_state );
             auto other_callbacks = _callbacks.find( State_Type( 0 ) );
 
-            if( state_callbacks != _callbacks.end() )
+            if ( state_callbacks != _callbacks.end() )
             {
                 auto call_itr = state_callbacks->second.find( bind->name );
-                if( call_itr != state_callbacks->second.end() )
+                if ( call_itr != state_callbacks->second.end() )
                 {
                     call_itr->second( &bind->details );
                 }
             }
-            if( other_callbacks != _callbacks.end() )
+            if ( other_callbacks != _callbacks.end() )
             {
                 auto call_itr = other_callbacks->second.find( bind->name );
-                if( call_itr != other_callbacks->second.end() )
+                if ( call_itr != other_callbacks->second.end() )
                 {
                     call_itr->second( &bind->details );
                 }
@@ -223,30 +223,30 @@ void Event_Manager::load_bindings()
 
     std::ifstream bindings;
     bindings.open( "res/keys.cfg" );
-    if( !bindings.is_open() )
+    if ( !bindings.is_open() )
     {
         std::cout << "! Failed loading res/keys.cfg." << std::endl;
         return;
     }
     std::string line;
-    while( std::getline( bindings, line ) )
+    while ( std::getline( bindings, line ) )
     {
         std::stringstream key_stream( line );
         std::string callback_name;
         key_stream >> callback_name;
         Binding *bind = new Binding( callback_name );
-        while( !key_stream.eof() )
+        while ( !key_stream.eof() )
         {
             std::string key_val;
             key_stream >> key_val;
-            if( key_stream.fail() )
+            if ( key_stream.fail() )
             {
                 key_stream.clear();
                 break;
             }
             int start = 0;
             int end = key_val.find( delimiter );
-            if( end == std::string::npos )
+            if ( end == std::string::npos )
             {
                 delete bind;
                 bind = nullptr;
@@ -259,7 +259,7 @@ void Event_Manager::load_bindings()
             event_info.code = code;
             bind->bind_event( type, event_info );
         }
-        if( !add_binding( bind ) )
+        if ( !add_binding( bind ) )
         {
             delete bind;
         }

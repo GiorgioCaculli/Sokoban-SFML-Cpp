@@ -23,8 +23,8 @@ namespace sokoban
             std::vector< Platform * > _platforms;
             Player *_player;
             std::vector< Actor * > _world;
-            int _width;
-            int _height;
+            float _width;
+            float _height;
             bool _completed;
             void init_board();
             void init_world();
@@ -37,14 +37,14 @@ namespace sokoban
                 TOP_COLLISION,
                 BOTTOM_COLLISION
             };
-            explicit Board( std::string lvl );
+            explicit Board( const std::string &lvl );
             Board( const Board &board );
             Board &operator=( const Board &board );
             ~Board();
             bool check_wall_collision( Actor *actor, int type );
             bool check_box_collision( int type );
-            int get_board_width() const;
-            int get_board_height() const;
+            float get_board_width() const;
+            float get_board_height() const;
             bool is_completed() const;
             std::vector< Actor * > get_world();
             friend std::ostream &operator<<( std::ostream &os, const Board &board );

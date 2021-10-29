@@ -3,9 +3,9 @@
 using namespace sokoban::ui::gui;
 
 Base_State::Base_State( State_Manager *state_manager )
-: _state_manager( state_manager )
-, _transparent( false )
-, _transcendent( false )
+        : _state_manager( state_manager )
+          , _transparent( false )
+          , _transcendent( false )
 {
 }
 

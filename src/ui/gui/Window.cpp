@@ -12,11 +12,11 @@ const int WIDTH = 1440;
 const int HEIGHT = WIDTH / 16 * 10;
 
 MainFrame::MainFrame()
-          : _font()
-            , _statistics_text()
-            , _statistics_update_time()
-            , _statistics_num_frames( 0 )
-            , _window( sf::VideoMode( WIDTH, HEIGHT ), "Sokoban", sf::Style::Titlebar | sf::Style::Close )
+        : _font()
+          , _statistics_text()
+          , _statistics_update_time()
+          , _statistics_num_frames( 0 )
+          , _window( sf::VideoMode( WIDTH, HEIGHT ), "Sokoban", sf::Style::Titlebar | sf::Style::Close )
 {
     Logger::log( LoggerLevel::INFO, "Init Window" );
 

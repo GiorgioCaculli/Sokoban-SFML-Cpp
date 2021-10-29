@@ -11,9 +11,11 @@ namespace sokoban
         namespace gui
         {
             class State_Manager;
+
             class Base_State
             {
                 friend class State_Manager;
+
             public:
                 Base_State( State_Manager *state_manager );
                 virtual ~Base_State();

@@ -6,7 +6,7 @@
 
 using namespace sokoban::model;
 
-const std::array< float, 4 > platform_purple_asset = { 0, 384, 32, 32  };
+const std::array< float, 4 > platform_purple_asset = { 0, 384, 32, 32 };
 
 Platform::Platform( float x, float y )
         : Actor( x, y, platform_purple_asset )
@@ -20,7 +20,7 @@ Platform::Platform( const Platform &platform )
 
 Platform &Platform::operator=( const Platform &platform )
 {
-    if( &platform != this )
+    if ( &platform != this )
     {
         set_x( platform.get_x() );
         set_y( platform.get_y() );

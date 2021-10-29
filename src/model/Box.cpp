@@ -20,7 +20,7 @@ Box::Box( const Box &box )
 
 Box &Box::operator=( const Box &box )
 {
-    if( &box != this )
+    if ( &box != this )
     {
         set_x( box.get_x() );
         set_y( box.get_y() );

@@ -10,41 +10,33 @@ std::array< float, 4 > character_facing_north = { 384, 0, 37, 60 };
 
 std::array< float, 4 > character_walking_right = { 320, 128, 42, 58 };
 std::array< float, 4 > character_walking_north_left_step = {
-        character_walking_right[ 0 ] + character_walking_right[ 2 ],
-        character_walking_right[ 1 ],
-        37, 60 };
+        character_walking_right[ 0 ] + character_walking_right[ 2 ], character_walking_right[ 1 ], 37, 60
+};
 
 std::array< float, 4 > character_facing_east = {
-        character_walking_right[ 0 ],
-        character_walking_right[ 1 ] + character_walking_right[ 3 ],
-        42, 59 };
+        character_walking_right[ 0 ], character_walking_right[ 1 ] + character_walking_right[ 3 ], 42, 59
+};
 std::array< float, 4 > character_walking_north_right_step = {
-        character_facing_east[ 0 ] + character_facing_east[ 2 ],
-        character_facing_east[ 1 ],
-        37, 60 };
+        character_facing_east[ 0 ] + character_facing_east[ 2 ], character_facing_east[ 1 ], 37, 60
+};
 
 std::array< float, 4 > character_facing_west = {
-        character_facing_east[ 0 ],
-        character_facing_east[ 1 ] + character_facing_east[ 3 ],
-        42, 59 };
+        character_facing_east[ 0 ], character_facing_east[ 1 ] + character_facing_east[ 3 ], 42, 59
+};
 std::array< float, 4 > character_facing_south = {
-        character_facing_west[ 0 ] + character_facing_west[ 2 ],
-        character_facing_west[ 1 ] + 3,
-        37, 59 };
+        character_facing_west[ 0 ] + character_facing_west[ 2 ], character_facing_west[ 1 ] + 3, 37, 59
+};
 
 std::array< float, 4 > character_walking_left = {
-        character_facing_west[ 0 ],
-        character_facing_west[ 1 ] + character_facing_west[ 3 ],
-        42, 58 };
+        character_facing_west[ 0 ], character_facing_west[ 1 ] + character_facing_west[ 3 ], 42, 58
+};
 
 std::array< float, 4 > character_walking_south_right_step = {
-        character_walking_left[ 0 ],
-        character_walking_left[ 1 ] + character_walking_left[ 3 ],
-        37, 59 };
+        character_walking_left[ 0 ], character_walking_left[ 1 ] + character_walking_left[ 3 ], 37, 59
+};
 std::array< float, 4 > character_walking_south_left_step = {
-        character_walking_south_right_step[ 0 ] + character_walking_south_right_step[ 2 ],
-        character_walking_south_right_step[ 1 ],
-        37, 59 };
+        character_walking_south_right_step[ 0 ] + character_walking_south_right_step[ 2 ], character_walking_south_right_step[ 1 ], 37, 59
+};
 
 const std::array< float, 4 > player_asset_north = character_facing_north;
 const std::array< float, 4 > player_asset_south = character_facing_south;
@@ -53,19 +45,10 @@ const std::array< float, 4 > player_asset_west = character_facing_west;
 
 Player::Player( float x, float y )
         : Movable( x, y, player_asset_north )
-        , _current_face( Face::NORTH )
+          , _current_face( Face::NORTH )
 {
     _animations = {
-            character_facing_north,
-            character_walking_north_right_step,
-            character_walking_north_left_step,
-            character_facing_west,
-            character_walking_right,
-            character_facing_south,
-            character_walking_south_right_step,
-            character_walking_south_left_step,
-            character_facing_east,
-            character_walking_left
+            character_facing_north, character_walking_north_right_step, character_walking_north_left_step, character_facing_west, character_walking_right, character_facing_south, character_walking_south_right_step, character_walking_south_left_step, character_facing_east, character_walking_left
     };
 }
 
@@ -79,7 +62,7 @@ Player::Player( const Player &player )
 
 Player &Player::operator=( const Player &player )
 {
-    if( &player != this )
+    if ( &player != this )
     {
         set_x( player.get_x() );
         set_y( player.get_y() );

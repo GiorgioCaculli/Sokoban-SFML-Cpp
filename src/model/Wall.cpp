@@ -20,7 +20,7 @@ Wall::Wall( const Wall &wall )
 
 Wall &Wall::operator=( const Wall &wall )
 {
-    if( &wall != this )
+    if ( &wall != this )
     {
         set_x( wall.get_x() );
         set_y( wall.get_y() );

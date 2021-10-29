@@ -32,7 +32,7 @@ Actor::Actor( const Actor &actor )
 
 Actor &Actor::operator=( const Actor &actor )
 {
-    if( &actor != this )
+    if ( &actor != this )
     {
         _x = actor._x;
         _y = actor._y;

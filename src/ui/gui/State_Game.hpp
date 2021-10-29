@@ -21,7 +21,7 @@ namespace sokoban
                     : private sf::NonCopyable
             {
             public:
-                State_Game( sf::RenderWindow &window, const std::string& level );
+                State_Game( sf::RenderWindow &window, const std::string &level );
                 ~State_Game();
                 void update( const sf::Time &dt );
                 void draw();
