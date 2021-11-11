@@ -32,19 +32,19 @@ if(Boost_USE_STATIC_RUNTIME)
   return()
 endif()
 
-# runtime-debugging=off
+# runtime-debugging=on
 
-if(Boost_USE_DEBUG_RUNTIME)
-  _BOOST_SKIPPED("libboost_log_setup.so.1.77.0" "release runtime, Boost_USE_DEBUG_RUNTIME=${Boost_USE_DEBUG_RUNTIME}")
+if(NOT "${Boost_USE_DEBUG_RUNTIME}" STREQUAL "" AND NOT Boost_USE_DEBUG_RUNTIME)
+  _BOOST_SKIPPED("libboost_log_setup.so.1.77.0" "debug runtime, Boost_USE_DEBUG_RUNTIME=${Boost_USE_DEBUG_RUNTIME}")
   return()
 endif()
 
 # threading=multi
 
-# variant=release
+# variant=debug
 
-if(NOT "${Boost_USE_RELEASE_LIBS}" STREQUAL "" AND NOT Boost_USE_RELEASE_LIBS)
-  _BOOST_SKIPPED("libboost_log_setup.so.1.77.0" "release, Boost_USE_RELEASE_LIBS=${Boost_USE_RELEASE_LIBS}")
+if(NOT "${Boost_USE_DEBUG_LIBS}" STREQUAL "" AND NOT Boost_USE_DEBUG_LIBS)
+  _BOOST_SKIPPED("libboost_log_setup.so.1.77.0" "debug, Boost_USE_DEBUG_LIBS=${Boost_USE_DEBUG_LIBS}")
   return()
 endif()
 
@@ -65,22 +65,17 @@ endif()
 
 # Target file name: libboost_log_setup.so.1.77.0
 
-get_target_property(__boost_imploc Boost::log_setup IMPORTED_LOCATION_RELEASE)
+get_target_property(__boost_imploc Boost::log_setup IMPORTED_LOCATION_DEBUG)
 if(__boost_imploc)
   message(SEND_ERROR "Target Boost::log_setup already has an imported location '${__boost_imploc}', which is being overwritten with '${_BOOST_LIBDIR}/libboost_log_setup.so.1.77.0'")
 endif()
 unset(__boost_imploc)
 
-set_property(TARGET Boost::log_setup APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+set_property(TARGET Boost::log_setup APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
 
 set_target_properties(Boost::log_setup PROPERTIES
-  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE CXX
-  IMPORTED_LOCATION_RELEASE "${_BOOST_LIBDIR}/libboost_log_setup.so.1.77.0"
-  )
-
-set_target_properties(Boost::log_setup PROPERTIES
-  MAP_IMPORTED_CONFIG_MINSIZEREL Release
-  MAP_IMPORTED_CONFIG_RELWITHDEBINFO Release
+  IMPORTED_LINK_INTERFACE_LANGUAGES_DEBUG CXX
+  IMPORTED_LOCATION_DEBUG "${_BOOST_LIBDIR}/libboost_log_setup.so.1.77.0"
   )
 
 set_property(TARGET Boost::log_setup APPEND
