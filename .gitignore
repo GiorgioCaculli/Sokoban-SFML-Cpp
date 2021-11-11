@@ -2,6 +2,14 @@
 cmake-build-debug/
 build/
 
+# CodeBlocks
+*.layout
+*.depend
+# generated directories
+bin/
+obj/
+Sokoban.cbp.save
+
 # CMake
 CMakeLists.txt.user
 CMakeCache.txt
