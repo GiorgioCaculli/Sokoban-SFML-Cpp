@@ -37,7 +37,7 @@ _deps
 *.pch
 
 # Compiled Dynamic libraries
-*.so
+#*.so
 *.dylib
 *.dll
 
@@ -48,7 +48,7 @@ _deps
 # Compiled Static libraries
 *.lai
 *.la
-*.a
+#*.a
 *.lib
 
 # Executables
