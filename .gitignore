@@ -9,6 +9,7 @@ build/
 bin/
 obj/
 Sokoban.cbp.save
+Sokoban.layout.save
 
 # CMake
 CMakeLists.txt.user

@@ -18,7 +18,9 @@
 					<Add option="-Wall" />
 					<Add option="-g" />
 					<Add option="-std=c++11 -O0 -DBOOST_LOG_DYN_LINK" />
+					<Add option="-DSFML_STATIC" />
 					<Add directory="lib/boost" />
+					<Add directory="lib/sfml/include" />
 				</Compiler>
 				<Linker>
 					<Add library="pthread" />
@@ -61,12 +63,13 @@
 					<Add library="boost_unit_test_framework" />
 					<Add library="boost_wave" />
 					<Add library="boost_wserialization" />
-					<Add library="sfml-system" />
-					<Add library="sfml-window" />
 					<Add library="sfml-graphics" />
+					<Add library="sfml-window" />
+					<Add library="sfml-system" />
 					<Add library="sfml-audio" />
 					<Add library="sfml-network" />
 					<Add directory="lib/boost/lib" />
+					<Add directory="lib/sfml/lib" />
 				</Linker>
 				<ExtraCommands>
 					<Add before='mkdir -p &quot;$(TARGET_OUTPUT_DIR)&quot;' />
