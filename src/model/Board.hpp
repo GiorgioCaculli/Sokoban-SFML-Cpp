@@ -14,18 +14,22 @@ namespace sokoban
 {
     namespace model
     {
+        /**
+         * Board class
+         * Meant to build the layout of the leve that the player will be playing
+         */
         class Board
         {
         private:
-            std::string _level;
-            std::vector< Box * > _boxes;
-            std::vector< Wall * > _walls;
-            std::vector< Platform * > _platforms;
-            Player *_player;
-            std::vector< Actor * > _world;
-            float _width;
-            float _height;
-            bool _completed;
+            std::string _level; /** The skeleton of the level */
+            std::vector< Box * > _boxes; /** All the boxes in the level */
+            std::vector< Wall * > _walls; /** All the walls in the game */
+            std::vector< Platform * > _platforms; /** All the platforms in the game */
+            Player *_player; /** The main character of the game */
+            std::vector< Actor * > _world; /** Every actor in the game */
+            float _width; /** The board's maximum width */
+            float _height; /** The board's maximum height */
+            bool _completed; /** Whether the game is completed */
             void init_board();
             void init_world();
             void build_world();

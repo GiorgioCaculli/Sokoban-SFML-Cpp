@@ -7,9 +7,21 @@
 
 using namespace sokoban::model;
 
-const int OFFSET = 64;
-const int SPACE = 64;
+const int OFFSET = 64; /** Variable used for the amount of pixels an actor can move */
+const int SPACE = 64; /** Variable used for the size of each character */
 
+/**
+ * Constructor for the board
+ * The parameter lvl is meant to be a string containing the path to a text file
+ * That text file will contain the skeleton of the level, meaning that from the
+ * symbols present on the text file, we can build every actor of the game.
+ * # represents a wall
+ * @ represents the player
+ * . represents a platform
+ * $ represents a box
+ * An empty space is just emptiness
+ * @param lvl The path for the level
+ */
 Board::Board( const std::string &lvl )
         : _completed( false )
           , _boxes()
@@ -35,11 +47,24 @@ Board::Board( const std::string &lvl )
     init_board();
 }
 
+/**
+ * Copy constructor of the board
+ * Primarily used to create a backup of the board.
+ * An example of usage for this constructor could be to load a board when
+ * the player hits the reset button
+ * @param board The board from which we wish to create a copy
+ */
 Board::Board( const Board &board )
         : Board( board._level )
 {
 }
 
+/**
+ * Redefinition of the = operator
+ * Same usage as the copy constructor
+ * @param board
+ * @return
+ */
 Board &Board::operator=( const Board &board )
 {
     if ( &board != this )
@@ -58,6 +83,10 @@ Board &Board::operator=( const Board &board )
     return *this;
 }
 
+/**
+ * Board's destructor
+ * Meant to clear the memory from any actor that has been initialised
+ */
 Board::~Board()
 {
     for ( Wall *wall: _walls )
@@ -79,11 +108,25 @@ Board::~Board()
     _world.clear();
 }
 
+/**
+ * Executions before the world initialization
+ */
 void Board::init_board()
 {
     init_world();
 }
 
+/**
+ * World initialization
+ * Meant to initialise every actor on the board
+ * As stated in the constructor:
+ * * # represents a wall
+ * @ represents the player
+ * . represents a platform
+ * $ represents a box
+ * An empty space is just emptiness
+ * Each actor is inserted into its respective vector
+ */
 void Board::init_world()
 {
     _boxes = std::vector< Box * >();
@@ -137,6 +180,10 @@ void Board::init_world()
     build_world();
 }
 
+/**
+ * Definition of each actor in their respective category.
+ * This will allow is to easily clear out their memory simultaneously
+ */
 void Board::build_world()
 {
     _world = std::vector< Actor * >();
@@ -155,6 +202,12 @@ void Board::build_world()
     _world.insert( _world.begin(), _player );
 }
 
+/**
+ * Function to check whether there is a collision between an actor and a wall
+ * @param actor The actor causing the collision
+ * @param type The type of collision: TOP, BOTTOM, LEFT, RIGHT
+ * @return true if a collision took place, false if not
+ */
 bool Board::check_wall_collision( Actor *actor, int type )
 {
     switch ( type )
@@ -201,6 +254,11 @@ bool Board::check_wall_collision( Actor *actor, int type )
     return false;
 }
 
+/**
+ * Functions that checks whether there is a collision between an actor and a box
+ * @param type The type of collision: TOP, BOTTOM, LEFT, RIGHT
+ * @return true if a collision took place, false if not
+ */
 bool Board::check_box_collision( int type )
 {
     switch ( type )
@@ -307,21 +365,40 @@ bool Board::check_box_collision( int type )
     return false;
 }
 
+/**
+ * Getter for the board width
+ * @return The width of the board
+ */
 float Board::get_board_width() const
 {
     return _width;
 }
 
+/**
+ * Getter for the board height
+ * @return The height of the board
+ */
 float Board::get_board_height() const
 {
     return _height;
 }
 
+/**
+ * Function that allows the played to know whether the level is completed
+ * @return True if all the boxes are on the platforms
+ */
 bool Board::is_completed() const
 {
     return _completed;
 }
 
+/**
+ * Redefinition of the << operator
+ * Meant to be used when outputting the board textually
+ * @param os The base output stream
+ * @param board The board to output
+ * @return Textual output of the various actor's positions
+ */
 std::ostream &sokoban::model::operator<<( std::ostream &os, const Board &board )
 {
     os << board._level;
@@ -332,6 +409,10 @@ std::ostream &sokoban::model::operator<<( std::ostream &os, const Board &board )
     return os;
 }
 
+/**
+ * Function to retrieve all the actors on the board
+ * @return The vector containing the various actors
+ */
 std::vector< Actor * > Board::get_world()
 {
     return _world;

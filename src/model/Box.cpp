@@ -6,7 +6,7 @@
 
 using namespace sokoban::model;
 
-const std::array< float, 4 > box_brown_light_asset = { 192, 256, 64, 64 };
+const std::array< float, 4 > box_brown_light_asset = { 192, 256, 64, 64 }; /** The default asset for the box */
 
 Box::Box( float x, float y )
         : Movable( x, y, box_brown_light_asset )

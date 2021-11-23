@@ -4,36 +4,28 @@
 #include <array>
 #include <string>
 #include <ostream>
-
-/*
- * Classe actor
- * Cette classe est le _parent de tous les objects.
- * Bien des objects qui peuvent bouger, que ces qui sont fixes.
- */
 namespace sokoban
 {
     namespace model
     {
+        /**
+         * Actor class
+         * Parent class for any actor that will be displayed throughout the game
+         * Parent class of both movable and non movable actors
+         */
         class Actor
         {
         private:
-            float _x; /* La coordonnée X dans la _board */
-            float _y; /* La coordonnée Y dans la _board */
-            std::array< float, 4 > _asset_coords;
+            float _x; /** The X coordinate on the board */
+            float _y; /** The Y coordinate on the board */
+            std::array< float, 4 > _asset_coords; /** The asset's coordinates on the sprite sheet */
         public:
-            /*
-             * On considère 4 acteurs possibles dans le jeu
-             * - Une boîte
-             * - Une plateforme sur laquelle poser la boîte
-             * - Le joueur
-             * - Un mur
-             */
-            enum ID
+            enum ID /** We consider there to be 4 types of actors */
             {
-                BOX,
-                PLATFORM,
-                PLAYER,
-                WALL
+                BOX, /** A box */
+                PLATFORM, /** A platform on which we put the box */
+                PLAYER, /** A player */
+                WALL /** A wall */
             };
             Actor( float x, float y, std::array< float, 4 > asset_coords );
             Actor( const Actor &actor );
@@ -45,7 +37,7 @@ namespace sokoban
             void set_y( float y );
             std::array< float, 4 > get_asset_coords() const;
             void set_asset_coords( std::array< float, 4 > asset_coords );
-            virtual ID get_type() const;
+            virtual ID get_type() const = 0;
             bool is_left_collision( const Actor *actor ) const;
             bool is_right_collision( const Actor *actor ) const;
             bool is_top_collision( const Actor *actor ) const;

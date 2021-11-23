@@ -10,6 +10,10 @@ namespace sokoban
 {
     namespace model
     {
+        /**
+         * Box class
+         * This class is an actor that can move, as such it inherits from the classe Movable
+         */
         class Box
                 : public Movable
         {
