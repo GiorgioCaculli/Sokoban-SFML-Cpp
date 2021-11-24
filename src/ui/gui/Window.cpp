@@ -26,11 +26,11 @@ std::vector< boost::filesystem::path > get_all_levels()
     const boost::filesystem::path root = "assets/levels";
     const std::string extension = ".lvl";
     std::vector< boost::filesystem::path > paths;
-    if( boost::filesystem::exists( root ) && boost::filesystem::is_directory( root ) )
+    if ( boost::filesystem::exists( root ) && boost::filesystem::is_directory( root ) )
     {
-        for( auto const &entry : boost::filesystem::recursive_directory_iterator( root ) )
+        for ( auto const &entry: boost::filesystem::recursive_directory_iterator( root ) )
         {
-            if( boost::filesystem::is_regular_file( entry ) )
+            if ( boost::filesystem::is_regular_file( entry ) )
             {
                 paths.emplace_back( entry );
             }
@@ -60,20 +60,20 @@ MainWindow::MainWindow()
 
     Logger::log( LoggerLevel::INFO, "Init levels" );
 
-    if( get_all_levels().empty() )
+    if ( get_all_levels().empty() )
     {
         std::cout << "No levels loaded" << std::endl;
         _window.close();
         return;
     }
 
-    for( const boost::filesystem::path &path : get_all_levels() )
+    for ( const boost::filesystem::path &path: get_all_levels() )
     {
         levels.emplace_back( path.string() );
     }
 
     std::cout << "Levels loaded" << std::endl;
-    for( const std::string &lvl : levels )
+    for ( const std::string &lvl: levels )
     {
         std::cout << lvl << std::endl;
     }

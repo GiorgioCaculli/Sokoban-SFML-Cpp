@@ -161,28 +161,28 @@ void Event_Manager::update()
         {
             switch ( event_itr.first )
             {
-            case Event_Type::Keyboard:
-                if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Key( event_itr.second.code ) ) )
-                {
-                    if ( bind->details.key_code != -1 )
+                case Event_Type::Keyboard:
+                    if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Key( event_itr.second.code ) ) )
                     {
-                        bind->details.key_code = event_itr.second.code;
+                        if ( bind->details.key_code != -1 )
+                        {
+                            bind->details.key_code = event_itr.second.code;
+                        }
+                        ++( bind->c );
                     }
-                    ++( bind->c );
-                }
-                break;
-            case Event_Type::Mouse:
-                if ( sf::Mouse::isButtonPressed( sf::Mouse::Button( event_itr.second.code ) ) )
-                {
-                    if ( bind->details.key_code != -1 )
+                    break;
+                case Event_Type::Mouse:
+                    if ( sf::Mouse::isButtonPressed( sf::Mouse::Button( event_itr.second.code ) ) )
                     {
-                        bind->details.key_code = event_itr.second.code;
+                        if ( bind->details.key_code != -1 )
+                        {
+                            bind->details.key_code = event_itr.second.code;
+                        }
+                        ++( bind->c );
                     }
-                    ++( bind->c );
-                }
-                break;
-            case Event_Type::Joystick:
-                break;
+                    break;
+                case Event_Type::Joystick:
+                    break;
             }
         }
         if ( bind->events.size() == bind->c )

@@ -3,6 +3,8 @@
 
 #include "Movable.hpp"
 
+#include <map>
+#include <array>
 #include <string>
 #include <ostream>
 
@@ -14,7 +16,7 @@ namespace sokoban
                 : public Movable
         {
         public:
-            enum Face
+            enum class Face
             {
                 NORTH,
                 SOUTH,
@@ -26,14 +28,11 @@ namespace sokoban
             Player &operator=( const Player &player );
             ~Player() override;
             ID get_type() const override;
-            void set_face( const Face &face );
-            Face get_face() const;
-            std::array< std::array< float, 4 >, 10 > get_animations() const;
             std::string to_string() const override;
             friend std::ostream &operator<<( std::ostream &os, const Player &player );
+            const std::map< Face, std::array< float, 4>> &get_player_face_map() const;
         private:
-            Face _current_face;
-            std::array< std::array< float, 4 >, 10 > _animations;
+            std::map< Face, std::array< float, 4 > > _player_face_map;
         };
     }
 }

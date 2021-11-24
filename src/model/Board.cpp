@@ -23,7 +23,7 @@ const int SPACE = 64; /** Variable used for the size of each character */
  * @param lvl The path for the level
  */
 Board::Board( const std::string &lvl )
-          : _boxes()
+        : _boxes()
           , _walls()
           , _platforms()
           , _player( nullptr )
@@ -136,42 +136,42 @@ void Board::init_world()
     Box *box;
     Wall *wall;
     Platform *platform;
-    for ( char item : _level )
+    for ( char item: _level )
     {
         switch ( item )
         {
-        case '\n':
-            y += SPACE;
-            if ( _width < x )
-            {
-                _width = x;
-            }
-            x = OFFSET;
-            break;
-        case '#':
-            wall = new Wall( x, y );
-            _walls.insert( _walls.begin(), wall );
-            x += SPACE;
-            break;
-        case '$':
-            box = new Box( x, y );
-            _boxes.insert( _boxes.begin(), box );
-            x += SPACE;
-            break;
-        case '.':
-            platform = new Platform( x, y );
-            _platforms.insert( _platforms.begin(), platform );
-            x += SPACE;
-            break;
-        case '@':
-            _player = new Player( x, y );
-            x += SPACE;
-            break;
-        case ' ':
-            x += SPACE;
-            break;
-        default:
-            break;
+            case '\n':
+                y += SPACE;
+                if ( _width < x )
+                {
+                    _width = x;
+                }
+                x = OFFSET;
+                break;
+            case '#':
+                wall = new Wall( x, y );
+                _walls.insert( _walls.begin(), wall );
+                x += SPACE;
+                break;
+            case '$':
+                box = new Box( x, y );
+                _boxes.insert( _boxes.begin(), box );
+                x += SPACE;
+                break;
+            case '.':
+                platform = new Platform( x, y );
+                _platforms.insert( _platforms.begin(), platform );
+                x += SPACE;
+                break;
+            case '@':
+                _player = new Player( x, y );
+                x += SPACE;
+                break;
+            case ' ':
+                x += SPACE;
+                break;
+            default:
+                break;
         }
         _height = y;
     }
@@ -210,44 +210,44 @@ bool Board::check_wall_collision( Actor *actor, int type )
 {
     switch ( type )
     {
-    case LEFT_COLLISION:
-        for ( const Wall *wall: _walls )
-        {
-            if ( actor->is_left_collision( wall ) )
+        case LEFT_COLLISION:
+            for ( const Wall *wall: _walls )
             {
-                return true;
+                if ( actor->is_left_collision( wall ) )
+                {
+                    return true;
+                }
             }
-        }
-        return false;
-    case RIGHT_COLLISION:
-        for ( const Wall *wall: _walls )
-        {
-            if ( actor->is_right_collision( wall ) )
+            return false;
+        case RIGHT_COLLISION:
+            for ( const Wall *wall: _walls )
             {
-                return true;
+                if ( actor->is_right_collision( wall ) )
+                {
+                    return true;
+                }
             }
-        }
-        return false;
-    case TOP_COLLISION:
-        for ( const Wall *wall: _walls )
-        {
-            if ( actor->is_top_collision( wall ) )
+            return false;
+        case TOP_COLLISION:
+            for ( const Wall *wall: _walls )
             {
-                return true;
+                if ( actor->is_top_collision( wall ) )
+                {
+                    return true;
+                }
             }
-        }
-        return false;
-    case BOTTOM_COLLISION:
-        for ( const Wall *wall: _walls )
-        {
-            if ( actor->is_bottom_collision( wall ) )
+            return false;
+        case BOTTOM_COLLISION:
+            for ( const Wall *wall: _walls )
             {
-                return true;
+                if ( actor->is_bottom_collision( wall ) )
+                {
+                    return true;
+                }
             }
-        }
-        return false;
-    default:
-        break;
+            return false;
+        default:
+            break;
     }
     return false;
 }
@@ -261,104 +261,104 @@ bool Board::check_box_collision( int type )
 {
     switch ( type )
     {
-    case LEFT_COLLISION:
-        for ( Box *box: _boxes )
-        {
-            if ( _player->is_left_collision( box ) )
+        case LEFT_COLLISION:
+            for ( Box *box: _boxes )
             {
-                for ( Box *item: _boxes )
+                if ( _player->is_left_collision( box ) )
                 {
-                    if ( box != item )
+                    for ( Box *item: _boxes )
                     {
-                        if ( box->is_left_collision( item ) )
+                        if ( box != item )
+                        {
+                            if ( box->is_left_collision( item ) )
+                            {
+                                return true;
+                            }
+                        }
+                        if ( check_wall_collision( box, LEFT_COLLISION ) )
                         {
                             return true;
                         }
                     }
-                    if ( check_wall_collision( box, LEFT_COLLISION ) )
-                    {
-                        return true;
-                    }
+                    box->move( -SPACE, 0 );
+                    is_completed();
                 }
-                box->move( -SPACE, 0 );
-                is_completed();
             }
-        }
-        return false;
-    case RIGHT_COLLISION:
-        for ( Box *box: _boxes )
-        {
-            if ( _player->is_right_collision( box ) )
+            return false;
+        case RIGHT_COLLISION:
+            for ( Box *box: _boxes )
             {
-                for ( Box *item: _boxes )
+                if ( _player->is_right_collision( box ) )
                 {
-                    if ( box != item )
+                    for ( Box *item: _boxes )
                     {
-                        if ( box->is_right_collision( item ) )
+                        if ( box != item )
+                        {
+                            if ( box->is_right_collision( item ) )
+                            {
+                                return true;
+                            }
+                        }
+                        if ( check_wall_collision( box, RIGHT_COLLISION ) )
                         {
                             return true;
                         }
                     }
-                    if ( check_wall_collision( box, RIGHT_COLLISION ) )
-                    {
-                        return true;
-                    }
+                    box->move( SPACE, 0 );
+                    is_completed();
                 }
-                box->move( SPACE, 0 );
-                is_completed();
             }
-        }
-        return false;
-    case TOP_COLLISION:
-        for ( Box *box: _boxes )
-        {
-            if ( _player->is_top_collision( box ) )
+            return false;
+        case TOP_COLLISION:
+            for ( Box *box: _boxes )
             {
-                for ( Box *item: _boxes )
+                if ( _player->is_top_collision( box ) )
                 {
-                    if ( box != item )
+                    for ( Box *item: _boxes )
                     {
-                        if ( box->is_top_collision( item ) )
+                        if ( box != item )
+                        {
+                            if ( box->is_top_collision( item ) )
+                            {
+                                return true;
+                            }
+                        }
+                        if ( check_wall_collision( box, TOP_COLLISION ) )
                         {
                             return true;
                         }
                     }
-                    if ( check_wall_collision( box, TOP_COLLISION ) )
-                    {
-                        return true;
-                    }
+                    box->move( 0, -SPACE );
+                    is_completed();
                 }
-                box->move( 0, -SPACE );
-                is_completed();
             }
-        }
-        return false;
-    case BOTTOM_COLLISION:
-        for ( Box *box: _boxes )
-        {
-            if ( _player->is_bottom_collision( box ) )
+            return false;
+        case BOTTOM_COLLISION:
+            for ( Box *box: _boxes )
             {
-                for ( Box *item: _boxes )
+                if ( _player->is_bottom_collision( box ) )
                 {
-                    if ( box != item )
+                    for ( Box *item: _boxes )
                     {
-                        if ( box->is_bottom_collision( item ) )
+                        if ( box != item )
+                        {
+                            if ( box->is_bottom_collision( item ) )
+                            {
+                                return true;
+                            }
+                        }
+                        if ( check_wall_collision( box, BOTTOM_COLLISION ) )
                         {
                             return true;
                         }
                     }
-                    if ( check_wall_collision( box, BOTTOM_COLLISION ) )
-                    {
-                        return true;
-                    }
+                    box->move( 0, SPACE );
+                    is_completed();
                 }
-                box->move( 0, SPACE );
-                is_completed();
             }
-        }
-        return false;
-    default:
-        break;
+            return false;
+        default:
+            break;
     }
     return false;
 }
@@ -390,18 +390,18 @@ bool Board::is_completed() const
     unsigned long number_of_boxes = _boxes.size();
     int finished_boxes = 0;
 
-    for( Box *box : _boxes )
+    for ( Box *box: _boxes )
     {
-        for( Platform *platform : _platforms )
+        for ( Platform *platform: _platforms )
         {
-            if( box->get_x() == platform->get_x() && box->get_y() == platform->get_y() )
+            if ( box->get_x() == platform->get_x() && box->get_y() == platform->get_y() )
             {
                 finished_boxes += 1;
             }
         }
     }
 
-    if( finished_boxes == number_of_boxes )
+    if ( finished_boxes == number_of_boxes )
     {
         return true;
     }

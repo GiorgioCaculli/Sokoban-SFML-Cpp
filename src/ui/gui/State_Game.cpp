@@ -21,8 +21,8 @@ int current_level;
 int steps_counter;
 int reset_counter;
 
-State_Game::State_Game( sf::RenderWindow &window, const std::vector< std::string >& levels, int start_level )
-        :_window( window )
+State_Game::State_Game( sf::RenderWindow &window, const std::vector< std::string > &levels, int start_level )
+        : _window( window )
           , _world_view( window.getDefaultView() )
           , _scene_layers()
           , _world_bounds( 0.f, 0.f, _world_view.getSize().x, _world_view.getSize().y )
@@ -34,7 +34,10 @@ State_Game::State_Game( sf::RenderWindow &window, const std::vector< std::string
           , _level( levels.at( start_level ) )
           , _board( _level )
           , _player_sprite( nullptr )
-          , _base_sokoban_texture( nullptr )
+          , _box_texture_sheet( nullptr )
+          , _platform_texture_sheet( nullptr )
+          , _wall_texture_sheet( nullptr )
+          , _player_texture_sheet( nullptr )
           , _background_texture( nullptr )
           , _font( nullptr )
           , _text( nullptr )
@@ -69,7 +72,9 @@ State_Game::~State_Game()
         delete layer;
     }
     _scene_layers.clear();
-    delete _base_sokoban_texture;
+    delete _box_texture_sheet;
+    delete _platform_texture_sheet;
+    delete _wall_texture_sheet;
     delete _background_texture;
     _box_sprites.clear();
     _box_actors.clear();
@@ -85,13 +90,13 @@ void State_Game::update( const sf::Time &dt )
     float player_height_coords;
     if ( _player_is_moving_up )
     {
-        _board_player->set_face( model::Player::NORTH );
-        player_x_coords = _board_player->get_asset_coords()[ 0 ];
-        player_y_coords = _board_player->get_asset_coords()[ 1 ];
-        player_width_coords = _board_player->get_asset_coords()[ 2 ];
-        player_height_coords = _board_player->get_asset_coords()[ 3 ];
+        auto player_asset_rect = _board_player->get_player_face_map().find( model::Player::Face::NORTH )->second;
+        player_x_coords = player_asset_rect.at( 0 );
+        player_y_coords = player_asset_rect.at( 1 );
+        player_width_coords = player_asset_rect.at( 2 );
+        player_height_coords = player_asset_rect.at( 3 );
         player_assets_coords = sf::IntRect( player_x_coords, player_y_coords, player_width_coords, player_height_coords );
-        _player_sprite->setTexture( *_base_sokoban_texture );
+        _player_sprite->setTexture( *_player_texture_sheet );
         _player_sprite->setTextureRect( player_assets_coords );
         if ( _board.check_wall_collision( _board_player, _board.TOP_COLLISION ) )
         {
@@ -113,13 +118,13 @@ void State_Game::update( const sf::Time &dt )
     }
     if ( _player_is_moving_down )
     {
-        _board_player->set_face( model::Player::SOUTH );
-        player_x_coords = _board_player->get_asset_coords()[ 0 ];
-        player_y_coords = _board_player->get_asset_coords()[ 1 ];
-        player_width_coords = _board_player->get_asset_coords()[ 2 ];
-        player_height_coords = _board_player->get_asset_coords()[ 3 ];
+        auto player_asset_rect = _board_player->get_player_face_map().find( model::Player::Face::SOUTH )->second;
+        player_x_coords = player_asset_rect.at( 0 );
+        player_y_coords = player_asset_rect.at( 1 );
+        player_width_coords = player_asset_rect.at( 2 );
+        player_height_coords = player_asset_rect.at( 3 );
         player_assets_coords = sf::IntRect( player_x_coords, player_y_coords, player_width_coords, player_height_coords );
-        _player_sprite->setTexture( *_base_sokoban_texture );
+        _player_sprite->setTexture( *_player_texture_sheet );
         _player_sprite->setTextureRect( player_assets_coords );
         if ( _board.check_wall_collision( _board_player, _board.BOTTOM_COLLISION ) )
         {
@@ -141,13 +146,13 @@ void State_Game::update( const sf::Time &dt )
     }
     if ( _player_is_moving_left )
     {
-        _board_player->set_face( model::Player::EAST );
-        player_x_coords = _board_player->get_asset_coords()[ 0 ];
-        player_y_coords = _board_player->get_asset_coords()[ 1 ];
-        player_width_coords = _board_player->get_asset_coords()[ 2 ];
-        player_height_coords = _board_player->get_asset_coords()[ 3 ];
+        auto player_asset_rect = _board_player->get_player_face_map().find( model::Player::Face::WEST )->second;
+        player_x_coords = player_asset_rect.at( 0 );
+        player_y_coords = player_asset_rect.at( 1 );
+        player_width_coords = player_asset_rect.at( 2 );
+        player_height_coords = player_asset_rect.at( 3 );
         player_assets_coords = sf::IntRect( player_x_coords, player_y_coords, player_width_coords, player_height_coords );
-        _player_sprite->setTexture( *_base_sokoban_texture );
+        _player_sprite->setTexture( *_player_texture_sheet );
         _player_sprite->setTextureRect( player_assets_coords );
         if ( _board.check_wall_collision( _board_player, _board.LEFT_COLLISION ) )
         {
@@ -169,13 +174,13 @@ void State_Game::update( const sf::Time &dt )
     }
     if ( _player_is_moving_right )
     {
-        _board_player->set_face( model::Player::WEST );
-        player_x_coords = _board_player->get_asset_coords()[ 0 ];
-        player_y_coords = _board_player->get_asset_coords()[ 1 ];
-        player_width_coords = _board_player->get_asset_coords()[ 2 ];
-        player_height_coords = _board_player->get_asset_coords()[ 3 ];
+        auto player_asset_rect = _board_player->get_player_face_map().find( model::Player::Face::EAST )->second;
+        player_x_coords = player_asset_rect.at( 0 );
+        player_y_coords = player_asset_rect.at( 1 );
+        player_width_coords = player_asset_rect.at( 2 );
+        player_height_coords = player_asset_rect.at( 3 );
         player_assets_coords = sf::IntRect( player_x_coords, player_y_coords, player_width_coords, player_height_coords );
-        _player_sprite->setTexture( *_base_sokoban_texture );
+        _player_sprite->setTexture( *_player_texture_sheet );
         _player_sprite->setTextureRect( player_assets_coords );
         if ( _board.check_wall_collision( _board_player, _board.RIGHT_COLLISION ) )
         {
@@ -196,8 +201,8 @@ void State_Game::update( const sf::Time &dt )
         _board_player->set_x( _board_player->get_x() + SPACE );
     }
     _text->setString( "Steps: " + std::to_string( steps_counter ) + "\n" +
-    "Resets: " + std::to_string( reset_counter ) );
-    if( _board.is_completed() )
+            "Resets: " + std::to_string( reset_counter ) );
+    if ( _board.is_completed() )
     {
         /* TODO: BLINKING TEXT WHEN FINISHED */
     }
@@ -216,8 +221,14 @@ void State_Game::draw()
 void State_Game::load_textures()
 {
     Logger::log( LoggerLevel::INFO, "Loading Textures..." );
-    _base_sokoban_texture = new sf::Texture();
-    _base_sokoban_texture->loadFromFile( "assets/images/Spritesheet/sprites.png" );
+    _player_texture_sheet = new sf::Texture();
+    _player_texture_sheet->loadFromFile( "assets/images/Spritesheet/character_spritesheet.png" );
+    _box_texture_sheet = new sf::Texture();
+    _box_texture_sheet->loadFromFile( "assets/images/Spritesheet/boxes_spritesheet.png" );
+    _platform_texture_sheet = new sf::Texture();
+    _platform_texture_sheet->loadFromFile( "assets/images/Spritesheet/platforms_spritesheet.png" );
+    _wall_texture_sheet = new sf::Texture();
+    _wall_texture_sheet->loadFromFile( "assets/images/Spritesheet/wall_round_spritesheet.png" );
     _background_texture = new sf::Texture();
     _background_texture->loadFromFile( "assets/images/PNG/GroundGravel_Sand.png" );
 }
@@ -230,9 +241,8 @@ void State_Game::build_scene( const std::string &level )
     _player_is_moving_left = false;
     _player_is_moving_right = false;
     _text->setFont( *_font );
-    _text->setPosition(  20.f, 20.f );
+    _text->setPosition( 20.f, 20.f );
     _text->setCharacterSize( 20 );
-    reset_counter = 0;
 
     Logger::log( LoggerLevel::INFO, "Board size: " + std::to_string( _board.get_world().size() ) );
     _box_sprites = std::vector< sf::Sprite * >();
@@ -262,21 +272,32 @@ void State_Game::build_scene( const std::string &level )
         float asset_coord_width = actor->get_asset_coords().at( 2 );
         float asset_coord_height = actor->get_asset_coords().at( 3 );
 
-        sf::IntRect asset_rect( asset_coord_x, asset_coord_y, asset_coord_width, asset_coord_height );
+        sf::IntRect asset_rect;
 
-        auto *actor_sprite = new sf::Sprite( *_base_sokoban_texture, asset_rect );
-        actor_sprite->setPosition( actor->get_x(), actor->get_y() );
+        sf::Sprite *actor_sprite = nullptr;
         if ( actor->get_type() == actor->PLAYER )
         {
             _board_player = dynamic_cast< model::Player * >( actor );
+            auto player_asset_rect = _board_player->get_player_face_map().find( model::Player::Face::SOUTH )->second;
+            asset_coord_x = player_asset_rect.at( 0 );
+            asset_coord_y = player_asset_rect.at( 1 );
+            asset_coord_width = player_asset_rect.at( 2 );
+            asset_coord_height = player_asset_rect.at( 3 );
+            asset_rect = sf::IntRect( asset_coord_x, asset_coord_y, asset_coord_width, asset_coord_height );
+            actor_sprite = new sf::Sprite( *_player_texture_sheet, asset_rect );
             _player_sprite = actor_sprite;
-            actor_sprite->setOrigin(
-                    -( asset_coord_width / 4.f ),
-                    0.f
-            );
         }
         if ( actor->get_type() == actor->PLATFORM )
         {
+            auto *platform_actor = dynamic_cast< model::Platform * >( actor );
+            auto platform_asset_rect = platform_actor->get_platform_color_map().find( model::Platform::Color::RED )->second;
+            asset_coord_x = platform_asset_rect.at( 0 );
+            asset_coord_y = platform_asset_rect.at( 1 );
+            asset_coord_width = platform_asset_rect.at( 2 );
+            asset_coord_height = platform_asset_rect.at( 3 );
+            asset_rect = sf::IntRect( asset_coord_x, asset_coord_y, asset_coord_width, asset_coord_height );
+            actor_sprite = new sf::Sprite( *_platform_texture_sheet, asset_rect );
+            /* If sprite size = 32x32 */
             actor_sprite->setOrigin(
                     -( asset_coord_width / 2.f ),
                     -( asset_coord_height / 2.f )
@@ -284,9 +305,29 @@ void State_Game::build_scene( const std::string &level )
         }
         if ( actor->get_type() == actor->BOX )
         {
+            auto *box_actor = dynamic_cast< model::Box * >( actor );
+            auto box_asset_rect = box_actor->get_box_color_map().find( model::Box::Color::PURPLE_DARK )->second;
+            asset_coord_x = box_asset_rect.at( 0 );
+            asset_coord_y = box_asset_rect.at( 1 );
+            asset_coord_width = box_asset_rect.at( 2 );
+            asset_coord_height = box_asset_rect.at( 3 );
+            sf::IntRect asset_rect( asset_coord_x, asset_coord_y, asset_coord_width, asset_coord_height );
+            actor_sprite = new sf::Sprite( *_box_texture_sheet, asset_rect );
             _box_sprites.push_back( actor_sprite );
-            _box_actors.push_back( dynamic_cast< model::Box * >( actor ) );
+            _box_actors.push_back( box_actor );
         }
+        if ( actor->get_type() == actor->WALL )
+        {
+            auto *wall_actor = dynamic_cast< model::Wall * >( actor );
+            auto wall_asset_rect = wall_actor->get_wall_color_map().find( model::Wall::Color::WHITE )->second;
+            asset_coord_x = wall_asset_rect.at( 0 );
+            asset_coord_y = wall_asset_rect.at( 1 );
+            asset_coord_width = wall_asset_rect.at( 2 );
+            asset_coord_height = wall_asset_rect.at( 3 );
+            asset_rect = sf::IntRect( asset_coord_x, asset_coord_y, asset_coord_width, asset_coord_height );
+            actor_sprite = new sf::Sprite( *_wall_texture_sheet, asset_rect );
+        }
+        actor_sprite->setPosition( actor->get_x(), actor->get_y() );
         _scene_layers.push_back( actor_sprite );
         layers++;
     }
@@ -296,37 +337,24 @@ void State_Game::build_scene( const std::string &level )
 
 void State_Game::handle_player_input( sf::Keyboard::Key key, bool is_pressed )
 {
-    if( _board.is_completed() )
+    if ( _board.is_completed() )
     {
         _text->setCharacterSize( 50 );
         _text->setPosition( _world_view.getSize().x / 3.0f, _world_view.getSize().y / 2.f );
         _text->setString( "Level Completed\nPress ENTER to continue!" );
-        if( key == sf::Keyboard::Enter )
+        if ( key == sf::Keyboard::Enter )
         {
             current_level += 1;
-            if( _levels.size() == current_level )
+            if ( _levels.size() == current_level )
             {
                 _text->setCharacterSize( 50 );
                 _text->setPosition( _world_view.getSize().x / 3.0f, _world_view.getSize().y / 2.f );
                 _text->setString( "All Levels Completed!" );
                 return;
             }
-            steps_counter = 0;
             _level = _levels.at( current_level );
-            _window.clear();
-            for ( sf::Sprite *layer: _scene_layers )
-            {
-                delete layer;
-            }
-            _scene_layers.clear();
-            for ( model::Actor *actor: _board.get_world() )
-            {
-                delete actor;
-            }
-            _box_sprites.clear();
-            _box_actors.clear();
-            _board = model::Board( _level );
-            build_scene( _level );
+            reset_counter = 0;
+            reset_board();
         }
     }
     else
@@ -371,59 +399,59 @@ void State_Game::process_events()
     {
         switch ( event.type )
         {
-        case sf::Event::KeyPressed:
-            handle_player_input( event.key.code, true );
-            break;
-        case sf::Event::KeyReleased:
-            handle_player_input( event.key.code, false );
-            break;
-        case sf::Event::Closed:
-            _window.close();
-            break;
-        case sf::Event::Resized:
-            break;
-        case sf::Event::LostFocus:
-            music.setVolume( unfocused_volume );
-            break;
-        case sf::Event::GainedFocus:
-            music.setVolume( base_volume );
-            break;
-        case sf::Event::TextEntered:
-            break;
-        case sf::Event::MouseWheelMoved:
-            break;
-        case sf::Event::MouseWheelScrolled:
-            break;
-        case sf::Event::MouseButtonPressed:
-            break;
-        case sf::Event::MouseButtonReleased:
-            break;
-        case sf::Event::MouseMoved:
-            break;
-        case sf::Event::MouseEntered:
-            break;
-        case sf::Event::MouseLeft:
-            break;
-        case sf::Event::JoystickButtonPressed:
-            break;
-        case sf::Event::JoystickButtonReleased:
-            break;
-        case sf::Event::JoystickMoved:
-            break;
-        case sf::Event::JoystickConnected:
-            break;
-        case sf::Event::JoystickDisconnected:
-            break;
-        case sf::Event::TouchBegan:
-            break;
-        case sf::Event::TouchMoved:
-            break;
-        case sf::Event::TouchEnded:
-            break;
-        case sf::Event::SensorChanged:
-            break;
-        case sf::Event::Count:
-            break;
+            case sf::Event::KeyPressed:
+                handle_player_input( event.key.code, true );
+                break;
+            case sf::Event::KeyReleased:
+                handle_player_input( event.key.code, false );
+                break;
+            case sf::Event::Closed:
+                _window.close();
+                break;
+            case sf::Event::Resized:
+                break;
+            case sf::Event::LostFocus:
+                music.setVolume( unfocused_volume );
+                break;
+            case sf::Event::GainedFocus:
+                music.setVolume( base_volume );
+                break;
+            case sf::Event::TextEntered:
+                break;
+            case sf::Event::MouseWheelMoved:
+                break;
+            case sf::Event::MouseWheelScrolled:
+                break;
+            case sf::Event::MouseButtonPressed:
+                break;
+            case sf::Event::MouseButtonReleased:
+                break;
+            case sf::Event::MouseMoved:
+                break;
+            case sf::Event::MouseEntered:
+                break;
+            case sf::Event::MouseLeft:
+                break;
+            case sf::Event::JoystickButtonPressed:
+                break;
+            case sf::Event::JoystickButtonReleased:
+                break;
+            case sf::Event::JoystickMoved:
+                break;
+            case sf::Event::JoystickConnected:
+                break;
+            case sf::Event::JoystickDisconnected:
+                break;
+            case sf::Event::TouchBegan:
+                break;
+            case sf::Event::TouchMoved:
+                break;
+            case sf::Event::TouchEnded:
+                break;
+            case sf::Event::SensorChanged:
+                break;
+            case sf::Event::Count:
+                break;
         }
     }
 }

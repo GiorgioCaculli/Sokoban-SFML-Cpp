@@ -23,7 +23,7 @@ namespace sokoban
                     : private sf::NonCopyable
             {
             public:
-                State_Game( sf::RenderWindow &window, const std::vector< std::string >& levels, int start_level  );
+                State_Game( sf::RenderWindow &window, const std::vector< std::string > &levels, int start_level );
                 ~State_Game();
                 void update( const sf::Time &dt );
                 void draw();
@@ -48,7 +48,10 @@ namespace sokoban
                 sf::Sound step_sound;
                 sf::SoundBuffer box_move_buffer;
                 sf::Sound box_move_sound;
-                sf::Texture *_base_sokoban_texture;
+                sf::Texture *_box_texture_sheet;
+                sf::Texture *_platform_texture_sheet;
+                sf::Texture *_wall_texture_sheet;
+                sf::Texture *_player_texture_sheet;
                 sf::Texture *_background_texture;
                 sf::Font *_font;
                 sf::Text *_text;

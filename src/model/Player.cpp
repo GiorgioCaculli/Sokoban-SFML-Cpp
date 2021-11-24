@@ -6,36 +6,71 @@
 
 using namespace sokoban::model;
 
-std::array< float, 4 > character_facing_north = { 384, 0, 37, 60 };
+const float OFFSET = 64;
 
-std::array< float, 4 > character_walking_right = { 320, 128, 42, 58 };
-std::array< float, 4 > character_walking_north_left_step = {
-        character_walking_right[ 0 ] + character_walking_right[ 2 ], character_walking_right[ 1 ], 37, 60
+std::array< float, 4 > character_facing_west = {
+        0
+        , 0
+        , OFFSET
+        , OFFSET
+};
+std::array< float, 4 > character_walking_west = {
+        OFFSET * 1
+        , 0
+        , OFFSET
+        , OFFSET
 };
 
 std::array< float, 4 > character_facing_east = {
-        character_walking_right[ 0 ], character_walking_right[ 1 ] + character_walking_right[ 3 ], 42, 59
+        OFFSET * 2
+        , 0
+        , OFFSET
+        , OFFSET
 };
-std::array< float, 4 > character_walking_north_right_step = {
-        character_facing_east[ 0 ] + character_facing_east[ 2 ], character_facing_east[ 1 ], 37, 60
+std::array< float, 4 > character_walking_east = {
+        OFFSET * 3
+        , 0
+        , OFFSET
+        , OFFSET
 };
 
-std::array< float, 4 > character_facing_west = {
-        character_facing_east[ 0 ], character_facing_east[ 1 ] + character_facing_east[ 3 ], 42, 59
-};
 std::array< float, 4 > character_facing_south = {
-        character_facing_west[ 0 ] + character_facing_west[ 2 ], character_facing_west[ 1 ] + 3, 37, 59
-};
-
-std::array< float, 4 > character_walking_left = {
-        character_facing_west[ 0 ], character_facing_west[ 1 ] + character_facing_west[ 3 ], 42, 58
+        OFFSET * 4
+        , 0
+        , OFFSET
+        , OFFSET
 };
 
 std::array< float, 4 > character_walking_south_right_step = {
-        character_walking_left[ 0 ], character_walking_left[ 1 ] + character_walking_left[ 3 ], 37, 59
+        OFFSET * 5
+        , 0
+        , OFFSET
+        , OFFSET
 };
 std::array< float, 4 > character_walking_south_left_step = {
-        character_walking_south_right_step[ 0 ] + character_walking_south_right_step[ 2 ], character_walking_south_right_step[ 1 ], 37, 59
+        OFFSET * 6
+        , 0
+        , OFFSET
+        , OFFSET
+};
+
+std::array< float, 4 > character_facing_north = {
+        OFFSET * 7
+        , 0
+        , OFFSET
+        , OFFSET
+};
+std::array< float, 4 > character_walking_north_right_step = {
+        OFFSET * 8
+        , 0
+        , OFFSET
+        , OFFSET
+};
+std::array< float, 4 > character_walking_north_left_step = {
+        OFFSET * 9
+        , 0
+        , OFFSET
+        , OFFSET
 };
 
 const std::array< float, 4 > player_asset_north = character_facing_north;
@@ -45,19 +80,21 @@ const std::array< float, 4 > player_asset_west = character_facing_west;
 
 Player::Player( float x, float y )
         : Movable( x, y, player_asset_north )
-          , _current_face( Face::NORTH )
 {
-    _animations = {
-            character_facing_north, character_walking_north_right_step, character_walking_north_left_step, character_facing_west, character_walking_right, character_facing_south, character_walking_south_right_step, character_walking_south_left_step, character_facing_east, character_walking_left
-    };
+    _player_face_map = std::map< Face, std::array< float, 4 > >
+            {
+                    {   Face::NORTH, player_asset_north }
+                    , { Face::SOUTH, player_asset_south }
+                    , { Face::EAST , player_asset_east }
+                    , { Face::WEST , player_asset_west }
+            };
 }
 
 Player::Player( const Player &player )
         : Player( player.get_x(), player.get_y() )
 {
     set_asset_coords( player.get_asset_coords() );
-    _current_face = player._current_face;
-    _animations = player._animations;
+    _player_face_map = player._player_face_map;
 }
 
 Player &Player::operator=( const Player &player )
@@ -67,8 +104,7 @@ Player &Player::operator=( const Player &player )
         set_x( player.get_x() );
         set_y( player.get_y() );
         set_asset_coords( player.get_asset_coords() );
-        _current_face = player._current_face;
-        _animations = player._animations;
+        _player_face_map = player._player_face_map;
     }
     return *this;
 }
@@ -83,48 +119,15 @@ Actor::ID Player::get_type() const
     return Actor::PLAYER;
 }
 
-void Player::set_face( const Face &face )
+const std::map< Player::Face, std::array< float, 4 > > &Player::get_player_face_map() const
 {
-    switch ( face )
-    {
-    case NORTH:
-        set_asset_coords( player_asset_north );
-        _current_face = NORTH;
-        break;
-    case SOUTH:
-        set_asset_coords( player_asset_south );
-        _current_face = SOUTH;
-        break;
-    case EAST:
-        set_asset_coords( player_asset_east );
-        _current_face = EAST;
-        break;
-    case WEST:
-        set_asset_coords( player_asset_west );
-        _current_face = WEST;
-        break;
-    default:
-        set_asset_coords( player_asset_south );
-        _current_face = SOUTH;
-        break;
-    }
-}
-
-Player::Face Player::get_face() const
-{
-    return _current_face;
-}
-
-std::array< std::array< float, 4 >, 10 > Player::get_animations() const
-{
-    return _animations;
+    return _player_face_map;
 }
 
 std::string Player::to_string() const
 {
     std::stringstream ss;
     ss << "Player: " << Movable::to_string();
-    ss << " Face: " << _current_face;
     return ss.str();
 }
 

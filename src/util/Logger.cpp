@@ -26,7 +26,12 @@ template< typename CharT, typename TraitsT >
     {
         static const char *const str[] =
                 {
-                        "trace", "debug", "info", "warning", "error", "fatal"
+                        "trace"
+                        , "debug"
+                        , "info"
+                        , "warning"
+                        , "error"
+                        , "fatal"
                 };
         if ( static_cast< std::size_t >(lvl) < ( sizeof( str ) / sizeof( *str ) ) )
         {
@@ -99,26 +104,26 @@ void Logger::log( int level, const std::string &log_message )
 
     switch ( level )
     {
-    case LoggerLevel::TRACE:
-        BOOST_LOG_TRIVIAL( trace ) << message;
-        break;
-    case LoggerLevel::DEBUG:
-        BOOST_LOG_TRIVIAL( debug ) << message;
-        break;
-    case LoggerLevel::INFO:
-        BOOST_LOG_TRIVIAL( info ) << message;
-        break;
-    case LoggerLevel::WARNING:
-        BOOST_LOG_TRIVIAL( warning ) << message;
-        break;
-    case LoggerLevel::ERROR:
-        BOOST_LOG_TRIVIAL( error ) << message;
-        break;
-    case LoggerLevel::FATAL:
-        BOOST_LOG_TRIVIAL( fatal ) << message;
-        break;
-    default:
-        BOOST_LOG_TRIVIAL( trace ) << message;
-        break;
+        case LoggerLevel::TRACE:
+            BOOST_LOG_TRIVIAL( trace ) << message;
+            break;
+        case LoggerLevel::DEBUG:
+            BOOST_LOG_TRIVIAL( debug ) << message;
+            break;
+        case LoggerLevel::INFO:
+            BOOST_LOG_TRIVIAL( info ) << message;
+            break;
+        case LoggerLevel::WARNING:
+            BOOST_LOG_TRIVIAL( warning ) << message;
+            break;
+        case LoggerLevel::ERROR:
+            BOOST_LOG_TRIVIAL( error ) << message;
+            break;
+        case LoggerLevel::FATAL:
+            BOOST_LOG_TRIVIAL( fatal ) << message;
+            break;
+        default:
+            BOOST_LOG_TRIVIAL( trace ) << message;
+            break;
     }
 }

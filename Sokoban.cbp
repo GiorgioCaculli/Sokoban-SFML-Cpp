@@ -197,6 +197,9 @@
 			<Add library="sfml-audio" />
 			<Add library="sfml-network" />
 		</Linker>
+		<Unit filename="src/assets/fonts/ConnectionIi-2wj8.otf" />
+		<Unit filename="src/assets/fonts/misc/Connection II-1260.sfd" />
+		<Unit filename="src/assets/fonts/misc/SIL Open Font License-7679.txt" />
 		<Unit filename="src/assets/images/PNG/Character1.png" />
 		<Unit filename="src/assets/images/PNG/Character10.png" />
 		<Unit filename="src/assets/images/PNG/Character2.png" />
@@ -264,6 +267,7 @@
 		<Unit filename="src/assets/images/license.txt" />
 		<Unit filename="src/assets/levels/00.lvl" />
 		<Unit filename="src/assets/levels/01.lvl" />
+		<Unit filename="src/assets/levels/02.lvl" />
 		<Unit filename="src/assets/music/Field_-_Desolate_Domain.ogg" />
 		<Unit filename="src/assets/music/Field_-_Golden_Harvest.ogg" />
 		<Unit filename="src/assets/music/Field_-_Greatest_Nation.ogg" />

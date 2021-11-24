@@ -23,7 +23,8 @@ int main( int argc, char *argv[] )
     try
     {
         res = menu.launch_application();
-    } catch ( std::exception &e )
+    }
+    catch ( std::exception &e )
     {
         Logger::log( LoggerLevel::FATAL, e.what() );
         res = -1;
