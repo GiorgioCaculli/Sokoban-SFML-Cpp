@@ -1,9 +1,11 @@
 #include "Window.hpp"
 
 #include <boost/filesystem.hpp>
+#include <SFML/Graphics/Color.hpp>
 
 #include <sstream>
 #include <iostream>
+#include <algorithm>
 
 #include "../../util/Logger.hpp"
 
@@ -13,6 +15,11 @@ using namespace sokoban::util;
 const sf::Time MainWindow::_time_per_frame = sf::seconds( 1.f / 10.f );
 const int WIDTH = 1440;
 const int HEIGHT = WIDTH / 16 * 10;
+
+bool sort_alphabetically( const boost::filesystem::path &a, const boost::filesystem::path &b )
+{
+    return a.string() < b.string();
+}
 
 std::vector< boost::filesystem::path > get_all_levels()
 {
@@ -29,6 +36,9 @@ std::vector< boost::filesystem::path > get_all_levels()
             }
         }
     }
+
+    std::sort( paths.begin(), paths.end(), sort_alphabetically );
+
     return paths;
 }
 
@@ -46,6 +56,7 @@ MainWindow::MainWindow()
     _statistics_text.setFont( _font );
     _statistics_text.setPosition( WIDTH / 2.5f, 5.f );
     _statistics_text.setCharacterSize( 10 );
+    _statistics_text.setFillColor( sf::Color::Black );
 
     Logger::log( LoggerLevel::INFO, "Init levels" );
 
@@ -58,7 +69,7 @@ MainWindow::MainWindow()
 
     for( const boost::filesystem::path &path : get_all_levels() )
     {
-        levels.insert( levels.begin(), path.string() );
+        levels.emplace_back( path.string() );
     }
 
     std::cout << "Levels loaded" << std::endl;

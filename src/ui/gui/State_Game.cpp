@@ -1,14 +1,16 @@
 #include "State_Game.hpp"
 
-#include <utility>
-#include <sstream>
-#include <iostream>
-
+#include "../../util/Logger.hpp"
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Color.hpp>
 
-#include "../../util/Logger.hpp"
+#include <cmath>
+#include <ctime>
+#include <utility>
+#include <sstream>
+#include <iostream>
 
 using namespace sokoban::ui::gui;
 using namespace sokoban::util;
@@ -40,6 +42,7 @@ State_Game::State_Game( sf::RenderWindow &window, const std::vector< std::string
     _font = new sf::Font();
     _font->loadFromFile( "assets/fonts/ConnectionIi-2wj8.otf" );
     _text = new sf::Text();
+    _text->setFillColor( sf::Color::Black );
     _levels = levels;
     current_level = start_level;
     music.openFromFile( "assets/music/Town_-_Tavern_Tune.ogg" );
@@ -194,6 +197,10 @@ void State_Game::update( const sf::Time &dt )
     }
     _text->setString( "Steps: " + std::to_string( steps_counter ) + "\n" +
     "Resets: " + std::to_string( reset_counter ) );
+    if( _board.is_completed() )
+    {
+        /* TODO: BLINKING TEXT WHEN FINISHED */
+    }
 }
 
 void State_Game::draw()
