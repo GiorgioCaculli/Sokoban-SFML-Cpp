@@ -16,9 +16,11 @@ float base_volume = 10.f;
 float unfocused_volume = base_volume / 3.f;
 std::vector< std::string > _levels;
 int current_level;
+int steps_counter;
+int reset_counter;
 
 State_Game::State_Game( sf::RenderWindow &window, const std::vector< std::string >& levels, int start_level )
-        : _window( window )
+        :_window( window )
           , _world_view( window.getDefaultView() )
           , _scene_layers()
           , _world_bounds( 0.f, 0.f, _world_view.getSize().x, _world_view.getSize().y )
@@ -32,7 +34,12 @@ State_Game::State_Game( sf::RenderWindow &window, const std::vector< std::string
           , _player_sprite( nullptr )
           , _base_sokoban_texture( nullptr )
           , _background_texture( nullptr )
+          , _font( nullptr )
+          , _text( nullptr )
 {
+    _font = new sf::Font();
+    _font->loadFromFile( "assets/fonts/ConnectionIi-2wj8.otf" );
+    _text = new sf::Text();
     _levels = levels;
     current_level = start_level;
     music.openFromFile( "assets/music/Town_-_Tavern_Tune.ogg" );
@@ -52,6 +59,8 @@ State_Game::State_Game( sf::RenderWindow &window, const std::vector< std::string
 
 State_Game::~State_Game()
 {
+    delete _font;
+    delete _text;
     for ( sf::Sprite *layer: _scene_layers )
     {
         delete layer;
@@ -183,6 +192,8 @@ void State_Game::update( const sf::Time &dt )
         _player_sprite->move( +SPACE, 0.f );
         _board_player->set_x( _board_player->get_x() + SPACE );
     }
+    _text->setString( "Steps: " + std::to_string( steps_counter ) + "\n" +
+    "Resets: " + std::to_string( reset_counter ) );
 }
 
 void State_Game::draw()
@@ -192,6 +203,7 @@ void State_Game::draw()
     {
         _window.draw( *layer );
     }
+    _window.draw( *_text );
 }
 
 void State_Game::load_textures()
@@ -205,11 +217,15 @@ void State_Game::load_textures()
 
 void State_Game::build_scene( const std::string &level )
 {
+    Logger::log( LoggerLevel::INFO, "World Node init" );
     _player_is_moving_up = false;
     _player_is_moving_down = false;
     _player_is_moving_left = false;
     _player_is_moving_right = false;
-    Logger::log( LoggerLevel::INFO, "World Node init" );
+    _text->setFont( *_font );
+    _text->setPosition(  20.f, 20.f );
+    _text->setCharacterSize( 20 );
+    reset_counter = 0;
 
     Logger::log( LoggerLevel::INFO, "Board size: " + std::to_string( _board.get_world().size() ) );
     _box_sprites = std::vector< sf::Sprite * >();
@@ -273,48 +289,22 @@ void State_Game::build_scene( const std::string &level )
 
 void State_Game::handle_player_input( sf::Keyboard::Key key, bool is_pressed )
 {
-    if ( is_pressed )
+    if( _board.is_completed() )
     {
-        step_sound.play();
-    }
-    else
-    {
-        step_sound.stop();
-    }
-    if( !_board.is_completed() )
-    {
-        if ( key == sf::Keyboard::Up )
-        {
-            _player_is_moving_up = is_pressed;
-        }
-        else if ( key == sf::Keyboard::Down )
-        {
-            _player_is_moving_down = is_pressed;
-        }
-        else if ( key == sf::Keyboard::Left )
-        {
-            _player_is_moving_left = is_pressed;
-        }
-        else if ( key == sf::Keyboard::Right )
-        {
-            _player_is_moving_right = is_pressed;
-        }
-        else if ( key == sf::Keyboard::R )
-        {
-            reset_board();
-        }
-    }
-    else
-    {
+        _text->setCharacterSize( 50 );
+        _text->setPosition( _world_view.getSize().x / 3.0f, _world_view.getSize().y / 2.f );
+        _text->setString( "Level Completed\nPress ENTER to continue!" );
         if( key == sf::Keyboard::Enter )
         {
             current_level += 1;
             if( _levels.size() == current_level )
             {
-                std::cout << "All levels completed" << std::endl;
-                _window.close();
+                _text->setCharacterSize( 50 );
+                _text->setPosition( _world_view.getSize().x / 3.0f, _world_view.getSize().y / 2.f );
+                _text->setString( "All Levels Completed!" );
                 return;
             }
+            steps_counter = 0;
             _level = _levels.at( current_level );
             _window.clear();
             for ( sf::Sprite *layer: _scene_layers )
@@ -330,6 +320,39 @@ void State_Game::handle_player_input( sf::Keyboard::Key key, bool is_pressed )
             _box_actors.clear();
             _board = model::Board( _level );
             build_scene( _level );
+        }
+    }
+    else
+    {
+        if ( is_pressed )
+        {
+            step_sound.play();
+            steps_counter++;
+            if ( key == sf::Keyboard::R )
+            {
+                reset_board();
+                reset_counter++;
+            }
+        }
+        else
+        {
+            step_sound.stop();
+        }
+        if ( key == sf::Keyboard::Up )
+        {
+            _player_is_moving_up = is_pressed;
+        }
+        else if ( key == sf::Keyboard::Down )
+        {
+            _player_is_moving_down = is_pressed;
+        }
+        else if ( key == sf::Keyboard::Left )
+        {
+            _player_is_moving_left = is_pressed;
+        }
+        else if ( key == sf::Keyboard::Right )
+        {
+            _player_is_moving_right = is_pressed;
         }
     }
 }
@@ -400,6 +423,7 @@ void State_Game::process_events()
 
 void State_Game::reset_board()
 {
+    steps_counter = 0;
     _window.clear();
     for ( sf::Sprite *layer: _scene_layers )
     {

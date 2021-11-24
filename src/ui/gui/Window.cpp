@@ -41,6 +41,12 @@ MainWindow::MainWindow()
           , _statistics_num_frames( 0 )
           , _window( sf::VideoMode( WIDTH, HEIGHT ), "Sokoban", sf::Style::Titlebar | sf::Style::Close )
 {
+    _window.setVerticalSyncEnabled( true );
+    _font.loadFromFile( "assets/fonts/ConnectionIi-2wj8.otf" );
+    _statistics_text.setFont( _font );
+    _statistics_text.setPosition( WIDTH / 2.5f, 5.f );
+    _statistics_text.setCharacterSize( 10 );
+
     Logger::log( LoggerLevel::INFO, "Init levels" );
 
     if( get_all_levels().empty() )
@@ -110,10 +116,10 @@ unsigned short MainWindow::run()
         while ( time_since_last_update > _time_per_frame )
         {
             time_since_last_update -= _time_per_frame;
-            /* _game->process_events(); */
+            _game->process_events();
             update( _time_per_frame );
         }
-        _game->process_events();
+        /*_game->process_events();*/
         update_statistics( elapsed_time );
         render();
     }

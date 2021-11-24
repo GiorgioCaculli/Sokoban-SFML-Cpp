@@ -4,6 +4,8 @@
 #include "../../model/Board.hpp"
 
 #include <SFML/System/NonCopyable.hpp>
+#include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Audio/Music.hpp>
@@ -48,6 +50,8 @@ namespace sokoban
                 sf::Sound box_move_sound;
                 sf::Texture *_base_sokoban_texture;
                 sf::Texture *_background_texture;
+                sf::Font *_font;
+                sf::Text *_text;
                 void handle_player_input( sf::Keyboard::Key key, bool is_pressed );
                 void load_textures();
                 void build_scene( const std::string &level );
