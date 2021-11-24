@@ -19,7 +19,7 @@ namespace sokoban
             using namespace sokoban::util;
             using namespace sokoban::model;
 
-            class MainFrame
+            class MainWindow
                     : private sf::NonCopyable
             {
             private:
@@ -34,8 +34,8 @@ namespace sokoban
                 void update( const sf::Time &delta_time );
                 void render();
             public:
-                MainFrame();
-                ~MainFrame();
+                MainWindow();
+                ~MainWindow();
                 unsigned short run();
             };
         }

@@ -21,14 +21,14 @@ namespace sokoban
                     : private sf::NonCopyable
             {
             public:
-                State_Game( sf::RenderWindow &window, const std::string &level );
+                State_Game( sf::RenderWindow &window, const std::vector< std::string >& levels, int start_level  );
                 ~State_Game();
                 void update( const sf::Time &dt );
                 void draw();
                 void process_events();
             private:
                 sf::RenderWindow &_window;
-                const std::string _level;
+                std::string _level;
                 bool _player_is_moving_up;
                 bool _player_is_moving_down;
                 bool _player_is_moving_left;
@@ -51,6 +51,7 @@ namespace sokoban
                 void handle_player_input( sf::Keyboard::Key key, bool is_pressed );
                 void load_textures();
                 void build_scene( const std::string &level );
+                void reset_board();
             };
         }
     }

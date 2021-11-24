@@ -1,5 +1,8 @@
 #include "Window.hpp"
 
+#include <boost/filesystem.hpp>
+
+#include <sstream>
 #include <iostream>
 
 #include "../../util/Logger.hpp"
@@ -7,29 +10,67 @@
 using namespace sokoban::ui::gui;
 using namespace sokoban::util;
 
-const sf::Time MainFrame::_time_per_frame = sf::seconds( 1.f / 10.f );
+const sf::Time MainWindow::_time_per_frame = sf::seconds( 1.f / 10.f );
 const int WIDTH = 1440;
 const int HEIGHT = WIDTH / 16 * 10;
 
-MainFrame::MainFrame()
+std::vector< boost::filesystem::path > get_all_levels()
+{
+    const boost::filesystem::path root = "assets/levels";
+    const std::string extension = ".lvl";
+    std::vector< boost::filesystem::path > paths;
+    if( boost::filesystem::exists( root ) && boost::filesystem::is_directory( root ) )
+    {
+        for( auto const &entry : boost::filesystem::recursive_directory_iterator( root ) )
+        {
+            if( boost::filesystem::is_regular_file( entry ) )
+            {
+                paths.emplace_back( entry );
+            }
+        }
+    }
+    return paths;
+}
+
+std::vector< std::string > levels = std::vector< std::string >();
+
+MainWindow::MainWindow()
         : _font()
           , _statistics_text()
           , _statistics_update_time()
           , _statistics_num_frames( 0 )
           , _window( sf::VideoMode( WIDTH, HEIGHT ), "Sokoban", sf::Style::Titlebar | sf::Style::Close )
 {
-    Logger::log( LoggerLevel::INFO, "Init Window" );
+    Logger::log( LoggerLevel::INFO, "Init levels" );
 
-    Logger::log( LoggerLevel::INFO, "Initializing _game..." );
-    _game = new State_Game( _window, "assets/levels/tutorial.lvl" );
+    if( get_all_levels().empty() )
+    {
+        std::cout << "No levels loaded" << std::endl;
+        _window.close();
+        return;
+    }
+
+    for( const boost::filesystem::path &path : get_all_levels() )
+    {
+        levels.insert( levels.begin(), path.string() );
+    }
+
+    std::cout << "Levels loaded" << std::endl;
+    for( const std::string &lvl : levels )
+    {
+        std::cout << lvl << std::endl;
+    }
+
+    Logger::log( LoggerLevel::INFO, "Initializing game..." );
+    _game = new State_Game( _window, levels, 0 );
 }
 
-MainFrame::~MainFrame()
+MainWindow::~MainWindow()
 {
     delete _game;
 }
 
-void MainFrame::update_statistics( sf::Time elapsed_time )
+void MainWindow::update_statistics( sf::Time elapsed_time )
 {
     _statistics_update_time += elapsed_time;
     _statistics_num_frames += 1;
@@ -44,12 +85,12 @@ void MainFrame::update_statistics( sf::Time elapsed_time )
     }
 }
 
-void MainFrame::update( const sf::Time &delta_time )
+void MainWindow::update( const sf::Time &delta_time )
 {
     _game->update( delta_time );
 }
 
-void MainFrame::render()
+void MainWindow::render()
 {
     _window.clear();
     _game->draw();
@@ -58,7 +99,7 @@ void MainFrame::render()
     _window.display();
 }
 
-unsigned short MainFrame::run()
+unsigned short MainWindow::run()
 {
     sf::Clock clock;
     sf::Time time_since_last_update = sf::Time::Zero;

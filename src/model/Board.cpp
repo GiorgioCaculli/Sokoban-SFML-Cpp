@@ -23,8 +23,7 @@ const int SPACE = 64; /** Variable used for the size of each character */
  * @param lvl The path for the level
  */
 Board::Board( const std::string &lvl )
-        : _completed( false )
-          , _boxes()
+          : _boxes()
           , _walls()
           , _platforms()
           , _player( nullptr )
@@ -77,7 +76,6 @@ Board &Board::operator=( const Board &board )
         _world = board._world;
         _width = board._width;
         _height = board._height;
-        _completed = board._completed;
     }
     init_board();
     return *this;
@@ -389,7 +387,26 @@ float Board::get_board_height() const
  */
 bool Board::is_completed() const
 {
-    return _completed;
+    unsigned long number_of_boxes = _boxes.size();
+    int finished_boxes = 0;
+
+    for( Box *box : _boxes )
+    {
+        for( Platform *platform : _platforms )
+        {
+            if( box->get_x() == platform->get_x() && box->get_y() == platform->get_y() )
+            {
+                finished_boxes += 1;
+            }
+        }
+    }
+
+    if( finished_boxes == number_of_boxes )
+    {
+        return true;
+    }
+
+    return false;
 }
 
 /**

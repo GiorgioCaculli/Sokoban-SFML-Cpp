@@ -14,8 +14,10 @@ using namespace sokoban::ui::gui;
 using namespace sokoban::util;
 float base_volume = 10.f;
 float unfocused_volume = base_volume / 3.f;
+std::vector< std::string > _levels;
+int current_level;
 
-State_Game::State_Game( sf::RenderWindow &window, const std::string &level )
+State_Game::State_Game( sf::RenderWindow &window, const std::vector< std::string >& levels, int start_level )
         : _window( window )
           , _world_view( window.getDefaultView() )
           , _scene_layers()
@@ -25,12 +27,14 @@ State_Game::State_Game( sf::RenderWindow &window, const std::string &level )
           , _player_is_moving_left( false )
           , _player_is_moving_right( false )
           , _board_player( nullptr )
-          , _level( level )
+          , _level( levels.at( start_level ) )
           , _board( _level )
           , _player_sprite( nullptr )
           , _base_sokoban_texture( nullptr )
           , _background_texture( nullptr )
 {
+    _levels = levels;
+    current_level = start_level;
     music.openFromFile( "assets/music/Town_-_Tavern_Tune.ogg" );
     music.play();
     music.setVolume( base_volume );
@@ -43,7 +47,7 @@ State_Game::State_Game( sf::RenderWindow &window, const std::string &level )
     box_move_sound.setVolume( base_volume );
     load_textures();
     std::cout << _board << std::endl;
-    build_scene( level );
+    build_scene( levels.at( current_level ) );
 }
 
 State_Game::~State_Game()
@@ -201,6 +205,10 @@ void State_Game::load_textures()
 
 void State_Game::build_scene( const std::string &level )
 {
+    _player_is_moving_up = false;
+    _player_is_moving_down = false;
+    _player_is_moving_left = false;
+    _player_is_moving_right = false;
     Logger::log( LoggerLevel::INFO, "World Node init" );
 
     Logger::log( LoggerLevel::INFO, "Board size: " + std::to_string( _board.get_world().size() ) );
@@ -273,38 +281,56 @@ void State_Game::handle_player_input( sf::Keyboard::Key key, bool is_pressed )
     {
         step_sound.stop();
     }
-    if ( key == sf::Keyboard::Up )
+    if( !_board.is_completed() )
     {
-        _player_is_moving_up = is_pressed;
-    }
-    else if ( key == sf::Keyboard::Down )
-    {
-        _player_is_moving_down = is_pressed;
-    }
-    else if ( key == sf::Keyboard::Left )
-    {
-        _player_is_moving_left = is_pressed;
-    }
-    else if ( key == sf::Keyboard::Right )
-    {
-        _player_is_moving_right = is_pressed;
-    }
-    else if ( key == sf::Keyboard::R )
-    {
-        _window.clear();
-        for ( sf::Sprite *layer: _scene_layers )
+        if ( key == sf::Keyboard::Up )
         {
-            delete layer;
+            _player_is_moving_up = is_pressed;
         }
-        _scene_layers.clear();
-        for ( model::Actor *actor: _board.get_world() )
+        else if ( key == sf::Keyboard::Down )
         {
-            delete actor;
+            _player_is_moving_down = is_pressed;
         }
-        _box_sprites.clear();
-        _box_actors.clear();
-        _board = model::Board( _level );
-        build_scene( _level );
+        else if ( key == sf::Keyboard::Left )
+        {
+            _player_is_moving_left = is_pressed;
+        }
+        else if ( key == sf::Keyboard::Right )
+        {
+            _player_is_moving_right = is_pressed;
+        }
+        else if ( key == sf::Keyboard::R )
+        {
+            reset_board();
+        }
+    }
+    else
+    {
+        if( key == sf::Keyboard::Enter )
+        {
+            current_level += 1;
+            if( _levels.size() == current_level )
+            {
+                std::cout << "All levels completed" << std::endl;
+                _window.close();
+                return;
+            }
+            _level = _levels.at( current_level );
+            _window.clear();
+            for ( sf::Sprite *layer: _scene_layers )
+            {
+                delete layer;
+            }
+            _scene_layers.clear();
+            for ( model::Actor *actor: _board.get_world() )
+            {
+                delete actor;
+            }
+            _box_sprites.clear();
+            _box_actors.clear();
+            _board = model::Board( _level );
+            build_scene( _level );
+        }
     }
 }
 
@@ -370,4 +396,22 @@ void State_Game::process_events()
             break;
         }
     }
+}
+
+void State_Game::reset_board()
+{
+    _window.clear();
+    for ( sf::Sprite *layer: _scene_layers )
+    {
+        delete layer;
+    }
+    _scene_layers.clear();
+    for ( model::Actor *actor: _board.get_world() )
+    {
+        delete actor;
+    }
+    _box_sprites.clear();
+    _box_actors.clear();
+    _board = model::Board( _level );
+    build_scene( _level );
 }

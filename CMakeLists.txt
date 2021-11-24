@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.19)
 project(Sokoban)
 
-find_package(Boost COMPONENTS date_time locale log REQUIRED)
+find_package(Boost COMPONENTS date_time locale log filesystem REQUIRED)
 find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)
 
 include_directories(${Boost_INCLUDE_DIR})

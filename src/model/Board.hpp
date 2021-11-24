@@ -29,7 +29,6 @@ namespace sokoban
             std::vector< Actor * > _world; /** Every actor in the game */
             float _width; /** The board's maximum width */
             float _height; /** The board's maximum height */
-            bool _completed; /** Whether the game is completed */
             void init_board();
             void init_world();
             void build_world();

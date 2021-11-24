@@ -11,7 +11,7 @@ Menu::Menu()
     Logger::log( LoggerLevel::INFO, "Init Menu" );
 
     Logger::log( LoggerLevel::INFO, "Init Main Frame" );
-    MainFrame main_frame;
+    MainWindow main_frame;
     _res = main_frame.run();
 }
 
