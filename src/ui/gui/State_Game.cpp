@@ -8,6 +8,7 @@
 
 #include <cmath>
 #include <ctime>
+#include <random>
 #include <utility>
 #include <sstream>
 #include <iostream>
@@ -252,8 +253,30 @@ void State_Game::build_scene( const std::string &level )
     std::size_t world_size = _board.get_world().size() + 1;
     _scene_layers = std::vector< sf::Sprite * >();
     std::stringstream ss;
-    ss << "Initializing " << std::to_string( world_size ) << " fictional Scene nodes...";
+    ss << "Initializing " << std::to_string( world_size ) << " Scene nodes...";
     Logger::log( LoggerLevel::DEBUG, ss.str() );
+
+
+    std::random_device rd;
+    std::mt19937 mt( rd() );
+
+    int min_within_enum;
+    int max_within_enum;
+
+    min_within_enum = static_cast< int >( model::Box::Color::BEIGE_LIGHT );
+    max_within_enum = static_cast< int >( model::Box::Color::YELLOW_LIGHT );
+    std::uniform_int_distribution< int > box_distribution( min_within_enum, max_within_enum );
+    auto random_box_color = static_cast< model::Box::Color >( box_distribution( mt ) );
+
+    min_within_enum = static_cast< int >( model::Platform::Color::BEIGE );
+    max_within_enum = static_cast< int >( model::Platform::Color::YELLOW );
+    std::uniform_int_distribution< int > platform_distribution( min_within_enum, max_within_enum );
+    auto random_platform_color = static_cast< model::Platform::Color >( platform_distribution( mt ) );
+
+    min_within_enum = static_cast< int >( model::Wall::Color::BEIGE );
+    max_within_enum = static_cast< int >( model::Wall::Color::BROWN );
+    std::uniform_int_distribution< int > wall_distribution( min_within_enum, max_within_enum );
+    auto random_wall_color = static_cast< model::Wall::Color >( wall_distribution( mt ) );
 
     int layers = 0;
     sf::IntRect textureRect( _world_bounds );
@@ -275,6 +298,7 @@ void State_Game::build_scene( const std::string &level )
         sf::IntRect asset_rect;
 
         sf::Sprite *actor_sprite = nullptr;
+
         if ( actor->get_type() == actor->PLAYER )
         {
             _board_player = dynamic_cast< model::Player * >( actor );
@@ -290,7 +314,7 @@ void State_Game::build_scene( const std::string &level )
         if ( actor->get_type() == actor->PLATFORM )
         {
             auto *platform_actor = dynamic_cast< model::Platform * >( actor );
-            auto platform_asset_rect = platform_actor->get_platform_color_map().find( model::Platform::Color::RED )->second;
+            auto platform_asset_rect = platform_actor->get_platform_color_map().find( random_platform_color )->second;
             asset_coord_x = platform_asset_rect.at( 0 );
             asset_coord_y = platform_asset_rect.at( 1 );
             asset_coord_width = platform_asset_rect.at( 2 );
@@ -306,7 +330,7 @@ void State_Game::build_scene( const std::string &level )
         if ( actor->get_type() == actor->BOX )
         {
             auto *box_actor = dynamic_cast< model::Box * >( actor );
-            auto box_asset_rect = box_actor->get_box_color_map().find( model::Box::Color::PURPLE_DARK )->second;
+            auto box_asset_rect = box_actor->get_box_color_map().find( random_box_color )->second;
             asset_coord_x = box_asset_rect.at( 0 );
             asset_coord_y = box_asset_rect.at( 1 );
             asset_coord_width = box_asset_rect.at( 2 );
@@ -319,7 +343,7 @@ void State_Game::build_scene( const std::string &level )
         if ( actor->get_type() == actor->WALL )
         {
             auto *wall_actor = dynamic_cast< model::Wall * >( actor );
-            auto wall_asset_rect = wall_actor->get_wall_color_map().find( model::Wall::Color::WHITE )->second;
+            auto wall_asset_rect = wall_actor->get_wall_color_map().find( random_wall_color )->second;
             asset_coord_x = wall_asset_rect.at( 0 );
             asset_coord_y = wall_asset_rect.at( 1 );
             asset_coord_width = wall_asset_rect.at( 2 );
