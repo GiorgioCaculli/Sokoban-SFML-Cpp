@@ -73,6 +73,7 @@ State_Game::~State_Game()
         delete layer;
     }
     _scene_layers.clear();
+    delete _player_texture_sheet;
     delete _box_texture_sheet;
     delete _platform_texture_sheet;
     delete _wall_texture_sheet;
@@ -231,7 +232,6 @@ void State_Game::load_textures()
     _wall_texture_sheet = new sf::Texture();
     _wall_texture_sheet->loadFromFile( "assets/images/Spritesheet/wall_round_spritesheet.png" );
     _background_texture = new sf::Texture();
-    _background_texture->loadFromFile( "assets/images/PNG/GroundGravel_Sand.png" );
 }
 
 void State_Game::build_scene( const std::string &level )
@@ -262,6 +262,27 @@ void State_Game::build_scene( const std::string &level )
 
     int min_within_enum;
     int max_within_enum;
+
+
+    min_within_enum = static_cast< int >( Background_Color::CONCRETE );
+    max_within_enum = static_cast< int >( Background_Color::SAND );
+    std::uniform_int_distribution< int > background_distribution( min_within_enum, max_within_enum );
+    auto random_background_color = static_cast< Background_Color >( background_distribution( mt ) );
+    switch ( random_background_color )
+    {
+    case Background_Color::CONCRETE:
+        _background_texture->loadFromFile( "assets/images/PNG/GroundGravel_Concrete.png" );
+        break;
+    case Background_Color::DIRT:
+        _background_texture->loadFromFile( "assets/images/PNG/GroundGravel_Dirt.png" );
+        break;
+    case Background_Color::GRASS:
+        _background_texture->loadFromFile( "assets/images/PNG/GroundGravel_Grass.png" );
+        break;
+    case Background_Color::SAND:
+        _background_texture->loadFromFile( "assets/images/PNG/GroundGravel_Sand.png" );
+        break;
+    }
 
     min_within_enum = static_cast< int >( model::Box::Color::BEIGE_LIGHT );
     max_within_enum = static_cast< int >( model::Box::Color::YELLOW_LIGHT );

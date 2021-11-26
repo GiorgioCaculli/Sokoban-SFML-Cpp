@@ -29,6 +29,13 @@ namespace sokoban
                 void draw();
                 void process_events();
             private:
+                enum class Background_Color
+                        {
+                    CONCRETE,
+                    DIRT,
+                    GRASS,
+                    SAND
+                        };
                 sf::RenderWindow &_window;
                 std::string _level;
                 bool _player_is_moving_up;
