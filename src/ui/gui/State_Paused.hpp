@@ -1,9 +1,0 @@
-#ifndef SOKOBAN_STATE_PAUSED_HPP
-#define SOKOBAN_STATE_PAUSED_HPP
-
-class State_Paused
-{
-
-};
-
-#endif //SOKOBAN_STATE_PAUSED_HPP

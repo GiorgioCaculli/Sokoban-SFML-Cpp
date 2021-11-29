@@ -3,6 +3,11 @@
 
 #include "../../model/Board.hpp"
 
+#include "entities/Entity_Box.hpp"
+#include "entities/Entity_Platform.hpp"
+#include "entities/Entity_Player.hpp"
+#include "entities/Entity_Wall.hpp"
+
 #include <SFML/System/NonCopyable.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Font.hpp>
@@ -30,12 +35,12 @@ namespace sokoban
                 void process_events();
             private:
                 enum class Background_Color
-                        {
+                {
                     CONCRETE,
                     DIRT,
                     GRASS,
                     SAND
-                        };
+                };
                 sf::RenderWindow &_window;
                 std::string _level;
                 bool _player_is_moving_up;
@@ -48,8 +53,11 @@ namespace sokoban
                 model::Board _board;
                 sf::Sprite *_player_sprite;
                 model::Player *_board_player;
+                entity::Entity_Player *_player_entity;
                 std::vector< sf::Sprite * > _box_sprites;
                 std::vector< model::Box * > _box_actors;
+                std::vector< entity::Entity_Box * > _box_entities;
+                std::vector< entity::Entity * > _entities;
                 sf::Music music;
                 sf::SoundBuffer step_buffer;
                 sf::Sound step_sound;

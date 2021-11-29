@@ -16,13 +16,13 @@ int main( int argc, char *argv[] )
 
     Menu menu;
 
-    int res = 0;
-
-    Logger::log( LoggerLevel::INFO, "Running Game..." );
+    int res;
 
     try
     {
+        Logger::log( LoggerLevel::INFO, "Running Game..." );
         res = menu.launch_application();
+        Logger::log( LoggerLevel::INFO, "Closing Sokoban..." );
     }
     catch ( std::exception &e )
     {
@@ -30,6 +30,5 @@ int main( int argc, char *argv[] )
         res = -1;
     }
 
-    Logger::log( LoggerLevel::INFO, "Closing Sokoban..." );
     return res;
 }

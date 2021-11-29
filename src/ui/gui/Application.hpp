@@ -1,13 +1,13 @@
-#ifndef SOKOBAN_WINDOW_HPP
-#define SOKOBAN_WINDOW_HPP
+#ifndef SOKOBAN_APPLICATION_HPP
+#define SOKOBAN_APPLICATION_HPP
 
 #include "../../util/Logger.hpp"
 #include "../../model/Board.hpp"
-#include "State_Game.hpp"
+#include "../Resource_Holder.hpp"
+#include "Resource_Identifiers.hpp"
 
 #include <SFML/System/Time.hpp>
 #include <SFML/Graphics/Text.hpp>
-#include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
 namespace sokoban
@@ -19,27 +19,29 @@ namespace sokoban
             using namespace sokoban::util;
             using namespace sokoban::model;
 
-            class MainWindow
+            class Application
                     : private sf::NonCopyable
             {
+            public:
+                Application();
+                ~Application();
+                unsigned short run();
             private:
                 static const sf::Time _time_per_frame;
                 sf::RenderWindow _window;
-                State_Game *_game;
-                sf::Font _font;
+                Texture_Holder _textures;
+                Font_Holder _fonts;
                 sf::Text _statistics_text;
                 sf::Time _statistics_update_time;
                 std::size_t _statistics_num_frames;
-                void update_statistics( sf::Time elapsed_time );
+                void process_input();
                 void update( const sf::Time &delta_time );
                 void render();
-            public:
-                MainWindow();
-                ~MainWindow();
-                unsigned short run();
+                void update_statistics( sf::Time elapsed_time );
+                void register_states();
             };
         }
     }
 }
 
-#endif //SOKOBAN_WINDOW_HPP
+#endif //SOKOBAN_APPLICATION_HPP

@@ -16,17 +16,6 @@ namespace sokoban
                 : public Actor
         {
         public:
-            enum class Color
-            {
-                BEIGE,
-                BLACK,
-                BLUE,
-                BROWN,
-                WHITE,
-                PURPLE,
-                RED,
-                YELLOW
-            };
             Platform( float x, float y );
             Platform( const Platform &platform );
             Platform &operator=( const Platform &platform );
@@ -34,9 +23,6 @@ namespace sokoban
             ID get_type() const override;
             std::string to_string() const override;
             friend std::ostream &operator<<( std::ostream &os, const Platform &platform );
-            const std::map< Color, std::array< float, 4>> &get_platform_color_map() const;
-        private:
-            std::map< Color, std::array< float, 4 > > _platform_color_map;
         };
     }
 }

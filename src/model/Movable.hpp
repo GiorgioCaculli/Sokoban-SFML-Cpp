@@ -19,7 +19,7 @@ namespace sokoban
                 : public Actor
         {
         public:
-            Movable( float x, float y, std::array< float, 4 > asset_coords );
+            Movable( float x, float y );
             Movable( const Movable &movable );
             Movable &operator=( const Movable &movable );
             ~Movable() override = default;

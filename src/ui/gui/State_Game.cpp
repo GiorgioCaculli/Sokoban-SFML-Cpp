@@ -1,6 +1,7 @@
 #include "State_Game.hpp"
 
 #include "../../util/Logger.hpp"
+
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/Sprite.hpp>
@@ -32,6 +33,7 @@ State_Game::State_Game( sf::RenderWindow &window, const std::vector< std::string
           , _player_is_moving_left( false )
           , _player_is_moving_right( false )
           , _board_player( nullptr )
+          , _player_entity( nullptr )
           , _level( levels.at( start_level ) )
           , _board( _level )
           , _player_sprite( nullptr )
@@ -43,6 +45,7 @@ State_Game::State_Game( sf::RenderWindow &window, const std::vector< std::string
           , _font( nullptr )
           , _text( nullptr )
 {
+    _window.setKeyRepeatEnabled( true );
     _font = new sf::Font();
     _font->loadFromFile( "assets/fonts/ConnectionIi-2wj8.otf" );
     _text = new sf::Text();
@@ -72,14 +75,19 @@ State_Game::~State_Game()
     {
         delete layer;
     }
+    for( entity::Entity *entity : _entities )
+    {
+        delete entity;
+    }
     _scene_layers.clear();
+    _entities.clear();
     delete _player_texture_sheet;
     delete _box_texture_sheet;
     delete _platform_texture_sheet;
     delete _wall_texture_sheet;
     delete _background_texture;
     _box_sprites.clear();
-    _box_actors.clear();
+    _box_entities.clear();
 }
 
 void State_Game::update( const sf::Time &dt )
@@ -92,7 +100,7 @@ void State_Game::update( const sf::Time &dt )
     float player_height_coords;
     if ( _player_is_moving_up )
     {
-        auto player_asset_rect = _board_player->get_player_face_map().find( model::Player::Face::NORTH )->second;
+        auto player_asset_rect = _player_entity->get_player_face_map().find( entity::Entity_Player::Face::NORTH )->second;
         player_x_coords = player_asset_rect.at( 0 );
         player_y_coords = player_asset_rect.at( 1 );
         player_width_coords = player_asset_rect.at( 2 );
@@ -110,17 +118,18 @@ void State_Game::update( const sf::Time &dt )
         }
         else
         {
-            for ( int i = 0; i < _box_actors.size(); i++ )
+            for ( int i = 0; i < _box_entities.size(); i++ )
             {
                 _box_sprites.at( i )->setPosition( _box_actors.at( i )->get_x(), _box_actors.at( i )->get_y() );
             }
         }
         _player_sprite->move( 0.f, -SPACE );
+        _player_entity->set_y( _player_entity->get_y() - SPACE );
         _board_player->set_y( _board_player->get_y() - SPACE );
     }
     if ( _player_is_moving_down )
     {
-        auto player_asset_rect = _board_player->get_player_face_map().find( model::Player::Face::SOUTH )->second;
+        auto player_asset_rect = _player_entity->get_player_face_map().find( entity::Entity_Player::Face::SOUTH )->second;
         player_x_coords = player_asset_rect.at( 0 );
         player_y_coords = player_asset_rect.at( 1 );
         player_width_coords = player_asset_rect.at( 2 );
@@ -138,17 +147,18 @@ void State_Game::update( const sf::Time &dt )
         }
         else
         {
-            for ( int i = 0; i < _box_actors.size(); i++ )
+            for ( int i = 0; i < _box_entities.size(); i++ )
             {
                 _box_sprites.at( i )->setPosition( _box_actors.at( i )->get_x(), _box_actors.at( i )->get_y() );
             }
         }
         _player_sprite->move( 0.f, +SPACE );
+        _player_entity->set_y( _player_entity->get_y() + SPACE );
         _board_player->set_y( _board_player->get_y() + SPACE );
     }
     if ( _player_is_moving_left )
     {
-        auto player_asset_rect = _board_player->get_player_face_map().find( model::Player::Face::WEST )->second;
+        auto player_asset_rect = _player_entity->get_player_face_map().find( entity::Entity_Player::Face::WEST )->second;
         player_x_coords = player_asset_rect.at( 0 );
         player_y_coords = player_asset_rect.at( 1 );
         player_width_coords = player_asset_rect.at( 2 );
@@ -166,17 +176,18 @@ void State_Game::update( const sf::Time &dt )
         }
         else
         {
-            for ( int i = 0; i < _box_actors.size(); i++ )
+            for ( int i = 0; i < _box_entities.size(); i++ )
             {
                 _box_sprites.at( i )->setPosition( _box_actors.at( i )->get_x(), _box_actors.at( i )->get_y() );
             }
         }
         _player_sprite->move( -SPACE, 0.f );
+        _player_entity->set_x( _player_entity->get_x() - SPACE );
         _board_player->set_x( _board_player->get_x() - SPACE );
     }
     if ( _player_is_moving_right )
     {
-        auto player_asset_rect = _board_player->get_player_face_map().find( model::Player::Face::EAST )->second;
+        auto player_asset_rect = _player_entity->get_player_face_map().find( entity::Entity_Player::Face::EAST )->second;
         player_x_coords = player_asset_rect.at( 0 );
         player_y_coords = player_asset_rect.at( 1 );
         player_width_coords = player_asset_rect.at( 2 );
@@ -194,7 +205,7 @@ void State_Game::update( const sf::Time &dt )
         }
         else
         {
-            for ( int i = 0; i < _box_actors.size(); i++ )
+            for ( int i = 0; i < _box_entities.size(); i++ )
             {
                 _box_sprites.at( i )->setPosition( _box_actors.at( i )->get_x(), _box_actors.at( i )->get_y() );
             }
@@ -206,6 +217,7 @@ void State_Game::update( const sf::Time &dt )
             "Resets: " + std::to_string( reset_counter ) );
     if ( _board.is_completed() )
     {
+        step_sound.stop();
         /* TODO: BLINKING TEXT WHEN FINISHED */
     }
 }
@@ -248,6 +260,7 @@ void State_Game::build_scene( const std::string &level )
     Logger::log( LoggerLevel::INFO, "Board size: " + std::to_string( _board.get_world().size() ) );
     _box_sprites = std::vector< sf::Sprite * >();
     _box_actors = std::vector< model::Box * >();
+    _box_entities = std::vector< entity::Entity_Box * >();
 
     Logger::log( LoggerLevel::INFO, "Building Scene..." );
     std::size_t world_size = _board.get_world().size() + 1;
@@ -256,13 +269,11 @@ void State_Game::build_scene( const std::string &level )
     ss << "Initializing " << std::to_string( world_size ) << " Scene nodes...";
     Logger::log( LoggerLevel::DEBUG, ss.str() );
 
-
     std::random_device rd;
     std::mt19937 mt( rd() );
 
     int min_within_enum;
     int max_within_enum;
-
 
     min_within_enum = static_cast< int >( Background_Color::CONCRETE );
     max_within_enum = static_cast< int >( Background_Color::SAND );
@@ -270,34 +281,34 @@ void State_Game::build_scene( const std::string &level )
     auto random_background_color = static_cast< Background_Color >( background_distribution( mt ) );
     switch ( random_background_color )
     {
-    case Background_Color::CONCRETE:
-        _background_texture->loadFromFile( "assets/images/PNG/GroundGravel_Concrete.png" );
-        break;
-    case Background_Color::DIRT:
-        _background_texture->loadFromFile( "assets/images/PNG/GroundGravel_Dirt.png" );
-        break;
-    case Background_Color::GRASS:
-        _background_texture->loadFromFile( "assets/images/PNG/GroundGravel_Grass.png" );
-        break;
-    case Background_Color::SAND:
-        _background_texture->loadFromFile( "assets/images/PNG/GroundGravel_Sand.png" );
-        break;
+        case Background_Color::CONCRETE:
+            _background_texture->loadFromFile( "assets/images/PNG/GroundGravel_Concrete.png" );
+            break;
+        case Background_Color::DIRT:
+            _background_texture->loadFromFile( "assets/images/PNG/GroundGravel_Dirt.png" );
+            break;
+        case Background_Color::GRASS:
+            _background_texture->loadFromFile( "assets/images/PNG/GroundGravel_Grass.png" );
+            break;
+        case Background_Color::SAND:
+            _background_texture->loadFromFile( "assets/images/PNG/GroundGravel_Sand.png" );
+            break;
     }
 
-    min_within_enum = static_cast< int >( model::Box::Color::BEIGE_LIGHT );
-    max_within_enum = static_cast< int >( model::Box::Color::YELLOW_LIGHT );
+    min_within_enum = static_cast< int >( entity::Entity_Box::Color::BEIGE_LIGHT );
+    max_within_enum = static_cast< int >( entity::Entity_Box::Color::YELLOW_LIGHT );
     std::uniform_int_distribution< int > box_distribution( min_within_enum, max_within_enum );
-    auto random_box_color = static_cast< model::Box::Color >( box_distribution( mt ) );
+    auto random_box_color = static_cast< entity::Entity_Box::Color >( box_distribution( mt ) );
 
-    min_within_enum = static_cast< int >( model::Platform::Color::BEIGE );
-    max_within_enum = static_cast< int >( model::Platform::Color::YELLOW );
+    min_within_enum = static_cast< int >( entity::Entity_Platform::Color::BEIGE );
+    max_within_enum = static_cast< int >( entity::Entity_Platform::Color::YELLOW );
     std::uniform_int_distribution< int > platform_distribution( min_within_enum, max_within_enum );
-    auto random_platform_color = static_cast< model::Platform::Color >( platform_distribution( mt ) );
+    auto random_platform_color = static_cast< entity::Entity_Platform::Color >( platform_distribution( mt ) );
 
-    min_within_enum = static_cast< int >( model::Wall::Color::BEIGE );
-    max_within_enum = static_cast< int >( model::Wall::Color::BROWN );
+    min_within_enum = static_cast< int >( entity::Entity_Wall::Color::BEIGE );
+    max_within_enum = static_cast< int >( entity::Entity_Wall::Color::BROWN );
     std::uniform_int_distribution< int > wall_distribution( min_within_enum, max_within_enum );
-    auto random_wall_color = static_cast< model::Wall::Color >( wall_distribution( mt ) );
+    auto random_wall_color = static_cast< entity::Entity_Wall::Color >( wall_distribution( mt ) );
 
     int layers = 0;
     sf::IntRect textureRect( _world_bounds );
@@ -311,19 +322,23 @@ void State_Game::build_scene( const std::string &level )
 
     for ( model::Actor *actor: _board.get_world() )
     {
-        float asset_coord_x = actor->get_asset_coords().at( 0 );
-        float asset_coord_y = actor->get_asset_coords().at( 1 );
-        float asset_coord_width = actor->get_asset_coords().at( 2 );
-        float asset_coord_height = actor->get_asset_coords().at( 3 );
+        float asset_coord_x;
+        float asset_coord_y;
+        float asset_coord_width;
+        float asset_coord_height;
 
         sf::IntRect asset_rect;
 
         sf::Sprite *actor_sprite = nullptr;
 
+        entity::Entity *entity_actor = nullptr;
+
         if ( actor->get_type() == actor->PLAYER )
         {
             _board_player = dynamic_cast< model::Player * >( actor );
-            auto player_asset_rect = _board_player->get_player_face_map().find( model::Player::Face::SOUTH )->second;
+            entity_actor = new entity::Entity_Player( actor->get_x(), actor->get_y() );
+            _player_entity = dynamic_cast< entity::Entity_Player * >( entity_actor );
+            auto player_asset_rect = _player_entity->get_player_face_map().find( entity::Entity_Player::Face::SOUTH )->second;
             asset_coord_x = player_asset_rect.at( 0 );
             asset_coord_y = player_asset_rect.at( 1 );
             asset_coord_width = player_asset_rect.at( 2 );
@@ -334,7 +349,9 @@ void State_Game::build_scene( const std::string &level )
         }
         if ( actor->get_type() == actor->PLATFORM )
         {
-            auto *platform_actor = dynamic_cast< model::Platform * >( actor );
+            entity_actor = new entity::Entity_Platform( actor->get_x(), actor->get_y() );
+            actor = dynamic_cast< entity::Entity_Platform * >( entity_actor );
+            auto *platform_actor = dynamic_cast< entity::Entity_Platform * >( actor );
             auto platform_asset_rect = platform_actor->get_platform_color_map().find( random_platform_color )->second;
             asset_coord_x = platform_asset_rect.at( 0 );
             asset_coord_y = platform_asset_rect.at( 1 );
@@ -350,8 +367,11 @@ void State_Game::build_scene( const std::string &level )
         }
         if ( actor->get_type() == actor->BOX )
         {
-            auto *box_actor = dynamic_cast< model::Box * >( actor );
-            auto box_asset_rect = box_actor->get_box_color_map().find( random_box_color )->second;
+            _box_actors.push_back( dynamic_cast< model::Box * >( actor ) );
+            entity_actor = new entity::Entity_Box( actor->get_x(), actor->get_y() );
+            actor = dynamic_cast< entity::Entity_Box * >( entity_actor );
+            auto *box_entity = dynamic_cast< entity::Entity_Box * >( actor );
+            auto box_asset_rect = box_entity->get_box_color_map().find( random_box_color )->second;
             asset_coord_x = box_asset_rect.at( 0 );
             asset_coord_y = box_asset_rect.at( 1 );
             asset_coord_width = box_asset_rect.at( 2 );
@@ -359,11 +379,13 @@ void State_Game::build_scene( const std::string &level )
             sf::IntRect asset_rect( asset_coord_x, asset_coord_y, asset_coord_width, asset_coord_height );
             actor_sprite = new sf::Sprite( *_box_texture_sheet, asset_rect );
             _box_sprites.push_back( actor_sprite );
-            _box_actors.push_back( box_actor );
+            _box_entities.push_back( box_entity );
         }
         if ( actor->get_type() == actor->WALL )
         {
-            auto *wall_actor = dynamic_cast< model::Wall * >( actor );
+            entity_actor = new entity::Entity_Wall( actor->get_x(), actor->get_y() );
+            actor = dynamic_cast< entity::Entity_Wall * >( entity_actor );
+            auto *wall_actor = dynamic_cast< entity::Entity_Wall * >( actor );
             auto wall_asset_rect = wall_actor->get_wall_color_map().find( random_wall_color )->second;
             asset_coord_x = wall_asset_rect.at( 0 );
             asset_coord_y = wall_asset_rect.at( 1 );
@@ -374,6 +396,7 @@ void State_Game::build_scene( const std::string &level )
         }
         actor_sprite->setPosition( actor->get_x(), actor->get_y() );
         _scene_layers.push_back( actor_sprite );
+        _entities.push_back( entity_actor );
         layers++;
     }
 
@@ -404,20 +427,6 @@ void State_Game::handle_player_input( sf::Keyboard::Key key, bool is_pressed )
     }
     else
     {
-        if ( is_pressed )
-        {
-            step_sound.play();
-            steps_counter++;
-            if ( key == sf::Keyboard::R )
-            {
-                reset_board();
-                reset_counter++;
-            }
-        }
-        else
-        {
-            step_sound.stop();
-        }
         if ( key == sf::Keyboard::Up )
         {
             _player_is_moving_up = is_pressed;
@@ -433,6 +442,32 @@ void State_Game::handle_player_input( sf::Keyboard::Key key, bool is_pressed )
         else if ( key == sf::Keyboard::Right )
         {
             _player_is_moving_right = is_pressed;
+        }
+        if ( is_pressed )
+        {
+            if ( _player_is_moving_up ||
+                    _player_is_moving_down ||
+                    _player_is_moving_left ||
+                    _player_is_moving_right )
+            {
+                step_sound.play();
+                steps_counter++;
+            }
+            if ( key == sf::Keyboard::R )
+            {
+                reset_board();
+                reset_counter++;
+            }
+        }
+        else
+        {
+            if ( !_player_is_moving_up ||
+                    !_player_is_moving_down ||
+                    !_player_is_moving_left ||
+                    !_player_is_moving_right )
+            {
+                step_sound.stop();
+            }
         }
     }
 }
@@ -453,49 +488,11 @@ void State_Game::process_events()
             case sf::Event::Closed:
                 _window.close();
                 break;
-            case sf::Event::Resized:
-                break;
             case sf::Event::LostFocus:
                 music.setVolume( unfocused_volume );
                 break;
             case sf::Event::GainedFocus:
                 music.setVolume( base_volume );
-                break;
-            case sf::Event::TextEntered:
-                break;
-            case sf::Event::MouseWheelMoved:
-                break;
-            case sf::Event::MouseWheelScrolled:
-                break;
-            case sf::Event::MouseButtonPressed:
-                break;
-            case sf::Event::MouseButtonReleased:
-                break;
-            case sf::Event::MouseMoved:
-                break;
-            case sf::Event::MouseEntered:
-                break;
-            case sf::Event::MouseLeft:
-                break;
-            case sf::Event::JoystickButtonPressed:
-                break;
-            case sf::Event::JoystickButtonReleased:
-                break;
-            case sf::Event::JoystickMoved:
-                break;
-            case sf::Event::JoystickConnected:
-                break;
-            case sf::Event::JoystickDisconnected:
-                break;
-            case sf::Event::TouchBegan:
-                break;
-            case sf::Event::TouchMoved:
-                break;
-            case sf::Event::TouchEnded:
-                break;
-            case sf::Event::SensorChanged:
-                break;
-            case sf::Event::Count:
                 break;
         }
     }
@@ -514,8 +511,13 @@ void State_Game::reset_board()
     {
         delete actor;
     }
+    for( entity::Entity *entity : _entities )
+    {
+        delete entity;
+    }
     _box_sprites.clear();
-    _box_actors.clear();
+    _box_entities.clear();
+    _entities.clear();
     _board = model::Board( _level );
     build_scene( _level );
 }

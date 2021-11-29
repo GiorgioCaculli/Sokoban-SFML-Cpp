@@ -19,7 +19,6 @@ namespace sokoban
         private:
             float _x; /** The X coordinate on the board */
             float _y; /** The Y coordinate on the board */
-            std::array< float, 4 > _asset_coords; /** The asset's coordinates on the sprite sheet */
         public:
             enum ID /** We consider there to be 4 types of actors */
             {
@@ -28,7 +27,7 @@ namespace sokoban
                 PLAYER, /** A player */
                 WALL /** A wall */
             };
-            Actor( float x, float y, std::array< float, 4 > asset_coords );
+            Actor( float x, float y );
             Actor( const Actor &actor );
             Actor &operator=( const Actor &actor );
             virtual ~Actor() = default;
@@ -36,8 +35,6 @@ namespace sokoban
             void set_x( float x );
             float get_y() const;
             void set_y( float y );
-            std::array< float, 4 > get_asset_coords() const;
-            void set_asset_coords( std::array< float, 4 > asset_coords );
             virtual ID get_type() const = 0;
             bool is_left_collision( const Actor *actor ) const;
             bool is_right_collision( const Actor *actor ) const;

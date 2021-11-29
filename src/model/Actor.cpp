@@ -12,10 +12,9 @@ const float SPACE = 64.f; /** Dans ce cas, les images mesurent 64x64 */
  * @param y The Y coordinate.
  * @param asset_coords The coordinates on the sprite sheet which represent it graphically.
  */
-Actor::Actor( float x, float y, std::array< float, 4 > asset_coords )
+Actor::Actor( float x, float y )
         : _x( x )
           , _y( y )
-          , _asset_coords( asset_coords )
 {
 }
 
@@ -24,7 +23,7 @@ Actor::Actor( float x, float y, std::array< float, 4 > asset_coords )
  * @param actor The actor from which we wish to create a copy
  */
 Actor::Actor( const Actor &actor )
-        : Actor( actor._x, actor._y, actor._asset_coords )
+        : Actor( actor._x, actor._y )
 {
 }
 
@@ -39,7 +38,6 @@ Actor &Actor::operator=( const Actor &actor )
     {
         _x = actor._x;
         _y = actor._y;
-        _asset_coords = actor._asset_coords;
     }
     return *this;
 }
@@ -78,24 +76,6 @@ float Actor::get_y() const
 void Actor::set_y( float y )
 {
     this->_y = y;
-}
-
-/**
- * Assets coordinates getter
- * @return The coordinates of an asset on a sprite sheet
- */
-std::array< float, 4 > Actor::get_asset_coords() const
-{
-    return _asset_coords;
-}
-
-/**
- * Assets coordinates setter
- * @param asset_coords The new coordinates for the asset on the sprite sheet
- */
-void Actor::set_asset_coords( std::array< float, 4 > asset_coords )
-{
-    this->_asset_coords = asset_coords;
 }
 
 /**
@@ -193,8 +173,7 @@ std::ostream &sokoban::model::operator<<( std::ostream &os, const Actor &actor )
 bool Actor::operator==( const Actor &actor ) const
 {
     return _x == actor._x &&
-            _y == actor._y &&
-            _asset_coords == actor._asset_coords;
+            _y == actor._y;
 }
 
 /**

@@ -8,10 +8,8 @@ using namespace sokoban::util;
 
 Menu::Menu()
 {
-    Logger::log( LoggerLevel::INFO, "Init Menu" );
-
     Logger::log( LoggerLevel::INFO, "Init Main Frame" );
-    MainWindow main_frame;
+    Application main_frame;
     _res = main_frame.run();
 }
 

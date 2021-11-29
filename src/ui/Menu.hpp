@@ -1,7 +1,7 @@
 #ifndef SOKOBAN_MENU_HPP
 #define SOKOBAN_MENU_HPP
 
-#include "gui/Window.hpp"
+#include "gui/Application.hpp"
 
 namespace sokoban
 {
