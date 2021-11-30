@@ -407,22 +407,22 @@ void State_Game::handle_player_input( sf::Keyboard::Key key, bool is_pressed )
 {
     if ( _board.is_completed() )
     {
-        _text->setCharacterSize( 50 );
-        _text->setPosition( _world_view.getSize().x / 3.0f, _world_view.getSize().y / 2.f );
-        _text->setString( "Level Completed\nPress ENTER to continue!" );
-        if ( key == sf::Keyboard::Enter )
+        if ( _levels.size() <= current_level )
         {
-            current_level += 1;
-            if ( _levels.size() == current_level )
+            _text->setCharacterSize( 50 );
+            _text->setPosition( _world_view.getSize().x / 3.0f, _world_view.getSize().y / 2.f );
+            _text->setString( "All Levels Completed!" );
+            return;
+        }
+        else
+        {
+            _text->setCharacterSize( 50 );
+            _text->setPosition( _world_view.getSize().x / 3.0f, _world_view.getSize().y / 2.f );
+            _text->setString( "Level Completed\nPress ENTER to continue!" );
+            if ( key == sf::Keyboard::Enter )
             {
-                _text->setCharacterSize( 50 );
-                _text->setPosition( _world_view.getSize().x / 3.0f, _world_view.getSize().y / 2.f );
-                _text->setString( "All Levels Completed!" );
-                return;
+                next_level();
             }
-            _level = _levels.at( current_level );
-            reset_counter = 0;
-            reset_board();
         }
     }
     else
@@ -457,6 +457,21 @@ void State_Game::handle_player_input( sf::Keyboard::Key key, bool is_pressed )
             {
                 reset_board();
                 reset_counter++;
+            }
+            if( key == sf::Keyboard::S )
+            {
+                next_level();
+            }
+            if( key == sf::Keyboard::M )
+            {
+                if( music.Playing )
+                {
+                    music.pause();
+                }
+                else
+                {
+                    music.play();
+                }
             }
         }
         else
@@ -520,4 +535,16 @@ void State_Game::reset_board()
     _entities.clear();
     _board = model::Board( _level );
     build_scene( _level );
+}
+
+void State_Game::next_level()
+{
+    current_level += 1;
+    if ( _levels.size() <= current_level )
+    {
+        return;
+    }
+    _level = _levels.at( current_level );
+    reset_counter = 0;
+    reset_board();
 }

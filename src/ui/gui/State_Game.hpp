@@ -74,6 +74,7 @@ namespace sokoban
                 void load_textures();
                 void build_scene( const std::string &level );
                 void reset_board();
+                void next_level();
             };
         }
     }
