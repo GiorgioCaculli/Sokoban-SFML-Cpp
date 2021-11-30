@@ -167,6 +167,13 @@ void Board::init_world()
                 _player = new Player( x, y );
                 x += SPACE;
                 break;
+            case '*':
+                box = new Box( x, y );
+                platform = new Platform( x, y );
+                _boxes.insert( _boxes.begin(), box );
+                _platforms.insert( _platforms.begin(), platform );
+                x += SPACE;
+                break;
             case ' ':
                 x += SPACE;
                 break;
