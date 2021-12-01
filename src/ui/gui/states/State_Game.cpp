@@ -1,6 +1,6 @@
 #include "State_Game.hpp"
 
-#include "../../util/Logger.hpp"
+#include "../../../util/Logger.hpp"
 
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Event.hpp>
@@ -213,7 +213,8 @@ void State_Game::update( const sf::Time &dt )
         _player_sprite->move( +SPACE, 0.f );
         _board_player->set_x( _board_player->get_x() + SPACE );
     }
-    _text->setString( "Steps: " + std::to_string( steps_counter ) + "\n" +
+    _text->setString( "Level: " + std::to_string( current_level ) + "\n" +
+            "Steps: " + std::to_string( steps_counter ) + "\n" +
             "Resets: " + std::to_string( reset_counter ) );
     if ( _board.is_completed() )
     {
@@ -254,8 +255,10 @@ void State_Game::build_scene( const std::string &level )
     _player_is_moving_left = false;
     _player_is_moving_right = false;
     _text->setFont( *_font );
-    _text->setPosition( 20.f, 20.f );
-    _text->setCharacterSize( 20 );
+    _text->setPosition(
+            _window.getSize().x - 200.f,
+            20.f );
+    _text->setCharacterSize( 32 );
 
     Logger::log( LoggerLevel::INFO, "Board size: " + std::to_string( _board.get_world().size() ) );
     _box_sprites = std::vector< sf::Sprite * >();
@@ -462,6 +465,10 @@ void State_Game::handle_player_input( sf::Keyboard::Key key, bool is_pressed )
             {
                 next_level();
             }
+            if( key == sf::Keyboard::X )
+            {
+                prev_level();
+            }
             if( key == sf::Keyboard::M )
             {
                 if( music.Playing )
@@ -542,6 +549,20 @@ void State_Game::next_level()
     current_level += 1;
     if ( _levels.size() <= current_level )
     {
+        current_level = _levels.size() - 1;
+        return;
+    }
+    _level = _levels.at( current_level );
+    reset_counter = 0;
+    reset_board();
+}
+
+void State_Game::prev_level()
+{
+    current_level -= 1;
+    if ( current_level <= 0 )
+    {
+        current_level = 1;
         return;
     }
     _level = _levels.at( current_level );

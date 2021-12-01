@@ -1,12 +1,12 @@
 #ifndef SOKOBAN_STATE_GAME_HPP
 #define SOKOBAN_STATE_GAME_HPP
 
-#include "../../model/Board.hpp"
+#include "../../../model/Board.hpp"
 
-#include "entities/Entity_Box.hpp"
-#include "entities/Entity_Platform.hpp"
-#include "entities/Entity_Player.hpp"
-#include "entities/Entity_Wall.hpp"
+#include "../entities/Entity_Box.hpp"
+#include "../entities/Entity_Platform.hpp"
+#include "../entities/Entity_Player.hpp"
+#include "../entities/Entity_Wall.hpp"
 
 #include <SFML/System/NonCopyable.hpp>
 #include <SFML/Graphics/Text.hpp>
@@ -75,6 +75,7 @@ namespace sokoban
                 void build_scene( const std::string &level );
                 void reset_board();
                 void next_level();
+                void prev_level();
             };
         }
     }

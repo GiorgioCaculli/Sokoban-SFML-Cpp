@@ -3,7 +3,7 @@
 #define SOKOBAN_STATE_HPP
 
 #include "State_Identifiers.hpp"
-#include "Resource_Identifiers.hpp"
+#include "../Resource_Identifiers.hpp"
 
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Event.hpp>

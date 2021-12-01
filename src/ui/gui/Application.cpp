@@ -1,11 +1,11 @@
 #include "Application.hpp"
 #include "../../util/Logger.hpp"
-#include "State.hpp"
-#include "State_Identifiers.hpp"
-#include "State_Title.hpp"
-#include "State_Game.hpp"
-#include "State_Menu.hpp"
-#include "State_Pause.hpp"
+#include "states/State.hpp"
+#include "states/State_Identifiers.hpp"
+#include "states/State_Title.hpp"
+#include "states/State_Game.hpp"
+#include "states/State_Menu.hpp"
+#include "states/State_Pause.hpp"
 
 #include <boost/filesystem.hpp>
 
@@ -19,8 +19,9 @@ using namespace sokoban::ui::gui;
 using namespace sokoban::util;
 
 const sf::Time Application::_time_per_frame = sf::seconds( 1.f / 10.f );
-const int WIDTH = 1440;
-const int HEIGHT = WIDTH / 16 * 10;
+const int WIDTH = 1920;
+const int HEIGHT = WIDTH / 16 * 9;
+const int BITS_PER_PIXEL = 32;
 
 bool sort_alphabetically( const boost::filesystem::path &a, const boost::filesystem::path &b )
 {
@@ -58,9 +59,8 @@ Application::Application()
           , _statistics_text()
           , _statistics_update_time()
           , _statistics_num_frames( 0 )
-          , _window( sf::VideoMode( WIDTH, HEIGHT ), "Sokoban", sf::Style::Titlebar | sf::Style::Close )
+          , _window( sf::VideoMode( WIDTH, HEIGHT, BITS_PER_PIXEL ), "Sokoban", sf::Style::Fullscreen )
 {
-    _window.setKeyRepeatEnabled( false );
     _fonts.load( Fonts::Main, "assets/fonts/ConnectionIi-2wj8.otf" );
     _textures.load( Textures::TitleScreen, "assets/images/Sample_Sokoban.png" );
     _statistics_text.setFont( _fonts.get( Fonts::Main ) );
