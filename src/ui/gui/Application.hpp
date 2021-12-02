@@ -2,9 +2,9 @@
 #define SOKOBAN_APPLICATION_HPP
 
 #include "../../util/Logger.hpp"
-#include "../../model/Board.hpp"
 #include "../Resource_Holder.hpp"
 #include "Resource_Identifiers.hpp"
+#include "states/State_Stack.hpp"
 
 #include <SFML/System/Time.hpp>
 #include <SFML/Graphics/Text.hpp>
@@ -17,7 +17,6 @@ namespace sokoban
         namespace gui
         {
             using namespace sokoban::util;
-            using namespace sokoban::model;
 
             class Application
                     : private sf::NonCopyable
@@ -27,17 +26,18 @@ namespace sokoban
                 ~Application();
                 unsigned short run();
             private:
-                static const sf::Time _time_per_frame;
+                static const sf::Time time_per_frame;
                 sf::RenderWindow _window;
                 Texture_Holder _textures;
                 Font_Holder _fonts;
+                State_Stack _state_stack;
                 sf::Text _statistics_text;
                 sf::Time _statistics_update_time;
                 std::size_t _statistics_num_frames;
                 void process_input();
                 void update( const sf::Time &delta_time );
                 void render();
-                void update_statistics( sf::Time elapsed_time );
+                void update_statistics( sf::Time dt );
                 void register_states();
             };
         }

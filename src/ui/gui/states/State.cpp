@@ -4,11 +4,10 @@
 
 using namespace sokoban::ui::gui;
 
-State::Context::Context( sf::RenderWindow &window, sokoban::ui::Texture_Holder &textures, sokoban::ui::Font_Holder &fonts, Entity_Player &entity_player )
+State::Context::Context( sf::RenderWindow &window, sokoban::ui::Texture_Holder &textures, sokoban::ui::Font_Holder &fonts )
         : _window( &window )
           , _textures( &textures )
           , _fonts( &fonts )
-          , _entity_player( &entity_player )
 {
 }
 
@@ -24,15 +23,17 @@ State::~State()
 
 void State::request_stack_push( States::ID stateID )
 {
+    _stack->push_state( stateID );
 }
 
 void State::request_stack_pop()
 {
+    _stack->pop_state();
 }
 
 void State::request_state_clear()
 {
-
+    _stack->clear_states();
 }
 
 State::Context State::get_context() const

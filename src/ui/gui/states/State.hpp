@@ -32,11 +32,10 @@ namespace sokoban
 
                 struct Context
                 {
-                    Context( sf::RenderWindow &window, Texture_Holder &textures, Font_Holder &fonts, Entity_Player &entity_player );
+                    Context( sf::RenderWindow &window, Texture_Holder &textures, Font_Holder &fonts );
                     sf::RenderWindow *_window;
                     Texture_Holder *_textures;
                     Font_Holder *_fonts;
-                    Entity_Player *_entity_player;
                 };
 
                 State( State_Stack &stack, Context context );

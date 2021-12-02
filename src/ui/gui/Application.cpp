@@ -1,5 +1,6 @@
 #include "Application.hpp"
 #include "../../util/Logger.hpp"
+#include "Utility.hpp"
 #include "states/State.hpp"
 #include "states/State_Identifiers.hpp"
 #include "states/State_Title.hpp"
@@ -12,13 +13,10 @@
 #include <iostream>
 #include <algorithm>
 
-// TODO: REMOVE AND CORRECT
-#include <SFML/Window/Event.hpp>
-
 using namespace sokoban::ui::gui;
 using namespace sokoban::util;
 
-const sf::Time Application::_time_per_frame = sf::seconds( 1.f / 10.f );
+const sf::Time Application::time_per_frame = sf::seconds( 1.f / 60.f );
 const int WIDTH = 1920;
 const int HEIGHT = WIDTH / 16 * 9;
 const int BITS_PER_PIXEL = 32;
@@ -51,16 +49,16 @@ std::vector< boost::filesystem::path > get_all_levels()
 
 std::vector< std::string > levels = std::vector< std::string >();
 
-State_Game *_game = nullptr;
-
 Application::Application()
-        : _textures()
+        : _window( sf::VideoMode( WIDTH, HEIGHT, BITS_PER_PIXEL ), "Sokoban", sf::Style::Fullscreen )
+          , _textures()
           , _fonts()
+          , _state_stack( State::Context( _window, _textures, _fonts ) )
           , _statistics_text()
           , _statistics_update_time()
           , _statistics_num_frames( 0 )
-          , _window( sf::VideoMode( WIDTH, HEIGHT, BITS_PER_PIXEL ), "Sokoban", sf::Style::Fullscreen )
 {
+    _window.setKeyRepeatEnabled( false );
     _fonts.load( Fonts::Main, "assets/fonts/ConnectionIi-2wj8.otf" );
     _textures.load( Textures::TitleScreen, "assets/images/Sample_Sokoban.png" );
     _statistics_text.setFont( _fonts.get( Fonts::Main ) );
@@ -89,25 +87,21 @@ Application::Application()
     }
 
     register_states();
-
-    Logger::log( LoggerLevel::INFO, "Initializing game..." );
-    _game = new State_Game( _window, levels, 0 );
+    _state_stack.push_state( States::Title );
 }
 
 Application::~Application()
 {
-    delete _game;
 }
 
-void Application::update_statistics( sf::Time elapsed_time )
+void Application::update_statistics( sf::Time dt )
 {
-    _statistics_update_time += elapsed_time;
+    _statistics_update_time += dt;
     _statistics_num_frames += 1;
     if ( _statistics_update_time >= sf::seconds( 1.0f ) )
     {
         _statistics_text.setString(
-                "Frames / Second = " + std::to_string( _statistics_num_frames ) + "\n" +
-                        "Time / Update = " + std::to_string( _statistics_update_time.asMicroseconds() / _statistics_num_frames ) + "us"
+                "FPS: " + std::to_string( _statistics_num_frames )
         );
         _statistics_update_time -= sf::seconds( 1.0f );
         _statistics_num_frames = 0;
@@ -116,10 +110,11 @@ void Application::update_statistics( sf::Time elapsed_time )
 
 void Application::process_input()
 {
-    sf::Event event {};
+    sf::Event event;
 
     while ( _window.pollEvent( event ) )
     {
+        _state_stack.handle_event( event );
         if ( event.type == sf::Event::Closed )
         {
             _window.close();
@@ -130,13 +125,13 @@ void Application::process_input()
 
 void Application::update( const sf::Time &delta_time )
 {
-    _game->update( delta_time );
+    _state_stack.update( delta_time );
 }
 
 void Application::render()
 {
     _window.clear();
-    _game->draw();
+    _state_stack.draw();
     _window.setView( _window.getDefaultView() );
     _window.draw( _statistics_text );
     _window.display();
@@ -148,15 +143,19 @@ unsigned short Application::run()
     sf::Time time_since_last_update = sf::Time::Zero;
     while ( _window.isOpen() )
     {
-        sf::Time elapsed_time = clock.restart();
-        time_since_last_update += elapsed_time;
-        while ( time_since_last_update > _time_per_frame )
+        sf::Time dt = clock.restart();
+        time_since_last_update += dt;
+        while ( time_since_last_update > time_per_frame )
         {
-            time_since_last_update -= _time_per_frame;
-            _game->process_events();
-            update( _time_per_frame );
+            time_since_last_update -= time_per_frame;
+            process_input();
+            update( time_per_frame );
+            if( _state_stack.is_empty() )
+            {
+                _window.close();
+            }
         }
-        update_statistics( elapsed_time );
+        update_statistics( dt );
         render();
     }
     return 0;
@@ -164,5 +163,6 @@ unsigned short Application::run()
 
 void Application::register_states()
 {
-
+    _state_stack.register_state< State_Title >( States::Title );
+    _state_stack.register_state< State_Menu >( States::Menu );
 }

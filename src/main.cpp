@@ -4,7 +4,6 @@
 #include "util/Logger.hpp"
 
 using namespace sokoban::ui;
-using namespace sokoban::model;
 using namespace sokoban::util;
 
 int main( int argc, char *argv[] )
