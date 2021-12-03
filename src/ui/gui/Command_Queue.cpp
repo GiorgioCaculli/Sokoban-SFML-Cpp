@@ -1,14 +1,14 @@
-#include "CommandQueue.hpp"
+#include "Command_Queue.hpp"
 #include "Scene_Node.hpp"
 
 using namespace sokoban::ui::gui;
 
-void CommandQueue::push( const Command &command )
+void Command_Queue::push( const Command &command )
 {
     _queue.push( command );
 }
 
-Command CommandQueue::pop()
+Command Command_Queue::pop()
 {
     Command command = _queue.front();
 
@@ -17,7 +17,7 @@ Command CommandQueue::pop()
     return command;
 }
 
-bool CommandQueue::is_empty() const
+bool Command_Queue::is_empty() const
 {
     return _queue.empty();
 }

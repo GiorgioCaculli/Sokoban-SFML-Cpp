@@ -16,7 +16,7 @@
 using namespace sokoban::ui::gui;
 using namespace sokoban::util;
 
-const sf::Time Application::time_per_frame = sf::seconds( 1.f / 60.f );
+const sf::Time Application::time_per_frame = sf::seconds( 1.f / 10.f );
 const int WIDTH = 1920;
 const int HEIGHT = WIDTH / 16 * 9;
 const int BITS_PER_PIXEL = 32;
@@ -59,7 +59,11 @@ Application::Application()
           , _statistics_num_frames( 0 )
 {
     _window.setKeyRepeatEnabled( false );
-    _fonts.load( Fonts::Main, "assets/fonts/ConnectionIi-2wj8.otf" );
+    _fonts.load( Fonts::KodomoRounded, "assets/fonts/KodomoRounded.otf" );
+    _fonts.load( Fonts::ConnectionII, "assets/fonts/ConnectionIi-2wj8.otf" );
+    _fonts.load( Fonts::FreeFont, "assets/fonts/freefont/FreeSansBold.ttf" );
+    _fonts.load( Fonts::RampartOne, "assets/fonts/RampartOne-Regular.ttf" );
+    _fonts.load( Fonts::Main, "assets/fonts/RampartOne-Regular.ttf" );
     _textures.load( Textures::TitleScreen, "assets/images/Sample_Sokoban.png" );
     _statistics_text.setFont( _fonts.get( Fonts::Main ) );
     _statistics_text.setPosition( WIDTH / 2.5f, 5.f );
@@ -91,8 +95,7 @@ Application::Application()
 }
 
 Application::~Application()
-{
-}
+= default;
 
 void Application::update_statistics( sf::Time dt )
 {
@@ -110,7 +113,7 @@ void Application::update_statistics( sf::Time dt )
 
 void Application::process_input()
 {
-    sf::Event event;
+    sf::Event event{};
 
     while ( _window.pollEvent( event ) )
     {

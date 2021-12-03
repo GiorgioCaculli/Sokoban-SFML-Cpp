@@ -17,7 +17,7 @@ State_Title::State_Title( State_Stack &stack, State::Context context )
     Utility::center_origin( _background_sprite );
     _background_sprite.setPosition( context._window->getView().getSize() / 2.f );
     _text.setFont( context._fonts->get( Fonts::Main ) );
-    _text.setString( "Press any key to start" );
+    _text.setString( L"Press any key to start é" );
     Utility::center_origin( _text );
     _text.setPosition( context._window->getView().getSize() / 2.f );
 }

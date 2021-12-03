@@ -19,7 +19,7 @@ namespace sokoban
                 State_Title( State_Stack &stack, Context context );
                 void draw() override;
                 bool update( sf::Time dt ) override;
-                bool handle_event( const sf::Event &event );
+                bool handle_event( const sf::Event &event ) override;
             private:
                 sf::Sprite _background_sprite;
                 sf::Text _text;

@@ -18,8 +18,8 @@ State_Menu::State_Menu( State_Stack &stack, State::Context context )
     sf::Texture &texture = context._textures->get( Textures::TitleScreen );
     sf::Font &font = context._fonts->get( Fonts::Main );
     _background_sprite.setTexture( texture );
-    Utility::center_origin( _background_sprite );
-    _background_sprite.setPosition( context._window->getView().getSize() / 2.f );
+    //Utility::center_origin( _background_sprite );
+    //_background_sprite.setPosition( context._window->getView().getSize() / 2.f );
 
     sf::Text play_option;
     play_option.setFont( font );
@@ -111,6 +111,5 @@ void State_Menu::update_option_text()
         text.setFillColor( sf::Color::White );
     }
     _options[ _option_index ].setFillColor( sf::Color::Red );
-    std::string option = _options[ _option_index ].getString();
-    std::cout << option << std::endl;
+
 }

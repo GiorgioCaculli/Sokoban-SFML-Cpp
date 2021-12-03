@@ -1,5 +1,5 @@
-#ifndef SOKOBAN_COMMANDQUEUE_HPP
-#define SOKOBAN_COMMANDQUEUE_HPP
+#ifndef SOKOBAN_COMMAND_QUEUE_HPP
+#define SOKOBAN_COMMAND_QUEUE_HPP
 
 #include "Command.hpp"
 
@@ -11,7 +11,7 @@ namespace sokoban
     {
         namespace gui
         {
-            class CommandQueue
+            class Command_Queue
             {
             public:
                 void push( const Command &command );
@@ -24,4 +24,4 @@ namespace sokoban
     }
 }
 
-#endif //SOKOBAN_COMMANDQUEUE_HPP
+#endif //SOKOBAN_COMMAND_QUEUE_HPP

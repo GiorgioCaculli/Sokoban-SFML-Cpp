@@ -19,7 +19,7 @@ namespace sokoban
                 State_Menu( State_Stack &stack, Context context );
                 void draw() override;
                 bool update( sf::Time dt ) override;
-                bool handle_event( const sf::Event &event );
+                bool handle_event( const sf::Event &event ) override;
                 void update_option_text();
             private:
                 enum Option_Names

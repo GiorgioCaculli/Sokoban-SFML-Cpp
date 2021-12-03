@@ -32,6 +32,10 @@ namespace sokoban
                 enum ID
                 {
                     Main,
+                    ConnectionII,
+                    KodomoRounded,
+                    FreeFont,
+                    RampartOne,
                 };
             }
         }
