@@ -1,10 +1,12 @@
 #include "Player.hpp"
 
-#include <array>
+#include "../util/Logger.hpp"
+
 #include <sstream>
 #include <iostream>
 
 using namespace sokoban::model;
+using namespace sokoban::util;
 
 Player::Player( float x, float y )
         : Movable( x, y )
@@ -28,7 +30,7 @@ Player &Player::operator=( const Player &player )
 
 Player::~Player()
 {
-    std::cout << "Deletion " << Player::to_string() << std::endl;
+    Logger::log( LoggerLevel::INFO, "Deletion " + Player::to_string() );
 }
 
 Actor::ID Player::get_type() const

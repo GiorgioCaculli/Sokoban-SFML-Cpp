@@ -7,91 +7,66 @@
 #include "states/State_Game.hpp"
 #include "states/State_Menu.hpp"
 #include "states/State_Pause.hpp"
+#include "states/State_Settings.hpp"
+#include "states/State_Game_Over.hpp"
 
-#include <boost/filesystem.hpp>
-
-#include <iostream>
-#include <algorithm>
 
 using namespace sokoban::ui::gui;
 using namespace sokoban::util;
 
-const sf::Time Application::time_per_frame = sf::seconds( 1.f / 10.f );
-const int WIDTH = 1920;
-const int HEIGHT = WIDTH / 16 * 9;
-const int BITS_PER_PIXEL = 32;
+const sf::Time Application::_time_per_frame = sf::seconds( 1.f / 10.f );
 
-bool sort_alphabetically( const boost::filesystem::path &a, const boost::filesystem::path &b )
+namespace
 {
-    return a.string() < b.string();
+    const int WIDTH = 1920;
+    const int HEIGHT = WIDTH / 16 * 9;
+    const int BITS_PER_PIXEL = 32;
 }
-
-std::vector< boost::filesystem::path > get_all_levels()
-{
-    const boost::filesystem::path root = "assets/levels";
-    const std::string extension = ".lvl";
-    std::vector< boost::filesystem::path > paths;
-    if ( boost::filesystem::exists( root ) && boost::filesystem::is_directory( root ) )
-    {
-        for ( auto const &entry: boost::filesystem::recursive_directory_iterator( root ) )
-        {
-            if ( boost::filesystem::is_regular_file( entry ) )
-            {
-                paths.emplace_back( entry );
-            }
-        }
-    }
-
-    std::sort( paths.begin(), paths.end(), sort_alphabetically );
-
-    return paths;
-}
-
-std::vector< std::string > levels = std::vector< std::string >();
 
 Application::Application()
         : _window( sf::VideoMode( WIDTH, HEIGHT, BITS_PER_PIXEL ), "Sokoban", sf::Style::Fullscreen )
           , _textures()
           , _fonts()
-          , _state_stack( State::Context( _window, _textures, _fonts ) )
+          , _music()
+          , _sounds()
+          , _state_stack( State::Context( _window, _textures, _fonts, _music, _sounds ) )
           , _statistics_text()
           , _statistics_update_time()
           , _statistics_num_frames( 0 )
 {
+    Logger::log( LoggerLevel::DEBUG, "Setting KeyRepeatedEnabled = false" );
     _window.setKeyRepeatEnabled( false );
-    _fonts.load( Fonts::KodomoRounded, "assets/fonts/KodomoRounded.otf" );
-    _fonts.load( Fonts::ConnectionII, "assets/fonts/ConnectionIi-2wj8.otf" );
-    _fonts.load( Fonts::FreeFont, "assets/fonts/freefont/FreeSansBold.ttf" );
-    _fonts.load( Fonts::RampartOne, "assets/fonts/RampartOne-Regular.ttf" );
-    _fonts.load( Fonts::Main, "assets/fonts/RampartOne-Regular.ttf" );
-    _textures.load( Textures::TitleScreen, "assets/images/Sample_Sokoban.png" );
-    _statistics_text.setFont( _fonts.get( Fonts::Main ) );
+
+    Logger::log( LoggerLevel::DEBUG, "Setting VerticalSyncEnabled = true" );
+    _window.setVerticalSyncEnabled( true );
+
+    Logger::log( LoggerLevel::DEBUG, "Loading fonts" );
+    _fonts.load( Fonts::Kodomo_Rounded, "assets/fonts/KodomoRounded.otf" );
+    _fonts.load( Fonts::Connection_II, "assets/fonts/ConnectionIi-2wj8.otf" );
+    _fonts.load( Fonts::Free_Font, "assets/fonts/freefont/FreeSansBold.ttf" );
+    _fonts.load( Fonts::Rampart_One, "assets/fonts/RampartOne-Regular.ttf" );
+
+    Logger::log( LoggerLevel::DEBUG, "Loading Title Screen Texture" );
+    _textures.load( Textures::Title_Screen, "assets/images/Sample_Sokoban.png" );
+    _textures.load( Textures::Button, "assets/images/Buttons.png" );
+
+    Logger::log( LoggerLevel::DEBUG, "Initializing stastistics text" );
+    _statistics_text.setFont( _fonts.get( Fonts::Connection_II ) );
     _statistics_text.setPosition( WIDTH / 2.5f, 5.f );
     _statistics_text.setCharacterSize( 10u );
     _statistics_text.setFillColor( sf::Color::Yellow );
 
-    Logger::log( LoggerLevel::INFO, "Init levels" );
-
-    if ( get_all_levels().empty() )
-    {
-        std::cout << "No levels loaded" << std::endl;
-        _window.close();
-        return;
-    }
-
-    for ( const boost::filesystem::path &path: get_all_levels() )
-    {
-        levels.emplace_back( path.string() );
-    }
-
-    std::cout << "Levels loaded" << std::endl;
-    for ( const std::string &lvl: levels )
-    {
-        std::cout << lvl << std::endl;
-    }
-
+    Logger::log( LoggerLevel::DEBUG, "Registering States" );
     register_states();
+
+    Logger::log( LoggerLevel::DEBUG, "Setting Title as first State to load" );
     _state_stack.push_state( States::Title );
+
+    Logger::log( LoggerLevel::DEBUG, "Setting default music volume" );
+    _music.set_volume( 25.f );
+
+    Logger::log( LoggerLevel::DEBUG, "Playing Default Song" );
+    _music.play( Music::Town_Pleasant_peasants );
 }
 
 Application::~Application()
@@ -148,11 +123,11 @@ unsigned short Application::run()
     {
         sf::Time dt = clock.restart();
         time_since_last_update += dt;
-        while ( time_since_last_update > time_per_frame )
+        while ( time_since_last_update > _time_per_frame )
         {
-            time_since_last_update -= time_per_frame;
+            time_since_last_update -= _time_per_frame;
             process_input();
-            update( time_per_frame );
+            update( _time_per_frame );
             if( _state_stack.is_empty() )
             {
                 _window.close();
@@ -166,6 +141,12 @@ unsigned short Application::run()
 
 void Application::register_states()
 {
+    Logger::log( LoggerLevel::DEBUG, "Registering Title State" );
     _state_stack.register_state< State_Title >( States::Title );
+
+    Logger::log( LoggerLevel::DEBUG, "Registering Menu State" );
     _state_stack.register_state< State_Menu >( States::Menu );
+
+    Logger::log( LoggerLevel::DEBUG, "Registering Game State" );
+    _state_stack.register_state< State_Game >( States::Game );
 }

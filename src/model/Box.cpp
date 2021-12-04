@@ -1,10 +1,12 @@
 #include "Box.hpp"
 
-#include <array>
+#include "../util/Logger.hpp"
+
 #include <sstream>
 #include <iostream>
 
 using namespace sokoban::model;
+using namespace sokoban::util;
 
 Box::Box( float x, float y )
         : Movable( x, y )
@@ -28,7 +30,7 @@ Box &Box::operator=( const Box &box )
 
 Box::~Box()
 {
-    std::cout << "Deletion " << Box::to_string() << std::endl;
+    Logger::log( LoggerLevel::INFO, "Deletion " + Box::to_string() );
 }
 
 Actor::ID Box::get_type() const

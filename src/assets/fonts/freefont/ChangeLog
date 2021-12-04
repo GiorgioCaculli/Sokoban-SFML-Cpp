@@ -3725,7 +3725,7 @@
 2011-07-16 11:24 +0000 [r1660]  Stevan_White:
 
 	* notes/features.txt (added): Initial document about
-	  OpenType features used in FreeFont.
+	  OpenType features used in Free_Font.
 
 2011-07-16 11:12 +0000 [r1659]  Stevan_White:
 
@@ -4580,7 +4580,7 @@
 	  FreeMonoBoldOblique.sfd: Latin Extended-A:
 	  Applied Daniel Johnson's patch that made two versions of capital
 	  Eng. His explanation: ' http://en.wikipedia.org/wiki/%C5%8A The
-	  form of capital Eng currently in all three FreeFont faces is that
+	  form of capital Eng currently in all three Free_Font faces is that
 	  used by the Sami people, resembling a capital N with a hooked
 	  right descender. However, the form preferred for African and
 	  Amerindian languages resembles a tall lowercase n with a hook
@@ -8103,7 +8103,7 @@
 	* FreeSerif.sfd: Replaced most of Mathematical
 	  Alphanumeric Symbols roman italic bold (latin and greek) gothic
 	  italic bold (latin and greek) typewriter and numerals with glyphs
-	  from FreeFont. These were scaled to uniform height. Remains:
+	  from Free_Font. These were scaled to uniform height. Remains:
 	  Blackboard Bold, Fraktur, Calligraphic, Script
 
 2008-10-19 12:03 +0000 [r996]  Stevan_White:
@@ -9146,10 +9146,10 @@
 	  FreeSerifBold.sfd: Started implementing
 	  TemporaLCGUni in Greek ranges. Replaced 3DC-3E1 from Tempora,
 	  because I thought they looked nicer and more like the other
-	  existing FreeFont glyphs. Replaced 3DA-B from Tempora, because
+	  existing Free_Font glyphs. Replaced 3DA-B from Tempora, because
 	  they look more like Unicode samples, and nicer. Added 03f3-4,
 	  03F7-F. Prefer my own lunate epsilon. Replaced Phi and Omega from
-	  Tempora. These plainly fit the other FreeFont glyphs better than
+	  Tempora. These plainly fit the other Free_Font glyphs better than
 	  the origninals. (How did this happen?) In bold, replaced U+03D7
 	  Copied lbbar u+2114 Small italic greek: replaced most except phi,
 	  psi, omega Based on new information, broke the identification of
@@ -14704,4 +14704,3 @@
 	  FreeMonoOblique.sfd (added),
 	  FreeMonoBoldOblique.sfd (added): Monospaced
 	  ISO 10646 fonts.
-

@@ -1,10 +1,12 @@
 #include "Wall.hpp"
 
-#include <array>
+#include "../util/Logger.hpp"
+
 #include <sstream>
 #include <iostream>
 
 using namespace sokoban::model;
+using namespace sokoban::util;
 
 Wall::Wall( float x, float y )
         : Actor( x, y )
@@ -28,7 +30,7 @@ Wall &Wall::operator=( const Wall &wall )
 
 Wall::~Wall()
 {
-    std::cout << "Deletion " << Wall::to_string() << std::endl;
+    Logger::log( LoggerLevel::INFO, "Deletion " + Wall::to_string() );
 }
 
 Actor::ID Wall::get_type() const

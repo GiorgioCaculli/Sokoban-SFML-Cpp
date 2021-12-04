@@ -1,41 +1,55 @@
 #include "State_Menu.hpp"
 
+#include "../Button.hpp"
 #include "../Utility.hpp"
 #include "../../Resource_Holder.hpp"
 
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include <iostream>
-
 using namespace sokoban::ui::gui;
 
 State_Menu::State_Menu( State_Stack &stack, State::Context context )
         : State( stack, context )
-        , _options()
-        , _option_index( 0 )
+        , _container()
 {
-    sf::Texture &texture = context._textures->get( Textures::TitleScreen );
-    sf::Font &font = context._fonts->get( Fonts::Main );
+    sf::Texture &texture = context._textures->get( Textures::Title_Screen );
+    sf::Font &font = context._fonts->get( Fonts::Rampart_One );
+
     _background_sprite.setTexture( texture );
-    //Utility::center_origin( _background_sprite );
-    //_background_sprite.setPosition( context._window->getView().getSize() / 2.f );
+    Utility::center_origin( _background_sprite );
+    _background_sprite.setPosition( context._window->getView().getSize() / 2.f );
 
-    sf::Text play_option;
-    play_option.setFont( font );
-    play_option.setString( "Play" );
-    Utility::center_origin( play_option );
-    play_option.setPosition( context._window->getView().getSize() / 2.f );
-    _options.push_back( play_option );
+    auto play_button = std::make_shared< Button >( context );
+    play_button->set_text( "Play" );
+    play_button->set_callback( [ this ] ()
+    {
+        request_stack_pop();
+        request_stack_push( States::Game );
+    });
 
-    sf::Text exit_option;
-    exit_option.setFont( font );
-    exit_option.setString( "Exit" );
-    Utility::center_origin( exit_option );
-    exit_option.setPosition( play_option.getPosition() + sf::Vector2f( 0.f, 30.f  ) );
-    _options.push_back( exit_option );
+    auto settings_button = std::make_shared< Button >( context );
+    settings_button->set_text( "Settings" );
+    settings_button->set_callback( [ this ] ()
+    {
+        request_stack_pop();
+        request_stack_push( States::Settings );
+    });
 
-    update_option_text();
+    auto exit_button = std::make_shared< Button >( context );
+    exit_button->set_text( "Exit" );
+    exit_button->set_callback( [ this ] ()
+    {
+        get_context()._window->close();
+    });
+
+    settings_button->setPosition( context._window->getView().getSize() / 2.f );
+    play_button->setPosition( settings_button->getPosition() - sf::Vector2f( 0, 50.f ) );
+    exit_button->setPosition( settings_button->getPosition() + sf::Vector2f( 0, 50.f ) );
+
+    _container.pack( play_button );
+    _container.pack( settings_button );
+    _container.pack( exit_button );
 }
 
 void State_Menu::draw()
@@ -44,10 +58,7 @@ void State_Menu::draw()
 
     window.setView( window.getDefaultView() );
     window.draw( _background_sprite );
-    for( const sf::Text &text : _options )
-    {
-        window.draw( text );
-    }
+    window.draw( _container );
 }
 
 bool State_Menu::update( sf::Time dt )
@@ -57,59 +68,6 @@ bool State_Menu::update( sf::Time dt )
 
 bool State_Menu::handle_event( const sf::Event &event )
 {
-    if( event.type != sf::Event::KeyPressed )
-    {
-        return false;
-    }
-    if( event.key.code == sf::Keyboard::Return )
-    {
-        if( _option_index == Play )
-        {
-            request_stack_pop();
-            request_stack_push( States::Game );
-        }
-        else if( _option_index == Exit )
-        {
-            request_stack_pop();
-        }
-    }
-    else if( event.key.code == sf::Keyboard::Up )
-    {
-        if( _option_index > 0 )
-        {
-            _option_index--;
-        }
-        else
-        {
-            _option_index = _options.size() - 1;
-        }
-        update_option_text();
-    }
-    else if( event.key.code == sf::Keyboard::Down )
-    {
-        if( _option_index < _options.size() - 1 )
-        {
-            _option_index++;
-        }
-        else
-        {
-            _option_index = 0;
-        }
-        update_option_text();
-    }
-    return true;
-}
-
-void State_Menu::update_option_text()
-{
-    if( _options.empty() )
-    {
-        return;
-    }
-    for( sf::Text &text : _options )
-    {
-        text.setFillColor( sf::Color::White );
-    }
-    _options[ _option_index ].setFillColor( sf::Color::Red );
-
+    _container.handle_event( event );
+    return false;
 }

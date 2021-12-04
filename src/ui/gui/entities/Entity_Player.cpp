@@ -76,7 +76,7 @@ const std::array< float, 4 > player_asset_west = character_facing_west;
 
 Entity_Player::Entity_Player( float x, float y )
         : model::Player( x, y )
-        , Entity( player_asset_south )
+        , Entity_Movable( player_asset_south )
 {
     _player_face_map = std::map< Face, std::array< float, 4 > >
             {

@@ -12,12 +12,11 @@ namespace sokoban
                 enum ID
                 {
                     None,
-                    Intro,
                     Title,
                     Menu,
                     Game,
-                    Loading,
-                    Pause
+                    Pause,
+                    Settings,
                 };
             }
         }

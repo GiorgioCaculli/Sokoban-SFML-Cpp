@@ -1,5 +1,7 @@
 #include "Entity.hpp"
 
+#include <cassert>
+
 using namespace sokoban::ui::gui::entity;
 
 Entity::Entity( std::array< float, 4 > asset_coords )
@@ -32,4 +34,8 @@ std::array< float, 4 > Entity::get_asset_coords() const
 void Entity::set_asset_coords( std::array< float, 4 > asset_coords )
 {
     _assets_coords = asset_coords;
+}
+
+void Entity::update_current( sf::Time dt, Command_Queue &commands )
+{
 }

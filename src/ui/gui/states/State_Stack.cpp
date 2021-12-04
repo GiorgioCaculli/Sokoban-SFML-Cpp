@@ -88,11 +88,11 @@ void State_Stack::apply_pending_changes()
                 break;
         }
     }
+    _pending_list.clear();
 }
 
 State_Stack::Pending_Change::Pending_Change( State_Stack::Action action, States::ID state_id )
 : _action( action )
 , _state_id( state_id )
 {
-
 }

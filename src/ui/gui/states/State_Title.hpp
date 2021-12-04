@@ -23,6 +23,7 @@ namespace sokoban
             private:
                 sf::Sprite _background_sprite;
                 sf::Text _text;
+                sf::Text _title_text;
                 bool _show_text;
                 sf::Time _text_effect_time;
             };

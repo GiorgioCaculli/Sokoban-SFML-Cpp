@@ -1,9 +1,12 @@
 #include "Platform.hpp"
 
+#include "../util/Logger.hpp"
+
 #include <sstream>
 #include <iostream>
 
 using namespace sokoban::model;
+using namespace sokoban::util;
 
 Platform::Platform( float x, float y )
         : Actor( x, y )
@@ -27,7 +30,7 @@ Platform &Platform::operator=( const Platform &platform )
 
 Platform::~Platform()
 {
-    std::cout << "Deletion " << Platform::to_string() << std::endl;
+    Logger::log( LoggerLevel::INFO, "Deletion " + Platform::to_string() );
 }
 
 Actor::ID Platform::get_type() const

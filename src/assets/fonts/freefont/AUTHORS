@@ -1,8 +1,8 @@
 -*- mode:text; coding:utf-8; -*-
-                        GNU FreeFont Authors
+                        GNU Free_Font Authors
                         ====================
 
-The FreeFont collection is being maintained by
+The Free_Font collection is being maintained by
 	Steve White <stevan.white AT googlemail.com>
 The folowing list cites the other contributors that contributed to
 particular ISO 10646 blocks.
@@ -233,7 +233,7 @@ particular ISO 10646 blocks.
 	Python scripts, support
 
 * Primož Peterlin <primoz.peterlin AT biofiz.mf.uni-lj.si>
-  maintained FreeFont for several years, and is thanked for all his work.
+  maintained Free_Font for several years, and is thanked for all his work.
 
 Please see the CREDITS file for details on who contributed particular
 subsets of the glyphs in font files.

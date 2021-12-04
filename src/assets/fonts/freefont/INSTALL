@@ -1,14 +1,14 @@
-                          Installing GNU FreeFont
+                          Installing GNU Free_Font
                           =======================
 
-GNU FreeFont can be used in any modern operating system.
+GNU Free_Font can be used in any modern operating system.
 
-This document explains how to install FreeFont on some common systems.
+This document explains how to install Free_Font on some common systems.
 
 UNIX/GNU/Linux/BSD Systems
 --------------------------
 
-FreeFont works with any system using the free font rasterizer FreeType
+Free_Font works with any system using the free font rasterizer FreeType
 <http://www.freetype.org/>.  Some features such as glyph substitution and
 positioning may be handled by the text layout library
 Pango <http://www.pango.org/>.

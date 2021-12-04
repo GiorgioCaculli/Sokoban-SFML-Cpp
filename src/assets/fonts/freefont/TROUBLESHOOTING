@@ -1,12 +1,12 @@
-	Troubleshooting GNU FreeFont
+	Troubleshooting GNU Free_Font
 
-So your text looks lousy, although you installed FreeFont and you seem to be
+So your text looks lousy, although you installed Free_Font and you seem to be
 using it.  What do you do?
 
-Before you blame the problem on FreeFont, take the time to double-check that
-the text you are looking at is really rendered with FreeFont.
+Before you blame the problem on Free_Font, take the time to double-check that
+the text you are looking at is really rendered with Free_Font.
 
-Be aware that not all Unicode characters are supported by FreeFont, and
+Be aware that not all Unicode characters are supported by Free_Font, and
 even characters supported by one face, such as Serif, might not be
 supported by other faces such as Sans.
 
@@ -26,7 +26,7 @@ a different font.
 
 First double-check that the font in question really contains the character
 in question.  If you don't have font development software, this can be
-tricky.  In the case of FreeFont, you can check if a given character 
+tricky.  In the case of Free_Font, you can check if a given character
 range is supported: <http://www.gnu.org/software/freefont/coverage.html>
 
 Next double-check that your application (web browser, text editor, etc)
@@ -78,7 +78,7 @@ These products have their own font rendering libraries, which have
 idiosyncratic behavior.
 
 It has recently been reported that as of LibreOffice 3.5.1, font features
-are disabled for OpenType fonts.  If you use FreeFont with these products,
+are disabled for OpenType fonts.  If you use Free_Font with these products,
 you may want to install the TrueType versions of the fonts.
 
 Windows
@@ -93,8 +93,8 @@ The Microsoft pages install a tuner for ClearType. A security block notice
 will appear at the top of the window--you have to allow the installation.
 Then check the box "Turn on ClearType".  The change happens immediately.
 
-The secont cause is that the FreeFont version with cubic spline outlines is
-installed.  As of the 2012 GNU FreeFont release, the TrueType builds have
+The secont cause is that the Free_Font version with cubic spline outlines is
+installed.  As of the 2012 GNU Free_Font release, the TrueType builds have
 quadratic splines, which work best with Windows' rendering software.
 	TTF (TrueType)  quadratic splines Windows 7, Vista, Windows XP.
 	OTF (OpenType)  cubic splines     Linux, Mac
@@ -106,7 +106,7 @@ A value of 2 sets it to old-style GDI rendering, while -1 is the default.
 reporting problems
 ==================
 
-If you really think you're seeing a bug in FreeFont, or if you have
+If you really think you're seeing a bug in Free_Font, or if you have
 a suggestion, consider opening a problem report at
 	https://savannah.gnu.org/bugs/?group=freefont
 It is best that you make a Savannah account and log in with that, so 

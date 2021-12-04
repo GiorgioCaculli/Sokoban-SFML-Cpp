@@ -1,4 +1,4 @@
-	Usage of GNU FreeFont
+	Usage of GNU Free_Font
 
 Language scripts and faces
 ==========================
@@ -17,12 +17,12 @@ supports the largest number of writing scripts.  However there are writing
 scripts supported by the sans-serif but not by serif.
 
 For an overview of which scripts and sets of symbols are supported by
-which face, see the FreeFont 'coverage' web page.
+which face, see the Free_Font 'coverage' web page.
 
 Font features
 =============
 
-FreeFont has numerous font "features" that perform alterations to the basic
+Free_Font has numerous font "features" that perform alterations to the basic
 letters of the font, replacing them with other letters, or positioning them
 with respect to other letters.
 
@@ -171,7 +171,7 @@ Bсички хора се раждат свободни и равни по до�
 
 \end{document}
 ---------------------------------------------------------------------------
-Here are some 'fontspec' setting-value pairs meaningful for FreeFont.
+Here are some 'fontspec' setting-value pairs meaningful for Free_Font.
 
 Numbers: Lining OldStyle Proportional SlashedZero
 Fractions: On

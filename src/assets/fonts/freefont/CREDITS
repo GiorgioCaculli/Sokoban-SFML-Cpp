@@ -1,8 +1,8 @@
 -*- mode:text; coding:utf-8; -*-
-                         GNU FreeFont Credits
+                         GNU Free_Font Credits
                          ====================
 
-This file lists contributors and contributions to the GNU FreeFont project.
+This file lists contributors and contributions to the GNU Free_Font project.
 
 
 * URW++ Design & Development GmbH <http://www.urwpp.de/>
@@ -324,7 +324,7 @@ subscript and superscript digits and capital Roman numbers.
 
 Is the author of several Eurasian fonts, including "Carlo Ator".
 He has given his written permission for glyphs from this font to be
-included in FreeFont.
+included in Free_Font.
 	Syriac					(U+0700-U+074A)
 
 
@@ -357,7 +357,8 @@ please contact mssridhar AT vsnl.com.
 
 Noah Levitt found out that the Sinhalese fonts available on the site
 <http://www.metta.lk/fonts/> are released under GNU GPL, or,
-precisely, "Public Domain under GNU Licence Produced by DMS
+precisely, "Public Domain under GNU Licence
+ Produced by DMS
 Electronics for The Sri Lanka Tipitaka Project" (taken from the font
 comment), and took the effort of recoding the font to Unicode.
 
@@ -525,9 +526,9 @@ of ancient sources.
 
 * Daniel Johnson
 
-Created by hand a Cherokee range specially for FreeFont to be "in line with
+Created by hand a Cherokee range specially for Free_Font to be "in line with
 the classic Cherokee typefaces used in 19th century printing", but also to
-fit well with ranges previously in FreeFont.  Then he made Unified Canadian
+fit well with ranges previously in Free_Font.  Then he made Unified Canadian
 Syllabics in Sans, and a Cherokee and Kayah Li in Mono!  And never to be
 outdone by himself, then did UCAS Extended and Osmanya....  What next?
 
@@ -550,7 +551,7 @@ commissioned Mr. Haralambous to produce a Sinhalese font for them.
 
 We have received 03/09 official notice from Robert Kiley, Head of e-Strategy
 for the Wellcome Library, that Yannis' font could be included in GNU
-FreeFont under its GNU license.
+Free_Font under its GNU license.
 
 Thanks to Dominik Wujastyk, for providing us with feedback and contacts
 to repsonsible people at the Trust.
@@ -561,7 +562,7 @@ to repsonsible people at the Trust.
 
 The Sinhala font project has taken the glyphs from Yannis Haralambous'
 Sinhala font, to produce a Unicode TrueType font, LKLUG.  These glyphs
-were for a while included in FreeFont.
+were for a while included in Free_Font.
 
 	Sinhala					(U+0D80-U+0DFF)
 
