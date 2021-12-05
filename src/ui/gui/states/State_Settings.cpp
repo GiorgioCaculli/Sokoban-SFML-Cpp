@@ -105,38 +105,13 @@ bool State_Settings::handle_event( const sf::Event &event )
             {
                 _sound_effect_volume_button->deactivate();
             }
-            else if( event.key.code == sf::Keyboard::Left )
+            else if( event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Down )
             {
-                float vol = get_context()._sounds->get_volume() - 5;
-                if( vol < 0.f )
-                {
-                    vol = 100.f;
-                }
-                get_context()._sounds->set_volume( vol );
+                change_sound_effect_volume( -5.f );
             }
-            else if( event.key.code == sf::Keyboard::Right )
+            else if( event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::Up )
             {
-                float vol = get_context()._sounds->get_volume() + 5;
-                if( vol > 100.f )
-                {
-                    vol = 0.f;
-                }
-                get_context()._sounds->set_volume( vol );
-            }
-            else if( event.key.code == sf::Keyboard::Space )
-            {
-                float vol = get_context()._sounds->get_volume();
-                tmp_sound_effect_vol = vol;
-                if( vol > 0.f )
-                {
-                    vol = 0.f;
-                }
-                else
-                {
-                    vol = tmp_sound_effect_vol;
-                }
-                get_context()._sounds->set_volume( vol );
-                _sound_effect_volume_button->deactivate();
+                change_sound_effect_volume( 5.f );
             }
         }
     }
@@ -149,27 +124,17 @@ bool State_Settings::handle_event( const sf::Event &event )
             {
                 _music_volume_button->deactivate();
             }
-            else if( event.key.code == sf::Keyboard::Left )
+            else if( event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Down )
             {
-                float vol = get_context()._music->get_volume() - 5;
-                if( vol < 0.f )
-                {
-                    vol = 100.f;
-                }
-                get_context()._music->set_volume( vol );
+                change_music_volume( -5.f );
             }
-            else if( event.key.code == sf::Keyboard::Right )
+            else if( event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::Up )
             {
-                float vol = get_context()._music->get_volume() + 5;
-                if( vol > 100.f )
-                {
-                    vol = 0.f;
-                }
-                get_context()._music->set_volume( vol );
+                change_music_volume( 5.f );
             }
         }
     }
-    if( _sound_effect_volume_button->is_selected() )
+    if( _sound_effect_volume_button->is_selected() && !is_setting_volume )
     {
         if( event.type == sf::Event::KeyReleased )
         {
@@ -187,9 +152,17 @@ bool State_Settings::handle_event( const sf::Event &event )
                 }
                 get_context()._sounds->set_volume( vol );
             }
+            else if( event.key.code == sf::Keyboard::Left )
+            {
+                change_sound_effect_volume( -5.f );
+            }
+            else if( event.key.code == sf::Keyboard::Right )
+            {
+                change_sound_effect_volume( 5.f );
+            }
         }
     }
-    if( _music_volume_button->is_selected() )
+    if( _music_volume_button->is_selected() && !is_setting_volume )
     {
         if( event.type == sf::Event::KeyReleased )
         {
@@ -207,6 +180,14 @@ bool State_Settings::handle_event( const sf::Event &event )
                 }
                 get_context()._music->set_volume( vol );
             }
+            else if( event.key.code == sf::Keyboard::Left )
+            {
+                change_music_volume( -5.f );
+            }
+            else if( event.key.code == sf::Keyboard::Right )
+            {
+                change_music_volume( 5.f );
+            }
         }
     }
 
@@ -222,4 +203,32 @@ bool State_Settings::handle_event( const sf::Event &event )
         }
     }
     return false;
+}
+
+void State_Settings::change_sound_effect_volume( float val )
+{
+    float vol = get_context()._sounds->get_volume() + val;
+    if( vol < 0.f )
+    {
+        vol = 100.f;
+    }
+    if( vol > 100.f )
+    {
+        vol = 0.f;
+    }
+    get_context()._sounds->set_volume( vol );
+}
+
+void State_Settings::change_music_volume( float val )
+{
+    float vol = get_context()._music->get_volume() + val;
+    if( vol < 0.f )
+    {
+        vol = 100.f;
+    }
+    else if( vol > 100.f )
+    {
+        vol = 0.f;
+    }
+    get_context()._music->set_volume( vol );
 }

@@ -28,6 +28,8 @@ namespace sokoban
                 Container _container;
                 Button::Ptr _music_volume_button;
                 Button::Ptr _sound_effect_volume_button;
+                void change_sound_effect_volume( float val );
+                void change_music_volume( float val );
             };
         }
     }

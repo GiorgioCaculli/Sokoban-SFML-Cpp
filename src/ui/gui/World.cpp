@@ -214,7 +214,7 @@ void World::update( sf::Time dt )
             "Move Right: Arrow Right" + "\n" +
             "Reset Board: R" + "\n" +
             "Skip Level: S" + "\n" +
-            "Undo Skip: S" + "\n" +
+            "Undo Skip: X" + "\n" +
             "Pause Game: Escape" + "\n"
             );
     if ( _board.is_completed() )
