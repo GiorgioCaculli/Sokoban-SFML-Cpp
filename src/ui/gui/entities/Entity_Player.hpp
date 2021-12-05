@@ -2,7 +2,9 @@
 #define SOKOBAN_ENTITY_PLAYER_HPP
 
 #include "../../../model/Player.hpp"
-#include "Entity.hpp"
+#include "Entity_Movable.hpp"
+
+#include <SFML/Window/Event.hpp>
 
 #include <map>
 #include <array>
@@ -19,7 +21,7 @@ namespace sokoban
             {
                 class Entity_Player
                         : public model::Player
-                          , public Entity
+                          , public Entity_Movable
                 {
                 public:
                     enum class Face
@@ -33,7 +35,7 @@ namespace sokoban
                     Entity_Player( const Entity_Player &entity );
                     Entity_Player &operator=( const Entity_Player &entity );
                     ~Entity_Player() override;
-                    std::string to_string() const;
+                    std::string to_string() const override;
                     const std::map< Face, std::array< float, 4>> &get_player_face_map() const;
                     friend std::ostream &operator<<( std::ostream &os, const Entity_Player &entity );
                 private:

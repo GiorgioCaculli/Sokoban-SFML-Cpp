@@ -1,0 +1,9 @@
+#ifndef SOKOBAN_STATE_GAME_OVER_HPP
+#define SOKOBAN_STATE_GAME_OVER_HPP
+
+class State_Game_Over
+{
+
+};
+
+#endif //SOKOBAN_STATE_GAME_OVER_HPP

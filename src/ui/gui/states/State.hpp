@@ -22,9 +22,8 @@ namespace sokoban
         namespace gui
         {
             class State_Stack;
-
-            class Entity_Player;
-
+            class Music_Player;
+            class Sound_Player;
             class State
             {
             public:
@@ -32,11 +31,12 @@ namespace sokoban
 
                 struct Context
                 {
-                    Context( sf::RenderWindow &window, Texture_Holder &textures, Font_Holder &fonts, Entity_Player &entity_player );
+                    Context( sf::RenderWindow &window, Texture_Holder &textures, Font_Holder &fonts, Music_Player &music, Sound_Player &sounds );
                     sf::RenderWindow *_window;
                     Texture_Holder *_textures;
                     Font_Holder *_fonts;
-                    Entity_Player *_entity_player;
+                    Music_Player *_music;
+                    Sound_Player *_sounds;
                 };
 
                 State( State_Stack &stack, Context context );

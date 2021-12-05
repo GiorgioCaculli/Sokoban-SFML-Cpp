@@ -20,12 +20,13 @@ namespace sokoban
                         : public Scene_Node
                 {
                 public:
-                    Entity( std::array< float, 4 > asset_coords );
+                    explicit Entity( std::array< float, 4 > asset_coords );
                     Entity( const Entity &entity );
                     Entity &operator=( const Entity &entity );
-                    virtual ~Entity();
+                    ~Entity() override;
                     std::array< float, 4 > get_asset_coords() const;
                     void set_asset_coords( std::array< float, 4 > asset_coords );
+                    void update_current( sf::Time dt, Command_Queue &commands ) override;
                 private:
                     std::array< float, 4 > _assets_coords;
                 };

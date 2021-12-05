@@ -1,6 +1,7 @@
 #include "Entity_Box.hpp"
 
 using namespace sokoban::ui::gui::entity;
+using namespace sokoban::model;
 
 const float OFFSET = 64;
 
@@ -103,7 +104,7 @@ const std::array< float, 4 > box_yellow_light_asset = {
 
 Entity_Box::Entity_Box( float x, float y )
         : model::Box( x, y )
-        , Entity( box_brown_light_asset )
+        , Entity_Movable( box_brown_light_asset )
 {
 
     _box_color_map = std::map< Color, std::array< float, 4 > >
@@ -144,17 +145,17 @@ Entity_Box &Entity_Box::operator=( const Entity_Box &box )
 
 Entity_Box::~Entity_Box()
 {
-    model::Box::~Box();
+    Box::~Box();
 }
 
-sokoban::model::Actor::ID Entity_Box::get_type() const
+Actor::ID Entity_Box::get_type() const
 {
-    return model::Actor::BOX;
+    return Actor::BOX;
 }
 
 std::string Entity_Box::to_string() const
 {
-    return model::Box::to_string();
+    return Box::to_string();
 }
 
 const std::map< Entity_Box::Color, std::array< float, 4>> &Entity_Box::get_box_color_map() const

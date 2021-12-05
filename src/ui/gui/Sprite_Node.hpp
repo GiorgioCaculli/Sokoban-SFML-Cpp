@@ -16,10 +16,12 @@ namespace sokoban
             {
             public:
                 explicit Sprite_Node( const sf::Texture &texture );
-                Sprite_Node( sf::Texture &texture, const sf::IntRect &textureRect );
+                Sprite_Node( const sf::Texture &texture, const sf::IntRect &textureRect );
+                void set_texture( const sf::Texture &texture );
+                void set_texture( const sf::Texture &texture, const sf::IntRect &textureRect );
             private:
                 sf::Sprite _sprite;
-                virtual void draw_current( sf::RenderTarget &target, sf::RenderStates states ) const;
+                void draw_current( sf::RenderTarget &target, sf::RenderStates states ) const override;
             };
         }
     }

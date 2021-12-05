@@ -1,15 +1,20 @@
 #include "Scene_Node.hpp"
 
-#include "Command.hpp"
+#include "Utility.hpp"
 
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+
+#include <cmath>
 #include <cassert>
 #include <algorithm>
 
 using namespace sokoban::ui::gui;
 
-Scene_Node::Scene_Node()
+Scene_Node::Scene_Node( Category::Type category )
         : _children()
           , _parent( nullptr )
+          , _default_category( category )
 {
 }
 
@@ -33,10 +38,10 @@ Scene_Node::Ptr Scene_Node::detach_child( const Scene_Node &node )
     return result;
 }
 
-void Scene_Node::update( sf::Time dt )
+void Scene_Node::update( sf::Time dt, Command_Queue &commands )
 {
-    update_current( dt );
-    update_children( dt );
+    update_current( dt, commands );
+    update_children( dt, commands );
 }
 
 sf::Vector2f Scene_Node::get_world_positions() const
@@ -56,33 +61,20 @@ sf::Transform Scene_Node::get_world_transform() const
     return transform;
 }
 
-void Scene_Node::on_command( const Command &command, sf::Time dt )
-{
-    if ( command._category & get_category() )
-    {
-        command.action( *this, dt );
-    }
-
-    for ( Ptr &child : _children )
-    {
-        child->on_command( command, dt );
-    }
-}
-
 unsigned int Scene_Node::get_category() const
 {
-    return Category::Scene;
+    return _default_category;
 }
 
-void Scene_Node::update_current( sf::Time dt )
+void Scene_Node::update_current( sf::Time dt, Command_Queue &commands )
 {
 }
 
-void Scene_Node::update_children( sf::Time dt )
+void Scene_Node::update_children( sf::Time dt, Command_Queue &commands )
 {
     for ( Ptr &child : _children )
     {
-        child->update( dt );
+        child->update( dt, commands );
     }
 }
 
@@ -91,6 +83,8 @@ void Scene_Node::draw( sf::RenderTarget &target, sf::RenderStates states ) const
     states.transform *= getTransform();
     draw_current( target, states );
     draw_children( target, states );
+    /* FOR DEBUG REASONS */
+    draw_bounding_rect( target, states );
 }
 
 void Scene_Node::draw_current( sf::RenderTarget &target, sf::RenderStates states ) const
@@ -103,4 +97,31 @@ void Scene_Node::draw_children( sf::RenderTarget &target, sf::RenderStates state
     {
         child->draw( target, states );
     }
+}
+
+sf::FloatRect Scene_Node::get_bounding_rect() const
+{
+    return {};
+}
+
+bool Scene_Node::is_marked_for_removal() const
+{
+    return is_destroyed();
+}
+
+bool Scene_Node::is_destroyed() const
+{
+    return false;
+}
+
+void Scene_Node::draw_bounding_rect( sf::RenderTarget &target, sf::RenderStates states ) const
+{
+    sf::FloatRect rect = get_bounding_rect();
+    sf::RectangleShape shape;
+    shape.setPosition( sf::Vector2f( rect.left, rect.top ) );
+    shape.setSize( sf::Vector2f( rect.width, rect.height ) );
+    shape.setFillColor( sf::Color::Transparent );
+    shape.setOutlineColor( sf::Color::Green );
+    shape.setOutlineThickness( 1.f );
+    target.draw( shape );
 }
