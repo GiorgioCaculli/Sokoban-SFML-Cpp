@@ -24,6 +24,7 @@ namespace sokoban
                 sf::Sprite _background_sprite;
                 sf::Text _text;
                 sf::Text _title_text;
+                sf::Text _title_sub_text;
                 bool _show_text;
                 sf::Time _text_effect_time;
             };

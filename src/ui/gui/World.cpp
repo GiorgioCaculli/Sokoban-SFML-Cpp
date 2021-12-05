@@ -15,8 +15,11 @@
 
 using namespace sokoban::ui::gui;
 using namespace sokoban::util;
-int steps_counter;
-int reset_counter;
+
+namespace
+{
+    int steps_counter = 0;
+}
 
 World::World( sf::RenderTarget &target, const model::Board &board, Font_Holder &fonts, Sound_Player &sounds )
 : _target( target )
@@ -41,6 +44,7 @@ World::World( sf::RenderTarget &target, const model::Board &board, Font_Holder &
   , _background_texture( nullptr )
   , _board( "" )
   , _text( nullptr )
+  , _reset_counter( 0 )
 {
     _board = board;
     Logger::log( LoggerLevel::DEBUG, "Level Layout:" );
@@ -56,6 +60,7 @@ World::World( sf::RenderTarget &target, const model::Board &board, Font_Holder &
     box_move_sound.setVolume( 10.f );*/
     load_textures();
     build_scene();
+    steps_counter = 0;
 }
 
 World::~World()
@@ -200,8 +205,18 @@ void World::update( sf::Time dt )
         _player_sprite->move( +SPACE, 0.f );
         _board_player->set_x( _board_player->get_x() + SPACE );
     }
-    _text->setString( "Steps: " + std::to_string( steps_counter ) + "\n" +
-            "Resets: " + std::to_string( reset_counter ) );
+    _text->setString(
+            "Steps: " + std::to_string( steps_counter ) + "\n" +
+            "Resets: " + std::to_string( get_reset_counter() ) + "\n" +
+            "Move Up: Arrow Up" + "\n" +
+            "Move Down: Arrow Down" + "\n" +
+            "Move Left: Arrow Left" + "\n" +
+            "Move Right: Arrow Right" + "\n" +
+            "Reset Board: R" + "\n" +
+            "Skip Leven: S" + "\n" +
+            "Undo Skip: S" + "\n" +
+            "Pause Game: Escape" + "\n"
+            );
     if ( _board.is_completed() )
     {
         //step_sound.stop();
@@ -213,7 +228,6 @@ void World::update( sf::Time dt )
 void World::draw()
 {
     _target.setView( _world_view );
-    _target.draw( _scene_graph );
     for ( Scene_Node *layer: _scene_layers )
     {
         _target.draw( *layer );
@@ -237,7 +251,6 @@ void World::load_textures()
 
 void World::build_scene()
 {
-
     Logger::log( LoggerLevel::INFO, "World Node init" );
     _player_is_moving_up = false;
     _player_is_moving_down = false;
@@ -246,9 +259,10 @@ void World::build_scene()
     _text = new sf::Text();
     _text->setFont( _fonts.get( Fonts::Connection_II ) );
     _text->setPosition(
-            _target.getSize().x - 200.f,
+            _target.getSize().x - 350.f,
             20.f );
-    _text->setCharacterSize( 32 );
+    _text->setCharacterSize( 24 );
+    _text->setFillColor( sf::Color::Black );
 
     Logger::log( LoggerLevel::INFO, "Board size: " + std::to_string( _board.get_world().size() ) );
     _box_sprites = std::vector< Sprite_Node * >();
@@ -403,20 +417,46 @@ bool World::is_board_completed() const
 
 void World::move_up( bool pressed )
 {
+    if( pressed )
+    {
+        steps_counter++;
+    }
     _player_is_moving_up = pressed;
 }
 
 void World::move_down( bool pressed )
 {
+    if( pressed )
+    {
+        steps_counter++;
+    }
     _player_is_moving_down = pressed;
 }
 
 void World::move_left( bool pressed )
 {
+    if( pressed )
+    {
+        steps_counter++;
+    }
     _player_is_moving_left = pressed;
 }
 
 void World::move_right( bool pressed )
 {
+    if( pressed )
+    {
+        steps_counter++;
+    }
     _player_is_moving_right = pressed;
+}
+
+void World::set_reset_counter( int reset_counter )
+{
+    _reset_counter = reset_counter;
+}
+
+int World::get_reset_counter() const
+{
+    return _reset_counter;
 }

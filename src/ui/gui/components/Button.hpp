@@ -2,8 +2,8 @@
 #define SOKOBAN_BUTTON_HPP
 
 #include "Component.hpp"
-#include "Resource_Identifiers.hpp"
-#include "states/State.hpp"
+#include "../Resource_Identifiers.hpp"
+#include "../states/State.hpp"
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>

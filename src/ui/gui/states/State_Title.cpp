@@ -29,8 +29,16 @@ State_Title::State_Title( State_Stack &stack, State::Context context )
     _title_text.setString( L"そこばん" );
     Utility::center_origin( _title_text );
     sf::Vector2f pos( context._window->getView().getSize() / 2.f );
-    _title_text.setPosition( pos.x / 1.5f, pos.y / 1.5f );
+    _title_text.setPosition( pos.x / 1.5f, 10.f );
     _title_text.setCharacterSize( 8 * 24 );
+    _title_text.setFillColor( sf::Color::Cyan );
+
+    _title_sub_text.setFont( context._fonts->get( Fonts::Kodomo_Rounded ) );
+    _title_sub_text.setString( "Sokoban" );
+    Utility::center_origin( _title_sub_text );
+    _title_sub_text.setPosition( pos.x / 1.2f, _title_text.getPosition().y + 200.f );
+    _title_sub_text.setCharacterSize( 4 * 24 );
+    _title_sub_text.setFillColor( sf::Color::Cyan );
 
     _text.setFont( context._fonts->get( Fonts::Rampart_One ) );
     _text.setString( "Press any key to start" );
@@ -44,6 +52,7 @@ void State_Title::draw()
     sf::RenderWindow &window = *get_context()._window;
     window.draw( _background_sprite );
     window.draw( _title_text );
+    window.draw( _title_sub_text );
     if( _show_text )
     {
         window.draw( _text );

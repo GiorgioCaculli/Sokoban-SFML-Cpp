@@ -1,6 +1,6 @@
 #include "Utility.hpp"
 #include "Animation.hpp"
-#include "Button.hpp"
+#include "components/Button.hpp"
 
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Sprite.hpp>

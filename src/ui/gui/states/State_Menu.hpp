@@ -2,7 +2,7 @@
 #define SOKOBAN_STATE_MENU_HPP
 
 #include "State.hpp"
-#include "../Container.hpp"
+#include "../components/Container.hpp"
 
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Sprite.hpp>

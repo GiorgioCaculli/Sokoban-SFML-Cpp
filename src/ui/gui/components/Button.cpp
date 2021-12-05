@@ -1,8 +1,8 @@
 #include "Button.hpp"
 
-#include "Utility.hpp"
-#include "Sound_Player.hpp"
-#include "../Resource_Holder.hpp"
+#include "../Utility.hpp"
+#include "../Sound_Player.hpp"
+#include "../../Resource_Holder.hpp"
 
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderStates.hpp>

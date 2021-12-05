@@ -149,4 +149,10 @@ void Application::register_states()
 
     Logger::log( LoggerLevel::DEBUG, "Registering Game State" );
     _state_stack.register_state< State_Game >( States::Game );
+
+    Logger::log( LoggerLevel::DEBUG, "Registering Settings State" );
+    _state_stack.register_state< State_Settings >( States::Settings );
+
+    Logger::log( LoggerLevel::DEBUG, "Registering Pause State" );
+    _state_stack.register_state< State_Pause >( States::Pause );
 }

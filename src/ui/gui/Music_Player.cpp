@@ -65,4 +65,10 @@ void Music_Player::set_paused( bool paused )
 void Music_Player::set_volume( float volume )
 {
     _volume = volume;
+    _music.setVolume( _volume );
+}
+
+float Music_Player::get_volume() const
+{
+    return _volume;
 }

@@ -2,8 +2,8 @@
 #define SOKOBAN_LABEL_HPP
 
 #include "Component.hpp"
-#include "Resource_Identifiers.hpp"
-#include "../Resource_Holder.hpp"
+#include "../Resource_Identifiers.hpp"
+#include "../../Resource_Holder.hpp"
 
 #include <SFML/Graphics/Text.hpp>
 

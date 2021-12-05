@@ -1,6 +1,6 @@
 #include "State_Menu.hpp"
 
-#include "../Button.hpp"
+#include "../components/Button.hpp"
 #include "../Utility.hpp"
 #include "../../Resource_Holder.hpp"
 

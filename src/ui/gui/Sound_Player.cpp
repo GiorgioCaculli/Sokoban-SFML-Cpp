@@ -20,6 +20,7 @@ namespace
 Sound_Player::Sound_Player()
 : _sound_buffers()
 , _sounds()
+, _volume( 10.f )
 {
     _sound_buffers.load( Sound_Effect::Button_Beep_01, "assets/sounds/button_beep_01.ogg" );
     _sound_buffers.load( Sound_Effect::Button_Beep_02, "assets/sounds/button_beep_02.ogg" );
@@ -39,6 +40,10 @@ Sound_Player::Sound_Player()
     _sound_buffers.load( Sound_Effect::Player_Footsteps_Stair_Ascent_Creaky, "assets/sounds/footsteps_stair_ascent_creaky.ogg" );
     _sound_buffers.load( Sound_Effect::Player_Footsteps_Water_01, "assets/sounds/footsteps_water_01.ogg" );
     _sound_buffers.load( Sound_Effect::Player_Footsteps_Water_02, "assets/sounds/footsteps_water_02.ogg" );
+    for( sf::Sound sound : _sounds )
+    {
+        sound.setVolume( _volume );
+    }
     sf::Listener::setDirection( 0.f, 0.f, -1.f );
 }
 
@@ -76,4 +81,18 @@ sf::Vector2f Sound_Player::get_listener_position() const
 {
     sf::Vector3f position = sf::Listener::getPosition();
     return { position.x, position.y };
+}
+
+void Sound_Player::set_volume( float volume )
+{
+    _volume = volume;
+    for( sf::Sound sound : _sounds )
+    {
+        sound.setVolume( _volume );
+    }
+}
+
+float Sound_Player::get_volume() const
+{
+    return _volume;
 }

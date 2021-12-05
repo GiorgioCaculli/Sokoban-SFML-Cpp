@@ -1,6 +1,6 @@
 #include "Label.hpp"
 
-#include "Utility.hpp"
+#include "../Utility.hpp"
 
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>

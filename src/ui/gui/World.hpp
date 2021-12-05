@@ -45,6 +45,8 @@ namespace sokoban
                 void move_down( bool pressed );
                 void move_left( bool pressed );
                 void move_right( bool pressed );
+                void set_reset_counter( int reset_counter );
+                int get_reset_counter() const;
             private:
                 enum class Background_Color
                 {
@@ -79,6 +81,7 @@ namespace sokoban
                 sf::Texture *_player_texture_sheet;
                 sf::Texture *_background_texture;
                 sf::Text *_text;
+                int _reset_counter;
                 void load_textures();
                 void build_scene();
             };

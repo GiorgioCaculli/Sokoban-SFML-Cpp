@@ -27,9 +27,12 @@ namespace sokoban
                 void remove_stopped_sounds();
                 void set_listener_position( sf::Vector2f position );
                 sf::Vector2f get_listener_position() const;
+                void set_volume( float volume );
+                float get_volume() const;
             private:
                 Sound_Buffer_Holder _sound_buffers;
                 std::list< sf::Sound > _sounds;
+                float _volume;
             };
         }
     }

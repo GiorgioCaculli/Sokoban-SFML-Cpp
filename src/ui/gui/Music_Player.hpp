@@ -25,6 +25,7 @@ namespace sokoban
                 void stop();
                 void set_paused( bool paused );
                 void set_volume( float volume );
+                float get_volume() const;
             private:
                 sf::Music _music;
                 std::map< Music::ID, std::string > _filenames;

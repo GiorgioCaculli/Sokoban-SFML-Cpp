@@ -16,6 +16,7 @@ using namespace sokoban::util;
 namespace
 {
     int current_level;
+    int reset_counter = 0;
 }
 
 bool sort_alphabetically( const boost::filesystem::path &a, const boost::filesystem::path &b )
@@ -54,6 +55,7 @@ State_Game::State_Game( State_Stack &stack, Context context )
     _window.setKeyRepeatEnabled( true );
     context._music->play( Music::Town_Peaceful_Place );
     _text.setFont( context._fonts->get( Fonts::Connection_II ) );
+    _text.setFillColor( sf::Color::Black );
     Logger::log( LoggerLevel::INFO, "Init levels" );
     _levels = std::vector< std::string >();
 
@@ -188,37 +190,14 @@ bool State_Game::handle_event( const sf::Event &event )
         }
     }
     return true;
-   /*
-    else
-    {
-        if ( is_pressed )
-        {
-            if ( _player_is_moving_up ||
-                    _player_is_moving_down ||
-                    _player_is_moving_left ||
-                    _player_is_moving_right )
-            {
-                step_sound.play();
-                steps_counter++;
-            }
-        }
-        else
-        {
-            if ( !_player_is_moving_up ||
-                    !_player_is_moving_down ||
-                    !_player_is_moving_left ||
-                    !_player_is_moving_right )
-            {
-                step_sound.stop();
-            }
-        }
-    }*/
 }
 
 void State_Game::reset_board()
 {
     delete _world;
     _world = new World( _window, model::Board( _level ), *get_context()._fonts, *get_context()._sounds );
+    reset_counter++;
+    _world->set_reset_counter( reset_counter );
 }
 
 void State_Game::next_level()
@@ -232,6 +211,8 @@ void State_Game::next_level()
     _level = _levels.at( current_level );
     delete _world;
     _world = new World( _window, model::Board( _level ), *get_context()._fonts, *get_context()._sounds );
+    reset_counter = 0;
+    _world->set_reset_counter( reset_counter );
 }
 
 void State_Game::prev_level()
@@ -245,4 +226,6 @@ void State_Game::prev_level()
     _level = _levels.at( current_level );
     delete _world;
     _world = new World( _window, model::Board( _level ), *get_context()._fonts, *get_context()._sounds );
+    reset_counter = 0;
+    _world->set_reset_counter( reset_counter );
 }
