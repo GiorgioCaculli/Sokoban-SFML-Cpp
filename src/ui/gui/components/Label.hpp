@@ -18,7 +18,7 @@ namespace sokoban
             {
             public:
                 typedef std::shared_ptr< Label > Ptr;
-                Label( const std::string &text, const Font_Holder &fonts );
+                Label( const std::string &text, const Font_Holder &fonts, float character_size );
                 bool is_selectable() const override;
                 void set_text( const std::string &text );
                 void handle_event( const sf::Event &event ) override;

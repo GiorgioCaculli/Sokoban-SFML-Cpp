@@ -3,9 +3,12 @@
 #include "../components/Button.hpp"
 #include "../Utility.hpp"
 #include "../../Resource_Holder.hpp"
+#include "../Music_Player.hpp"
 
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+
+#include <cmath>
 
 using namespace sokoban::ui::gui;
 
@@ -32,7 +35,6 @@ State_Menu::State_Menu( State_Stack &stack, State::Context context )
     settings_button->set_text( "Settings" );
     settings_button->set_callback( [ this ] ()
     {
-        request_stack_pop();
         request_stack_push( States::Settings );
     });
 
@@ -44,8 +46,11 @@ State_Menu::State_Menu( State_Stack &stack, State::Context context )
     });
 
     settings_button->setPosition( context._window->getView().getSize() / 2.f );
-    play_button->setPosition( settings_button->getPosition() - sf::Vector2f( 0, 50.f ) );
-    exit_button->setPosition( settings_button->getPosition() + sf::Vector2f( 0, 50.f ) );
+    settings_button->setOrigin( 100.f, 25.f );
+    play_button->setPosition( settings_button->getPosition() - sf::Vector2f( 0, 100.f ) );
+    play_button->setOrigin( 100.f, 25.f );
+    exit_button->setPosition( settings_button->getPosition() + sf::Vector2f( 0, 100.f ) );
+    exit_button->setOrigin( 100.f, 25.f );
 
     _container.pack( play_button );
     _container.pack( settings_button );

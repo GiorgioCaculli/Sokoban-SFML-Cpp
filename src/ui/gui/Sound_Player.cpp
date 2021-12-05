@@ -20,7 +20,7 @@ namespace
 Sound_Player::Sound_Player()
 : _sound_buffers()
 , _sounds()
-, _volume( 10.f )
+, _volume( 100.f )
 {
     _sound_buffers.load( Sound_Effect::Button_Beep_01, "assets/sounds/button_beep_01.ogg" );
     _sound_buffers.load( Sound_Effect::Button_Beep_02, "assets/sounds/button_beep_02.ogg" );
@@ -61,6 +61,7 @@ void Sound_Player::play( Sound_Effect::ID effect, sf::Vector2f position )
     sound.setPosition( position.x, position.y, 0.f );
     sound.setAttenuation( Attenuation );
     sound.setMinDistance( Min_Distance_3D );
+    sound.setVolume( _volume );
 
     sound.play();
 }

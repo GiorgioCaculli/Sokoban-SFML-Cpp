@@ -7,8 +7,8 @@
 
 using namespace sokoban::ui::gui;
 
-Label::Label( const std::string &text, const sokoban::ui::Font_Holder &fonts )
-: _text( text, fonts.get( Fonts::Rampart_One ), 16 )
+Label::Label( const std::string &text, const sokoban::ui::Font_Holder &fonts, float character_size )
+: _text( text, fonts.get( Fonts::Rampart_One ), character_size )
 {
 }
 

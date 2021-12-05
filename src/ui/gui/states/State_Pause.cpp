@@ -1,11 +1,13 @@
 #include "State_Pause.hpp"
 
+#include "../components/Button.hpp"
 #include "../Utility.hpp"
 #include "../../Resource_Holder.hpp"
-#include "../Music_Player.hpp"
 
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+
+#include <cmath>
 
 using namespace sokoban::ui::gui;
 
@@ -24,13 +26,41 @@ State_Pause::State_Pause( State_Stack &stack, State::Context context )
     _paused_text.setString( "Paused" );
     _paused_text.setCharacterSize( 64.f );
     Utility::center_origin( _paused_text );
-    _paused_text.setPosition( view_size.x / 2.f, view_size.y / 2.f - 100.f );
+    _paused_text.setPosition( view_size.x / 2.f, view_size.y / 2.f - 200.f );
 
-    _back_text.setFont( font );
-    _back_text.setString( "Back" );
-    _back_text.setCharacterSize( 32.f );
-    Utility::center_origin( _back_text );
-    _back_text.setPosition( view_size / 2.f );
+    auto resume_button = std::make_shared< Button >( context );
+    resume_button->set_text( "Resume" );
+    resume_button->set_callback( [ this ] ()
+    {
+        request_stack_pop();
+    });
+
+    auto settings_button = std::make_shared< Button >( context );
+    settings_button->set_text( "Settings" );
+    settings_button->set_callback( [ this ] ()
+    {
+        request_stack_push( States::Settings );
+    });
+
+    auto back_to_main_menu_button = std::make_shared< Button >( context );
+    back_to_main_menu_button->set_text( "Main Menu" );
+    back_to_main_menu_button->set_callback( [ this ] ()
+    {
+        request_stack_pop();
+        request_stack_pop();
+        request_stack_push( States::Menu );
+    });
+
+    settings_button->setPosition( context._window->getView().getSize() / 2.f );
+    settings_button->setOrigin( 100.f, 25.f );
+    resume_button->setPosition( settings_button->getPosition() - sf::Vector2f( 0, 100.f ) );
+    resume_button->setOrigin( 100.f, 25.f );
+    back_to_main_menu_button->setPosition( settings_button->getPosition() + sf::Vector2f( 0, 100.f ) );
+    back_to_main_menu_button->setOrigin( 100.f, 25.f );
+
+    _container.pack( resume_button );
+    _container.pack( settings_button );
+    _container.pack( back_to_main_menu_button );
 }
 
 void State_Pause::draw()
@@ -38,7 +68,7 @@ void State_Pause::draw()
     sf::RenderWindow &window = *get_context()._window;
     window.setView( window.getDefaultView() );
     window.draw( _paused_text );
-    window.draw( _back_text );
+    window.draw( _container );
 }
 
 bool State_Pause::update( sf::Time dt )
@@ -48,6 +78,7 @@ bool State_Pause::update( sf::Time dt )
 
 bool State_Pause::handle_event( const sf::Event &event )
 {
+    _container.handle_event( event );
     if( event.type == sf::Event::KeyPressed )
     {
         if( event.key.code == sf::Keyboard::Escape )

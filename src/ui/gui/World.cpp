@@ -206,14 +206,14 @@ void World::update( sf::Time dt )
         _board_player->set_x( _board_player->get_x() + SPACE );
     }
     _text->setString(
-            "Steps: " + std::to_string( steps_counter ) + "\n" +
-            "Resets: " + std::to_string( get_reset_counter() ) + "\n" +
+            "Steps:  " + std::to_string( steps_counter ) + "\n" +
+            "Resets:  " + std::to_string( get_reset_counter() ) + "\n" +
             "Move Up: Arrow Up" + "\n" +
             "Move Down: Arrow Down" + "\n" +
             "Move Left: Arrow Left" + "\n" +
             "Move Right: Arrow Right" + "\n" +
             "Reset Board: R" + "\n" +
-            "Skip Leven: S" + "\n" +
+            "Skip Level: S" + "\n" +
             "Undo Skip: S" + "\n" +
             "Pause Game: Escape" + "\n"
             );

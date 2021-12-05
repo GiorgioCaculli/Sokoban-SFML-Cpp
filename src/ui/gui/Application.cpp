@@ -62,9 +62,6 @@ Application::Application()
     Logger::log( LoggerLevel::DEBUG, "Setting Title as first State to load" );
     _state_stack.push_state( States::Title );
 
-    Logger::log( LoggerLevel::DEBUG, "Setting default music volume" );
-    _music.set_volume( 25.f );
-
     Logger::log( LoggerLevel::DEBUG, "Playing Default Song" );
     _music.play( Music::Town_Pleasant_peasants );
 }
