@@ -95,7 +95,6 @@ Entity_Platform &Entity_Platform::operator=( const Entity_Platform &entity )
 
 Entity_Platform::~Entity_Platform()
 {
-    model::Platform::~Platform();
 }
 
 std::string Entity_Platform::to_string() const

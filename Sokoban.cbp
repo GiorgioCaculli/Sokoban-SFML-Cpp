@@ -6,10 +6,11 @@
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
-			<Target title="Debug">
-				<Option output="bin/Debug/Sokoban" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin/Debug" />
-				<Option object_output="obj/Debug" />
+			<Target title="Debug-Unix">
+				<Option platforms="Unix;" />
+				<Option output="bin/Debug/Unix/Sokoban" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Debug/Unix/" />
+				<Option object_output="obj/Debug/Unix/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -19,8 +20,7 @@
 					<Add option="-g" />
 					<Add option="-std=c++11 -O0 -DBOOST_LOG_DYN_LINK" />
 					<Add option="-DSFML_STATIC" />
-					<Add directory="lib/boost/include" />
-					<Add directory="lib/sfml/include" />
+					<Add directory="/usr/include" />
 				</Compiler>
 				<Linker>
 					<Add library="pthread" />
@@ -52,9 +52,6 @@
 					<Add library="boost_random" />
 					<Add library="boost_regex" />
 					<Add library="boost_serialization" />
-					<Add library="boost_stacktrace_addr2line" />
-					<Add library="boost_stacktrace_basic" />
-					<Add library="boost_stacktrace_noop" />
 					<Add library="boost_system" />
 					<Add library="boost_test_exec_monitor" />
 					<Add library="boost_thread" />
@@ -72,9 +69,7 @@
 					<Add library="icui18n" />
 					<Add library="icuuc" />
 					<Add library="icudata" />
-					<Add directory="/usr/lib" />
-					<Add directory="lib/boost/lib" />
-					<Add directory="lib/sfml/lib" />
+					<Add directory="/usr/lib64" />
 				</Linker>
 				<ExtraCommands>
 					<Add before='mkdir -p &quot;$(TARGET_OUTPUT_DIR)&quot;' />
@@ -82,19 +77,18 @@
 					<Mode after="always" />
 				</ExtraCommands>
 			</Target>
-			<Target title="Release">
-				<Option output="bin/Release/Sokoban" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin/Release/" />
-				<Option object_output="obj/Release/" />
+			<Target title="Release-Unix">
+				<Option platforms="Unix;" />
+				<Option output="bin/Release/Unix/Sokoban" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Release/Unix/" />
+				<Option object_output="obj/Release/Unix/" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-std=c++11 -DBOOST_LOG_DYN_LINK" />
 					<Add option="-DSFML_STATIC" />
-					<Add directory="lib/boost" />
-					<Add directory="lib/sfml/include" />
-					<Add directory="lib/boost/include" />
+					<Add directory="/usr/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -127,9 +121,6 @@
 					<Add library="boost_random" />
 					<Add library="boost_regex" />
 					<Add library="boost_serialization" />
-					<Add library="boost_stacktrace_addr2line" />
-					<Add library="boost_stacktrace_basic" />
-					<Add library="boost_stacktrace_noop" />
 					<Add library="boost_system" />
 					<Add library="boost_test_exec_monitor" />
 					<Add library="boost_thread" />
@@ -147,66 +138,158 @@
 					<Add library="icui18n" />
 					<Add library="icuuc" />
 					<Add library="icudata" />
-					<Add directory="lib/boost/lib" />
-					<Add directory="lib/sfml/lib" />
-					<Add directory="/usr/lib" />
+					<Add directory="/usr/lib64" />
 				</Linker>
 				<ExtraCommands>
 					<Add before='mkdir -p &quot;$(TARGET_OUTPUT_DIR)&quot;' />
 					<Add before='cp -vr src/assets &quot;$(TARGET_OUTPUT_DIR)&quot;' />
+					<Mode after="always" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Debug-Windows">
+				<Option platforms="Windows;" />
+				<Option output="bin/Debug/Windows/Sokoban" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Debug/Windows/" />
+				<Option object_output="obj/Debug/Windows/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-Wunreachable-code" />
+					<Add option="-Wextra" />
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-std=c++11 -O0 -DBOOST_LOG_DYN_LINK" />
+					<Add option="-DSFML_STATIC" />
+					<Add directory="/usr/include" />
+				</Compiler>
+				<Linker>
+					<Add library="pthread" />
+					<Add library="boost_atomic" />
+					<Add library="boost_chrono" />
+					<Add library="boost_container" />
+					<Add library="boost_context" />
+					<Add library="boost_contract" />
+					<Add library="boost_coroutine" />
+					<Add library="boost_date_time" />
+					<Add library="boost_exception" />
+					<Add library="boost_fiber" />
+					<Add library="boost_filesystem" />
+					<Add library="boost_graph" />
+					<Add library="boost_iostreams" />
+					<Add library="boost_json" />
+					<Add library="boost_locale" />
+					<Add library="boost_log" />
+					<Add library="boost_log_setup" />
+					<Add library="boost_math_c99" />
+					<Add library="boost_math_c99f" />
+					<Add library="boost_math_c99l" />
+					<Add library="boost_math_tr1" />
+					<Add library="boost_math_tr1f" />
+					<Add library="boost_math_tr1l" />
+					<Add library="boost_nowide" />
+					<Add library="boost_prg_exec_monitor" />
+					<Add library="boost_program_options" />
+					<Add library="boost_random" />
+					<Add library="boost_regex" />
+					<Add library="boost_serialization" />
+					<Add library="boost_system" />
+					<Add library="boost_test_exec_monitor" />
+					<Add library="boost_thread" />
+					<Add library="boost_timer" />
+					<Add library="boost_type_erasure" />
+					<Add library="boost_unit_test_framework" />
+					<Add library="boost_wave" />
+					<Add library="boost_wserialization" />
+					<Add library="sfml-graphics" />
+					<Add library="sfml-window" />
+					<Add library="sfml-system" />
+					<Add library="sfml-audio" />
+					<Add library="sfml-network" />
+					<Add library="icuio" />
+					<Add library="icui18n" />
+					<Add library="icuuc" />
+					<Add library="icudata" />
+					<Add directory="/usr/lib64" />
+				</Linker>
+				<ExtraCommands>
+					<Add before='mkdir -p &quot;$(TARGET_OUTPUT_DIR)&quot;' />
+					<Add before='cp -vr src/assets &quot;$(TARGET_OUTPUT_DIR)&quot;' />
+					<Mode after="always" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Release-Windows">
+				<Option platforms="Windows;" />
+				<Option output="bin/Release/Windows/Sokoban" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Release/Windows/" />
+				<Option object_output="obj/Release/Windows/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-std=c++11 -DBOOST_LOG_DYN_LINK" />
+					<Add option="-DSFML_STATIC" />
+					<Add directory="/usr/include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="pthread" />
+					<Add library="boost_atomic" />
+					<Add library="boost_chrono" />
+					<Add library="boost_container" />
+					<Add library="boost_context" />
+					<Add library="boost_contract" />
+					<Add library="boost_coroutine" />
+					<Add library="boost_date_time" />
+					<Add library="boost_exception" />
+					<Add library="boost_fiber" />
+					<Add library="boost_filesystem" />
+					<Add library="boost_graph" />
+					<Add library="boost_iostreams" />
+					<Add library="boost_json" />
+					<Add library="boost_locale" />
+					<Add library="boost_log" />
+					<Add library="boost_log_setup" />
+					<Add library="boost_math_c99" />
+					<Add library="boost_math_c99f" />
+					<Add library="boost_math_c99l" />
+					<Add library="boost_math_tr1" />
+					<Add library="boost_math_tr1f" />
+					<Add library="boost_math_tr1l" />
+					<Add library="boost_nowide" />
+					<Add library="boost_prg_exec_monitor" />
+					<Add library="boost_program_options" />
+					<Add library="boost_random" />
+					<Add library="boost_regex" />
+					<Add library="boost_serialization" />
+					<Add library="boost_system" />
+					<Add library="boost_test_exec_monitor" />
+					<Add library="boost_thread" />
+					<Add library="boost_timer" />
+					<Add library="boost_type_erasure" />
+					<Add library="boost_unit_test_framework" />
+					<Add library="boost_wave" />
+					<Add library="boost_wserialization" />
+					<Add library="sfml-system" />
+					<Add library="sfml-window" />
+					<Add library="sfml-graphics" />
+					<Add library="sfml-audio" />
+					<Add library="sfml-network" />
+					<Add library="icuio" />
+					<Add library="icui18n" />
+					<Add library="icuuc" />
+					<Add library="icudata" />
+					<Add directory="/usr/lib64" />
+				</Linker>
+				<ExtraCommands>
+					<Add before='mkdir -p &quot;$(TARGET_OUTPUT_DIR)&quot;' />
+					<Add before='cp -vr src/assets &quot;$(TARGET_OUTPUT_DIR)&quot;' />
+					<Mode after="always" />
 				</ExtraCommands>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Linker>
-			<Add library="pthread" />
-			<Add library="boost_atomic" />
-			<Add library="boost_chrono" />
-			<Add library="boost_container" />
-			<Add library="boost_context" />
-			<Add library="boost_contract" />
-			<Add library="boost_coroutine" />
-			<Add library="boost_date_time" />
-			<Add library="boost_exception" />
-			<Add library="boost_fiber" />
-			<Add library="boost_filesystem" />
-			<Add library="boost_graph" />
-			<Add library="boost_iostreams" />
-			<Add library="boost_json" />
-			<Add library="boost_locale" />
-			<Add library="boost_log" />
-			<Add library="boost_log_setup" />
-			<Add library="boost_math_c99" />
-			<Add library="boost_math_c99f" />
-			<Add library="boost_math_c99l" />
-			<Add library="boost_math_tr1" />
-			<Add library="boost_math_tr1f" />
-			<Add library="boost_math_tr1l" />
-			<Add library="boost_nowide" />
-			<Add library="boost_prg_exec_monitor" />
-			<Add library="boost_program_options" />
-			<Add library="boost_random" />
-			<Add library="boost_regex" />
-			<Add library="boost_serialization" />
-			<Add library="boost_stacktrace_addr2line" />
-			<Add library="boost_stacktrace_basic" />
-			<Add library="boost_stacktrace_noop" />
-			<Add library="boost_system" />
-			<Add library="boost_test_exec_monitor" />
-			<Add library="boost_thread" />
-			<Add library="boost_timer" />
-			<Add library="boost_type_erasure" />
-			<Add library="boost_unit_test_framework" />
-			<Add library="boost_wave" />
-			<Add library="boost_wserialization" />
-			<Add library="sfml-system" />
-			<Add library="sfml-window" />
-			<Add library="sfml-graphics" />
-			<Add library="sfml-audio" />
-			<Add library="sfml-network" />
-		</Linker>
 		<Unit filename="src/assets/fonts/ConnectionIi-2wj8.otf" />
 		<Unit filename="src/assets/fonts/KodomoRounded.otf" />
 		<Unit filename="src/assets/fonts/OFL.txt" />

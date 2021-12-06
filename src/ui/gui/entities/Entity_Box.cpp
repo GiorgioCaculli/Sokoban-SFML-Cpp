@@ -145,7 +145,6 @@ Entity_Box &Entity_Box::operator=( const Entity_Box &box )
 
 Entity_Box::~Entity_Box()
 {
-    Box::~Box();
 }
 
 Actor::ID Entity_Box::get_type() const

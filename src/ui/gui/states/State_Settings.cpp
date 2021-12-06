@@ -80,7 +80,6 @@ void State_Settings::draw()
 {
     sf::RenderWindow &window = *get_context()._window;
     window.setView( window.getDefaultView() );
-    window.draw( _background_sprite );
     window.draw( _settings_text );
     window.draw( _container );
 }

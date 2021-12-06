@@ -108,7 +108,6 @@ Entity_Player &Entity_Player::operator=( const Entity_Player &entity )
 
 Entity_Player::~Entity_Player()
 {
-    model::Player::~Player();
 }
 
 std::string Entity_Player::to_string() const

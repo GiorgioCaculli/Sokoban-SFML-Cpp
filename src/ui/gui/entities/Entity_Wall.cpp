@@ -62,7 +62,6 @@ Entity_Wall &Entity_Wall::operator=( const Entity_Wall &entity )
 
 Entity_Wall::~Entity_Wall()
 {
-    model::Wall::~Wall();
 }
 
 std::string Entity_Wall::to_string() const
