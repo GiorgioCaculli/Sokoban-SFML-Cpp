@@ -1,12 +1,12 @@
 \section{Code source}
 
 \subsection{Aspect Intéressant}
-Un aspect intéressant qui a demandé beaucoup de recherché était de réussir à mettre en place la randomisation des différents aspects graphiques présents sur la carte.
-Afin de rendre le jeu plus varié, différentes algorithmes propres à C++ ont été exploité.
-Pour créer un niveau de randomisation, C++ demande à mettre en place un générateur de \enquote{seed} qui permettra par la suite de choisir de manière aléatoire entre les différentes choix proposés dans les énumérations des couleurs.
-Pour ce faire, on a exploité le \enquote{mersenne twister engine}, aussi connu en C++ sous le nom de \enquote{mt19937}.
-Ce mécanisme permet de retourner un entier de la taille maximale de 32 bit, en partant d'un seed randomiquement généré.
-C'est grâce à toutes ses engine qu'on a su avoir une complète randomisation des assets lors de l'affichage de la carte.
+Un aspect intéressant qui a demandé beaucoup de recherches était de réussir à mettre en place la randomisation des différents aspects graphiques présents sur la carte.
+Afin de rendre le jeu plus varié, différents algorithmes propres à C++ ont été exploité.
+Pour créer un niveau de randomisation, C++ demande de mettre en place un générateur de \enquote{seed} qui permettra par la suite de choisir de manière aléatoire entre les différents choix proposés dans les énumérations des couleurs.
+Pour ce faire, nous avons exploité le \enquote{mersenne twister engine}, aussi connu en C++ sous le nom de \enquote{mt19937}.
+Ce mécanisme permet de retourner un entier d'une taille maximale de 32 bits, en partant d'un seed randomiquement généré.
+C'est grâce à tout ces engines que nous avons sû avoir une complète randomisation des assets lors de l'affichage de la carte.
 
 \subsection{Main}
 \subsubsection{main.hpp}
