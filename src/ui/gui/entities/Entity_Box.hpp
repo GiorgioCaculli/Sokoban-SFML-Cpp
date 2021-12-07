@@ -24,6 +24,7 @@ namespace sokoban
                 {
 
                 public:
+                    /** The various colors of a box */
                     enum class Color
                     {
                         BEIGE_LIGHT,
@@ -52,6 +53,7 @@ namespace sokoban
                     friend std::ostream &operator<<( std::ostream &os, const Entity_Box &box );
                     const std::map< Color, std::array< float, 4>> &get_box_color_map() const;
                 private:
+                    /** Mapper containing the coordinates of each asset based on the color */
                     std::map< Color, std::array< float, 4 > > _box_color_map;
                 };
             }

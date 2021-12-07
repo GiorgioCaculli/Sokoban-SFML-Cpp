@@ -60,6 +60,11 @@ const std::array< float, 4 > platform_yellow_asset = {
         , OFFSET
 };
 
+/**
+ * Default Entity Platform constructor
+ * @param x The coordinates on the X axis
+ * @param y The coordinates on the Y axis
+ */
 Entity_Platform::Entity_Platform( float x, float y )
 : Platform( x, y )
 , Entity( platform_blue_asset )
@@ -78,11 +83,20 @@ Entity_Platform::Entity_Platform( float x, float y )
 
 }
 
+/**
+ * The copy constructor for the Entity Platform
+ * @param entity The Platform we wish to copy the information from
+ */
 Entity_Platform::Entity_Platform( const Entity_Platform &entity )
 : Entity_Platform( entity.get_x(), entity.get_y() )
 {
 }
 
+/**
+ * Redefinition of the = operator
+ * @param entity The entity we wish to copy the information from
+ * @return The entity with the copied platform's information
+ */
 Entity_Platform &Entity_Platform::operator=( const Entity_Platform &entity )
 {
     if( &entity != this )
@@ -93,20 +107,36 @@ Entity_Platform &Entity_Platform::operator=( const Entity_Platform &entity )
     return *this;
 }
 
+/**
+ * Default constructor for the Platform entity
+ */
 Entity_Platform::~Entity_Platform()
-{
-}
+= default;
 
+/**
+ * Textual output containing the platform's information
+ * @return The textual output with the platform's information
+ */
 std::string Entity_Platform::to_string() const
 {
     return model::Platform::to_string();
 }
 
+/**
+ * Getter for the mapper containing the asset's coordinates based on the color
+ * @return The mapper containing the coordinates based on the color
+ */
 const std::map< Entity_Platform::Color, std::array< float, 4>> &Entity_Platform::get_platform_color_map() const
 {
     return _platform_color_map;
 }
 
+/**
+ * Redefinition of the << operator
+ * @param os The output stream to display the text to
+ * @param entity The entity we wish to output
+ * @return The textual output containing the entity's information
+ */
 std::ostream &sokoban::ui::gui::entity::operator<<( std::ostream &os, const Entity_Platform &entity )
 {
     os << entity.to_string();

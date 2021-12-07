@@ -102,6 +102,11 @@ const std::array< float, 4 > box_yellow_light_asset = {
         , OFFSET
 };
 
+/**
+ * Constructor for the entity box
+ * @param x The position on the X axis
+ * @param y The position on the Y axis
+ */
 Entity_Box::Entity_Box( float x, float y )
         : model::Box( x, y )
         , Entity_Movable( box_brown_light_asset )
@@ -128,12 +133,20 @@ Entity_Box::Entity_Box( float x, float y )
             };
 }
 
+/**
+ * Copy constructor of a box entity
+ */
 Entity_Box::Entity_Box( const Entity_Box &box )
         : Entity_Box( box.get_x(), box.get_y() )
 {
 
 }
 
+/**
+ * Redefinition of the = operator
+ * @param box The box we wish to copy the information from
+ * @return The new box with the copied box's information
+ */
 Entity_Box &Entity_Box::operator=( const Entity_Box &box )
 {
     if ( &box != this )
@@ -143,25 +156,44 @@ Entity_Box &Entity_Box::operator=( const Entity_Box &box )
     return *this;
 }
 
+/**
+ * Based destructor for the box entity
+ */
 Entity_Box::~Entity_Box()
-{
-}
+= default;
 
+/**
+ * Getter meant to retrieve the actor's nature
+ */
 Actor::ID Entity_Box::get_type() const
 {
     return Actor::BOX;
 }
 
+/**
+ * Textual format of the box's information
+ * @return The Box Entity's information in textual format
+ */
 std::string Entity_Box::to_string() const
 {
     return Box::to_string();
 }
 
+/**
+ * Getter for the mapper containing the various coordinates of the box based on the color
+ * @return The color's mapper
+ */
 const std::map< Entity_Box::Color, std::array< float, 4>> &Entity_Box::get_box_color_map() const
 {
     return _box_color_map;
 }
 
+/**
+ * Redefinition of the << operator meant to output the box directly within an std::cout
+ * @param os The output stream to send the text to
+ * @param box The box we wish to output
+ * @return Textual output containing the Entity's information
+ */
 std::ostream &sokoban::ui::gui::entity::operator<<( std::ostream &os, const Entity_Box &box )
 {
     os << box.to_string();

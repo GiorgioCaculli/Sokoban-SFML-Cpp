@@ -28,6 +28,7 @@ namespace sokoban
                     void set_asset_coords( std::array< float, 4 > asset_coords );
                     void update_current( sf::Time dt, Command_Queue &commands ) override;
                 private:
+                    /** The asset's coordinates on the spritesheet */
                     std::array< float, 4 > _assets_coords;
                 };
             }

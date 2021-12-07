@@ -74,6 +74,11 @@ const std::array< float, 4 > player_asset_south = character_facing_south;
 const std::array< float, 4 > player_asset_east = character_facing_east;
 const std::array< float, 4 > player_asset_west = character_facing_west;
 
+/**
+ * Default constructor for the Player entity
+ * @param x The coordinates on the X axis
+ * @param y The coordinates on the Y axis
+ */
 Entity_Player::Entity_Player( float x, float y )
         : model::Player( x, y )
         , Entity_Movable( player_asset_south )
@@ -87,6 +92,10 @@ Entity_Player::Entity_Player( float x, float y )
             };
 }
 
+/**
+ * Copy constructor for the player entity
+ * @param entity The entity we wish to get the information from
+ */
 Entity_Player::Entity_Player( const Entity_Player &entity )
 : Entity_Player( entity.get_x(), entity.get_y() )
 {
@@ -94,6 +103,11 @@ Entity_Player::Entity_Player( const Entity_Player &entity )
     _player_face_map = entity._player_face_map;
 }
 
+/**
+ * Redefinition of the = operator
+ * @param entity The entity we wish to get the information from
+ * @return The new instance of a place with the copied information
+ */
 Entity_Player &Entity_Player::operator=( const Entity_Player &entity )
 {
     if( &entity != this )
@@ -106,20 +120,36 @@ Entity_Player &Entity_Player::operator=( const Entity_Player &entity )
     return *this;
 }
 
+/**
+ * Default destructor for the entity player
+ */
 Entity_Player::~Entity_Player()
-{
-}
+= default;
 
+/**
+ * Textual output containing the Player's information
+ * @return Text containing the player's information
+ */
 std::string Entity_Player::to_string() const
 {
     return Player::to_string();
 }
 
+/**
+ * Getter for the mapper containing the coordinates of each asset based on where the player is looking
+ * @return The mapper containing the assets
+ */
 const std::map< Entity_Player::Face, std::array< float, 4>> &Entity_Player::get_player_face_map() const
 {
     return _player_face_map;
 }
 
+/**
+ * Redefinition of the << operator
+ * @param os The output we wish to inject the text into
+ * @param entity The entity we wish to output
+ * @return Textual output displaying the player's information
+ */
 std::ostream &sokoban::ui::gui::entity::operator<<( std::ostream &os, const Entity_Player &entity )
 {
     os << entity.to_string();

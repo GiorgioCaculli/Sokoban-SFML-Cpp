@@ -32,6 +32,11 @@ const std::array< float, 4 > wall_round_white_asset = {
         , OFFSET
 };
 
+/**
+ * Default constructor for the Wall Entity
+ * @param x The coordinates on the X axis
+ * @param y The coordinates on the Y axis
+ */
 Entity_Wall::Entity_Wall( float x, float y )
         : model::Wall( x, y )
         , Entity( wall_round_white_asset )
@@ -45,11 +50,20 @@ Entity_Wall::Entity_Wall( float x, float y )
             };
 }
 
+/**
+ * Copy constructor for the Wall entity
+ * @param entity The entity we wish to copy the information from
+ */
 Entity_Wall::Entity_Wall( const Entity_Wall &entity )
 : Entity_Wall( entity.get_x(), entity.get_y() )
 {
 }
 
+/**
+ * Redefinition of the = operator
+ * @param entity The entity we wish to copy the information from
+ * @return The new entity with the copied information
+ */
 Entity_Wall &Entity_Wall::operator=( const Entity_Wall &entity )
 {
     if( &entity != this )
@@ -60,21 +74,38 @@ Entity_Wall &Entity_Wall::operator=( const Entity_Wall &entity )
     return *this;
 }
 
+/**
+ * Default destructor for the Wall entity
+ */
 Entity_Wall::~Entity_Wall()
-{
-}
+= default;
 
+/**
+ * Textual output of the Wall entity
+ * @return Textual output containing the Wall's information
+ */
 std::string Entity_Wall::to_string() const
 {
     return Wall::to_string();
 }
 
+/**
+ * Getter for the mapper containing the coordinates of the assets based on each color
+ * @return The mapper containing the coordinates of the assets based on each color
+ */
 const std::map< Entity_Wall::Color, std::array< float, 4>> &Entity_Wall::get_wall_color_map() const
 {
     return _wall_color_map;
 }
 
+/**
+ * Redefinition of the << operator
+ * @param os The output we wish to inject our information to
+ * @param entity The entity we wish to get the information from
+ * @return The textual output containing the entity's information
+ */
 std::ostream &sokoban::ui::gui::entity::operator<<( std::ostream &os, const Entity_Wall &entity )
 {
+    os << entity.to_string();
     return os;
 }
