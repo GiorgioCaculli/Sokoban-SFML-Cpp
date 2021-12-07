@@ -16,14 +16,15 @@ namespace sokoban
                     : public Component
             {
             public:
+                /** Shared pointer meant to characterize the component as a Container */
                 typedef std::shared_ptr< Container > Ptr;
                 Container();
                 void pack( Component::Ptr component );
                 bool is_selectable() const override;
                 void handle_event( const sf::Event &event ) override;
             private:
-                std::vector< Component::Ptr > _children;
-                int _selected_child;
+                std::vector< Component::Ptr > _children; /** The various components it should hold */
+                int _selected_child; /** The selected child */
                 void draw( sf::RenderTarget &target, sf::RenderStates states ) const override;
                 bool has_selection() const;
                 void select( std::size_t index );

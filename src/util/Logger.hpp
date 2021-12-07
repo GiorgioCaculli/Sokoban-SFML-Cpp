@@ -9,19 +9,19 @@ namespace sokoban
     {
         enum LoggerLevel
         {
-            TRACE,
-            DEBUG,
-            INFO,
-            WARNING,
-            ERROR,
-            FATAL
+            TRACE, /** The lowest level of importance leaving nothing but the existance of the information */
+            DEBUG, /** Debugging information meant for developers */
+            INFO, /** Textual information meant for the user */
+            WARNING, /** Warning information concerning the program's execution */
+            ERROR, /** Critical information that requires patch fix */
+            FATAL /** Prioritary level of logging that requires immediate fix */
         };
 
         class Logger
         {
         private:
-            std::string _id;
-            std::string _file_name;
+            std::string _id; /** The logger's unique ID */
+            std::string _file_name; /** The logger's name */
         public:
             Logger( const std::string &id, const std::string &file_name );
             explicit Logger( const std::string &id );

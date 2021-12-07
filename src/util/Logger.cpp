@@ -20,6 +20,15 @@
 using namespace sokoban::util;
 namespace logging = boost::log;
 
+/**
+ * Injection operator definition meant to show the severity level in string format
+ *
+ * @tparam CharT template's parameter for the character
+ * @tparam TraitsT template's paramenter for the traits
+ * @param strm The output stream
+ * @param lvl The severity level
+ * @return The string containing the severity level
+ */
 template< typename CharT, typename TraitsT >
     inline std::basic_ostream< CharT, TraitsT > &operator<<(
             std::basic_ostream< CharT, TraitsT > &strm, logging::trivial::severity_level lvl )
@@ -75,27 +84,47 @@ Logger::Logger( const std::string &id, const std::string &file_name )
     //logging::sources::severity_logger<logging::trivial::severity_level> lg;
 }
 
+/**
+ * Logger's constructor initializing its unique id and default name
+ * @param id The unique ID of the logger
+ */
 Logger::Logger( const std::string &id )
         : Logger( id, "sokoban.log" )
 {
 
 }
 
+/**
+ * Upon destruction of the logger, print out its identifier
+ */
 Logger::~Logger()
 {
     std::cout << "logger ID: " << get_id() << std::endl;
 }
 
+/**
+ * Getter for the logger's unique identifier.
+ * @return The ID
+ */
 std::string Logger::get_id()
 {
     return _id;
 }
 
+/**
+ * Getter for the logger's file name
+ * @return The name of the logger.
+ */
 std::string Logger::get_file_name()
 {
     return _file_name;
 }
 
+/**
+ * Function that will append the information requested throughout the execution of the program.
+ * @param level The severity level
+ * @param log_message The message to append
+ */
 void Logger::log( int level, const std::string &log_message )
 {
     using namespace logging::trivial;

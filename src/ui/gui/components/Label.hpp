@@ -17,14 +17,15 @@ namespace sokoban
                     : public Component
             {
             public:
+                /** Shared pointer meant to define the component as a Label */
                 typedef std::shared_ptr< Label > Ptr;
                 Label( const std::string &text, const Font_Holder &fonts, float character_size );
                 bool is_selectable() const override;
                 void set_text( const std::string &text );
                 void handle_event( const sf::Event &event ) override;
             private:
-                sf::Text _text;
-                void draw( sf::RenderTarget &target, sf::RenderStates states ) const;
+                sf::Text _text; /** The text meant to be displayed */
+                void draw( sf::RenderTarget &target, sf::RenderStates states ) const override;
             };
         }
     }

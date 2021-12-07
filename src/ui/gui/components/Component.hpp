@@ -24,6 +24,7 @@ namespace sokoban
         , private sf::NonCopyable
             {
             public:
+                /** Generic declaration of a shared pointer meant to define a base nature to said pointer */
                 typedef std::shared_ptr< Component > Ptr;
                 Component();
                 virtual ~Component();
@@ -36,8 +37,8 @@ namespace sokoban
                 virtual void deactivate();
                 virtual void handle_event( const sf::Event &event ) = 0;
             private:
-                bool _is_selected;
-                bool _is_active;
+                bool _is_selected; /** Check whether the component is selected */
+                bool _is_active; /** Check whether the component is active */
             };
         }
     }
