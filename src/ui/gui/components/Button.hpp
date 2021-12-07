@@ -24,16 +24,16 @@ namespace sokoban
                     : public Component
             {
             public:
-                typedef std::shared_ptr< Button > Ptr;
-                typedef std::function< void() > Callback;
+                typedef std::shared_ptr< Button > Ptr; /** The shared pointer that will define the Component's nature */
+                typedef std::function< void() > Callback; /** The action the component will execute */
                 enum Type
                 {
-                    Normal,
-                    Selected,
-                    Pressed,
-                    Button_Count
+                    Normal, /** Non-selected state of a button */
+                    Selected, /** Selected state of a button */
+                    Pressed, /** Pressed state of a button */
+                    Button_Count /** Counter for various button states */
                 };
-                Button( State::Context context );
+                explicit Button( State::Context context );
                 void set_callback( Callback callback );
                 void set_text( const std::string &text );
                 void set_toggle( bool flag );
@@ -44,12 +44,12 @@ namespace sokoban
                 void deactivate() override;
                 void handle_event( const sf::Event &event ) override;
             private:
-                Callback _callback;
-                sf::Sprite _sprite;
-                sf::Text _text;
-                bool _is_toggled;
-                Sound_Player &_sounds;
-                void draw( sf::RenderTarget &target, sf::RenderStates states ) const;
+                Callback _callback; /** The type of execution the button will cause */
+                sf::Sprite _sprite; /** The asset meant to represent the sprite */
+                sf::Text _text; /** The text written on the button */
+                bool _is_toggled; /** Whether the button is toggled or not */
+                Sound_Player &_sounds; /** The sound it will make when selected or executed */
+                void draw( sf::RenderTarget &target, sf::RenderStates states ) const override;
                 void change_texture( Type button_type );
             };
         }

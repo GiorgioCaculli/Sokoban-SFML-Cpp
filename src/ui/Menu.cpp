@@ -6,6 +6,11 @@ using namespace sokoban::ui;
 using namespace sokoban::ui::gui;
 using namespace sokoban::util;
 
+/**
+ * Menu's constructor meant to initialize and execute the game.
+ * Upon execution, a return code is entered.
+ * Should any exception arise, the program's return code will be -1.
+ */
 Menu::Menu()
 {
     try

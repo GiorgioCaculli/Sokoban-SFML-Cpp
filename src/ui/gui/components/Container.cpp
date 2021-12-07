@@ -6,12 +6,20 @@
 
 using namespace sokoban::ui::gui;
 
+/**
+ * Constructor for the container
+ * No children by default and no selected child by default
+ */
 Container::Container()
 : _children()
 , _selected_child( -1 )
 {
 }
 
+/**
+ * Function meant to add a component to the children.
+ * @param component The new child to add
+ */
 void Container::pack( Component::Ptr component )
 {
     _children.push_back( component );
@@ -21,11 +29,17 @@ void Container::pack( Component::Ptr component )
     }
 }
 
+/**
+ * By default a container is not selectable
+ */
 bool Container::is_selectable() const
 {
     return false;
 }
 
+/**
+ * Function meant to interchange between the various children
+ */
 void Container::handle_event( const sf::Event &event )
 {
     if( has_selection() && _children[ _selected_child ]->is_active() )
@@ -52,6 +66,9 @@ void Container::handle_event( const sf::Event &event )
     }
 }
 
+/**
+ * Visually display each child of the container
+ */
 void Container::draw( sf::RenderTarget &target, sf::RenderStates states ) const
 {
     states.transform *= getTransform();
@@ -61,11 +78,18 @@ void Container::draw( sf::RenderTarget &target, sf::RenderStates states ) const
     }
 }
 
+/**
+ * Function meant to retrieve whether a container has a selected child
+ */
 bool Container::has_selection() const
 {
     return _selected_child >= 0;
 }
 
+/**
+ * Function meant to interchange between the different children
+ * @param index The child that has been selected
+ */
 void Container::select( std::size_t index )
 {
     if( _children[ index ]->is_selectable() )
@@ -79,6 +103,9 @@ void Container::select( std::size_t index )
     }
 }
 
+/**
+ * Function meant to select the following child within the list of children
+ */
 void Container::select_next()
 {
     if( !has_selection() )
@@ -94,6 +121,9 @@ void Container::select_next()
     select( next );
 }
 
+/**
+ * Function meant to select the previous child within the list of children
+ */
 void Container::select_previous()
 {
     if( !has_selection() )

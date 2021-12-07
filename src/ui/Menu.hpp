@@ -12,7 +12,7 @@ namespace sokoban
             ~Menu();
             unsigned short launch_application() const;
         private:
-            int _res;
+            int _res; /** The end result for the game's execution */
         };
     }
 }
