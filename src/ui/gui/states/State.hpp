@@ -10,6 +10,9 @@
 
 #include <memory>
 
+/**
+ * Pre declaration of the SFML RenderWindow class
+ */
 namespace sf
 {
     class RenderWindow;
@@ -21,14 +24,18 @@ namespace sokoban
     {
         namespace gui
         {
-            class State_Stack;
-            class Music_Player;
-            class Sound_Player;
+            class State_Stack; /** The stack containing the various states */
+            class Music_Player; /** The global music player */
+            class Sound_Player; /** The global sound effects player */
             class State
             {
             public:
+                /** Unique pointer that characterizes the base nature of a state */
                 typedef std::unique_ptr< State > Ptr;
 
+                /**
+                 * Public struct containing globally accessible variables
+                 */
                 struct Context
                 {
                     Context( sf::RenderWindow &window, Texture_Holder &textures, Font_Holder &fonts, Music_Player &music, Sound_Player &sounds );
@@ -50,8 +57,8 @@ namespace sokoban
                 void request_state_clear();
                 Context get_context() const;
             private:
-                State_Stack *_stack;
-                Context _context;
+                State_Stack *_stack; /** The stack containing the various states */
+                Context _context; /** The globally accessible context */
             };
         }
     }

@@ -23,11 +23,11 @@ namespace sokoban
                 void draw() override;
                 bool handle_event( const sf::Event &event ) override;
             private:
-                World *_world;
-                sf::RenderWindow &_window;
-                std::vector< std::string > _levels;
-                std::string _level;
-                sf::Text _text;
+                World *_world; /** The map that has to be displayed */
+                sf::RenderWindow &_window; /** The window where everything has to be drawn into */
+                std::vector< std::string > _levels; /** The various levels throughout the game */
+                std::string _level; /** The level that is currently being played */
+                sf::Text _text; /** The textual information present on the screen */
                 void reset_board();
                 void next_level();
                 void prev_level();

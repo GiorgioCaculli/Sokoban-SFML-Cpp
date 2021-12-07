@@ -9,14 +9,17 @@ namespace sokoban
         {
             namespace States
             {
+                /**
+                 * ID of each state that characterizes it
+                 */
                 enum ID
                 {
-                    None,
-                    Title,
-                    Menu,
-                    Game,
-                    Pause,
-                    Settings,
+                    None, /** No nature whatsoever */
+                    Title, /** The title screen */
+                    Menu, /** The menu screen */
+                    Game, /** The playable area */
+                    Pause, /** The pause screen */
+                    Settings, /** The settings screen */
                 };
             }
         }

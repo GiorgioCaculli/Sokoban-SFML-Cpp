@@ -21,12 +21,12 @@ namespace sokoban
                 bool update( sf::Time dt ) override;
                 bool handle_event( const sf::Event &event ) override;
             private:
-                sf::Sprite _background_sprite;
-                sf::Text _text;
-                sf::Text _title_text;
-                sf::Text _title_sub_text;
-                bool _show_text;
-                sf::Time _text_effect_time;
+                sf::Sprite _background_sprite; /** The background sprite */
+                sf::Text _text; /** The flashing text */
+                sf::Text _title_text; /** The text in japanese stating Sokoban */
+                sf::Text _title_sub_text; /** The sub text translating Sokoban from Japanese */
+                bool _show_text; /** Bool that states whether the text has to be hidden or not */
+                sf::Time _text_effect_time; /** Timer for the text to blink */
             };
         }
     }

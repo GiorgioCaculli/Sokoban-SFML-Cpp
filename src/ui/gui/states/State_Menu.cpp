@@ -12,6 +12,11 @@
 
 using namespace sokoban::ui::gui;
 
+/**
+ * Default constructor for the Menu state
+ * @param stack The stack containing the various states
+ * @param context The context meant to access all the resources available
+ */
 State_Menu::State_Menu( State_Stack &stack, State::Context context )
         : State( stack, context )
         , _container()
@@ -57,6 +62,9 @@ State_Menu::State_Menu( State_Stack &stack, State::Context context )
     _container.pack( exit_button );
 }
 
+/**
+ * Visually draw the various components and entities with the state
+ */
 void State_Menu::draw()
 {
     sf::RenderWindow &window = *get_context()._window;
@@ -66,11 +74,21 @@ void State_Menu::draw()
     window.draw( _container );
 }
 
+/**
+ * Realtime update the various components
+ * @param dt The clock time
+ * @return always true
+ */
 bool State_Menu::update( sf::Time dt )
 {
     return true;
 }
 
+/**
+ * Event handler for the Menu container
+ * @param event The event that has been called
+ * @return always false
+ */
 bool State_Menu::handle_event( const sf::Event &event )
 {
     _container.handle_event( event );

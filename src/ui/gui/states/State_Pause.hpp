@@ -22,9 +22,9 @@ namespace sokoban
                 bool update( sf::Time dt ) override;
                 bool handle_event( const sf::Event &event ) override;
             private:
-                sf::Sprite _background_sprite;
-                sf::Text _paused_text;
-                Container _container;
+                sf::Sprite _background_sprite; /** The background sprite */
+                sf::Text _paused_text; /** The text stating that the game is paused */
+                Container _container; /** Container containing the various components */
             };
         }
     }

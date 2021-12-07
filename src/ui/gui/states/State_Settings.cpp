@@ -20,6 +20,11 @@ namespace
     float tmp_sound_effect_vol;
 }
 
+/**
+ * Default constructor for the Settings state
+ * @param stack The stack containing the various states
+ * @param context The context containing the globally accessible resources
+ */
 State_Settings::State_Settings( State_Stack &stack, Context context )
         : State( stack, context )
 {
@@ -76,6 +81,9 @@ State_Settings::State_Settings( State_Stack &stack, Context context )
     _settings_text.setPosition( view_size.x / 2.f, 200.f );
 }
 
+/**
+ * Visually display the various components that make up the Settings state
+ */
 void State_Settings::draw()
 {
     sf::RenderWindow &window = *get_context()._window;
@@ -84,6 +92,11 @@ void State_Settings::draw()
     window.draw( _container );
 }
 
+/**
+ * Realtime update the various components
+ * @param dt The clock time
+ * @return always true
+ */
 bool State_Settings::update( sf::Time dt )
 {
     _music_volume_button->set_text( std::to_string( ( int ) get_context()._music->get_volume() ) );
@@ -91,6 +104,11 @@ bool State_Settings::update( sf::Time dt )
     return true;
 }
 
+/**
+ * Event handler for the current state
+ * @param event The event that has been called
+ * @return always false
+ */
 bool State_Settings::handle_event( const sf::Event &event )
 {
     bool is_setting_volume = false;
@@ -204,6 +222,10 @@ bool State_Settings::handle_event( const sf::Event &event )
     return false;
 }
 
+/**
+ * Function to change the sound effect volume
+ * @param val The value that we wish to increase or decrease the volume with
+ */
 void State_Settings::change_sound_effect_volume( float val )
 {
     float vol = get_context()._sounds->get_volume() + val;
@@ -218,6 +240,10 @@ void State_Settings::change_sound_effect_volume( float val )
     get_context()._sounds->set_volume( vol );
 }
 
+/**
+ * Function to change the music volume
+ * @param val The value we wish to increase or decrease the volume with
+ */
 void State_Settings::change_music_volume( float val )
 {
     float vol = get_context()._music->get_volume() + val;

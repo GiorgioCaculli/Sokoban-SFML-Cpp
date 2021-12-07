@@ -11,6 +11,11 @@
 
 using namespace sokoban::ui::gui;
 
+/**
+ * Default constructor for the Pause state
+ * @param stack The stack containing the various states
+ * @param context The context containing the various resources
+ */
 State_Pause::State_Pause( State_Stack &stack, State::Context context )
         : State( stack, context )
 {
@@ -63,6 +68,9 @@ State_Pause::State_Pause( State_Stack &stack, State::Context context )
     _container.pack( back_to_main_menu_button );
 }
 
+/**
+ * Visually display the various components that make up the state
+ */
 void State_Pause::draw()
 {
     sf::RenderWindow &window = *get_context()._window;
@@ -71,11 +79,21 @@ void State_Pause::draw()
     window.draw( _container );
 }
 
+/**
+ * Realtime update the various components
+ * @param dt The clock time
+ * @return always true
+ */
 bool State_Pause::update( sf::Time dt )
 {
     return true;
 }
 
+/**
+ * Event handler for the current pause state
+ * @param event The event that has been called
+ * @return always false
+ */
 bool State_Pause::handle_event( const sf::Event &event )
 {
     _container.handle_event( event );

@@ -9,6 +9,11 @@
 using namespace sokoban::ui::gui;
 using namespace sokoban::util;
 
+/**
+ * Default constructor for the Title state
+ * @param stack The stack containing the various states
+ * @param context The context containing the various resources
+ */
 State_Title::State_Title( State_Stack &stack, State::Context context )
         : State( stack, context )
         , _text()
@@ -47,6 +52,9 @@ State_Title::State_Title( State_Stack &stack, State::Context context )
     _text.setCharacterSize( 32 );
 }
 
+/**
+ * Visually display the various components within the state
+ */
 void State_Title::draw()
 {
     sf::RenderWindow &window = *get_context()._window;
@@ -59,6 +67,11 @@ void State_Title::draw()
     }
 }
 
+/**
+ * Realtime update each component
+ * @param dt The clock time
+ * @return always true
+ */
 bool State_Title::update( sf::Time dt )
 {
     _text_effect_time += dt;
@@ -70,6 +83,11 @@ bool State_Title::update( sf::Time dt )
     return true;
 }
 
+/**
+ * Event handler for the current state
+ * @param event The event to manage
+ * @return always true
+ */
 bool State_Title::handle_event( const sf::Event &event )
 {
     if( event.type == sf::Event::KeyReleased )

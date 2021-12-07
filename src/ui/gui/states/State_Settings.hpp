@@ -23,11 +23,11 @@ namespace sokoban
                 bool update( sf::Time dt ) override;
                 bool handle_event( const sf::Event &event ) override;
             private:
-                sf::Sprite _background_sprite;
-                sf::Text _settings_text;
-                Container _container;
-                Button::Ptr _music_volume_button;
-                Button::Ptr _sound_effect_volume_button;
+                sf::Sprite _background_sprite; /** The background sprite */
+                sf::Text _settings_text; /** The text stating Settings */
+                Container _container; /** The container containing the various components */
+                Button::Ptr _music_volume_button; /** The music volume button */
+                Button::Ptr _sound_effect_volume_button; /** The sound effect volume button */
                 void change_sound_effect_volume( float val );
                 void change_music_volume( float val );
             };

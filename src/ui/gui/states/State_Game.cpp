@@ -19,11 +19,20 @@ namespace
     int reset_counter = 0;
 }
 
+/**
+ * Alphabetical sorting algorithm for the various paths found
+ * @param a A first path to sort
+ * @param b A second path to sort with
+ * @return The paths in the right order
+ */
 bool sort_alphabetically( const boost::filesystem::path &a, const boost::filesystem::path &b )
 {
     return a.string() < b.string();
 }
 
+/**
+ * Getter for the various levels that have been detected inside the folder
+ */
 std::vector< boost::filesystem::path > get_all_levels()
 {
     const boost::filesystem::path root = "assets/levels";
@@ -45,6 +54,11 @@ std::vector< boost::filesystem::path > get_all_levels()
     return paths;
 }
 
+/**
+ * Default constructor for the Game State
+ * @param stack The stack containing the various states
+ * @param context The context containing the various resources
+ */
 State_Game::State_Game( State_Stack &stack, Context context )
         : State( stack, context )
         , _window( *context._window )
@@ -82,17 +96,28 @@ State_Game::State_Game( State_Stack &stack, Context context )
     _world = new World( *context._window, model::Board( _level ), *context._fonts, *context._sounds );
 }
 
+/**
+ * Default destructor for the Game state
+ */
 State_Game::~State_Game()
 {
     delete _world;
 }
 
+/**
+ * Realtime update of the visually available Game window
+ * @param dt The clock time
+ * @return always true
+ */
 bool State_Game::update( sf::Time dt )
 {
     _world->update( dt );
     return true;
 }
 
+/**
+ * Function to draw the visual components of the Game state
+ */
 void State_Game::draw()
 {
     _world->draw();
@@ -117,6 +142,11 @@ void State_Game::draw()
     }
 }
 
+/**
+ * Event handler meant for each interaction possible within the Game state
+ * @param event The event executed
+ * @return always true
+ */
 bool State_Game::handle_event( const sf::Event &event )
 {
     if( event.type == sf::Event::KeyPressed )
@@ -192,6 +222,9 @@ bool State_Game::handle_event( const sf::Event &event )
     return true;
 }
 
+/**
+ * Board resetting function meant to restart a game board
+ */
 void State_Game::reset_board()
 {
     delete _world;
@@ -200,6 +233,9 @@ void State_Game::reset_board()
     _world->set_reset_counter( reset_counter );
 }
 
+/**
+ * Function meant to move onto the next level
+ */
 void State_Game::next_level()
 {
     current_level += 1;
@@ -215,6 +251,9 @@ void State_Game::next_level()
     _world->set_reset_counter( reset_counter );
 }
 
+/**
+ * Function meant to return to a previous level
+ */
 void State_Game::prev_level()
 {
     current_level -= 1;

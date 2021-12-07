@@ -29,11 +29,14 @@ namespace sokoban
         : private sf::NonCopyable
             {
             public:
+                /**
+                 * The various actions possible with the stack
+                 */
                 enum Action
                 {
-                    Push,
-                    Pop,
-                    Clear
+                    Push, /** Push a state ahead */
+                    Pop, /** Pop an existing state */
+                    Clear /** Clear the entirety of the stack */
                 };
                 explicit State_Stack( State::Context context );
                 template< typename T >
@@ -54,12 +57,17 @@ namespace sokoban
                     Action _action;
                     States::ID _state_id;
                 };
-                std::vector< State::Ptr > _stack;
-                std::vector< Pending_Change > _pending_list;
-                State::Context _context;
-                std::map< States::ID, std::function< State::Ptr() > > _factories;
+                std::vector< State::Ptr > _stack; /** The stack containing the various states */
+                std::vector< Pending_Change > _pending_list; /** The handler meant to change the state based on an action */
+                State::Context _context; /** The globally accessible resources */
+                std::map< States::ID, std::function< State::Ptr() > > _factories; /** Mapper that defines a State per ID */
             };
 
+            /**
+             * Dynamic initialisation of a state upon registration
+             * @tparam T The nature of the state
+             * @param state_id The ID that characterizes it
+             */
             template< typename T >
                 void State_Stack::register_state( States::ID state_id )
                 {

@@ -22,8 +22,8 @@ namespace sokoban
                 bool update( sf::Time dt ) override;
                 bool handle_event( const sf::Event &event ) override;
             private:
-                sf::Sprite _background_sprite;
-                Container _container;
+                sf::Sprite _background_sprite; /** The background sprite */
+                Container _container; /** Container storing the various components */
             };
         }
     }
