@@ -8,7 +8,6 @@
 #include "states/State_Menu.hpp"
 #include "states/State_Pause.hpp"
 #include "states/State_Settings.hpp"
-#include "states/State_Game_Over.hpp"
 
 
 using namespace sokoban::ui::gui;
