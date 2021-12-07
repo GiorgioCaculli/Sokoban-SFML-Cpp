@@ -26,9 +26,16 @@ Menu::Menu()
     }
 }
 
+/**
+ * Menu's destructor
+ */
 Menu::~Menu()
 = default;
 
+/**
+ * Function meant to return the games execution code
+ * @return 0 if run correctly, -1 if not
+ */
 unsigned short Menu::launch_application() const
 {
     return _res;

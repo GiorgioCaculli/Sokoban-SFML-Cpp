@@ -56,6 +56,11 @@ template< typename CharT, typename TraitsT >
 BOOST_LOG_ATTRIBUTE_KEYWORD( severity, "Severity", logging::trivial::severity_level )
 BOOST_LOG_ATTRIBUTE_KEYWORD( timestamp, "TimeStamp", boost::posix_time::ptime )
 
+/**
+ * Logger's constructor with a specific filename
+ * @param id The logger's unique I
+ * @param file_name The logger's custom filename
+ */
 Logger::Logger( const std::string &id, const std::string &file_name )
 {
     this->_id = id;
