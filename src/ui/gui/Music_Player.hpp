@@ -27,9 +27,9 @@ namespace sokoban
                 void set_volume( float volume );
                 float get_volume() const;
             private:
-                sf::Music _music;
-                std::map< Music::ID, std::string > _filenames;
-                float _volume;
+                sf::Music _music; /** The music handler */
+                std::map< Music::ID, std::string > _filenames; /** The various files that can be played */
+                float _volume; /** The music's volume */
             };
         }
     }

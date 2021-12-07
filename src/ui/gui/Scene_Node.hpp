@@ -42,9 +42,9 @@ namespace sokoban
                 virtual bool is_marked_for_removal() const;
                 virtual bool is_destroyed() const;
             private:
-                std::vector< Ptr > _children;
-                Scene_Node *_parent;
-                Category::Type _default_category;
+                std::vector< Ptr > _children; /** The various children that compose a Scene node */
+                Scene_Node *_parent; /** The parent node */
+                Category::Type _default_category; /** The default category of each node */
                 virtual void update_current( sf::Time dt, Command_Queue &commands );
                 void update_children( sf::Time dt, Command_Queue &commands );
                 void draw( sf::RenderTarget &target, sf::RenderStates states ) const override;

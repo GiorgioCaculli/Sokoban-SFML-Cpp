@@ -22,6 +22,11 @@ namespace
     auto Random_Engine = create_Random_Engine();
 }
 
+/**
+ * Function meant to return a keyboard key to string
+ * @param key The key to be converted
+ * @return The key in textual form
+ */
 std::string Utility::to_string( sf::Keyboard::Key key )
 {
 #define BOOK_KEY_TO_STRING_CASE( KEY ) case sf::Keyboard::KEY: return #KEY;
@@ -136,6 +141,10 @@ std::string Utility::to_string( sf::Keyboard::Key key )
     return "";
 }
 
+/**
+ * Function that sets a sprite's origin in its center
+ * @param sprite The sprite to center
+ */
 void Utility::center_origin( sf::Sprite &sprite )
 {
     sf::FloatRect bounds = sprite.getLocalBounds();
@@ -145,6 +154,10 @@ void Utility::center_origin( sf::Sprite &sprite )
             );
 }
 
+/**
+ * Function that sets a text's origin in its center
+ * @param text The text to center
+ */
 void Utility::center_origin( sf::Text &text )
 {
     sf::FloatRect bounds = text.getLocalBounds();
@@ -154,6 +167,10 @@ void Utility::center_origin( sf::Text &text )
             );
 }
 
+/**
+ * Function that sets the animation's origin in its center
+ * @param animation The animation to center
+ */
 void Utility::center_origin( Animation &animation )
 {
     sf::FloatRect bounds = animation.get_local_bounds();
@@ -163,27 +180,50 @@ void Utility::center_origin( Animation &animation )
     );
 }
 
+/**
+ * Function to convert from Radian to Degrees
+ * @param radian The radian value to convert
+ * @return The radian value in degrees form
+ */
 float Utility::to_degree( float radian )
 {
     return 100.f / M_PI * radian;
 }
 
+/**
+ * Function to convert from Degree to Radian
+ * @param degree The degree value to convert
+ * @return The degree value in radian form
+ */
 float Utility::to_radian( float degree )
 {
     return M_PI / 100.f * degree;
 }
 
+/**
+ * Random integer generator
+ * @param exclusive_max The maximum value we wish to obtain
+ * @return A value from 0 to Max
+ */
 int Utility::random_int( int exclusive_max )
 {
     std::uniform_int_distribution<> dist( 0, exclusive_max - 1 );
     return dist( Random_Engine );
 }
 
+/**
+ * Function to calculate the distance between within a vector
+ * @param vector The vecto's to calculate
+ * @return X * X + Y * Y
+ */
 float Utility::length( sf::Vector2f vector )
 {
     return std::sqrt( vector.x * vector.x + vector.y * vector.y );
 }
 
+/**
+ * Unit calculator based on the length of a vector and a vector itself
+ */
 sf::Vector2f Utility::unit_vector( sf::Vector2f vector )
 {
     assert( vector != sf::Vector2f( 0.f, 0.f ) );

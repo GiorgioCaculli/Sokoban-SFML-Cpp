@@ -20,7 +20,7 @@ namespace sokoban
                 void set_texture( const sf::Texture &texture );
                 void set_texture( const sf::Texture &texture, const sf::IntRect &textureRect );
             private:
-                sf::Sprite _sprite;
+                sf::Sprite _sprite; /** The sprite to display */
                 void draw_current( sf::RenderTarget &target, sf::RenderStates states ) const override;
             };
         }

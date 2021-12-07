@@ -38,7 +38,7 @@ namespace sokoban
                     std::string to_string() const override;
                     const std::map< Face, std::array< float, 4>> &get_player_face_map() const;
                     friend std::ostream &operator<<( std::ostream &os, const Entity_Player &entity );
-                private
+                private:
                     /** Mapper containing the coordinates of each asset based on the direction the player is looking */
                     std::map< Face, std::array< float, 4 > > _player_face_map;
                 };

@@ -29,16 +29,16 @@ namespace sokoban
                 ~Application();
                 unsigned short run();
             private:
-                static const sf::Time _time_per_frame;
-                sf::RenderWindow _window;
-                Texture_Holder _textures;
-                Font_Holder _fonts;
-                Music_Player _music;
-                Sound_Player _sounds;
-                State_Stack _state_stack;
-                sf::Text _statistics_text;
-                sf::Time _statistics_update_time;
-                std::size_t _statistics_num_frames;
+                static const sf::Time _time_per_frame; /** The amount of frames per second we wish to display */
+                sf::RenderWindow _window; /** The window where the drawables are shown */
+                Texture_Holder _textures; /** The default texture holder */
+                Font_Holder _fonts; /** The default font holder */
+                Music_Player _music; /** The default music player */
+                Sound_Player _sounds; /** The default sound player */
+                State_Stack _state_stack; /** The stack containing the various states */
+                sf::Text _statistics_text; /** Text with the FPS amount */
+                sf::Time _statistics_update_time; /** Timer to update the various statistics */
+                std::size_t _statistics_num_frames; /** Number of frames per second globally */
                 void process_input();
                 void update( const sf::Time &delta_time );
                 void render();

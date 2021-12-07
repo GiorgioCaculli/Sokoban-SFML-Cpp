@@ -5,6 +5,9 @@
 using namespace sokoban::ui::gui;
 using namespace sokoban::util;
 
+/**
+ * Default constructor for the music player
+ */
 Music_Player::Music_Player()
 : _music()
 , _filenames()
@@ -32,6 +35,10 @@ Music_Player::Music_Player()
     _filenames[ Music::Town_Tavern_Tune ] = "assets/music/Town_-_Tavern_Tune.ogg" ;
 }
 
+/**
+ * Function that plays a song based on its ID
+ * @param song The song we wish to play
+ */
 void Music_Player::play( Music::ID song )
 {
     std::string filename = _filenames[ song ];
@@ -45,11 +52,18 @@ void Music_Player::play( Music::ID song )
     _music.play();
 }
 
+/**
+ * Function meant to stop a song
+ */
 void Music_Player::stop()
 {
     _music.stop();
 }
 
+/**
+ * Function meant to pause a song
+ * @param paused Whether the song is paused or not
+ */
 void Music_Player::set_paused( bool paused )
 {
     if( paused )
@@ -62,12 +76,20 @@ void Music_Player::set_paused( bool paused )
     }
 }
 
+/**
+ * Volume setter for the song
+ * @param volume The value of the volume
+ */
 void Music_Player::set_volume( float volume )
 {
     _volume = volume;
     _music.setVolume( _volume );
 }
 
+/**
+ * Getter for the volume
+ * @return The current value of the volume
+ */
 float Music_Player::get_volume() const
 {
     return _volume;

@@ -17,40 +17,52 @@ namespace sokoban
         {
             namespace Textures
             {
+                /**
+                 * The various textures for each actor and entity
+                 */
                 enum ID
                 {
-                    Player,
-                    Box,
-                    Platform,
-                    Wall,
-                    Background,
-                    Title_Screen,
-                    Button,
+                    Player, /** The player texture */
+                    Box, /** The box texture */
+                    Platform, /** The platform texture */
+                    Wall, /** The box texture */
+                    Background, /** The background texture */
+                    Title_Screen, /** The title screen */
+                    Button, /** The button texture */
                 };
             }
 
+            /**
+             * The various shaders that can be displayed on the game
+             */
             namespace Shaders
             {
                 enum ID
                 {
-                    Brightness_Pass,
-                    Down_Sample_Pass,
-                    Gaussian_Blur_Pass,
-                    Add_Pass,
+                    Brightness_Pass, /** The Brightness levels */
+                    Down_Sample_Pass, /** The samples downscaling */
+                    Gaussian_Blur_Pass, /** The Blur effect */
+                    /* Add_Pass, */
                 };
             }
 
+            /**
+             * The various fonts displayed throughout the game
+             */
             namespace Fonts
             {
                 enum ID
                 {
-                    Connection_II,
-                    Kodomo_Rounded,
-                    Free_Font,
-                    Rampart_One,
+                    Connection_II, /** Minecraft-like font */
+                    Kodomo_Rounded, /** Kiddie Japanese font */
+                    Free_Font, /** GNU Free font */
+                    Rampart_One, /** Bubbly font */
                 };
             }
 
+            /**
+             * The various sound effects that can be heard throughout the usage of the software
+             */
             namespace Sound_Effect
             {
                 enum ID
@@ -81,6 +93,9 @@ namespace sokoban
                 };
             }
 
+            /**
+             * The various songs that can be played throughout the game
+             */
             namespace Music
             {
                 enum ID
@@ -111,10 +126,10 @@ namespace sokoban
         template< typename Resource, typename Identifier >
             class Resource_Holder;
 
-        typedef Resource_Holder< sf::Texture, gui::Textures::ID > Texture_Holder;
-        typedef Resource_Holder< sf::Font, gui::Fonts::ID > Font_Holder;
-        typedef Resource_Holder< sf::Shader, gui::Shaders::ID > Shader_Holder;
-        typedef Resource_Holder< sf::SoundBuffer, gui::Sound_Effect::ID > Sound_Buffer_Holder;
+        typedef Resource_Holder< sf::Texture, gui::Textures::ID > Texture_Holder; /** The texture holder */
+        typedef Resource_Holder< sf::Font, gui::Fonts::ID > Font_Holder; /** The font holder */
+        typedef Resource_Holder< sf::Shader, gui::Shaders::ID > Shader_Holder; /** The shader holder */
+        typedef Resource_Holder< sf::SoundBuffer, gui::Sound_Effect::ID > Sound_Buffer_Holder; /** The sound effects holder */
     }
 }
 

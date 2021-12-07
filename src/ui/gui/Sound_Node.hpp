@@ -19,7 +19,7 @@ namespace sokoban
                 void play_sound( Sound_Effect::ID sound, sf::Vector2f position );
                 unsigned int get_category() const override;
             private:
-                Sound_Player &_sounds;
+                Sound_Player &_sounds; /** The sound player for the current sound node */
             };
         }
     }

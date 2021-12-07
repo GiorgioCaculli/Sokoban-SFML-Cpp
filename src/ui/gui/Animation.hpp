@@ -39,13 +39,13 @@ namespace sokoban
                 void update( sf::Time dt );
 
             private:
-                sf::Sprite _sprite;
-                sf::Vector2i _frame_size;
-                std::size_t _num_frames;
-                std::size_t _current_frame;
-                sf::Time _duration;
-                sf::Time _elapsed_time;
-                bool _repeat;
+                sf::Sprite _sprite; /** The current sprite to display */
+                sf::Vector2i _frame_size; /** The sprite's frame size */
+                std::size_t _num_frames; /** The number of frames */
+                std::size_t _current_frame; /** The current frame */
+                sf::Time _duration; /** The duration of the animation */
+                sf::Time _elapsed_time; /** The time that went by */
+                bool _repeat; /** Whether the animation has to be repeated or not */
                 void draw( sf::RenderTarget &target, sf::RenderStates states ) const override;
             };
         }

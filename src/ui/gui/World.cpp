@@ -21,6 +21,13 @@ namespace
     int steps_counter = 0;
 }
 
+/**
+ * Default constructor for the world
+ * @param target The target to display the sprites onto
+ * @param board The board containing the various actors and the level's skeleton
+ * @param fonts The various fonts used
+ * @param sounds The various sound effects
+ */
 World::World( sf::RenderTarget &target, const model::Board &board, Font_Holder &fonts, Sound_Player &sounds )
 : _target( target )
   , _world_view( target.getDefaultView() )
@@ -63,6 +70,9 @@ World::World( sf::RenderTarget &target, const model::Board &board, Font_Holder &
     steps_counter = 0;
 }
 
+/**
+ * Default destructor for the World
+ */
 World::~World()
 {
     delete _text;
@@ -85,6 +95,10 @@ World::~World()
     _box_entities.clear();
 }
 
+/**
+ * Realtime updates the visually available entities
+ * @param dt The clock time
+ */
 void World::update( sf::Time dt )
 {
     float SPACE = 64.f;
@@ -225,6 +239,9 @@ void World::update( sf::Time dt )
 
 }
 
+/**
+ * Visually display the various scene nodes that make up the world
+ */
 void World::draw()
 {
     _target.setView( _world_view );
@@ -235,6 +252,9 @@ void World::draw()
     _target.draw( *_text );
 }
 
+/**
+ * Load the various sprite sheets
+ */
 void World::load_textures()
 {
     Logger::log( LoggerLevel::INFO, "Loading Textures..." );
@@ -249,6 +269,9 @@ void World::load_textures()
     _background_texture = new sf::Texture();
 }
 
+/**
+ * Build the scene based on the board's skeleton
+ */
 void World::build_scene()
 {
     Logger::log( LoggerLevel::INFO, "World Node init" );
@@ -410,11 +433,19 @@ void World::build_scene()
     Logger::log( LoggerLevel::INFO, "Number of layers loaded: " + std::to_string( layers ) );
 }
 
+/**
+ * Check whether the board is completed
+ * @return whether the board is completed
+ */
 bool World::is_board_completed() const
 {
     return _board.is_completed();
 }
 
+/**
+ * Move the player up
+ * @param pressed Whether the up key is pressed
+ */
 void World::move_up( bool pressed )
 {
     if( pressed )
@@ -424,6 +455,10 @@ void World::move_up( bool pressed )
     _player_is_moving_up = pressed;
 }
 
+/**
+ * Move the player down
+ * @param pressed Whether the down key is pressed
+ */
 void World::move_down( bool pressed )
 {
     if( pressed )
@@ -433,6 +468,10 @@ void World::move_down( bool pressed )
     _player_is_moving_down = pressed;
 }
 
+/**
+ * Move the player left
+ * @param pressed Whether the left key is pressed
+ */
 void World::move_left( bool pressed )
 {
     if( pressed )
@@ -442,6 +481,10 @@ void World::move_left( bool pressed )
     _player_is_moving_left = pressed;
 }
 
+/**
+ * Move the player right
+ * @param pressed Whether the right key is pressed
+ */
 void World::move_right( bool pressed )
 {
     if( pressed )
@@ -451,11 +494,19 @@ void World::move_right( bool pressed )
     _player_is_moving_right = pressed;
 }
 
+/**
+ * Setter for the number of resets done throughout the match
+ * @param reset_counter The current number of resets
+ */
 void World::set_reset_counter( int reset_counter )
 {
     _reset_counter = reset_counter;
 }
 
+/**
+ * Getter for the number of resets called
+ * @return The number of resets
+ */
 int World::get_reset_counter() const
 {
     return _reset_counter;

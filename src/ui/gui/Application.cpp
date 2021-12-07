@@ -22,6 +22,9 @@ namespace
     const int BITS_PER_PIXEL = 32;
 }
 
+/**
+ * Default constructor for the application
+ */
 Application::Application()
         : _window( sf::VideoMode( WIDTH, HEIGHT, BITS_PER_PIXEL ), "Sokoban", sf::Style::Fullscreen )
           , _textures()
@@ -65,9 +68,16 @@ Application::Application()
     _music.play( Music::Town_Pleasant_peasants );
 }
 
+/**
+ * Application's destructor
+ */
 Application::~Application()
 = default;
 
+/**
+ * Realtime update FPS counter
+ * @param dt The clock time
+ */
 void Application::update_statistics( sf::Time dt )
 {
     _statistics_update_time += dt;
@@ -82,6 +92,9 @@ void Application::update_statistics( sf::Time dt )
     }
 }
 
+/**
+ * Globalized Event handler per state within stack
+ */
 void Application::process_input()
 {
     sf::Event event{};
@@ -97,11 +110,18 @@ void Application::process_input()
 
 }
 
+/**
+ * Realtime update all states within stack
+ * @param delta_time The clock time
+ */
 void Application::update( const sf::Time &delta_time )
 {
     _state_stack.update( delta_time );
 }
 
+/**
+ * Visually display everything that makes up the game
+ */
 void Application::render()
 {
     _window.clear();
@@ -111,6 +131,10 @@ void Application::render()
     _window.display();
 }
 
+/**
+ * Execute the program and return the execution code
+ * @return 0 if run correctly, -1 if not
+ */
 unsigned short Application::run()
 {
     sf::Clock clock;
@@ -135,6 +159,9 @@ unsigned short Application::run()
     return 0;
 }
 
+/**
+ * Register the various states within the app
+ */
 void Application::register_states()
 {
     Logger::log( LoggerLevel::DEBUG, "Registering Title State" );

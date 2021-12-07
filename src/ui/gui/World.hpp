@@ -48,6 +48,9 @@ namespace sokoban
                 void set_reset_counter( int reset_counter );
                 int get_reset_counter() const;
             private:
+                /**
+                 * The various background colors
+                 */
                 enum class Background_Color
                 {
                     CONCRETE,
@@ -55,33 +58,33 @@ namespace sokoban
                     GRASS,
                     SAND
                 };
-                sf::RenderTarget &_target;
-                sf::View _world_view;
-                Texture_Holder _textures;
-                Font_Holder &_fonts;
-                Sound_Player &_sounds;
-                Scene_Node _scene_graph;
-                std::vector< Scene_Node * > _scene_layers;
-                bool _player_is_moving_up;
-                bool _player_is_moving_down;
-                bool _player_is_moving_left;
-                bool _player_is_moving_right;
-                sf::FloatRect _world_bounds;
-                model::Board _board;
-                Sprite_Node *_player_sprite;
-                model::Player *_board_player;
-                entity::Entity_Player *_player_entity;
-                std::vector< Sprite_Node * > _box_sprites;
-                std::vector< model::Box * > _box_actors;
-                std::vector< entity::Entity_Box * > _box_entities;
-                std::vector< entity::Entity * > _entities;
-                sf::Texture *_box_texture_sheet;
-                sf::Texture *_platform_texture_sheet;
-                sf::Texture *_wall_texture_sheet;
-                sf::Texture *_player_texture_sheet;
-                sf::Texture *_background_texture;
-                sf::Text *_text;
-                int _reset_counter;
+                sf::RenderTarget &_target; /** The window that will display the various components */
+                sf::View _world_view; /** The globally defined world view */
+                Texture_Holder _textures; /** Default texture holder */
+                Font_Holder &_fonts; /** Default font holder */
+                Sound_Player &_sounds; /** Default Sound Player */
+                Scene_Node _scene_graph; /** Main scene node */
+                std::vector< Scene_Node * > _scene_layers; /** Various Scene layers */
+                bool _player_is_moving_up; /** Whether the player is moving up */
+                bool _player_is_moving_down; /** Whether the player is moving down */
+                bool _player_is_moving_left; /** Whether the player is moving left */
+                bool _player_is_moving_right; /** Whether the player is moving right */
+                sf::FloatRect _world_bounds; /** The accessible limits of the window */
+                model::Board _board; /** The Board containing all the actors */
+                Sprite_Node *_player_sprite; /** The player sprite */
+                model::Player *_board_player; /** The player within the board */
+                entity::Entity_Player *_player_entity; /** The player entity containing the various assets coordinates */
+                std::vector< Sprite_Node * > _box_sprites; /** The various box sprites */
+                std::vector< model::Box * > _box_actors; /** The various box actors within the board */
+                std::vector< entity::Entity_Box * > _box_entities; /** The various box entities containing the assets' coordinates */
+                std::vector< entity::Entity * > _entities; /** The entirety of the entities present in the world */
+                sf::Texture *_box_texture_sheet; /** The box texture */
+                sf::Texture *_platform_texture_sheet; /** The platform texture */
+                sf::Texture *_wall_texture_sheet; /** The wall texture */
+                sf::Texture *_player_texture_sheet; /** The player texture */
+                sf::Texture *_background_texture; /** The background texture */
+                sf::Text *_text; /** The visually visible text */
+                int _reset_counter; /** The amount of resets */
                 void load_textures();
                 void build_scene();
             };

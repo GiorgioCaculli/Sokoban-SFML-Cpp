@@ -11,6 +11,10 @@
 
 using namespace sokoban::ui::gui;
 
+/**
+ * Default constructor for the scene node
+ * @param category The category that characterize the Scene node
+ */
 Scene_Node::Scene_Node( Category::Type category )
         : _children()
           , _parent( nullptr )
@@ -18,12 +22,21 @@ Scene_Node::Scene_Node( Category::Type category )
 {
 }
 
+/**
+ * Function to append a new node child within the Scene node
+ * @param child The new child to append
+ */
 void Scene_Node::attach_child( Scene_Node::Ptr child )
 {
     child->_parent = this;
     _children.push_back( std::move( child ) );
 }
 
+/**
+ * The node that needs to be detached from the children
+ * @param node The node to detach
+ * @return The node that has been detached
+ */
 Scene_Node::Ptr Scene_Node::detach_child( const Scene_Node &node )
 {
     auto found = std::find_if( _children.begin(), _children.end(), [ & ]( Ptr &p )
@@ -38,6 +51,11 @@ Scene_Node::Ptr Scene_Node::detach_child( const Scene_Node &node )
     return result;
 }
 
+/**
+ * Function that
+ * @param dt
+ * @param commands
+ */
 void Scene_Node::update( sf::Time dt, Command_Queue &commands )
 {
     update_current( dt, commands );

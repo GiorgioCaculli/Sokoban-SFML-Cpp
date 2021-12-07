@@ -30,9 +30,9 @@ namespace sokoban
                 void set_volume( float volume );
                 float get_volume() const;
             private:
-                Sound_Buffer_Holder _sound_buffers;
-                std::list< sf::Sound > _sounds;
-                float _volume;
+                Sound_Buffer_Holder _sound_buffers; /** Sound Effect Holder */
+                std::list< sf::Sound > _sounds; /** List containing the various sound effects */
+                float _volume; /** The sound effects' volume */
             };
         }
     }
