@@ -7,9 +7,9 @@
 #include <string>
 #include <ostream>
 
-/*
- * Classe qui gère les acteurs capables de se déplacer.
- * Cette classe hérite de la classe Actor
+/**
+ * Class that handles actors capable of moving
+ * This class inherits from Actor
  */
 namespace sokoban
 {

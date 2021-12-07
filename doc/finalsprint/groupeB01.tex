@@ -12,7 +12,7 @@
 \usepackage{graphicx}
 \usepackage[hidelinks]{hyperref}
 \usepackage[utf8]{inputenc}
-\usepackage{listings}
+\usepackage{listingsutf8}
 \usepackage{lstautogobble}
 \usepackage{tabularx}
 \usepackage{textcase}
@@ -45,7 +45,8 @@
   showstringspaces=false,
   showtabs=false,
   tabsize=4,
-  autogobble=true
+  autogobble=true,
+  inputencoding=utf8/latin1
 }
 
 \geometry{
@@ -69,7 +70,7 @@
 	\centering
 	\vspace*{\fill}
 	\begin{center}
-		\Huge 
+		\Huge
 		\textbf{Sokoban}\\
 		\vspace*{0.5cm}
 		\large
@@ -79,7 +80,7 @@
 	\end{center}
 	\vspace*{\fill}
 	\thispagestyle{fancy}
-\end{titlepage}	
+\end{titlepage}
 
 \newpage
 \tableofcontents
@@ -90,12 +91,12 @@
 \input{backlog}
 \input{diagrame}
 \newpage
-\input{src}
 \input{implementation}
 \newpage
 \input{contribution}
 \input{conclusion}
 \input{biblio}
+\input{src}
 
 %\newpage
 %\printglossary
