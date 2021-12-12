@@ -1,5 +1,7 @@
 # Sokoban Game written in C++11 and SFML
 
+![GAME](Documentation/finalsprint/pictures/jeu.png "jeu.png")
+
 ## Authors:
 - Giorgio Caculli
 - Guillaume Lambert
@@ -7,14 +9,14 @@
 - Nathan Thaon
 
 ## Dependencies
-- SFML 2.5.1
-- Boost
+- [SFML 2.5.1](https://www.sfml-dev.org/)
+- [Boost](https://www.boost.org/)
 
 ## Build Tools:
-- Cmake
-- Autotools
+- [CMake](https://cmake.org/)
+- [Autotools](https://www.gnu.org/software/software.html)
 
-## Building Instructionr:
+## Building Instructions:
 
 ### Autotools
 1. mkdir build
@@ -22,3 +24,8 @@
 3. autoreconf -fiv ../Sokoban
 4. ../Sokoban/configure
 5. make
+
+### CMake
+1. mkdir build
+2. cmake ../Sokoban
+3. make
