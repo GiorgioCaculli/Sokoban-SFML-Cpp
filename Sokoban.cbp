@@ -290,6 +290,9 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="Makefile.am" />
+		<Unit filename="configure.ac" />
+		<Unit filename="src/Makefile.am" />
 		<Unit filename="src/assets/fonts/ConnectionIi-2wj8.otf" />
 		<Unit filename="src/assets/fonts/KodomoRounded.otf" />
 		<Unit filename="src/assets/fonts/OFL.txt" />
@@ -886,6 +889,7 @@
 		<Unit filename="src/model/Board.hpp" />
 		<Unit filename="src/model/Box.cpp" />
 		<Unit filename="src/model/Box.hpp" />
+		<Unit filename="src/model/Makefile.am" />
 		<Unit filename="src/model/Movable.cpp" />
 		<Unit filename="src/model/Movable.hpp" />
 		<Unit filename="src/model/Platform.cpp" />
@@ -895,6 +899,7 @@
 		<Unit filename="src/model/Wall.cpp" />
 		<Unit filename="src/model/Wall.hpp" />
 		<Unit filename="src/ui/Category.hpp" />
+		<Unit filename="src/ui/Makefile.am" />
 		<Unit filename="src/ui/Menu.cpp" />
 		<Unit filename="src/ui/Menu.hpp" />
 		<Unit filename="src/ui/Resource_Holder.hpp" />
@@ -904,6 +909,7 @@
 		<Unit filename="src/ui/gui/Animation.hpp" />
 		<Unit filename="src/ui/gui/Application.cpp" />
 		<Unit filename="src/ui/gui/Application.hpp" />
+		<Unit filename="src/ui/gui/Makefile.am" />
 		<Unit filename="src/ui/gui/Music_Player.cpp" />
 		<Unit filename="src/ui/gui/Music_Player.hpp" />
 		<Unit filename="src/ui/gui/Resource_Identifiers.hpp" />
@@ -927,6 +933,7 @@
 		<Unit filename="src/ui/gui/components/Container.hpp" />
 		<Unit filename="src/ui/gui/components/Label.cpp" />
 		<Unit filename="src/ui/gui/components/Label.hpp" />
+		<Unit filename="src/ui/gui/components/Makefile.am" />
 		<Unit filename="src/ui/gui/entities/Entity.cpp" />
 		<Unit filename="src/ui/gui/entities/Entity.hpp" />
 		<Unit filename="src/ui/gui/entities/Entity_Box.cpp" />
@@ -939,17 +946,13 @@
 		<Unit filename="src/ui/gui/entities/Entity_Player.hpp" />
 		<Unit filename="src/ui/gui/entities/Entity_Wall.cpp" />
 		<Unit filename="src/ui/gui/entities/Entity_Wall.hpp" />
+		<Unit filename="src/ui/gui/entities/Makefile.am" />
+		<Unit filename="src/ui/gui/states/Makefile.am" />
 		<Unit filename="src/ui/gui/states/State.cpp" />
 		<Unit filename="src/ui/gui/states/State.hpp" />
 		<Unit filename="src/ui/gui/states/State_Game.cpp" />
 		<Unit filename="src/ui/gui/states/State_Game.hpp" />
-		<Unit filename="src/ui/gui/states/State_Game_Over.cpp" />
-		<Unit filename="src/ui/gui/states/State_Game_Over.hpp" />
 		<Unit filename="src/ui/gui/states/State_Identifiers.hpp" />
-		<Unit filename="src/ui/gui/states/State_Intro.cpp" />
-		<Unit filename="src/ui/gui/states/State_Intro.hpp" />
-		<Unit filename="src/ui/gui/states/State_Loading.cpp" />
-		<Unit filename="src/ui/gui/states/State_Loading.hpp" />
 		<Unit filename="src/ui/gui/states/State_Menu.cpp" />
 		<Unit filename="src/ui/gui/states/State_Menu.hpp" />
 		<Unit filename="src/ui/gui/states/State_Pause.cpp" />
@@ -962,6 +965,7 @@
 		<Unit filename="src/ui/gui/states/State_Title.hpp" />
 		<Unit filename="src/util/Logger.cpp" />
 		<Unit filename="src/util/Logger.hpp" />
+		<Unit filename="src/util/Makefile.am" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

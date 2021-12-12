@@ -18,6 +18,7 @@ Menu::Menu()
         Logger::log( LoggerLevel::INFO, "Init Main Frame" );
         Application main_frame;
         _res = main_frame.run();
+        _res = 0;
     }
     catch ( std::exception &e )
     {
