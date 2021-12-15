@@ -154,18 +154,6 @@ std::string Actor::to_string() const
 }
 
 /**
- * Redefinition of the << operator
- * This redefinition will allow us to directly output the object without
- * having to call the to_string() function within the << operators
- * @return The textual output from the function to_string()
- */
-std::ostream &sokoban::model::operator<<( std::ostream &os, const Actor &actor )
-{
-    os << actor.to_string();
-    return os;
-}
-
-/**
  * Redefinition of the == operator
  * This will allow us to check whether or not two actors are exactly the same.
  * @return true if same actor, false if not

@@ -39,7 +39,6 @@ namespace sokoban
                     ~Entity_Platform() override;
                     std::string to_string() const;
                     const std::map< Color, std::array< float, 4>> &get_platform_color_map() const;
-                    friend std::ostream &operator<<( std::ostream &os, const Entity_Platform &entity );
                 private:
                     /** Mapper containing the coordinates of each asset based on the color */
                     std::map< Color, std::array< float, 4 > > _platform_color_map;

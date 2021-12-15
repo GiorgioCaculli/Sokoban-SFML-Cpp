@@ -36,20 +36,20 @@ World::World( sf::RenderTarget &target, const model::Board &board, Font_Holder &
   , _sounds( sounds )
   , _scene_graph()
   , _scene_layers()
-  , _world_bounds( 0.f, 0.f, _world_view.getSize().x, _world_view.getSize().y )
   , _player_is_moving_up( false )
   , _player_is_moving_down( false )
   , _player_is_moving_left( false )
   , _player_is_moving_right( false )
+  , _world_bounds( 0.f, 0.f, _world_view.getSize().x, _world_view.getSize().y )
+  , _board( "" )
+  , _player_sprite( nullptr )
   , _board_player( nullptr )
   , _player_entity( nullptr )
-  , _player_sprite( nullptr )
   , _box_texture_sheet( nullptr )
   , _platform_texture_sheet( nullptr )
   , _wall_texture_sheet( nullptr )
   , _player_texture_sheet( nullptr )
   , _background_texture( nullptr )
-  , _board( "" )
   , _text( nullptr )
   , _reset_counter( 0 )
 {
@@ -101,6 +101,7 @@ World::~World()
  */
 void World::update( sf::Time dt )
 {
+    (void) dt; /* TODO: USAGE */
     float SPACE = 64.f;
     sf::IntRect player_assets_coords;
     float player_x_coords;
@@ -127,7 +128,7 @@ void World::update( sf::Time dt )
         }
         else
         {
-            for ( int i = 0; i < _box_entities.size(); i++ )
+            for ( long unsigned int i = 0; i < _box_entities.size(); i++ )
             {
                 _box_sprites.at( i )->setPosition( _box_actors.at( i )->get_x(), _box_actors.at( i )->get_y() );
             }
@@ -155,7 +156,7 @@ void World::update( sf::Time dt )
         }
         else
         {
-            for ( int i = 0; i < _box_entities.size(); i++ )
+            for ( long unsigned int i = 0; i < _box_entities.size(); i++ )
             {
                 _box_sprites.at( i )->setPosition( _box_actors.at( i )->get_x(), _box_actors.at( i )->get_y() );
             }
@@ -183,7 +184,7 @@ void World::update( sf::Time dt )
         }
         else
         {
-            for ( int i = 0; i < _box_entities.size(); i++ )
+            for ( long unsigned int i = 0; i < _box_entities.size(); i++ )
             {
                 _box_sprites.at( i )->setPosition( _box_actors.at( i )->get_x(), _box_actors.at( i )->get_y() );
             }
@@ -211,7 +212,7 @@ void World::update( sf::Time dt )
         }
         else
         {
-            for ( int i = 0; i < _box_entities.size(); i++ )
+            for ( long unsigned int i = 0; i < _box_entities.size(); i++ )
             {
                 _box_sprites.at( i )->setPosition( _box_actors.at( i )->get_x(), _box_actors.at( i )->get_y() );
             }

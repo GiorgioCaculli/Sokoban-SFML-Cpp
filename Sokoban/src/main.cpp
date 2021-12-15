@@ -3,6 +3,8 @@
 #include "ui/Menu.hpp"
 #include "util/Logger.hpp"
 
+#include <iostream>
+
 using namespace sokoban::ui;
 using namespace sokoban::util;
 
@@ -16,6 +18,15 @@ using namespace sokoban::util;
  */
 int main( int argc, char *argv[] )
 {
+    std::cout << "Calling: ";
+
+    for( int i = 0; i < argc; i++ )
+    {
+        std::cout << argv[i] << " ";
+    }
+
+    std::cout << std::endl;
+
     Logger logger( "sokoban.log" );
     remove( logger.get_file_name().c_str() );
 

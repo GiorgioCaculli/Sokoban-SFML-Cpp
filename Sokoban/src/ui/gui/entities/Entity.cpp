@@ -60,10 +60,10 @@ void Entity::set_asset_coords( std::array< float, 4 > asset_coords )
 }
 
 /**
- * Function to update an Entity graphically based on its action
- * @param dt The clock time
- * @param commands The commands to execute
+ * Visual real-time update of a movable entity along with its commands
  */
 void Entity::update_current( sf::Time dt, Command_Queue &commands )
 {
+    (void) dt;
+    (void) commands;
 }

@@ -44,9 +44,3 @@ std::string Box::to_string() const
     ss << "Box: " << Movable::to_string();
     return ss.str();
 }
-
-std::ostream &sokoban::model::operator<<( std::ostream &os, const Box &box )
-{
-    os << box.to_string();
-    return os;
-}

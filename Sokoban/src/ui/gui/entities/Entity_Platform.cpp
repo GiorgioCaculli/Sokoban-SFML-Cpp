@@ -101,7 +101,7 @@ Entity_Platform &Entity_Platform::operator=( const Entity_Platform &entity )
 {
     if( &entity != this )
     {
-        model::Platform::operator=( entity );
+        Platform::operator=( entity );
         Entity::operator=( entity );
     }
     return *this;
@@ -119,7 +119,7 @@ Entity_Platform::~Entity_Platform()
  */
 std::string Entity_Platform::to_string() const
 {
-    return model::Platform::to_string();
+    return Platform::to_string();
 }
 
 /**
@@ -129,16 +129,4 @@ std::string Entity_Platform::to_string() const
 const std::map< Entity_Platform::Color, std::array< float, 4>> &Entity_Platform::get_platform_color_map() const
 {
     return _platform_color_map;
-}
-
-/**
- * Redefinition of the << operator
- * @param os The output stream to display the text to
- * @param entity The entity we wish to output
- * @return The textual output containing the entity's information
- */
-std::ostream &sokoban::ui::gui::entity::operator<<( std::ostream &os, const Entity_Platform &entity )
-{
-    os << entity.to_string();
-    return os;
 }

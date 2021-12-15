@@ -35,7 +35,6 @@ namespace sokoban
                     ~Entity_Wall() override;
                     std::string to_string() const;
                     const std::map< Color, std::array< float, 4>> &get_wall_color_map() const;
-                    friend std::ostream &operator<<( std::ostream &os, const Entity_Wall &entity );
                 private:
                     /** Mapper containing the coordinates of each asset based on the color */
                     std::map< Color, std::array< float, 4 > > _wall_color_map;

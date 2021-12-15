@@ -187,15 +187,3 @@ const std::map< Entity_Box::Color, std::array< float, 4>> &Entity_Box::get_box_c
 {
     return _box_color_map;
 }
-
-/**
- * Redefinition of the << operator meant to output the box directly within an std::cout
- * @param os The output stream to send the text to
- * @param box The box we wish to output
- * @return Textual output containing the Entity's information
- */
-std::ostream &sokoban::ui::gui::entity::operator<<( std::ostream &os, const Entity_Box &box )
-{
-    os << box.to_string();
-    return os;
-}

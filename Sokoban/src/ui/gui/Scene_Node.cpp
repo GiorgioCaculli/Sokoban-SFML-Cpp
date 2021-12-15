@@ -86,6 +86,8 @@ unsigned int Scene_Node::get_category() const
 
 void Scene_Node::update_current( sf::Time dt, Command_Queue &commands )
 {
+    (void) dt;
+    (void) commands;
 }
 
 void Scene_Node::update_children( sf::Time dt, Command_Queue &commands )
@@ -107,6 +109,8 @@ void Scene_Node::draw( sf::RenderTarget &target, sf::RenderStates states ) const
 
 void Scene_Node::draw_current( sf::RenderTarget &target, sf::RenderStates states ) const
 {
+    (void) target;
+    (void) states;
 }
 
 void Scene_Node::draw_children( sf::RenderTarget &target, sf::RenderStates states ) const
@@ -134,6 +138,7 @@ bool Scene_Node::is_destroyed() const
 
 void Scene_Node::draw_bounding_rect( sf::RenderTarget &target, sf::RenderStates states ) const
 {
+    (void) states;
     sf::FloatRect rect = get_bounding_rect();
     sf::RectangleShape shape;
     shape.setPosition( sf::Vector2f( rect.left, rect.top ) );

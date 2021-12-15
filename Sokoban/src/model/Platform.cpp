@@ -69,15 +69,3 @@ std::string Platform::to_string() const
     ss << "Platform: " << Actor::to_string();
     return ss.str();
 }
-
-/**
- * Redefinition of the << operator
- * @param os The desired output stream
- * @param platform The platform we wish to output
- * @return Textual output displaying the platform's information
- */
-std::ostream &sokoban::model::operator<<( std::ostream &os, const Platform &platform )
-{
-    os << platform.to_string();
-    return os;
-}

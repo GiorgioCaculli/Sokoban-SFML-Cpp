@@ -50,7 +50,6 @@ namespace sokoban
                     ~Entity_Box() override;
                     ID get_type() const override;
                     std::string to_string() const override;
-                    friend std::ostream &operator<<( std::ostream &os, const Entity_Box &box );
                     const std::map< Color, std::array< float, 4>> &get_box_color_map() const;
                 private:
                     /** Mapper containing the coordinates of each asset based on the color */

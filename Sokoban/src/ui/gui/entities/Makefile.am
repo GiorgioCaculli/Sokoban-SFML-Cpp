@@ -1,3 +1,5 @@
+include $(top_srcdir)/common.mk
+
 noinst_LIBRARIES = libentities.a
 
 libentities_a_SOURCES = Entity.cpp Entity.hpp

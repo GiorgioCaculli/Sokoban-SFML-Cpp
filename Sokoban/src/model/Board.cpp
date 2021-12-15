@@ -401,7 +401,7 @@ float Board::get_board_height() const
 bool Board::is_completed() const
 {
     unsigned long number_of_boxes = _boxes.size();
-    int finished_boxes = 0;
+    unsigned long finished_boxes = 0;
 
     for ( Box *box: _boxes )
     {
@@ -423,20 +423,18 @@ bool Board::is_completed() const
 }
 
 /**
- * Redefinition of the << operator
  * Meant to be used when outputting the board textually
- * @param os The base output stream
- * @param board The board to output
  * @return Textual output of the various actor's positions
  */
-std::ostream &sokoban::model::operator<<( std::ostream &os, const Board &board )
+std::string Board::to_string() const
 {
-    os << board._level;
-    for ( Actor *actor: board._world )
+    std::stringstream ss;
+    ss << _level;
+    for ( Actor *actor: _world )
     {
-        std::cout << *actor << std::endl;
+        ss << actor->to_string() << std::endl;
     }
-    return os;
+    return ss.str();
 }
 
 /**

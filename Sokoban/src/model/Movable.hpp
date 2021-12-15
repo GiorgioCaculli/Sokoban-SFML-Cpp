@@ -26,7 +26,6 @@ namespace sokoban
             void move( float x, float y );
             ID get_type() const override = 0;
             std::string to_string() const override;
-            friend std::ostream &operator<<( std::ostream &os, const Movable &movable );
         };
     }
 }

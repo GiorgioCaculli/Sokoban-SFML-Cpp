@@ -22,7 +22,7 @@ State_Menu::State_Menu( State_Stack &stack, State::Context context )
         , _container()
 {
     sf::Texture &texture = context._textures->get( Textures::Title_Screen );
-    sf::Font &font = context._fonts->get( Fonts::Rampart_One );
+    //sf::Font &font = context._fonts->get( Fonts::Rampart_One );
 
     _background_sprite.setTexture( texture );
     Utility::center_origin( _background_sprite );
@@ -81,6 +81,7 @@ void State_Menu::draw()
  */
 bool State_Menu::update( sf::Time dt )
 {
+    (void) dt;
     return true;
 }
 

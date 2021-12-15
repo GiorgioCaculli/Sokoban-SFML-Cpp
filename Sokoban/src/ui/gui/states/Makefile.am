@@ -1,3 +1,5 @@
+include $(top_srcdir)/common.mk
+
 noinst_LTLIBRARIES = libstates.la
 
 libstates_la_SOURCES = State.cpp State.hpp

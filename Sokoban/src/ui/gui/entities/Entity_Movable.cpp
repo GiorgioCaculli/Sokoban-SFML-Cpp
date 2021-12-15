@@ -38,4 +38,5 @@ sf::Vector2f Entity_Movable::get_direction() const
 void Entity_Movable::update_current( sf::Time dt, Command_Queue &commands )
 {
     Entity_Movable::move( _direction * dt.asSeconds() );
+    (void)commands;
 }

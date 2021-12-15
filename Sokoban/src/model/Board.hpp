@@ -50,7 +50,7 @@ namespace sokoban
             float get_board_height() const;
             bool is_completed() const;
             std::vector< Actor * > get_world();
-            friend std::ostream &operator<<( std::ostream &os, const Board &board );
+            std::string to_string() const;
         };
     }
 }

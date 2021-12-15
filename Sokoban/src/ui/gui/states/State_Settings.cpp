@@ -99,6 +99,7 @@ void State_Settings::draw()
  */
 bool State_Settings::update( sf::Time dt )
 {
+    (void) dt;
     _music_volume_button->set_text( std::to_string( ( int ) get_context()._music->get_volume() ) );
     _sound_effect_volume_button->set_text( std::to_string( ( int ) get_context()._sounds->get_volume() ) );
     return true;

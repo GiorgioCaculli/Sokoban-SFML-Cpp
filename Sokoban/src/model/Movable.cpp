@@ -57,15 +57,3 @@ std::string Movable::to_string() const
     ss << Actor::to_string();
     return ss.str();
 }
-
-/**
- * Redefinition of the << operator
- * @param os The desired output stream
- * @param movable The movable object to get the information from
- * @return The textual output
- */
-std::ostream &sokoban::model::operator<<( std::ostream &os, const Movable &movable )
-{
-    os << movable.to_string();
-    return os;
-}

@@ -69,15 +69,3 @@ std::string Player::to_string() const
     ss << "Player: " << Movable::to_string();
     return ss.str();
 }
-
-/**
- * Redefinition of the << operator
- * @param os The desired output stream
- * @param player The player we wish to output
- * @return Textual output containing the player's information
- */
-std::ostream &sokoban::model::operator<<( std::ostream &os, const Player &player )
-{
-    os << player.to_string();
-    return os;
-}

@@ -69,15 +69,3 @@ std::string Wall::to_string() const
     ss << "Wall: " << Actor::to_string();
     return ss.str();
 }
-
-/**
- * Redefinition of the << operator
- * @param os The desired output stream
- * @param wall The wall we wish to output
- * @return Textual output containing the wall's information
- */
-std::ostream &sokoban::model::operator<<( std::ostream &os, const Wall &wall )
-{
-    os << wall.to_string();
-    return os;
-}

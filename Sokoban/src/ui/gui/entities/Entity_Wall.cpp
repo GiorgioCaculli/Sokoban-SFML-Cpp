@@ -97,15 +97,3 @@ const std::map< Entity_Wall::Color, std::array< float, 4>> &Entity_Wall::get_wal
 {
     return _wall_color_map;
 }
-
-/**
- * Redefinition of the << operator
- * @param os The output we wish to inject our information to
- * @param entity The entity we wish to get the information from
- * @return The textual output containing the entity's information
- */
-std::ostream &sokoban::ui::gui::entity::operator<<( std::ostream &os, const Entity_Wall &entity )
-{
-    os << entity.to_string();
-    return os;
-}

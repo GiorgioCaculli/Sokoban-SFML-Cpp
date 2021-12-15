@@ -129,6 +129,7 @@ void Button::deactivate()
  */
 void Button::handle_event( const sf::Event &event )
 {
+    (void)event;
 }
 
 /**

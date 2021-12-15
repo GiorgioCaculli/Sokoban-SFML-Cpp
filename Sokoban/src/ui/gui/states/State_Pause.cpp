@@ -86,6 +86,7 @@ void State_Pause::draw()
  */
 bool State_Pause::update( sf::Time dt )
 {
+    (void) dt;
     return true;
 }
 

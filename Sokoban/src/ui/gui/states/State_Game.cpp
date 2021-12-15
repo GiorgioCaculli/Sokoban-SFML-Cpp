@@ -15,7 +15,7 @@ using namespace sokoban::util;
 
 namespace
 {
-    int current_level;
+    unsigned long current_level;
     int reset_counter = 0;
 }
 
@@ -62,8 +62,8 @@ std::vector< boost::filesystem::path > get_all_levels()
 State_Game::State_Game( State_Stack &stack, Context context )
         : State( stack, context )
         , _window( *context._window )
-          , _level()
           , _levels()
+          , _level()
           , _text()
 {
     _window.setKeyRepeatEnabled( true );

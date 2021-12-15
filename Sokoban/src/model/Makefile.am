@@ -1,3 +1,5 @@
+include $(top_srcdir)/common.mk
+
 noinst_LIBRARIES = libmodel.a
 
 libmodel_a_SOURCES =

@@ -143,15 +143,3 @@ const std::map< Entity_Player::Face, std::array< float, 4>> &Entity_Player::get_
 {
     return _player_face_map;
 }
-
-/**
- * Redefinition of the << operator
- * @param os The output we wish to inject the text into
- * @param entity The entity we wish to output
- * @return Textual output displaying the player's information
- */
-std::ostream &sokoban::ui::gui::entity::operator<<( std::ostream &os, const Entity_Player &entity )
-{
-    os << entity.to_string();
-    return os;
-}

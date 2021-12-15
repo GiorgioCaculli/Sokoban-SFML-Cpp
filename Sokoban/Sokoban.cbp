@@ -24,42 +24,17 @@
 				</Compiler>
 				<Linker>
 					<Add library="pthread" />
-					<Add library="boost_atomic" />
-					<Add library="boost_chrono" />
-					<Add library="boost_container" />
-					<Add library="boost_context" />
-					<Add library="boost_contract" />
-					<Add library="boost_coroutine" />
 					<Add library="boost_date_time" />
-					<Add library="boost_exception" />
-					<Add library="boost_fiber" />
 					<Add library="boost_filesystem" />
-					<Add library="boost_graph" />
-					<Add library="boost_iostreams" />
 					<Add library="boost_json" />
 					<Add library="boost_locale" />
 					<Add library="boost_log" />
 					<Add library="boost_log_setup" />
-					<Add library="boost_math_c99" />
-					<Add library="boost_math_c99f" />
-					<Add library="boost_math_c99l" />
-					<Add library="boost_math_tr1" />
-					<Add library="boost_math_tr1f" />
-					<Add library="boost_math_tr1l" />
-					<Add library="boost_nowide" />
-					<Add library="boost_prg_exec_monitor" />
 					<Add library="boost_program_options" />
-					<Add library="boost_random" />
-					<Add library="boost_regex" />
 					<Add library="boost_serialization" />
 					<Add library="boost_system" />
-					<Add library="boost_test_exec_monitor" />
 					<Add library="boost_thread" />
 					<Add library="boost_timer" />
-					<Add library="boost_type_erasure" />
-					<Add library="boost_unit_test_framework" />
-					<Add library="boost_wave" />
-					<Add library="boost_wserialization" />
 					<Add library="sfml-graphics" />
 					<Add library="sfml-window" />
 					<Add library="sfml-system" />
@@ -72,8 +47,8 @@
 					<Add directory="/usr/lib64" />
 				</Linker>
 				<ExtraCommands>
-					<Add before='mkdir -p &quot;$(TARGET_OUTPUT_DIR)&quot;' />
-					<Add before='cp -vr src/assets &quot;$(TARGET_OUTPUT_DIR)&quot;' />
+					<Add before="mkdir -p $(TARGET_OUTPUT_DIR)" />
+					<Add before="ln -sf $(PROJECT_DIR)src/assets $(TARGET_OUTPUT_DIR)" />
 					<Mode after="always" />
 				</ExtraCommands>
 			</Target>
@@ -93,45 +68,20 @@
 				<Linker>
 					<Add option="-s" />
 					<Add library="pthread" />
-					<Add library="boost_atomic" />
-					<Add library="boost_chrono" />
-					<Add library="boost_container" />
-					<Add library="boost_context" />
-					<Add library="boost_contract" />
-					<Add library="boost_coroutine" />
 					<Add library="boost_date_time" />
-					<Add library="boost_exception" />
-					<Add library="boost_fiber" />
 					<Add library="boost_filesystem" />
-					<Add library="boost_graph" />
-					<Add library="boost_iostreams" />
 					<Add library="boost_json" />
 					<Add library="boost_locale" />
 					<Add library="boost_log" />
 					<Add library="boost_log_setup" />
-					<Add library="boost_math_c99" />
-					<Add library="boost_math_c99f" />
-					<Add library="boost_math_c99l" />
-					<Add library="boost_math_tr1" />
-					<Add library="boost_math_tr1f" />
-					<Add library="boost_math_tr1l" />
-					<Add library="boost_nowide" />
-					<Add library="boost_prg_exec_monitor" />
 					<Add library="boost_program_options" />
-					<Add library="boost_random" />
-					<Add library="boost_regex" />
 					<Add library="boost_serialization" />
 					<Add library="boost_system" />
-					<Add library="boost_test_exec_monitor" />
 					<Add library="boost_thread" />
 					<Add library="boost_timer" />
-					<Add library="boost_type_erasure" />
-					<Add library="boost_unit_test_framework" />
-					<Add library="boost_wave" />
-					<Add library="boost_wserialization" />
-					<Add library="sfml-system" />
-					<Add library="sfml-window" />
 					<Add library="sfml-graphics" />
+					<Add library="sfml-window" />
+					<Add library="sfml-system" />
 					<Add library="sfml-audio" />
 					<Add library="sfml-network" />
 					<Add library="icuio" />
@@ -141,8 +91,8 @@
 					<Add directory="/usr/lib64" />
 				</Linker>
 				<ExtraCommands>
-					<Add before='mkdir -p &quot;$(TARGET_OUTPUT_DIR)&quot;' />
-					<Add before='cp -vr src/assets &quot;$(TARGET_OUTPUT_DIR)&quot;' />
+					<Add before="mkdir -p $(TARGET_OUTPUT_DIR)" />
+					<Add before="ln -sf $(PROJECT_DIR)src/assets $(TARGET_OUTPUT_DIR)" />
 					<Mode after="always" />
 				</ExtraCommands>
 			</Target>

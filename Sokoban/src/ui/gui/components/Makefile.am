@@ -1,3 +1,5 @@
+include $(top_srcdir)/common.mk
+
 noinst_LIBRARIES = libcomponents.a
 
 libcomponents_a_SOURCES = Component.cpp Component.hpp

@@ -42,6 +42,7 @@ void Label::set_text( const std::string &text )
  */
 void Label::handle_event( const sf::Event &event )
 {
+    (void)event;
 }
 
 /**

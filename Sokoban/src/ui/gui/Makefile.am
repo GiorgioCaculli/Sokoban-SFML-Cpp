@@ -1,3 +1,5 @@
+include $(top_srcdir)/common.mk
+
 SUBDIRS = entities components states
 
 noinst_LTLIBRARIES = libgui.la

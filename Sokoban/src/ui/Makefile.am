@@ -1,3 +1,5 @@
+include $(top_srcdir)/common.mk
+
 SUBDIRS = gui
 
 noinst_LTLIBRARIES = libui.la
