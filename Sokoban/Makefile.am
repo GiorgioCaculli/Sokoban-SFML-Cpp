@@ -2,6 +2,8 @@ include $(top_srcdir)/common.mk
 
 ACLOCAL_AMFLAGS = -I m4 --install
 
+EXTRA_DIST = $(top_srcdir)/include $(top_srcdir)/libs
+
 SUBDIRS = src
 
 bin_PROGRAMS = sokoban
@@ -10,6 +12,11 @@ sokoban_SOURCES = src/main.cpp src/main.hpp
 
 sokoban_CPPFLAGS = $(BOOST_CPPFLAGS)
 sokoban_CPPFLAGS += -DSFML_STATIC
+sokoban_CPPFLAGS += -I$(top_srcdir)/include
+
+sokoban_DEPENDENCIES = $(top_srcdir)/libs/sokoban-linux/libsokoban_core.a
+sokoban_DEPENDENCIES += $(top_srcdir)/libs/util-linux/libutil_logger.a
+sokoban_DEPENDENCIES += $(top_srcdir)/libs/util-linux/libutil_serialize.a
 
 sokoban_LDADD = src/ui/libui.la
 sokoban_LDADD += $(top_srcdir)/libs/sokoban-linux/libsokoban_core.a
