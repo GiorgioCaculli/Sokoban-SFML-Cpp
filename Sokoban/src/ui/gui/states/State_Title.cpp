@@ -1,13 +1,13 @@
 #include "State_Title.hpp"
 
-#include "../../../util/Logger.hpp"
+#include <util/logger/Logger.hpp>
 #include "../Utility.hpp"
 #include "../../Resource_Holder.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
 using namespace sokoban::ui::gui;
-using namespace sokoban::util;
+using namespace util;
 
 /**
  * Default constructor for the Title state
@@ -21,14 +21,15 @@ State_Title::State_Title( State_Stack &stack, State::Context context )
         , _show_text( true )
         , _text_effect_time( sf::Time::Zero )
 {
-    Logger::log( LoggerLevel::DEBUG, "Initializing Title Screen" );
+    Logger logger( "State Title", "sokoban.log", true );
+    logger.log( Logger::Level::DEBUG, "Initializing Title Screen" );
 
-    Logger::log( LoggerLevel::DEBUG, "Loading Title Screen Texture" );
+    logger.log( Logger::Level::DEBUG, "Loading Title Screen Texture" );
     _background_sprite.setTexture( context._textures->get( Textures::Title_Screen ) );
     Utility::center_origin( _background_sprite );
     _background_sprite.setPosition( context._window->getView().getSize() / 2.f );
 
-    Logger::log( LoggerLevel::DEBUG, "Loading Title Screen Text" );
+    logger.log( Logger::Level::DEBUG, "Loading Title Screen Text" );
 
     _title_text.setFont( context._fonts->get( Fonts::Kodomo_Rounded ) );
     _title_text.setString( L"そこばん" );

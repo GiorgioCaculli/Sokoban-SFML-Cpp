@@ -1,13 +1,13 @@
 #include "Sound_Player.hpp"
 
-#include "../../util/Logger.hpp"
+#include <util/logger/Logger.hpp>
 
 #include <SFML/Audio/Listener.hpp>
 
 #include <cmath>
 
 using namespace sokoban::ui::gui;
-using namespace sokoban::util;
+using namespace util;
 
 namespace
 {

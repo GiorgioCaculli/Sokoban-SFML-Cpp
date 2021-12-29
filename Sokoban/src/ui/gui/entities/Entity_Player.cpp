@@ -80,7 +80,7 @@ const std::array< float, 4 > player_asset_west = character_facing_west;
  * @param y The coordinates on the Y axis
  */
 Entity_Player::Entity_Player( float x, float y )
-        : model::Player( x, y )
+        : core::Player( x, y )
         , Entity_Movable( player_asset_south )
 {
     _player_face_map = std::map< Face, std::array< float, 4 > >
@@ -112,7 +112,7 @@ Entity_Player &Entity_Player::operator=( const Entity_Player &entity )
 {
     if( &entity != this )
     {
-        model::Player::operator=( entity );
+        core::Player::operator=( entity );
         Entity::operator=( entity );
         set_asset_coords( entity.get_asset_coords() );
         _player_face_map = entity._player_face_map;

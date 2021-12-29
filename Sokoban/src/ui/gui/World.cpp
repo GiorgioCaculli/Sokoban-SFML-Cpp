@@ -1,6 +1,6 @@
 #include "World.hpp"
 
-#include "../../util/Logger.hpp"
+#include <util/logger/Logger.hpp>
 #include "Sound_Node.hpp"
 
 #include <SFML/Graphics/RenderTarget.hpp>
@@ -14,11 +14,13 @@
 #include <iostream>
 
 using namespace sokoban::ui::gui;
-using namespace sokoban::util;
+using namespace util;
 
 namespace
 {
+    float OFFSET = 64.f;
     int steps_counter = 0;
+    Logger logger( "World", "sokoban.log", true );
 }
 
 /**
@@ -28,7 +30,7 @@ namespace
  * @param fonts The various fonts used
  * @param sounds The various sound effects
  */
-World::World( sf::RenderTarget &target, const model::Board &board, Font_Holder &fonts, Sound_Player &sounds )
+World::World( sf::RenderTarget &target, const core::Board &board, Font_Holder &fonts, Sound_Player &sounds )
 : _target( target )
   , _world_view( target.getDefaultView() )
   , _textures()
@@ -54,10 +56,10 @@ World::World( sf::RenderTarget &target, const model::Board &board, Font_Holder &
   , _reset_counter( 0 )
 {
     _board = board;
-    Logger::log( LoggerLevel::DEBUG, "Level Layout:" );
-    for( model::Actor *actor : _board.get_world() )
+    logger.log( Logger::Level::DEBUG, "Level Layout:" );
+    for( core::Actor *actor : _board.get_world() )
     {
-        Logger::log( LoggerLevel::DEBUG, actor->to_string() );
+        logger.log( Logger::Level::DEBUG, actor->to_string() );
     }
     /*step_buffer.loadFromFile( "assets/sounds/footsteps_outdoor_boots.ogg" );
     step_sound.setBuffer( step_buffer );
@@ -102,7 +104,7 @@ World::~World()
 void World::update( sf::Time dt )
 {
     (void) dt; /* TODO: USAGE */
-    float SPACE = 64.f;
+    float SPACE = 1.f;
     sf::IntRect player_assets_coords;
     float player_x_coords;
     float player_y_coords;
@@ -130,10 +132,10 @@ void World::update( sf::Time dt )
         {
             for ( long unsigned int i = 0; i < _box_entities.size(); i++ )
             {
-                _box_sprites.at( i )->setPosition( _box_actors.at( i )->get_x(), _box_actors.at( i )->get_y() );
+                _box_sprites.at( i )->setPosition( _box_actors.at( i )->get_x() * OFFSET, _box_actors.at( i )->get_y() * OFFSET );
             }
         }
-        _player_sprite->move( 0.f, -SPACE );
+        _player_sprite->move( 0.f, -SPACE * OFFSET );
         _player_entity->set_y( _player_entity->get_y() - SPACE );
         _board_player->set_y( _board_player->get_y() - SPACE );
     }
@@ -158,10 +160,10 @@ void World::update( sf::Time dt )
         {
             for ( long unsigned int i = 0; i < _box_entities.size(); i++ )
             {
-                _box_sprites.at( i )->setPosition( _box_actors.at( i )->get_x(), _box_actors.at( i )->get_y() );
+                _box_sprites.at( i )->setPosition( _box_actors.at( i )->get_x() * OFFSET, _box_actors.at( i )->get_y() * OFFSET );
             }
         }
-        _player_sprite->move( 0.f, +SPACE );
+        _player_sprite->move( 0.f, +SPACE * OFFSET );
         _player_entity->set_y( _player_entity->get_y() + SPACE );
         _board_player->set_y( _board_player->get_y() + SPACE );
     }
@@ -186,10 +188,10 @@ void World::update( sf::Time dt )
         {
             for ( long unsigned int i = 0; i < _box_entities.size(); i++ )
             {
-                _box_sprites.at( i )->setPosition( _box_actors.at( i )->get_x(), _box_actors.at( i )->get_y() );
+                _box_sprites.at( i )->setPosition( _box_actors.at( i )->get_x() * OFFSET, _box_actors.at( i )->get_y() * OFFSET );
             }
         }
-        _player_sprite->move( -SPACE, 0.f );
+        _player_sprite->move( -SPACE * OFFSET, 0.f );
         _player_entity->set_x( _player_entity->get_x() - SPACE );
         _board_player->set_x( _board_player->get_x() - SPACE );
     }
@@ -214,10 +216,10 @@ void World::update( sf::Time dt )
         {
             for ( long unsigned int i = 0; i < _box_entities.size(); i++ )
             {
-                _box_sprites.at( i )->setPosition( _box_actors.at( i )->get_x(), _box_actors.at( i )->get_y() );
+                _box_sprites.at( i )->setPosition( _box_actors.at( i )->get_x() * OFFSET, _box_actors.at( i )->get_y() * OFFSET );
             }
         }
-        _player_sprite->move( +SPACE, 0.f );
+        _player_sprite->move( +SPACE * OFFSET, 0.f );
         _board_player->set_x( _board_player->get_x() + SPACE );
     }
     _text->setString(
@@ -258,7 +260,7 @@ void World::draw()
  */
 void World::load_textures()
 {
-    Logger::log( LoggerLevel::INFO, "Loading Textures..." );
+    logger.log( Logger::Level::INFO, "Loading Textures..." );
     _player_texture_sheet = new sf::Texture();
     _player_texture_sheet->loadFromFile( "assets/images/Spritesheet/character_spritesheet.png" );
     _box_texture_sheet = new sf::Texture();
@@ -275,7 +277,7 @@ void World::load_textures()
  */
 void World::build_scene()
 {
-    Logger::log( LoggerLevel::INFO, "World Node init" );
+    logger.log( Logger::Level::INFO, "World Node init" );
     _player_is_moving_up = false;
     _player_is_moving_down = false;
     _player_is_moving_left = false;
@@ -288,17 +290,17 @@ void World::build_scene()
     _text->setCharacterSize( 24 );
     _text->setFillColor( sf::Color::Black );
 
-    Logger::log( LoggerLevel::INFO, "Board size: " + std::to_string( _board.get_world().size() ) );
+    logger.log( Logger::Level::INFO, "Board size: " + std::to_string( _board.get_world().size() ) );
     _box_sprites = std::vector< Sprite_Node * >();
-    _box_actors = std::vector< model::Box * >();
+    _box_actors = std::vector< core::Box * >();
     _box_entities = std::vector< entity::Entity_Box * >();
 
-    Logger::log( LoggerLevel::INFO, "Building Scene..." );
+    logger.log( Logger::Level::INFO, "Building Scene..." );
     std::size_t world_size = _board.get_world().size() + 1;
     _scene_layers = std::vector< Scene_Node * >();
     std::stringstream ss;
     ss << "Initializing " << std::to_string( world_size ) << " Scene nodes...";
-    Logger::log( LoggerLevel::DEBUG, ss.str() );
+    logger.log( Logger::Level::DEBUG, ss.str() );
 
     std::random_device rd;
     std::mt19937 mt( rd() );
@@ -351,7 +353,7 @@ void World::build_scene()
 
     layers++;
 
-    for ( model::Actor *actor: _board.get_world() )
+    for ( core::Actor *actor: _board.get_world() )
     {
         float asset_coord_x;
         float asset_coord_y;
@@ -366,7 +368,7 @@ void World::build_scene()
 
         if ( actor->get_type() == actor->PLAYER )
         {
-            _board_player = dynamic_cast< model::Player * >( actor );
+            _board_player = dynamic_cast< core::Player * >( actor );
             entity_actor = new entity::Entity_Player( actor->get_x(), actor->get_y() );
             _player_entity = dynamic_cast< entity::Entity_Player * >( entity_actor );
             auto player_asset_rect = _player_entity->get_player_face_map().find( entity::Entity_Player::Face::SOUTH )->second;
@@ -398,7 +400,7 @@ void World::build_scene()
         }
         if ( actor->get_type() == actor->BOX )
         {
-            _box_actors.push_back( dynamic_cast< model::Box * >( actor ) );
+            _box_actors.push_back( dynamic_cast< core::Box * >( actor ) );
             entity_actor = new entity::Entity_Box( actor->get_x(), actor->get_y() );
             actor = dynamic_cast< entity::Entity_Box * >( entity_actor );
             auto *box_entity = dynamic_cast< entity::Entity_Box * >( actor );
@@ -425,13 +427,13 @@ void World::build_scene()
             asset_rect = sf::IntRect( asset_coord_x, asset_coord_y, asset_coord_width, asset_coord_height );
             actor_sprite = new Sprite_Node( *_wall_texture_sheet, asset_rect );
         }
-        actor_sprite->setPosition( actor->get_x(), actor->get_y() );
+        actor_sprite->setPosition( actor->get_x() * OFFSET, actor->get_y() * OFFSET );
         _scene_layers.push_back( actor_sprite );
         _entities.push_back( entity_actor );
         layers++;
     }
 
-    Logger::log( LoggerLevel::INFO, "Number of layers loaded: " + std::to_string( layers ) );
+    logger.log( Logger::Level::INFO, "Number of layers loaded: " + std::to_string( layers ) );
 }
 
 /**

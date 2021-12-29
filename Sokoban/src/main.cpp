@@ -1,12 +1,12 @@
 #include "main.hpp"
 
 #include "ui/Menu.hpp"
-#include "util/Logger.hpp"
+#include <util/logger/Logger.hpp>
 
 #include <iostream>
 
 using namespace sokoban::ui;
-using namespace sokoban::util;
+using namespace util;
 
 /**
  * Main function that initializes the game's logger.
@@ -27,18 +27,18 @@ int main( int argc, char *argv[] )
 
     std::cout << std::endl;
 
-    Logger logger( "sokoban.log" );
+    Logger logger( "main", "sokoban.log", true );
     remove( logger.get_file_name().c_str() );
 
-    Logger::log( LoggerLevel::INFO, "Starting Menu..." );
+    logger.log( Logger::Level::INFO, "Starting Menu..." );
 
     Menu menu;
 
-    Logger::log( LoggerLevel::INFO, "Running Game..." );
+    logger.log( Logger::Level::INFO, "Running Game..." );
 
     int res = menu.launch_application();
 
-    Logger::log( LoggerLevel::INFO, "Closing Sokoban..." );
+    logger.log( Logger::Level::INFO, "Closing Sokoban..." );
 
     return res;
 }

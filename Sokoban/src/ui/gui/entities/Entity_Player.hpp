@@ -1,7 +1,7 @@
 #ifndef SOKOBAN_ENTITY_PLAYER_HPP
 #define SOKOBAN_ENTITY_PLAYER_HPP
 
-#include "../../../model/Player.hpp"
+#include <core/Player.hpp>
 #include "Entity_Movable.hpp"
 
 #include <SFML/Window/Event.hpp>
@@ -20,7 +20,7 @@ namespace sokoban
             namespace entity
             {
                 class Entity_Player
-                        : public model::Player
+                        : public core::Player
                           , public Entity_Movable
                 {
                 public:

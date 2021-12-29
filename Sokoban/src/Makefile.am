@@ -1,1 +1,1 @@
-SUBDIRS = model util ui
+SUBDIRS = ui

@@ -1,5 +1,5 @@
 #include "Application.hpp"
-#include "../../util/Logger.hpp"
+#include <util/logger/Logger.hpp>
 #include "Utility.hpp"
 #include "states/State.hpp"
 #include "states/State_Identifiers.hpp"
@@ -11,7 +11,7 @@
 
 
 using namespace sokoban::ui::gui;
-using namespace sokoban::util;
+using namespace util;
 
 const sf::Time Application::_time_per_frame = sf::seconds( 1.f / 10.f );
 
@@ -20,6 +20,7 @@ namespace
     const int WIDTH = 1920;
     const int HEIGHT = WIDTH / 16 * 9;
     const int BITS_PER_PIXEL = 32;
+    Logger logger( "Application", "sokoban.log", true );
 }
 
 /**
@@ -36,35 +37,35 @@ Application::Application()
           , _statistics_update_time()
           , _statistics_num_frames( 0 )
 {
-    Logger::log( LoggerLevel::DEBUG, "Setting KeyRepeatedEnabled = false" );
+    logger.log( Logger::Level::DEBUG, "Setting KeyRepeatedEnabled = false" );
     _window.setKeyRepeatEnabled( false );
 
-    Logger::log( LoggerLevel::DEBUG, "Setting VerticalSyncEnabled = true" );
+    logger.log( Logger::Level::DEBUG, "Setting VerticalSyncEnabled = true" );
     _window.setVerticalSyncEnabled( true );
 
-    Logger::log( LoggerLevel::DEBUG, "Loading fonts" );
+    logger.log( Logger::Level::DEBUG, "Loading fonts" );
     _fonts.load( Fonts::Kodomo_Rounded, "assets/fonts/KodomoRounded.otf" );
     _fonts.load( Fonts::Connection_II, "assets/fonts/ConnectionIi-2wj8.otf" );
     _fonts.load( Fonts::Free_Font, "assets/fonts/freefont/FreeSansBold.ttf" );
     _fonts.load( Fonts::Rampart_One, "assets/fonts/RampartOne-Regular.ttf" );
 
-    Logger::log( LoggerLevel::DEBUG, "Loading Title Screen Texture" );
+    logger.log( Logger::Level::DEBUG, "Loading Title Screen Texture" );
     _textures.load( Textures::Title_Screen, "assets/images/Sample_Sokoban.png" );
     _textures.load( Textures::Button, "assets/images/Buttons.png" );
 
-    Logger::log( LoggerLevel::DEBUG, "Initializing stastistics text" );
+    logger.log( Logger::Level::DEBUG, "Initializing stastistics text" );
     _statistics_text.setFont( _fonts.get( Fonts::Connection_II ) );
     _statistics_text.setPosition( WIDTH / 2.5f, 5.f );
     _statistics_text.setCharacterSize( 10u );
     _statistics_text.setFillColor( sf::Color::Yellow );
 
-    Logger::log( LoggerLevel::DEBUG, "Registering States" );
+    logger.log( Logger::Level::DEBUG, "Registering States" );
     register_states();
 
-    Logger::log( LoggerLevel::DEBUG, "Setting Title as first State to load" );
+    logger.log( Logger::Level::DEBUG, "Setting Title as first State to load" );
     _state_stack.push_state( States::Title );
 
-    Logger::log( LoggerLevel::DEBUG, "Playing Default Song" );
+    logger.log( Logger::Level::DEBUG, "Playing Default Song" );
     _music.play( Music::Town_Pleasant_peasants );
 }
 
@@ -164,18 +165,18 @@ unsigned short Application::run()
  */
 void Application::register_states()
 {
-    Logger::log( LoggerLevel::DEBUG, "Registering Title State" );
+    logger.log( Logger::Level::DEBUG, "Registering Title State" );
     _state_stack.register_state< State_Title >( States::Title );
 
-    Logger::log( LoggerLevel::DEBUG, "Registering Menu State" );
+    logger.log( Logger::Level::DEBUG, "Registering Menu State" );
     _state_stack.register_state< State_Menu >( States::Menu );
 
-    Logger::log( LoggerLevel::DEBUG, "Registering Game State" );
+    logger.log( Logger::Level::DEBUG, "Registering Game State" );
     _state_stack.register_state< State_Game >( States::Game );
 
-    Logger::log( LoggerLevel::DEBUG, "Registering Settings State" );
+    logger.log( Logger::Level::DEBUG, "Registering Settings State" );
     _state_stack.register_state< State_Settings >( States::Settings );
 
-    Logger::log( LoggerLevel::DEBUG, "Registering Pause State" );
+    logger.log( Logger::Level::DEBUG, "Registering Pause State" );
     _state_stack.register_state< State_Pause >( States::Pause );
 }

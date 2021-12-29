@@ -38,7 +38,7 @@ const std::array< float, 4 > wall_round_white_asset = {
  * @param y The coordinates on the Y axis
  */
 Entity_Wall::Entity_Wall( float x, float y )
-        : model::Wall( x, y )
+        : core::Wall( x, y )
         , Entity( wall_round_white_asset )
 {
     _wall_color_map = std::map< Color, std::array< float, 4 > >
@@ -68,7 +68,7 @@ Entity_Wall &Entity_Wall::operator=( const Entity_Wall &entity )
 {
     if( &entity != this )
     {
-        model::Wall::operator=( entity );
+        core::Wall::operator=( entity );
         Entity::operator=( entity );
     }
     return *this;

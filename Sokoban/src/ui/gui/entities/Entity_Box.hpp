@@ -1,7 +1,7 @@
 #ifndef SOKOBAN_ENTITY_BOX_HPP
 #define SOKOBAN_ENTITY_BOX_HPP
 
-#include "../../../model/Box.hpp"
+#include <core/Box.hpp>
 #include "Entity_Movable.hpp"
 
 #include <map>
@@ -19,7 +19,7 @@ namespace sokoban
             {
 
                 class Entity_Box
-                          : public model::Box
+                          : public core::Box
                             , public Entity_Movable
                 {
 

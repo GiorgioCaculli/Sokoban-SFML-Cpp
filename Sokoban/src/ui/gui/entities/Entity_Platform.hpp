@@ -1,7 +1,7 @@
 #ifndef SOKOBAN_ENTITY_PLATFORM_HPP
 #define SOKOBAN_ENTITY_PLATFORM_HPP
 
-#include "../../../model/Platform.hpp"
+#include <core/Platform.hpp>
 #include "Entity.hpp"
 
 #include <map>
@@ -18,7 +18,7 @@ namespace sokoban
             namespace entity
             {
                 class Entity_Platform
-                        : public model::Platform
+                        : public core::Platform
                         , public Entity
                 {
                 public:

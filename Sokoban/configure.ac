@@ -47,8 +47,6 @@ AC_CHECK_HEADERS([
 
 # Check for library functions
 AC_CONFIG_FILES([
-    src/model/Makefile
-    src/util/Makefile
     src/ui/gui/entities/Makefile
     src/ui/gui/components/Makefile
     src/ui/gui/states/Makefile

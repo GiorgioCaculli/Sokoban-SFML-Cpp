@@ -1,7 +1,7 @@
 #include "Entity_Box.hpp"
 
 using namespace sokoban::ui::gui::entity;
-using namespace sokoban::model;
+using namespace sokoban::core;
 
 const float OFFSET = 64;
 
@@ -108,7 +108,7 @@ const std::array< float, 4 > box_yellow_light_asset = {
  * @param y The position on the Y axis
  */
 Entity_Box::Entity_Box( float x, float y )
-        : model::Box( x, y )
+        : core::Box( x, y )
         , Entity_Movable( box_brown_light_asset )
 {
 

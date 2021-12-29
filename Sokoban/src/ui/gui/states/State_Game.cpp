@@ -1,6 +1,6 @@
 #include "State_Game.hpp"
 
-#include "../../../util/Logger.hpp"
+#include <util/logger/Logger.hpp>
 
 #include "../Music_Player.hpp"
 #include "../Utility.hpp"
@@ -10,13 +10,14 @@
 #include <boost/filesystem.hpp>
 
 using namespace sokoban::ui::gui;
-using namespace sokoban::util;
+using namespace util;
 
 
 namespace
 {
     unsigned long current_level;
     int reset_counter = 0;
+    Logger logger( "State Game", "sokoban.log", true );
 }
 
 /**
@@ -70,12 +71,12 @@ State_Game::State_Game( State_Stack &stack, Context context )
     context._music->play( Music::Town_Peaceful_Place );
     _text.setFont( context._fonts->get( Fonts::Connection_II ) );
     _text.setFillColor( sf::Color::Black );
-    Logger::log( LoggerLevel::INFO, "Init levels" );
+    logger.log( Logger::Level::INFO, "Init levels" );
     _levels = std::vector< std::string >();
 
     if ( get_all_levels().empty() )
     {
-        Logger::log( LoggerLevel::INFO, "No levels loaded" );
+        logger.log( Logger::Level::INFO, "No levels loaded" );
         return;
     }
 
@@ -84,16 +85,16 @@ State_Game::State_Game( State_Stack &stack, Context context )
         _levels.emplace_back( path.string() );
     }
 
-    Logger::log( LoggerLevel::INFO, "Levels loaded" );
+    logger.log( Logger::Level::INFO, "Levels loaded" );
     for ( const std::string &lvl: _levels )
     {
-        Logger::log( LoggerLevel::INFO, lvl );
+        logger.log( Logger::Level::INFO, lvl );
     }
     current_level = 0;
     _text.setFont( context._fonts->get( Fonts::Connection_II ) );
     _level = _levels.at( current_level );
-    Logger::log( LoggerLevel::DEBUG, "Level loaded: " + _level );
-    _world = new World( *context._window, model::Board( _level ), *context._fonts, *context._sounds );
+    logger.log( Logger::Level::DEBUG, "Level loaded: " + _level );
+    _world = new World( *context._window, core::Board( _level ), *context._fonts, *context._sounds );
 }
 
 /**
@@ -228,7 +229,7 @@ bool State_Game::handle_event( const sf::Event &event )
 void State_Game::reset_board()
 {
     delete _world;
-    _world = new World( _window, model::Board( _level ), *get_context()._fonts, *get_context()._sounds );
+    _world = new World( _window, core::Board( _level ), *get_context()._fonts, *get_context()._sounds );
     reset_counter++;
     _world->set_reset_counter( reset_counter );
 }
@@ -246,7 +247,7 @@ void State_Game::next_level()
     }
     _level = _levels.at( current_level );
     delete _world;
-    _world = new World( _window, model::Board( _level ), *get_context()._fonts, *get_context()._sounds );
+    _world = new World( _window, core::Board( _level ), *get_context()._fonts, *get_context()._sounds );
     reset_counter = 0;
     _world->set_reset_counter( reset_counter );
 }
@@ -264,7 +265,7 @@ void State_Game::prev_level()
     }
     _level = _levels.at( current_level );
     delete _world;
-    _world = new World( _window, model::Board( _level ), *get_context()._fonts, *get_context()._sounds );
+    _world = new World( _window, core::Board( _level ), *get_context()._fonts, *get_context()._sounds );
     reset_counter = 0;
     _world->set_reset_counter( reset_counter );
 }

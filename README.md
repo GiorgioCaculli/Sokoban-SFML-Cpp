@@ -12,6 +12,10 @@
 - [SFML 2.5.1](https://www.sfml-dev.org/)
 - [Boost](https://www.boost.org/)
 
+## Optional Dependencies
+- [GzC Sokoban Core](https://www.gitlab.com/GiorgioCaculli/Sokoban-Cpp)
+- [GzC Utils](https://www.gitlab.com/GiorgioCaculli/Util-Cpp)
+
 ## Build Tools:
 - [CMake](https://cmake.org/)
 - [Autotools](https://www.gnu.org/software/software.html)

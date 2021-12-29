@@ -20,6 +20,8 @@
 					<Add option="-g" />
 					<Add option="-std=c++11 -O0 -DBOOST_LOG_DYN_LINK" />
 					<Add option="-DSFML_STATIC" />
+					<Add directory="include" />
+					<Add directory="include/sfml-unix" />
 					<Add directory="/usr/include" />
 				</Compiler>
 				<Linker>
@@ -44,7 +46,13 @@
 					<Add library="icui18n" />
 					<Add library="icuuc" />
 					<Add library="icudata" />
+					<Add library="sokoban_core" />
+					<Add library="util_logger" />
+					<Add library="util_serialize" />
+					<Add directory="libs/sfml-unix/lib" />
 					<Add directory="/usr/lib64" />
+					<Add directory="libs/sokoban-linux" />
+					<Add directory="libs/util-linux" />
 				</Linker>
 				<ExtraCommands>
 					<Add before="mkdir -p $(TARGET_OUTPUT_DIR)" />
@@ -63,6 +71,8 @@
 					<Add option="-O2" />
 					<Add option="-std=c++11 -DBOOST_LOG_DYN_LINK" />
 					<Add option="-DSFML_STATIC" />
+					<Add directory="include" />
+					<Add directory="include/sfml-unix" />
 					<Add directory="/usr/include" />
 				</Compiler>
 				<Linker>
@@ -88,6 +98,12 @@
 					<Add library="icui18n" />
 					<Add library="icuuc" />
 					<Add library="icudata" />
+					<Add library="sokoban_core" />
+					<Add library="util_logger" />
+					<Add library="util_serialize" />
+					<Add directory="libs/sfml-unix/lib" />
+					<Add directory="libs/sokoban-linux" />
+					<Add directory="libs/util-linux" />
 					<Add directory="/usr/lib64" />
 				</Linker>
 				<ExtraCommands>
@@ -241,6 +257,7 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="Makefile.am" />
+		<Unit filename="common.mk" />
 		<Unit filename="configure.ac" />
 		<Unit filename="src/Makefile.am" />
 		<Unit filename="src/assets/fonts/ConnectionIi-2wj8.otf" />
@@ -833,21 +850,6 @@
 		<Unit filename="src/assets/sounds/zipper_04.ogg" />
 		<Unit filename="src/main.cpp" />
 		<Unit filename="src/main.hpp" />
-		<Unit filename="src/model/Actor.cpp" />
-		<Unit filename="src/model/Actor.hpp" />
-		<Unit filename="src/model/Board.cpp" />
-		<Unit filename="src/model/Board.hpp" />
-		<Unit filename="src/model/Box.cpp" />
-		<Unit filename="src/model/Box.hpp" />
-		<Unit filename="src/model/Makefile.am" />
-		<Unit filename="src/model/Movable.cpp" />
-		<Unit filename="src/model/Movable.hpp" />
-		<Unit filename="src/model/Platform.cpp" />
-		<Unit filename="src/model/Platform.hpp" />
-		<Unit filename="src/model/Player.cpp" />
-		<Unit filename="src/model/Player.hpp" />
-		<Unit filename="src/model/Wall.cpp" />
-		<Unit filename="src/model/Wall.hpp" />
 		<Unit filename="src/ui/Category.hpp" />
 		<Unit filename="src/ui/Makefile.am" />
 		<Unit filename="src/ui/Menu.cpp" />
@@ -913,9 +915,6 @@
 		<Unit filename="src/ui/gui/states/State_Stack.hpp" />
 		<Unit filename="src/ui/gui/states/State_Title.cpp" />
 		<Unit filename="src/ui/gui/states/State_Title.hpp" />
-		<Unit filename="src/util/Logger.cpp" />
-		<Unit filename="src/util/Logger.hpp" />
-		<Unit filename="src/util/Makefile.am" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

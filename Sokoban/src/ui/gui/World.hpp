@@ -11,7 +11,7 @@
 #include "entities/Entity_Player.hpp"
 #include "entities/Entity_Platform.hpp"
 #include "Sound_Player.hpp"
-#include "../../model/Board.hpp"
+#include <core/Board.hpp>
 
 #include <SFML/System/NonCopyable.hpp>
 #include <SFML/Graphics/View.hpp>
@@ -36,7 +36,7 @@ namespace sokoban
         : private sf::NonCopyable
             {
             public:
-                World( sf::RenderTarget &target, const model::Board &board, Font_Holder &fonts, Sound_Player &sounds );
+                World( sf::RenderTarget &target, const core::Board &board, Font_Holder &fonts, Sound_Player &sounds );
                 ~World();
                 void update( sf::Time dt );
                 void draw();
@@ -70,12 +70,12 @@ namespace sokoban
                 bool _player_is_moving_left; /** Whether the player is moving left */
                 bool _player_is_moving_right; /** Whether the player is moving right */
                 sf::FloatRect _world_bounds; /** The accessible limits of the window */
-                model::Board _board; /** The Board containing all the actors */
+                core::Board _board; /** The Board containing all the actors */
                 Sprite_Node *_player_sprite; /** The player sprite */
-                model::Player *_board_player; /** The player within the board */
+                core::Player *_board_player; /** The player within the board */
                 entity::Entity_Player *_player_entity; /** The player entity containing the various assets coordinates */
                 std::vector< Sprite_Node * > _box_sprites; /** The various box sprites */
-                std::vector< model::Box * > _box_actors; /** The various box actors within the board */
+                std::vector< core::Box * > _box_actors; /** The various box actors within the board */
                 std::vector< entity::Entity_Box * > _box_entities; /** The various box entities containing the assets' coordinates */
                 std::vector< entity::Entity * > _entities; /** The entirety of the entities present in the world */
                 sf::Texture *_box_texture_sheet; /** The box texture */

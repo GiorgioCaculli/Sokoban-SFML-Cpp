@@ -1,7 +1,7 @@
 #ifndef SOKOBAN_APPLICATION_HPP
 #define SOKOBAN_APPLICATION_HPP
 
-#include "../../util/Logger.hpp"
+#include <util/logger/Logger.hpp>
 #include "../Resource_Holder.hpp"
 #include "Resource_Identifiers.hpp"
 #include "entities/Entity_Player.hpp"
@@ -19,7 +19,7 @@ namespace sokoban
     {
         namespace gui
         {
-            using namespace sokoban::util;
+            using namespace util;
 
             class Application
                     : private sf::NonCopyable

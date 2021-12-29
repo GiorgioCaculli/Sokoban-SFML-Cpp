@@ -1,10 +1,14 @@
 #include "Music_Player.hpp"
 
-#include "../../util/Logger.hpp"
+#include <util/logger/Logger.hpp>
 
 using namespace sokoban::ui::gui;
-using namespace sokoban::util;
+using namespace util;
 
+namespace
+{
+    Logger logger( "Music Player", "sokoban.log", true );
+}
 /**
  * Default constructor for the music player
  */
@@ -44,7 +48,7 @@ void Music_Player::play( Music::ID song )
     std::string filename = _filenames[ song ];
     if( !_music.openFromFile( filename ) )
     {
-        Logger::log( LoggerLevel::ERROR, "Music " + filename + " could not be loaded" );
+        logger.log( Logger::Level::ERROR, "Music " + filename + " could not be loaded" );
         throw std::runtime_error( "Music " + filename + " could not be loaded" );
     }
     _music.setVolume( _volume );

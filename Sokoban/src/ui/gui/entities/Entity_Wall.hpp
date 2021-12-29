@@ -1,7 +1,7 @@
 #ifndef SOKOBAN_ENTITY_WALL_HPP
 #define SOKOBAN_ENTITY_WALL_HPP
 
-#include "../../../model/Wall.hpp"
+#include <core/Wall.hpp>
 #include "Entity.hpp"
 
 #include <map>
@@ -18,7 +18,7 @@ namespace sokoban
             namespace entity
             {
                 class Entity_Wall
-                        : public model::Wall
+                        : public core::Wall
                           , public Entity
                 {
                 public:

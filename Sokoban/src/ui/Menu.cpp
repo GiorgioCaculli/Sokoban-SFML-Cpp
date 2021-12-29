@@ -4,7 +4,7 @@
 
 using namespace sokoban::ui;
 using namespace sokoban::ui::gui;
-using namespace sokoban::util;
+using namespace util;
 
 /**
  * Menu's constructor meant to initialize and execute the game.
@@ -13,16 +13,17 @@ using namespace sokoban::util;
  */
 Menu::Menu()
 {
+    Logger logger( "menu", "sokoban.log", true );
     try
     {
-        Logger::log( LoggerLevel::INFO, "Init Main Frame" );
+        logger.log( Logger::Level::INFO, "Init Main Frame" );
         Application main_frame;
         _res = main_frame.run();
         _res = 0;
     }
     catch ( std::exception &e )
     {
-        Logger::log( LoggerLevel::ERROR, e.what() );
+        logger.log( Logger::Level::ERROR, e.what() );
         _res = -1;
     }
 }
