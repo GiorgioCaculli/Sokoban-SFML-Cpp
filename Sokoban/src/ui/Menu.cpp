@@ -1,6 +1,6 @@
-#include "Menu.hpp"
+#include <gzc/games/sokoban/ui/Menu.hpp>
 
-#include "gui/Application.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/Application.hpp>
 
 using namespace sokoban::ui;
 using namespace sokoban::ui::gui;

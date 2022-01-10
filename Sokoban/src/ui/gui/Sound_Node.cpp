@@ -1,6 +1,6 @@
-#include "Sound_Node.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/Sound_Node.hpp>
 
-#include "Sound_Player.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/Sound_Player.hpp>
 
 using namespace sokoban::ui::gui;
 

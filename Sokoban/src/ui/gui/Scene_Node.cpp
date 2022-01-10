@@ -1,6 +1,6 @@
-#include "Scene_Node.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/Scene_Node.hpp>
 
-#include "Utility.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/Utility.hpp>
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>

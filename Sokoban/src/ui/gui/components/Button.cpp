@@ -1,8 +1,8 @@
-#include "Button.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/components/Button.hpp>
 
-#include "../Utility.hpp"
-#include "../Sound_Player.hpp"
-#include "../../Resource_Holder.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/Utility.hpp>
+#include <gzc/games/sokoban/ui/gui/sfml/Sound_Player.hpp>
+#include <gzc/games/sokoban/ui/Resource_Holder.hpp>
 
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderStates.hpp>

@@ -1,9 +1,9 @@
-#include "State_Game.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/states/State_Game.hpp>
 
-#include <util/logger/Logger.hpp>
+#include <gzc/logger/Logger.hpp>
 
-#include "../Music_Player.hpp"
-#include "../Utility.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/Music_Player.hpp>
+#include <gzc/games/sokoban/ui/gui/sfml/Utility.hpp>
 
 #include <SFML/Graphics/RenderWindow.hpp>
 

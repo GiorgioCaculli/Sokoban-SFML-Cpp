@@ -1,4 +1,4 @@
-#include "Sprite_Node.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/Sprite_Node.hpp>
 
 #include <SFML/Graphics/RenderTarget.hpp>
 

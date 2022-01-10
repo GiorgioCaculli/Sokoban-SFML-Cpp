@@ -1,13 +1,13 @@
-#include "Application.hpp"
-#include <util/logger/Logger.hpp>
-#include "Utility.hpp"
-#include "states/State.hpp"
-#include "states/State_Identifiers.hpp"
-#include "states/State_Title.hpp"
-#include "states/State_Game.hpp"
-#include "states/State_Menu.hpp"
-#include "states/State_Pause.hpp"
-#include "states/State_Settings.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/Application.hpp>
+#include <gzc/logger/Logger.hpp>
+#include <gzc/games/sokoban/ui/gui/sfml/Utility.hpp>
+#include <gzc/games/sokoban/ui/gui/sfml/states/State.hpp>
+#include <gzc/games/sokoban/ui/gui/sfml/states/State_Identifiers.hpp>
+#include <gzc/games/sokoban/ui/gui/sfml/states/State_Title.hpp>
+#include <gzc/games/sokoban/ui/gui/sfml/states/State_Game.hpp>
+#include <gzc/games/sokoban/ui/gui/sfml/states/State_Menu.hpp>
+#include <gzc/games/sokoban/ui/gui/sfml/states/State_Pause.hpp>
+#include <gzc/games/sokoban/ui/gui/sfml/states/State_Settings.hpp>
 
 
 using namespace sokoban::ui::gui;
@@ -44,14 +44,14 @@ Application::Application()
     _window.setVerticalSyncEnabled( true );
 
     logger.log( Logger::Level::DEBUG, "Loading fonts" );
-    _fonts.load( Fonts::Kodomo_Rounded, "assets/fonts/KodomoRounded.otf" );
-    _fonts.load( Fonts::Connection_II, "assets/fonts/ConnectionIi-2wj8.otf" );
-    _fonts.load( Fonts::Free_Font, "assets/fonts/freefont/FreeSansBold.ttf" );
-    _fonts.load( Fonts::Rampart_One, "assets/fonts/RampartOne-Regular.ttf" );
+    _fonts.load( Fonts::Kodomo_Rounded, "data/fonts/KodomoRounded.otf" );
+    _fonts.load( Fonts::Connection_II, "data/fonts/ConnectionIi-2wj8.otf" );
+    _fonts.load( Fonts::Free_Font, "data/fonts/freefont/FreeSansBold.ttf" );
+    _fonts.load( Fonts::Rampart_One, "data/fonts/RampartOne-Regular.ttf" );
 
     logger.log( Logger::Level::DEBUG, "Loading Title Screen Texture" );
-    _textures.load( Textures::Title_Screen, "assets/images/Sample_Sokoban.png" );
-    _textures.load( Textures::Button, "assets/images/Buttons.png" );
+    _textures.load( Textures::Title_Screen, "data/images/Sample_Sokoban.png" );
+    _textures.load( Textures::Button, "data/images/Buttons.png" );
 
     logger.log( Logger::Level::DEBUG, "Initializing stastistics text" );
     _statistics_text.setFont( _fonts.get( Fonts::Connection_II ) );

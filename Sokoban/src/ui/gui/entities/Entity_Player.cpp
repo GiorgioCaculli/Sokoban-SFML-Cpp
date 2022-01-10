@@ -1,4 +1,4 @@
-#include "Entity_Player.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/entities/Entity_Player.hpp>
 
 using namespace sokoban::ui::gui::entity;
 

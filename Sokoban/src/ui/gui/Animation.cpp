@@ -1,4 +1,4 @@
-#include "Animation.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/Animation.hpp>
 
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Texture.hpp>

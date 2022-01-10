@@ -1,4 +1,4 @@
-#include "Entity_Wall.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/entities/Entity_Wall.hpp>
 
 using namespace sokoban::ui::gui::entity;
 

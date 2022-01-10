@@ -1,8 +1,8 @@
-#include "State_Pause.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/states/State_Pause.hpp>
 
-#include "../components/Button.hpp"
-#include "../Utility.hpp"
-#include "../../Resource_Holder.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/components/Button.hpp>
+#include <gzc/games/sokoban/ui/gui/sfml/Utility.hpp>
+#include <gzc/games/sokoban/ui/Resource_Holder.hpp>
 
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>

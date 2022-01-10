@@ -1,6 +1,6 @@
-#include "Label.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/components/Label.hpp>
 
-#include "../Utility.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/Utility.hpp>
 
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>

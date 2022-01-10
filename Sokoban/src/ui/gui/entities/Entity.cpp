@@ -1,4 +1,4 @@
-#include "Entity.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/entities/Entity.hpp>
 
 #include <cassert>
 

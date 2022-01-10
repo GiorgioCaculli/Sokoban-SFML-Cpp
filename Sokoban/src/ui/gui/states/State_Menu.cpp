@@ -1,9 +1,9 @@
-#include "State_Menu.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/states/State_Menu.hpp>
 
-#include "../components/Button.hpp"
-#include "../Utility.hpp"
-#include "../../Resource_Holder.hpp"
-#include "../Music_Player.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/components/Button.hpp>
+#include <gzc/games/sokoban/ui/gui/sfml/Utility.hpp>
+#include <gzc/games/sokoban/ui/Resource_Holder.hpp>
+#include <gzc/games/sokoban/ui/gui/sfml/Music_Player.hpp>
 
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>

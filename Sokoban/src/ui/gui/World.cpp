@@ -1,7 +1,7 @@
-#include "World.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/World.hpp>
 
-#include <util/logger/Logger.hpp>
-#include "Sound_Node.hpp"
+#include <gzc/logger/Logger.hpp>
+#include <gzc/games/sokoban/ui/gui/sfml/Sound_Node.hpp>
 
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Text.hpp>

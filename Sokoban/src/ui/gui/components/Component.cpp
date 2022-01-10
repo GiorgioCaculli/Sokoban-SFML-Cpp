@@ -1,4 +1,4 @@
-#include "Component.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/components/Component.hpp>
 
 using namespace sokoban::ui::gui;
 

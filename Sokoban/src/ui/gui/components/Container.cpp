@@ -1,4 +1,4 @@
-#include "Container.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/components/Container.hpp>
 
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderStates.hpp>

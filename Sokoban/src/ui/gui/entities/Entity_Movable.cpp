@@ -1,4 +1,4 @@
-#include "Entity_Movable.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/entities/Entity_Movable.hpp>
 
 using namespace sokoban::ui::gui::entity;
 

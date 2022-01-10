@@ -1,7 +1,5 @@
-#include "main.hpp"
-
-#include "ui/Menu.hpp"
-#include <util/logger/Logger.hpp>
+#include <gzc/games/sokoban/ui/Menu.hpp>
+#include <gzc/logger/Logger.hpp>
 
 #include <iostream>
 

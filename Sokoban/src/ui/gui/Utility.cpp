@@ -1,6 +1,6 @@
-#include "Utility.hpp"
-#include "Animation.hpp"
-#include "components/Button.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/Utility.hpp>
+#include <gzc/games/sokoban/ui/gui/sfml/Animation.hpp>
+#include <gzc/games/sokoban/ui/gui/sfml/components/Button.hpp>
 
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Sprite.hpp>

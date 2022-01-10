@@ -1,4 +1,4 @@
-#include "Entity_Box.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/entities/Entity_Box.hpp>
 
 using namespace sokoban::ui::gui::entity;
 using namespace sokoban::core;

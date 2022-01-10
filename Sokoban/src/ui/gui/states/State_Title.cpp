@@ -1,8 +1,8 @@
-#include "State_Title.hpp"
+#include <gzc/games/sokoban/ui/gui/sfml/states/State_Title.hpp>
 
-#include <util/logger/Logger.hpp>
-#include "../Utility.hpp"
-#include "../../Resource_Holder.hpp"
+#include <gzc/logger/Logger.hpp>
+#include <gzc/games/sokoban/ui/gui/sfml/Utility.hpp>
+#include <gzc/games/sokoban/ui/Resource_Holder.hpp>
 
 #include <SFML/Graphics/RenderWindow.hpp>
 

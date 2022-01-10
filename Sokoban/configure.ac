@@ -1,6 +1,6 @@
 AC_PREREQ([2.69])
 
-AC_INIT([sokoban], [1.1], [devs@calata.be])
+AC_INIT([sokoban], [1.2], [devs@calata.be])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign subdir-objects])
 
 AM_PROG_AR
