@@ -98,9 +98,9 @@ bool State_Pause::update( sf::Time dt )
 bool State_Pause::handle_event( const sf::Event& event )
 {
     _container.handle_event( event );
-    if ( event.type == sf::Event::KeyPressed )
+    if ( const auto *keyPressed = event.getIf<sf::Event::KeyPressed>() )
     {
-        if ( event.key.code == sf::Keyboard::Scan::Escape )
+        if ( keyPressed->scancode == sf::Keyboard::Scancode::Escape )
         {
             request_stack_pop();
         }

@@ -42,7 +42,7 @@ World::World( sf::RenderTarget& target, const core::Board& board, Font_Holder& f
       , _player_is_moving_down( false )
       , _player_is_moving_left( false )
       , _player_is_moving_right( false )
-      , _world_bounds( 0.f, 0.f, _world_view.getSize().x, _world_view.getSize().y )
+      , _world_bounds( sf::Vector2f( 0.f, 0.f ), sf::Vector2f( _world_view.getSize().x, _world_view.getSize().y ) )
       , _board( "" )
       , _player_sprite( nullptr )
       , _board_player( nullptr )
@@ -61,10 +61,10 @@ World::World( sf::RenderTarget& target, const core::Board& board, Font_Holder& f
     {
         logger.log( Logger::Level::DEBUG, actor->to_string() );
     }
-    /*step_buffer.loadFromFile( "assets/sounds/footsteps_outdoor_boots.ogg" );
+    /*step_buffer.loadFromFile( "res/sounds/footsteps_outdoor_boots.ogg" );
     step_sound.setBuffer( step_buffer );
     step_sound.setVolume( 10.f );
-    box_move_buffer.loadFromFile( "assets/sounds/wood_creak_01.ogg" );
+    box_move_buffer.loadFromFile( "res/sounds/wood_creak_01.ogg" );
     box_move_sound.setBuffer( box_move_buffer );
     box_move_sound.setVolume( 10.f );*/
     load_textures();
@@ -118,8 +118,9 @@ void World::update( sf::Time dt )
         player_y_coords = player_asset_rect.at( 1 );
         player_width_coords = player_asset_rect.at( 2 );
         player_height_coords = player_asset_rect.at( 3 );
-        player_assets_coords = sf::IntRect( player_x_coords, player_y_coords, player_width_coords,
-                                            player_height_coords );
+        player_assets_coords = sf::IntRect( sf::Vector2i( player_x_coords, player_y_coords ),
+                                            sf::Vector2i( player_width_coords,
+                                                          player_height_coords ) );
         _player_sprite->set_texture( *_player_texture_sheet );
         _player_sprite->set_texture( *_player_texture_sheet, player_assets_coords );
         if ( _board.check_wall_collision( _board_player, _board.TOP_COLLISION ) )
@@ -133,11 +134,11 @@ void World::update( sf::Time dt )
         {
             for ( long unsigned int i = 0; i < _box_entities.size(); i++ )
             {
-                _box_sprites.at( i )->setPosition( _box_actors.at( i )->get_x() * OFFSET,
-                                                   _box_actors.at( i )->get_y() * OFFSET );
+                _box_sprites.at( i )->setPosition( sf::Vector2f( _box_actors.at( i )->get_x() * OFFSET,
+                                                                 _box_actors.at( i )->get_y() * OFFSET ) );
             }
         }
-        _player_sprite->move( 0.f, -SPACE * OFFSET );
+        _player_sprite->move( sf::Vector2f( 0.f, -SPACE * OFFSET ) );
         _player_entity->set_y( _player_entity->get_y() - SPACE );
         _board_player->set_y( _board_player->get_y() - SPACE );
     }
@@ -149,8 +150,9 @@ void World::update( sf::Time dt )
         player_y_coords = player_asset_rect.at( 1 );
         player_width_coords = player_asset_rect.at( 2 );
         player_height_coords = player_asset_rect.at( 3 );
-        player_assets_coords = sf::IntRect( player_x_coords, player_y_coords, player_width_coords,
-                                            player_height_coords );
+        player_assets_coords = sf::IntRect( sf::Vector2i( player_x_coords, player_y_coords ), sf::Vector2i(
+                                                player_width_coords,
+                                                player_height_coords ) );
         _player_sprite->set_texture( *_player_texture_sheet, player_assets_coords );
         if ( _board.check_wall_collision( _board_player, _board.BOTTOM_COLLISION ) )
         {
@@ -163,11 +165,11 @@ void World::update( sf::Time dt )
         {
             for ( long unsigned int i = 0; i < _box_entities.size(); i++ )
             {
-                _box_sprites.at( i )->setPosition( _box_actors.at( i )->get_x() * OFFSET,
-                                                   _box_actors.at( i )->get_y() * OFFSET );
+                _box_sprites.at( i )->setPosition( sf::Vector2f( _box_actors.at( i )->get_x() * OFFSET,
+                                                                 _box_actors.at( i )->get_y() * OFFSET ) );
             }
         }
-        _player_sprite->move( 0.f, +SPACE * OFFSET );
+        _player_sprite->move( sf::Vector2f( 0.f, +SPACE * OFFSET ) );
         _player_entity->set_y( _player_entity->get_y() + SPACE );
         _board_player->set_y( _board_player->get_y() + SPACE );
     }
@@ -179,8 +181,8 @@ void World::update( sf::Time dt )
         player_y_coords = player_asset_rect.at( 1 );
         player_width_coords = player_asset_rect.at( 2 );
         player_height_coords = player_asset_rect.at( 3 );
-        player_assets_coords = sf::IntRect( player_x_coords, player_y_coords, player_width_coords,
-                                            player_height_coords );
+        player_assets_coords = sf::IntRect( sf::Vector2i( player_x_coords, player_y_coords ), sf::Vector2i( player_width_coords,
+                                            player_height_coords ) );
         _player_sprite->set_texture( *_player_texture_sheet, player_assets_coords );
         if ( _board.check_wall_collision( _board_player, _board.LEFT_COLLISION ) )
         {
@@ -193,11 +195,11 @@ void World::update( sf::Time dt )
         {
             for ( long unsigned int i = 0; i < _box_entities.size(); i++ )
             {
-                _box_sprites.at( i )->setPosition( _box_actors.at( i )->get_x() * OFFSET,
-                                                   _box_actors.at( i )->get_y() * OFFSET );
+                _box_sprites.at( i )->setPosition( sf::Vector2f( _box_actors.at( i )->get_x() * OFFSET,
+                                                   _box_actors.at( i )->get_y() * OFFSET ) );
             }
         }
-        _player_sprite->move( -SPACE * OFFSET, 0.f );
+        _player_sprite->move( sf::Vector2f( -SPACE * OFFSET, 0.f ) );
         _player_entity->set_x( _player_entity->get_x() - SPACE );
         _board_player->set_x( _board_player->get_x() - SPACE );
     }
@@ -209,8 +211,8 @@ void World::update( sf::Time dt )
         player_y_coords = player_asset_rect.at( 1 );
         player_width_coords = player_asset_rect.at( 2 );
         player_height_coords = player_asset_rect.at( 3 );
-        player_assets_coords = sf::IntRect( player_x_coords, player_y_coords, player_width_coords,
-                                            player_height_coords );
+        player_assets_coords = sf::IntRect( sf::Vector2i( player_x_coords, player_y_coords ), sf::Vector2i( player_width_coords,
+                                            player_height_coords ) );
         _player_sprite->set_texture( *_player_texture_sheet, player_assets_coords );
         if ( _board.check_wall_collision( _board_player, _board.RIGHT_COLLISION ) )
         {
@@ -223,11 +225,11 @@ void World::update( sf::Time dt )
         {
             for ( long unsigned int i = 0; i < _box_entities.size(); i++ )
             {
-                _box_sprites.at( i )->setPosition( _box_actors.at( i )->get_x() * OFFSET,
-                                                   _box_actors.at( i )->get_y() * OFFSET );
+                _box_sprites.at( i )->setPosition( sf::Vector2f( _box_actors.at( i )->get_x() * OFFSET,
+                                                   _box_actors.at( i )->get_y() * OFFSET ) );
             }
         }
-        _player_sprite->move( +SPACE * OFFSET, 0.f );
+        _player_sprite->move( sf::Vector2f( +SPACE * OFFSET, 0.f ) );
         _board_player->set_x( _board_player->get_x() + SPACE );
     }
     _text->setString(
@@ -269,13 +271,13 @@ void World::load_textures()
 {
     logger.log( Logger::Level::INFO, "Loading Textures..." );
     _player_texture_sheet = new sf::Texture();
-    _player_texture_sheet->loadFromFile( "assets/images/Spritesheet/character_spritesheet.png" );
+    _player_texture_sheet->loadFromFile( "res/images/Spritesheet/character_spritesheet.png" );
     _box_texture_sheet = new sf::Texture();
-    _box_texture_sheet->loadFromFile( "assets/images/Spritesheet/boxes_spritesheet.png" );
+    _box_texture_sheet->loadFromFile( "res/images/Spritesheet/boxes_spritesheet.png" );
     _platform_texture_sheet = new sf::Texture();
-    _platform_texture_sheet->loadFromFile( "assets/images/Spritesheet/platforms_spritesheet.png" );
+    _platform_texture_sheet->loadFromFile( "res/images/Spritesheet/platforms_spritesheet.png" );
     _wall_texture_sheet = new sf::Texture();
-    _wall_texture_sheet->loadFromFile( "assets/images/Spritesheet/wall_round_spritesheet.png" );
+    _wall_texture_sheet->loadFromFile( "res/images/Spritesheet/wall_round_spritesheet.png" );
     _background_texture = new sf::Texture();
 }
 
@@ -291,9 +293,9 @@ void World::build_scene()
     _player_is_moving_right = false;
     _text = new sf::Text();
     _text->setFont( _fonts.get( Fonts::Connection_II ) );
-    _text->setPosition(
+    _text->setPosition( sf::Vector2f(
         _target.getSize().x - 350.f,
-        20.f );
+        20.f ) );
     _text->setCharacterSize( 24 );
     _text->setFillColor( sf::Color::Black );
 
@@ -322,16 +324,16 @@ void World::build_scene()
     switch ( random_background_color )
     {
         case Background_Color::CONCRETE:
-            _background_texture->loadFromFile( "assets/images/PNG/GroundGravel_Concrete.png" );
+            _background_texture->loadFromFile( "res/images/PNG/GroundGravel_Concrete.png" );
             break;
         case Background_Color::DIRT:
-            _background_texture->loadFromFile( "assets/images/PNG/GroundGravel_Dirt.png" );
+            _background_texture->loadFromFile( "res/images/PNG/GroundGravel_Dirt.png" );
             break;
         case Background_Color::GRASS:
-            _background_texture->loadFromFile( "assets/images/PNG/GroundGravel_Grass.png" );
+            _background_texture->loadFromFile( "res/images/PNG/GroundGravel_Grass.png" );
             break;
         case Background_Color::SAND:
-            _background_texture->loadFromFile( "assets/images/PNG/GroundGravel_Sand.png" );
+            _background_texture->loadFromFile( "res/images/PNG/GroundGravel_Sand.png" );
             break;
     }
 
@@ -355,7 +357,7 @@ void World::build_scene()
     _background_texture->setRepeated( true );
 
     auto* backgroundSprite = new Sprite_Node( *_background_texture, textureRect );
-    backgroundSprite->setPosition( _world_bounds.left, _world_bounds.top );
+    backgroundSprite->setPosition( sf::Vector2f( _world_bounds.left, _world_bounds.top ) );
     _scene_layers.push_back( backgroundSprite );
 
     layers++;
@@ -384,7 +386,7 @@ void World::build_scene()
             asset_coord_y = player_asset_rect.at( 1 );
             asset_coord_width = player_asset_rect.at( 2 );
             asset_coord_height = player_asset_rect.at( 3 );
-            asset_rect = sf::IntRect( asset_coord_x, asset_coord_y, asset_coord_width, asset_coord_height );
+            asset_rect = sf::IntRect( sf::Vector2i( asset_coord_x, asset_coord_y ), sf::Vector2i( asset_coord_width, asset_coord_height ) );
             actor_sprite = new Sprite_Node( *_player_texture_sheet, asset_rect );
             _player_sprite = actor_sprite;
         }
@@ -398,12 +400,12 @@ void World::build_scene()
             asset_coord_y = platform_asset_rect.at( 1 );
             asset_coord_width = platform_asset_rect.at( 2 );
             asset_coord_height = platform_asset_rect.at( 3 );
-            asset_rect = sf::IntRect( asset_coord_x, asset_coord_y, asset_coord_width, asset_coord_height );
+            asset_rect = sf::IntRect( sf::Vector2i( asset_coord_x, asset_coord_y ), sf::Vector2i( asset_coord_width, asset_coord_height ) );
             actor_sprite = new Sprite_Node( *_platform_texture_sheet, asset_rect );
             /* If sprite size = 32x32 */
-            actor_sprite->setOrigin(
+            actor_sprite->setOrigin( sf::Vector2f(
                 -( asset_coord_width / 2.f ),
-                -( asset_coord_height / 2.f )
+                -( asset_coord_height / 2.f ) )
             );
         }
         if ( actor->get_type() == actor->BOX )
@@ -417,7 +419,7 @@ void World::build_scene()
             asset_coord_y = box_asset_rect.at( 1 );
             asset_coord_width = box_asset_rect.at( 2 );
             asset_coord_height = box_asset_rect.at( 3 );
-            sf::IntRect asset_rect( asset_coord_x, asset_coord_y, asset_coord_width, asset_coord_height );
+            sf::IntRect asset_rect( sf::Vector2i( asset_coord_x, asset_coord_y ), sf::Vector2i( asset_coord_width, asset_coord_height ) );
             actor_sprite = new Sprite_Node( *_box_texture_sheet, asset_rect );
             _box_sprites.push_back( actor_sprite );
             _box_entities.push_back( box_entity );
@@ -432,10 +434,10 @@ void World::build_scene()
             asset_coord_y = wall_asset_rect.at( 1 );
             asset_coord_width = wall_asset_rect.at( 2 );
             asset_coord_height = wall_asset_rect.at( 3 );
-            asset_rect = sf::IntRect( asset_coord_x, asset_coord_y, asset_coord_width, asset_coord_height );
+            asset_rect = sf::IntRect( sf::Vector2i( asset_coord_x, asset_coord_y ), sf::Vector2i( asset_coord_width, asset_coord_height ) );
             actor_sprite = new Sprite_Node( *_wall_texture_sheet, asset_rect );
         }
-        actor_sprite->setPosition( actor->get_x() * OFFSET, actor->get_y() * OFFSET );
+        actor_sprite->setPosition( sf::Vector2f( actor->get_x() * OFFSET, actor->get_y() * OFFSET ) );
         _scene_layers.push_back( actor_sprite );
         _entities.push_back( entity_actor );
         layers++;

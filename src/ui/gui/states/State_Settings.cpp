@@ -117,15 +117,15 @@ bool State_Settings::handle_event( const sf::Event& event )
     if ( _sound_effect_volume_button->is_active() )
     {
         is_setting_volume = true;
-        if ( event.type == sf::Event::KeyReleased )
+        if ( const auto *keyReleased = event.getIf<sf::Event::KeyReleased>() )
         {
-            if ( event.key.code == sf::Keyboard::Key::Enter )
+            if ( keyReleased->scancode == sf::Keyboard::Scancode::Enter )
             {
                 _sound_effect_volume_button->deactivate();
-            } else if ( event.key.code == sf::Keyboard::Key::Left || event.key.code == sf::Keyboard::Key::Down )
+            } else if ( keyReleased->scancode == sf::Keyboard::Scancode::Left || keyReleased->scancode == sf::Keyboard::Scancode::Down )
             {
                 change_sound_effect_volume( -5.f );
-            } else if ( event.key.code == sf::Keyboard::Key::Right || event.key.code == sf::Keyboard::Key::Up )
+            } else if ( keyReleased->scancode == sf::Keyboard::Scancode::Right || keyReleased->scancode == sf::Keyboard::Scancode::Up )
             {
                 change_sound_effect_volume( 5.f );
             }
@@ -134,15 +134,15 @@ bool State_Settings::handle_event( const sf::Event& event )
     if ( _music_volume_button->is_active() )
     {
         is_setting_volume = true;
-        if ( event.type == sf::Event::KeyReleased )
+        if ( const auto *keyReleased = event.getIf<sf::Event::KeyReleased>() )
         {
-            if ( event.key.code == sf::Keyboard::Key::Enter )
+            if ( keyReleased->scancode == sf::Keyboard::Scancode::Enter )
             {
                 _music_volume_button->deactivate();
-            } else if ( event.key.code == sf::Keyboard::Key::Left || event.key.code == sf::Keyboard::Key::Down )
+            } else if ( keyReleased->scancode == sf::Keyboard::Scancode::Left || keyReleased->scancode == sf::Keyboard::Scancode::Down )
             {
                 change_music_volume( -5.f );
-            } else if ( event.key.code == sf::Keyboard::Key::Right || event.key.code == sf::Keyboard::Key::Up )
+            } else if ( keyReleased->scancode == sf::Keyboard::Scancode::Right || keyReleased->scancode == sf::Keyboard::Scancode::Up )
             {
                 change_music_volume( 5.f );
             }
@@ -150,9 +150,9 @@ bool State_Settings::handle_event( const sf::Event& event )
     }
     if ( _sound_effect_volume_button->is_selected() && !is_setting_volume )
     {
-        if ( event.type == sf::Event::KeyReleased )
+        if ( const auto *keyReleased = event.getIf<sf::Event::KeyReleased>() )
         {
-            if ( event.key.code == sf::Keyboard::M )
+            if ( keyReleased->scancode == sf::Keyboard::Scancode::M )
             {
                 float vol = get_context()._sounds->get_volume();
                 if ( vol > 0.f )
@@ -164,10 +164,10 @@ bool State_Settings::handle_event( const sf::Event& event )
                     vol = tmp_sound_effect_vol;
                 }
                 get_context()._sounds->set_volume( vol );
-            } else if ( event.key.code == sf::Keyboard::Key::Left )
+            } else if ( keyReleased->scancode == sf::Keyboard::Scancode::Left )
             {
                 change_sound_effect_volume( -5.f );
-            } else if ( event.key.code == sf::Keyboard::Key::Right )
+            } else if ( keyReleased->scancode == sf::Keyboard::Scancode::Right )
             {
                 change_sound_effect_volume( 5.f );
             }
@@ -175,9 +175,9 @@ bool State_Settings::handle_event( const sf::Event& event )
     }
     if ( _music_volume_button->is_selected() && !is_setting_volume )
     {
-        if ( event.type == sf::Event::KeyReleased )
+        if ( const auto *keyReleased = event.getIf<sf::Event::KeyReleased>() )
         {
-            if ( event.key.code == sf::Keyboard::M )
+            if ( keyReleased->scancode == sf::Keyboard::Scancode::M )
             {
                 float vol = get_context()._music->get_volume();
                 if ( vol > 0.f )
@@ -189,10 +189,10 @@ bool State_Settings::handle_event( const sf::Event& event )
                     vol = tmp_music_vol;
                 }
                 get_context()._music->set_volume( vol );
-            } else if ( event.key.code == sf::Keyboard::Key::Left )
+            } else if ( keyReleased->scancode == sf::Keyboard::Scancode::Left )
             {
                 change_music_volume( -5.f );
-            } else if ( event.key.code == sf::Keyboard::Key::Right )
+            } else if ( keyReleased->scancode == sf::Keyboard::Scancode::Right )
             {
                 change_music_volume( 5.f );
             }
@@ -202,9 +202,9 @@ bool State_Settings::handle_event( const sf::Event& event )
     if ( !is_setting_volume )
     {
         _container.handle_event( event );
-        if ( event.type == sf::Event::KeyReleased )
+        if ( const auto *keyReleased = event.getIf<sf::Event::KeyReleased>() )
         {
-            if ( event.key.code == sf::Keyboard::Key::Escape )
+            if ( keyReleased->scancode == sf::Keyboard::Scancode::Escape )
             {
                 request_stack_pop();
             }

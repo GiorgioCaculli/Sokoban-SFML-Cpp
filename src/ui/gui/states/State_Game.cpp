@@ -149,59 +149,59 @@ void State_Game::draw()
  */
 bool State_Game::handle_event( const sf::Event& event )
 {
-    if ( event.type == sf::Event::KeyPressed )
+    if ( const auto *keyPressed = event.getIf<sf::Event::KeyPressed>() )
     {
         if ( _world->is_board_completed() )
         {
-            if ( event.key.code == sf::Keyboard::Key::Enter )
+            if ( keyPressed->scancode == sf::Keyboard::Scancode::Enter )
             {
                 next_level();
             }
         } else
         {
-            if ( event.key.code == sf::Keyboard::Key::Escape )
+            if ( keyPressed->scancode == sf::Keyboard::Scancode::Escape )
             {
                 request_stack_push( States::Pause );
-            } else if ( event.key.code == sf::Keyboard::Key::R )
+            } else if ( keyPressed->scancode == sf::Keyboard::Scancode::R )
             {
                 reset_board();
-            } else if ( event.key.code == sf::Keyboard::Key::S )
+            } else if ( keyPressed->scancode == sf::Keyboard::Scancode::S )
             {
                 next_level();
-            } else if ( event.key.code == sf::Keyboard::Key::X )
+            } else if ( keyPressed->scancode == sf::Keyboard::Scancode::X )
             {
                 prev_level();
             }
-            if ( event.key.code == sf::Keyboard::Key::Up )
+            if ( keyPressed->scancode == sf::Keyboard::Scancode::Up )
             {
                 _world->move_up( true );
-            } else if ( event.key.code == sf::Keyboard::Key::Down )
+            } else if ( keyPressed->scancode == sf::Keyboard::Scancode::Down )
             {
                 _world->move_down( true );
-            } else if ( event.key.code == sf::Keyboard::Key::Left )
+            } else if ( keyPressed->scancode == sf::Keyboard::Scancode::Left )
             {
                 _world->move_left( true );
-            } else if ( event.key.code == sf::Keyboard::Key::Right )
+            } else if ( keyPressed->scancode == sf::Keyboard::Scancode::Right )
             {
                 _world->move_right( true );
             }
         }
-    } else if ( event.type == sf::Event::KeyReleased )
+    } else if ( const auto *keyReleased = event.getIf<sf::Event::KeyReleased>() )
     {
         if ( _world->is_board_completed() )
         {
         } else
         {
-            if ( event.key.code == sf::Keyboard::Key::Up )
+            if ( keyReleased->scancode == sf::Keyboard::Scancode::Up )
             {
                 _world->move_up( false );
-            } else if ( event.key.code == sf::Keyboard::Key::Down )
+            } else if ( keyReleased->scancode == sf::Keyboard::Scancode::Down )
             {
                 _world->move_down( false );
-            } else if ( event.key.code == sf::Keyboard::Key::Left )
+            } else if ( keyReleased->scancode == sf::Keyboard::Scancode::Left )
             {
                 _world->move_left( false );
-            } else if ( event.key.code == sf::Keyboard::Key::Right )
+            } else if ( keyReleased->scancode == sf::Keyboard::Scancode::Right )
             {
                 _world->move_right( false );
             }

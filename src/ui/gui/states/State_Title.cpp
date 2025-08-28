@@ -91,7 +91,7 @@ bool State_Title::update( sf::Time dt )
  */
 bool State_Title::handle_event( const sf::Event& event )
 {
-    if ( event.type == sf::Event::KeyReleased )
+    if ( const auto *keyReleased = event.getIf<sf::Event::KeyReleased>() )
     {
         request_stack_pop();
         request_stack_push( States::Menu );

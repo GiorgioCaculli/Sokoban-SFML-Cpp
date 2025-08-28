@@ -15,7 +15,7 @@
 namespace sokoban::ui::gui::entity
 {
     class Entity_Player
-            : public sokoban::core::Player
+            : public core::Player
               , public Entity_Movable
     {
     public:
