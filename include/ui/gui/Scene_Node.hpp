@@ -62,9 +62,9 @@ namespace sokoban::ui::gui
 
         virtual void draw_current( sf::RenderTarget& target, sf::RenderStates states ) const;
 
-        void draw_children( sf::RenderTarget& target, sf::RenderStates states ) const;
+        void draw_children( sf::RenderTarget& target, const sf::RenderStates& states ) const;
 
-        void draw_bounding_rect( sf::RenderTarget& target, sf::RenderStates states ) const;
+        void draw_bounding_rect( sf::RenderTarget& target, const sf::RenderStates& states ) const;
     };
 }
 

@@ -13,7 +13,7 @@ namespace sokoban::ui::gui
             : public State
     {
     public:
-        State_Title( State_Stack& stack, Context context );
+        State_Title( State_Stack& stack, const Context& context );
 
         void draw() override;
 

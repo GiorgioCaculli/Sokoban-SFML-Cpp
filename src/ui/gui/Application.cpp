@@ -93,12 +93,10 @@ void Application::update_statistics( sf::Time dt )
  */
 void Application::process_input()
 {
-    sf::Event event{};
-
-    while ( _window.pollEvent( event ) )
+    while ( const std::optional event = _window.pollEvent() )
     {
-        _state_stack.handle_event( event );
-        if ( event.type == sf::Event::Closed )
+        _state_stack.handle_event( *event );
+        if ( event->is< sf::Event::Closed >() )
         {
             _window.close();
         }

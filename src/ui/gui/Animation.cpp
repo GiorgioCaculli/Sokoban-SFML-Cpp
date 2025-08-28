@@ -49,7 +49,7 @@ void Animation::set_texture( const sf::Texture& texture )
  */
 const sf::Texture* Animation::get_texture() const
 {
-    return _sprite.getTexture();
+    return &_sprite.getTexture();
 }
 
 /**
@@ -155,16 +155,16 @@ void Animation::update( sf::Time dt )
 
     if ( _current_frame == 0 )
     {
-        texture_rect = sf::IntRect( 0, 0, _frame_size.x, _frame_size.y );
+        texture_rect = sf::IntRect( sf::Vector2i( 0, 0 ), sf::Vector2i( _frame_size.x, _frame_size.y ) );
     }
     while ( _elapsed_time >= time_per_frame && ( _current_frame <= _num_frames || _repeat ) )
     {
-        texture_rect.left += texture_rect.width;
+        texture_rect.position.x += texture_rect.size.x;
 
-        if ( texture_rect.left + texture_rect.width > texture_bounds.x )
+        if ( texture_rect.position.x + texture_rect.size.x > texture_bounds.x )
         {
-            texture_rect.left = 0;
-            texture_rect.top += texture_rect.height;
+            texture_rect.position.x = 0;
+            texture_rect.position.y += texture_rect.size.y;
         }
 
         _elapsed_time += time_per_frame;
@@ -174,7 +174,7 @@ void Animation::update( sf::Time dt )
             _current_frame = ( _current_frame + 1 ) % _num_frames;
             if ( _current_frame == 0 )
             {
-                texture_rect = sf::IntRect( 0, 0, _frame_size.x, _frame_size.y );
+                texture_rect = sf::IntRect( sf::Vector2i( 0, 0 ), sf::Vector2i( _frame_size.x, _frame_size.y ) );
             } else
             {
                 _current_frame++;

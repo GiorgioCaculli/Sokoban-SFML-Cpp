@@ -17,14 +17,14 @@ using namespace sokoban::ui::gui;
 Button::Button( State::Context context )
     : _callback()
       , _sprite( context._textures->get( Textures::Button ) )
-      , _text( "", context._fonts->get( Fonts::Rampart_One ) )
+      , _text( context._fonts->get( Fonts::Rampart_One ) )
       , _is_toggled( false )
       , _sounds( *context._sounds )
 {
     change_texture( Normal );
 
     sf::FloatRect bounds = _sprite.getLocalBounds();
-    _text.setPosition( bounds.width / 2.f, bounds.height / 2.f );
+    _text.setPosition( sf::Vector2f( bounds.size.x / 2.f , bounds.size.y / 2.f ) );
 }
 
 /**
@@ -148,6 +148,6 @@ void Button::draw( sf::RenderTarget& target, sf::RenderStates states ) const
  */
 void Button::change_texture( Button::Type button_type )
 {
-    sf::IntRect texture_rect( sf::Vector2<int>( 0, 50 * button_type ), sf::Vector2<int>( 200, 50 ) );
+    sf::IntRect texture_rect( sf::Vector2i( 0, 50 * button_type ), sf::Vector2i( 200, 50 ) );
     _sprite.setTextureRect( texture_rect );
 }

@@ -1,9 +1,9 @@
-BSD 3-Clause License
+# BSD 3-Clause License
 
-Copyright (c) 2021-2025 Caculli Giorgio <la196672@student.helha.be>
-Copyright (c) 2021-2025 Lambert Guillaume <la198116@student.helha.be>
-Copyright (c) 2021-2025 Taminiau Tanguy <la199566@student.helha.be>
-Copyright (c) 2021-2025 Thaon Nathan <la188132@student.helha.be>
+- Copyright (c) 2021-2025 Caculli Giorgio <[giorgio.caculli@icloud.com](mailto:giorgio.caculli@icloud)>
+- Copyright (c) 2021-2025 Lambert Guillaume <la198116@student.helha.be>
+- Copyright (c) 2021-2025 Taminiau Tanguy <la199566@student.helha.be>
+- Copyright (c) 2021-2025 Thaon Nathan <la188132@student.helha.be>
 
 All rights reserved.
 

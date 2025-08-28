@@ -18,7 +18,7 @@ namespace sokoban::ui::gui
 
         Container();
 
-        void pack( Component::Ptr component );
+        void pack( const Component::Ptr& component );
 
         bool is_selectable() const override;
 

@@ -9,12 +9,12 @@ using namespace sokoban::ui::gui;
 
 /**
  * Constructor for the Label component
- * @param text The text meant to be shown
  * @param fonts The font it should be characterized in
+ * @param text The text meant to be shown
  * @param character_size The character size
  */
-Label::Label( const std::string& text, const sokoban::ui::Font_Holder& fonts, float character_size )
-    : _text( text, fonts.get( Fonts::Rampart_One ), character_size )
+Label::Label( const sokoban::ui::Font_Holder& fonts, const std::string& text, const unsigned int character_size )
+    : _text( fonts.get( Fonts::Rampart_One ), text, character_size )
 {
 }
 

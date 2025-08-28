@@ -50,9 +50,9 @@ void State_Stack::draw()
  */
 void State_Stack::handle_event( const sf::Event& event )
 {
-    for ( auto itr = _stack.rbegin(); itr != _stack.rend(); ++itr )
+    for ( const auto & itr : std::ranges::reverse_view(_stack))
     {
-        if ( !( *itr )->handle_event( event ) )
+        if ( !itr->handle_event( event ) )
         {
             break;
         }

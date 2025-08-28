@@ -65,11 +65,10 @@ State_Game::State_Game( State_Stack& stack, Context context )
       , _window( *context._window )
       , _levels()
       , _level()
-      , _text()
+      , _text( context._fonts->get( Fonts::Connection_II ) )
 {
     _window.setKeyRepeatEnabled( true );
     context._music->play( Music::Town_Peaceful_Place );
-    _text.setFont( context._fonts->get( Fonts::Connection_II ) );
     _text.setFillColor( sf::Color::Black );
     logger.log( Logger::Level::INFO, "Init levels" );
     _levels = std::vector< std::string >();

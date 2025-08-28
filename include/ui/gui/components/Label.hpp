@@ -17,7 +17,7 @@ namespace sokoban::ui::gui
         /** Shared pointer meant to define the component as a Label */
         typedef std::shared_ptr< Label > Ptr;
 
-        Label( const std::string& text, const Font_Holder& fonts, float character_size );
+        Label( const Font_Holder& fonts, const std::string& text, unsigned int character_size );
 
         bool is_selectable() const override;
 

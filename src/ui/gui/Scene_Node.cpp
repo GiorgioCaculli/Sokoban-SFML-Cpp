@@ -15,7 +15,7 @@ using namespace sokoban::ui::gui;
  * Default constructor for the scene node
  * @param category The category that characterize the Scene node
  */
-Scene_Node::Scene_Node( Category::Type category )
+Scene_Node::Scene_Node( const Category::Type category )
     : _children()
       , _parent( nullptr )
       , _default_category( category )
@@ -39,7 +39,7 @@ void Scene_Node::attach_child( Scene_Node::Ptr child )
  */
 Scene_Node::Ptr Scene_Node::detach_child( const Scene_Node& node )
 {
-    auto found = std::find_if( _children.begin(), _children.end(), [ & ]( Ptr& p )
+    auto found = std::ranges::find_if( _children, [ & ]( Ptr& p )
     {
         return p.get() == &node;
     } );
@@ -56,7 +56,7 @@ Scene_Node::Ptr Scene_Node::detach_child( const Scene_Node& node )
  * @param dt
  * @param commands
  */
-void Scene_Node::update( sf::Time dt, Command_Queue& commands )
+void Scene_Node::update( const sf::Time dt, Command_Queue& commands )
 {
     update_current( dt, commands );
     update_children( dt, commands );
@@ -71,7 +71,7 @@ sf::Transform Scene_Node::get_world_transform() const
 {
     sf::Transform transform = sf::Transform::Identity;
 
-    for ( const Scene_Node* node = this; node != nullptr; node = node->_parent )
+    for ( auto node = this; node != nullptr; node = node->_parent )
     {
         transform = node->getTransform() * transform;
     }
@@ -84,13 +84,13 @@ unsigned int Scene_Node::get_category() const
     return _default_category;
 }
 
-void Scene_Node::update_current( sf::Time dt, Command_Queue& commands )
+void Scene_Node::update_current( const sf::Time dt, Command_Queue& commands )
 {
     ( void ) dt;
     ( void ) commands;
 }
 
-void Scene_Node::update_children( sf::Time dt, Command_Queue& commands )
+void Scene_Node::update_children( const sf::Time dt, Command_Queue& commands )
 {
     for ( Ptr& child: _children )
     {
@@ -107,13 +107,13 @@ void Scene_Node::draw( sf::RenderTarget& target, sf::RenderStates states ) const
     draw_bounding_rect( target, states );
 }
 
-void Scene_Node::draw_current( sf::RenderTarget& target, sf::RenderStates states ) const
+void Scene_Node::draw_current( sf::RenderTarget& target, const sf::RenderStates states ) const
 {
     ( void ) target;
     ( void ) states;
 }
 
-void Scene_Node::draw_children( sf::RenderTarget& target, sf::RenderStates states ) const
+void Scene_Node::draw_children( sf::RenderTarget& target, const sf::RenderStates& states ) const
 {
     for ( const Ptr& child: _children )
     {
@@ -136,13 +136,13 @@ bool Scene_Node::is_destroyed() const
     return false;
 }
 
-void Scene_Node::draw_bounding_rect( sf::RenderTarget& target, sf::RenderStates states ) const
+void Scene_Node::draw_bounding_rect( sf::RenderTarget& target, const sf::RenderStates& states ) const
 {
     ( void ) states;
-    sf::FloatRect rect = get_bounding_rect();
+    const sf::FloatRect rect = get_bounding_rect();
     sf::RectangleShape shape;
-    shape.setPosition( sf::Vector2f( rect.left, rect.top ) );
-    shape.setSize( sf::Vector2f( rect.width, rect.height ) );
+    shape.setPosition( sf::Vector2f( rect.position.x, rect.position.y ) );
+    shape.setSize( sf::Vector2f( rect.size.x, rect.size.y ) );
     shape.setFillColor( sf::Color::Transparent );
     shape.setOutlineColor( sf::Color::Green );
     shape.setOutlineThickness( 1.f );

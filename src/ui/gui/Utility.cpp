@@ -147,10 +147,10 @@ std::string Utility::to_string( const sf::Keyboard::Key key )
 void Utility::center_origin( sf::Sprite& sprite )
 {
     sf::FloatRect bounds = sprite.getLocalBounds();
-    sprite.setOrigin(
-        std::floor( bounds.left + bounds.width / 2.f ),
-        std::floor( bounds.top + bounds.height / 2.f )
-    );
+    sprite.setOrigin( sf::Vector2f(
+        std::floor( bounds.position.x + bounds.size.x / 2.f ),
+        std::floor( bounds.position.y + bounds.size.y / 2.f )
+    ) );
 }
 
 /**
@@ -160,10 +160,10 @@ void Utility::center_origin( sf::Sprite& sprite )
 void Utility::center_origin( sf::Text& text )
 {
     sf::FloatRect bounds = text.getLocalBounds();
-    text.setOrigin(
-        std::floor( bounds.left + bounds.width / 2.f ),
-        std::floor( bounds.top + bounds.height / 2.f )
-    );
+    text.setOrigin( sf::Vector2f(
+        std::floor( bounds.position.x + bounds.size.x / 2.f ),
+        std::floor( bounds.position.y + bounds.size.y / 2.f )
+    ) );
 }
 
 /**
@@ -173,10 +173,10 @@ void Utility::center_origin( sf::Text& text )
 void Utility::center_origin( Animation& animation )
 {
     sf::FloatRect bounds = animation.get_local_bounds();
-    animation.setOrigin(
-        std::floor( bounds.left + bounds.width / 2.f ),
-        std::floor( bounds.top + bounds.height / 2.f )
-    );
+    animation.setOrigin( sf::Vector2f(
+        std::floor( bounds.position.x + bounds.size.x / 2.f ),
+        std::floor( bounds.position.y + bounds.size.y / 2.f )
+    ) );
 }
 
 /**

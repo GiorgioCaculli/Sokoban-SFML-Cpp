@@ -20,7 +20,7 @@ Container::Container()
  * Function meant to add a component to the children.
  * @param component The new child to add
  */
-void Container::pack( Component::Ptr component )
+void Container::pack( const Component::Ptr& component )
 {
     _children.push_back( component );
     if ( !has_selection() && component->is_selectable() )
@@ -45,15 +45,15 @@ void Container::handle_event( const sf::Event& event )
     if ( has_selection() && _children[ _selected_child ]->is_active() )
     {
         _children[ _selected_child ]->handle_event( event );
-    } else if ( event.type == sf::Event::KeyReleased )
+    } else if ( const auto *keyReleased = event.getIf<sf::Event::KeyReleased>() )
     {
-        if ( event.key.code == sf::Keyboard::Key::Up )
+        if ( keyReleased->scancode == sf::Keyboard::Scancode::Up )
         {
             select_previous();
-        } else if ( event.key.code == sf::Keyboard::Key::Down )
+        } else if ( keyReleased->scancode == sf::Keyboard::Scancode::Down )
         {
             select_next();
-        } else if ( event.key.code == sf::Keyboard::Key::Enter || event.key.code == sf::Keyboard::Key::Space )
+        } else if ( keyReleased->scancode == sf::Keyboard::Scancode::Enter || keyReleased->scancode == sf::Keyboard::Scancode::Space )
         {
             if ( has_selection() )
             {

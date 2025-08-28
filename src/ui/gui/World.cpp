@@ -291,8 +291,7 @@ void World::build_scene()
     _player_is_moving_down = false;
     _player_is_moving_left = false;
     _player_is_moving_right = false;
-    _text = new sf::Text();
-    _text->setFont( _fonts.get( Fonts::Connection_II ) );
+    _text = new sf::Text( _fonts.get( Fonts::Connection_II ) );
     _text->setPosition( sf::Vector2f(
         _target.getSize().x - 350.f,
         20.f ) );
@@ -357,7 +356,7 @@ void World::build_scene()
     _background_texture->setRepeated( true );
 
     auto* backgroundSprite = new Sprite_Node( *_background_texture, textureRect );
-    backgroundSprite->setPosition( sf::Vector2f( _world_bounds.left, _world_bounds.top ) );
+    backgroundSprite->setPosition( sf::Vector2f( _world_bounds.position.x, _world_bounds.position.y ) );
     _scene_layers.push_back( backgroundSprite );
 
     layers++;

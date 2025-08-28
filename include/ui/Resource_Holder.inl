@@ -10,7 +10,7 @@ void Resource_Holder< Resource, Identifier >::load( Identifier id, const std::st
 {
     // Create and load resource
     std::unique_ptr< Resource > resource( new Resource() );
-    if ( !resource->loadFromFile( filename ) )
+    if ( !resource->openFromFile( filename ) )
     {
         throw std::runtime_error( "Resource_Holder::load - Failed to load " + filename );
     }

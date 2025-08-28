@@ -14,10 +14,10 @@ using namespace gzc::util::logger;
  * @param stack The stack containing the various states
  * @param context The context containing the various resources
  */
-State_Title::State_Title( State_Stack& stack, State::Context context )
+State_Title::State_Title( State_Stack& stack, const Context& context )
     : State( stack, context )
-      , _text()
-      , _title_text()
+      , _text( context._fonts->get( Fonts::Rampart_One ) )
+      , _title_text( context._fonts->get( Fonts::Kodomo_Rounded ) )
       , _show_text( true )
       , _text_effect_time( sf::Time::Zero )
 {
@@ -31,7 +31,6 @@ State_Title::State_Title( State_Stack& stack, State::Context context )
 
     logger.log( Logger::Level::DEBUG, "Loading Title Screen Text" );
 
-    _title_text.setFont( context._fonts->get( Fonts::Kodomo_Rounded ) );
     _title_text.setString( L"そこばん" );
     Utility::center_origin( _title_text );
     sf::Vector2f pos( context._window->getView().getSize() / 2.f );
@@ -46,7 +45,6 @@ State_Title::State_Title( State_Stack& stack, State::Context context )
     _title_sub_text.setCharacterSize( 4 * 24 );
     _title_sub_text.setFillColor( sf::Color::Cyan );
 
-    _text.setFont( context._fonts->get( Fonts::Rampart_One ) );
     _text.setString( "Press any key to start" );
     Utility::center_origin( _text );
     _text.setPosition( sf::Vector2f( pos.x, pos.y + 150.f ) );
