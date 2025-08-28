@@ -9,13 +9,7 @@ using namespace sokoban::ui::gui;
  * Default constructor for the animation
  */
 Animation::Animation()
-    : _sprite()
-      , _frame_size()
-      , _num_frames( 0 )
-      , _current_frame( 0 )
-      , _duration( sf::Time::Zero )
-      , _elapsed_time( sf::Time::Zero )
-      , _repeat( false )
+    : Animation( sf::Texture() )
 {
 }
 
@@ -150,7 +144,7 @@ void Animation::update( sf::Time dt )
     sf::Time time_per_frame = _duration / static_cast< float >( _num_frames );
     _elapsed_time += dt;
 
-    sf::Vector2i texture_bounds( _sprite.getTexture()->getSize() );
+    sf::Vector2i texture_bounds( _sprite.getTexture().getSize() );
     sf::IntRect texture_rect = _sprite.getTextureRect();
 
     if ( _current_frame == 0 )

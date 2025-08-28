@@ -5,12 +5,13 @@
  * @param id Its unique identifier in the enum
  * @param filename The filename of the asset
  */
+#pragma once
 template< typename Resource, typename Identifier >
 void Resource_Holder< Resource, Identifier >::load( Identifier id, const std::string& filename )
 {
     // Create and load resource
     std::unique_ptr< Resource > resource( new Resource() );
-    if ( !resource->openFromFile( filename ) )
+    if ( !resource->loadFromFile( filename ) )
     {
         throw std::runtime_error( "Resource_Holder::load - Failed to load " + filename );
     }

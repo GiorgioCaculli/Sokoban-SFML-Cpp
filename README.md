@@ -1,4 +1,4 @@
-# Sokoban Game written in C++11 and SFML
+# Sokoban Game written in C++20 and SFML 3
 
 ![GAME](doc/finalsprint/pictures/jeu.png "jeu.png")
 

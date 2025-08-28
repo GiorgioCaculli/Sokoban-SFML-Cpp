@@ -27,12 +27,11 @@ namespace
  */
 State_Settings::State_Settings( State_Stack& stack, Context context )
     : State( stack, context )
+    , _background_sprite( context._textures->get( Textures::Title_Screen ) )
+    , _settings_text( context._fonts->get( Fonts::Rampart_One ) )
 {
-    sf::Texture& texture = context._textures->get( Textures::Title_Screen );
-    sf::Font& font = context._fonts->get( Fonts::Rampart_One );
     sf::Vector2f view_size = context._window->getView().getSize();
 
-    _background_sprite.setTexture( texture );
     Utility::center_origin( _background_sprite );
     _background_sprite.setPosition( view_size / 2.f );
 
@@ -54,14 +53,14 @@ State_Settings::State_Settings( State_Stack& stack, Context context )
     _sound_effect_volume_button->setPosition( context._window->getView().getSize() / 2.f );
     _sound_effect_volume_button->setOrigin( sf::Vector2f( 100.f, 25.f ) );
 
-    auto sound_effect_label = std::make_shared< Label >( "Sound Effect Volume", *get_context()._fonts, 24.f );
+    auto sound_effect_label = std::make_shared< Label >( *get_context()._fonts, "Sound Effect Volume", 24.f );
     sound_effect_label->setPosition( _sound_effect_volume_button->getPosition() - sf::Vector2f( 0, 25.f ) );
     sound_effect_label->setOrigin( sf::Vector2f( 100.f, 25.f ) );
 
     _music_volume_button->setPosition( _sound_effect_volume_button->getPosition() - sf::Vector2f( 0, 100.f ) );
     _music_volume_button->setOrigin( sf::Vector2f( 100.f, 25.f ) );
 
-    auto music_label = std::make_shared< Label >( "Music Volume", *get_context()._fonts, 24.f );
+    auto music_label = std::make_shared< Label >( *get_context()._fonts, "Music Volume", 24.f );
     music_label->setPosition( _music_volume_button->getPosition() - sf::Vector2f( 0, 25.f ) );
     music_label->setOrigin( sf::Vector2f( 100.f, 25.f ) );
 
@@ -74,7 +73,6 @@ State_Settings::State_Settings( State_Stack& stack, Context context )
     _container.pack( sound_effect_label );
     _container.pack( back_button );
 
-    _settings_text.setFont( font );
     _settings_text.setString( "Settings" );
     _settings_text.setCharacterSize( 64.f );
     Utility::center_origin( _settings_text );

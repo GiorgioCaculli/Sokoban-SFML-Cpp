@@ -19,12 +19,9 @@ using namespace sokoban::ui::gui;
  */
 State_Menu::State_Menu( State_Stack& stack, State::Context context )
     : State( stack, context )
-      , _container()
+    , _background_sprite( context._textures->get( Textures::Title_Screen ) )
 {
-    sf::Texture& texture = context._textures->get( Textures::Title_Screen );
     //sf::Font &font = context._fonts->get( Fonts::Rampart_One );
-
-    _background_sprite.setTexture( texture );
     Utility::center_origin( _background_sprite );
     _background_sprite.setPosition( context._window->getView().getSize() / 2.f );
 

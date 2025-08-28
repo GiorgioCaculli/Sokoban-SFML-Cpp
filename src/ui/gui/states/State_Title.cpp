@@ -16,8 +16,10 @@ using namespace gzc::util::logger;
  */
 State_Title::State_Title( State_Stack& stack, const Context& context )
     : State( stack, context )
+      , _background_sprite( context._textures->get( Textures::Title_Screen ) )
       , _text( context._fonts->get( Fonts::Rampart_One ) )
       , _title_text( context._fonts->get( Fonts::Kodomo_Rounded ) )
+      , _title_sub_text( context._fonts->get( Fonts::Kodomo_Rounded ) )
       , _show_text( true )
       , _text_effect_time( sf::Time::Zero )
 {
@@ -25,7 +27,6 @@ State_Title::State_Title( State_Stack& stack, const Context& context )
     logger.log( Logger::Level::DEBUG, "Initializing Title Screen" );
 
     logger.log( Logger::Level::DEBUG, "Loading Title Screen Texture" );
-    _background_sprite.setTexture( context._textures->get( Textures::Title_Screen ) );
     Utility::center_origin( _background_sprite );
     _background_sprite.setPosition( context._window->getView().getSize() / 2.f );
 
@@ -38,7 +39,6 @@ State_Title::State_Title( State_Stack& stack, const Context& context )
     _title_text.setCharacterSize( 8 * 24 );
     _title_text.setFillColor( sf::Color::Cyan );
 
-    _title_sub_text.setFont( context._fonts->get( Fonts::Kodomo_Rounded ) );
     _title_sub_text.setString( "Sokoban" );
     Utility::center_origin( _title_sub_text );
     _title_sub_text.setPosition( sf::Vector2f( pos.x / 1.2f, _title_text.getPosition().y + 200.f ) );

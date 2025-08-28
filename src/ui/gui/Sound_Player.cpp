@@ -68,10 +68,9 @@ void Sound_Player::play( Sound_Effect::ID effect )
  */
 void Sound_Player::play( Sound_Effect::ID effect, sf::Vector2f position )
 {
-    _sounds.emplace_back( sf::Sound() );
+    _sounds.emplace_back( _sound_buffers.get( effect ) );
     sf::Sound& sound = _sounds.back();
 
-    sound.setBuffer( _sound_buffers.get( effect ) );
     sound.setPosition( sf::Vector3f( position.x, position.y, 0.f ) );
     sound.setAttenuation( Attenuation );
     sound.setMinDistance( Min_Distance_3D );

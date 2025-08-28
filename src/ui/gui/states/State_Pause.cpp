@@ -18,16 +18,14 @@ using namespace sokoban::ui::gui;
  */
 State_Pause::State_Pause( State_Stack& stack, State::Context context )
     : State( stack, context )
+    , _background_sprite( context._textures->get( Textures::Title_Screen ) )
+    , _paused_text( context._fonts->get( Fonts::Rampart_One ) )
 {
-    sf::Texture& texture = context._textures->get( Textures::Title_Screen );
-    sf::Font& font = context._fonts->get( Fonts::Rampart_One );
     sf::Vector2f view_size = context._window->getView().getSize();
 
-    _background_sprite.setTexture( texture );
     Utility::center_origin( _background_sprite );
     _background_sprite.setPosition( view_size / 2.f );
 
-    _paused_text.setFont( font );
     _paused_text.setString( "Paused" );
     _paused_text.setCharacterSize( 64.f );
     Utility::center_origin( _paused_text );
