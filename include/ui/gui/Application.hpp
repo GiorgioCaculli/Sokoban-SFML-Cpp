@@ -31,6 +31,7 @@ namespace sokoban::ui::gui
     private:
         static const sf::Time _time_per_frame; /** The amount of frames per second we wish to display */
         sf::RenderWindow _window; /** The window where the drawables are shown */
+        sf::Font _default_font;
         Texture_Holder _textures; /** The default texture holder */
         Font_Holder _fonts; /** The default font holder */
         Music_Player _music; /** The default music player */
