@@ -15,7 +15,7 @@ namespace sokoban::ui::gui
     public:
         explicit Sound_Node( Sound_Player& player );
 
-        void play_sound( Sound_Effect::ID sound, sf::Vector2f position );
+        void play_sound( Sound_Effect::ID sound, sf::Vector2f position ) const;
 
         unsigned int get_category() const override;
 

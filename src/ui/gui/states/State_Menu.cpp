@@ -3,12 +3,9 @@
 #include <ui/gui/components/Button.hpp>
 #include <ui/gui/Utility.hpp>
 #include <ui/Resource_Holder.hpp>
-#include <ui/gui/Music_Player.hpp>
 
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-
-#include <cmath>
 
 using namespace sokoban::ui::gui;
 
@@ -17,7 +14,7 @@ using namespace sokoban::ui::gui;
  * @param stack The stack containing the various states
  * @param context The context meant to access all the resources available
  */
-State_Menu::State_Menu( State_Stack& stack, State::Context context )
+State_Menu::State_Menu( State_Stack& stack, Context context )
     : State( stack, context )
     , _background_sprite( context._textures->get( Textures::Title_Screen ) )
 {
@@ -25,24 +22,24 @@ State_Menu::State_Menu( State_Stack& stack, State::Context context )
     Utility::center_origin( _background_sprite );
     _background_sprite.setPosition( context._window->getView().getSize() / 2.f );
 
-    auto play_button = std::make_shared< Button >( context );
+    const auto play_button = std::make_shared< Button >( context );
     play_button->set_text( "Play" );
-    play_button->set_callback( [ this ]()
+    play_button->set_callback( [ this ]
     {
         request_stack_pop();
         request_stack_push( States::Game );
     } );
 
-    auto settings_button = std::make_shared< Button >( context );
+    const auto settings_button = std::make_shared< Button >( context );
     settings_button->set_text( "Settings" );
-    settings_button->set_callback( [ this ]()
+    settings_button->set_callback( [ this ]
     {
         request_stack_push( States::Settings );
     } );
 
-    auto exit_button = std::make_shared< Button >( context );
+    const auto exit_button = std::make_shared< Button >( context );
     exit_button->set_text( "Exit" );
-    exit_button->set_callback( [ this ]()
+    exit_button->set_callback( [ this ]
     {
         get_context()._window->close();
     } );
@@ -76,7 +73,7 @@ void State_Menu::draw()
  * @param dt The clock time
  * @return always true
  */
-bool State_Menu::update( sf::Time dt )
+bool State_Menu::update( const sf::Time dt )
 {
     ( void ) dt;
     return true;

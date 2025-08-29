@@ -7,6 +7,7 @@
 #include <ui/gui/states/State_Menu.hpp>
 #include <ui/gui/states/State_Pause.hpp>
 #include <ui/gui/states/State_Settings.hpp>
+#include <utility>
 
 
 using namespace sokoban::ui::gui;
@@ -14,24 +15,17 @@ using namespace gzc::util::logger;
 
 const sf::Time Application::_time_per_frame = sf::seconds( 1.f / 10.f );
 
-/**
- * Default constructor for the application
- */
-Application::Application()
-    : _window( sf::VideoMode( sf::Vector2u( _width, _height ), _bits_per_pixel ), "Sokoban", sf::State::Fullscreen )
-      , _textures()
-      , _fonts()
-      , _music()
-      , _sounds()
-      , _default_font( sf::Font( "res/fonts/KodomoRounded.otf" ) )
-      , _state_stack( State::Context( _window, _textures, _fonts, _music, _sounds ) )
-      , _statistics_text( sf::Text( _default_font, "", 32 ) )
-      , _statistics_update_time()
-      , _statistics_num_frames( 0 )
-      , _width( 1920 )
-      , _height( _width / 16 * 9 )
+Application::Application( const uint16_t width, const uint16_t height, std::string  title )
+    : _width( width )
+      , _height( height )
+      , _title( std::move( title ) )
       , _bits_per_pixel( 32 )
       , _logger( "Application", "sokoban.log", true )
+      , _window( sf::VideoMode( sf::Vector2u( _width, _height ), _bits_per_pixel ), _title, sf::State::Fullscreen )
+      , _default_font( sf::Font( "res/fonts/KodomoRounded.otf" ) )
+      , _statistics_text( sf::Text( _default_font, "", 32 ) )
+      , _statistics_num_frames( 0 )
+      , _state_stack( State::Context( _window, _textures, _fonts, _music, _sounds ) )
 {
     _logger.log( Logger::Level::DEBUG, "Setting KeyRepeatedEnabled = false" );
     _window.setKeyRepeatEnabled( false );
@@ -63,6 +57,14 @@ Application::Application()
 
     _logger.log( Logger::Level::DEBUG, "Playing Default Song" );
     _music.play( Music::Town_Pleasant_peasants );
+}
+
+/**
+ * Default constructor for the application
+ */
+Application::Application()
+    : Application( 1920, 1080, "Sokoban" )
+{
 }
 
 /**

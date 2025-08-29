@@ -48,7 +48,7 @@ void Sprite_Node::set_texture( const sf::Texture& texture, const sf::IntRect& te
  * @param target The target to display the sprite onto
  * @param states The various states that characterize the window
  */
-void Sprite_Node::draw_current( sf::RenderTarget& target, sf::RenderStates states ) const
+void Sprite_Node::draw_current( sf::RenderTarget& target, const sf::RenderStates states ) const
 {
     target.draw( _sprite, states );
 }

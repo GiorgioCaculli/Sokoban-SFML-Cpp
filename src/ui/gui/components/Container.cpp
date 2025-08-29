@@ -11,8 +11,7 @@ using namespace sokoban::ui::gui;
  * No children by default and no selected child by default
  */
 Container::Container()
-    : _children()
-      , _selected_child( -1 )
+    : _selected_child( -1 )
 {
 }
 
@@ -87,7 +86,7 @@ bool Container::has_selection() const
  * Function meant to interchange between the different children
  * @param index The child that has been selected
  */
-void Container::select( std::size_t index )
+void Container::select( const std::size_t index )
 {
     if ( _children[ index ]->is_selectable() )
     {

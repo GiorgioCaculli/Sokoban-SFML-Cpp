@@ -7,13 +7,12 @@
 #include <map>
 #include <array>
 #include <string>
-#include <ostream>
 
 
 namespace sokoban::ui::gui::entity
 {
-    class Entity_Platform
-            : public sokoban::core::Platform
+    class Entity_Platform final
+            : public core::Platform
               , public Entity
     {
     public:
@@ -37,7 +36,7 @@ namespace sokoban::ui::gui::entity
 
         ~Entity_Platform() override;
 
-        std::string to_string() const;
+        std::string to_string() const override;
 
         const std::map< Color, std::array< float, 4 > >& get_platform_color_map() const;
 

@@ -8,7 +8,6 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Transformable.hpp>
 
-#include <set>
 #include <memory>
 #include <vector>
 #include <utility>
@@ -56,7 +55,7 @@ namespace sokoban::ui::gui
         Category::Type _default_category; /** The default category of each node */
         virtual void update_current( sf::Time dt, Command_Queue& commands );
 
-        void update_children( sf::Time dt, Command_Queue& commands );
+        void update_children( sf::Time dt, Command_Queue& commands ) const;
 
         void draw( sf::RenderTarget& target, sf::RenderStates states ) const override;
 

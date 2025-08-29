@@ -39,7 +39,7 @@ namespace sokoban::ui::gui
 
         void update( sf::Time dt );
 
-        void draw();
+        void draw() const;
 
         bool is_board_completed() const;
 

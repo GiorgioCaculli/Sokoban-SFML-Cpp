@@ -2,33 +2,31 @@
 
 using namespace sokoban::ui::gui::entity;
 
-const float OFFSET = 64;
-
-const std::array< float, 4 > wall_round_beige_asset = {
-    0, 0, OFFSET, OFFSET
-};
-
-const std::array< float, 4 > wall_round_black_asset = {
-    OFFSET * 1, 0, OFFSET, OFFSET
-};
-
-const std::array< float, 4 > wall_round_brown_asset = {
-    OFFSET * 2, 0, OFFSET, OFFSET
-};
-
-const std::array< float, 4 > wall_round_white_asset = {
-    OFFSET * 3, 0, OFFSET, OFFSET
-};
-
 /**
  * Default constructor for the Wall Entity
  * @param x The coordinates on the X axis
  * @param y The coordinates on the Y axis
  */
-Entity_Wall::Entity_Wall( float x, float y )
-    : core::Wall( x, y )
-      , Entity( wall_round_white_asset )
+Entity_Wall::Entity_Wall( const float x, const float y )
+    : Wall( x, y )
 {
+    constexpr float SPRITE_SHEET_PLACEMENT_Y_COORDINATE = 0;
+    /* TODO: Apply FOR loop + mapping for cleaner generation, need to overcome the single naming issue (mapping) */
+    const std::array< float, 4 > wall_round_beige_asset = {
+        SPRITE_SHEET_SPRITE_OFFSET * 0, SPRITE_SHEET_PLACEMENT_Y_COORDINATE, SPRITE_SHEET_SPRITE_OFFSET, SPRITE_SHEET_SPRITE_OFFSET
+    };
+
+    const std::array< float, 4 > wall_round_black_asset = {
+        SPRITE_SHEET_SPRITE_OFFSET * 1, SPRITE_SHEET_PLACEMENT_Y_COORDINATE, SPRITE_SHEET_SPRITE_OFFSET, SPRITE_SHEET_SPRITE_OFFSET
+    };
+
+    const std::array< float, 4 > wall_round_brown_asset = {
+        SPRITE_SHEET_SPRITE_OFFSET * 2, SPRITE_SHEET_PLACEMENT_Y_COORDINATE, SPRITE_SHEET_SPRITE_OFFSET, SPRITE_SHEET_SPRITE_OFFSET
+    };
+
+    const std::array< float, 4 > wall_round_white_asset = {
+        SPRITE_SHEET_SPRITE_OFFSET * 3, SPRITE_SHEET_PLACEMENT_Y_COORDINATE, SPRITE_SHEET_SPRITE_OFFSET, SPRITE_SHEET_SPRITE_OFFSET
+    };
     _wall_color_map = std::map< Color, std::array< float, 4 > >
     {
         { Color::BEIGE, wall_round_beige_asset }, { Color::BLACK, wall_round_black_asset },
@@ -54,7 +52,7 @@ Entity_Wall& Entity_Wall::operator=( const Entity_Wall& entity )
 {
     if ( &entity != this )
     {
-        core::Wall::operator=( entity );
+        Wall::operator=( entity );
         Entity::operator=( entity );
     }
     return *this;

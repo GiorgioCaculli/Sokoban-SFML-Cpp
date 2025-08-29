@@ -16,7 +16,7 @@ namespace
 {
     std::default_random_engine create_Random_Engine()
     {
-        auto seed = static_cast< unsigned long >( std::time( nullptr ) );
+        const auto seed = static_cast< unsigned long >( std::time( nullptr ) );
         return std::default_random_engine( seed );
     }
 
@@ -133,7 +133,9 @@ std::string Utility::to_string( const sf::Keyboard::Key key )
         BOOK_KEY_TO_STRING_CASE( F13 )
         BOOK_KEY_TO_STRING_CASE( F14 )
         BOOK_KEY_TO_STRING_CASE( F15 )
-        BOOK_KEY_TO_STRING_CASE( Pause )
+    BOOK_KEY_TO_STRING_CASE( Pause )
+    default:
+        break;
         //case sf::Keyboard::KeyCount: // TODO: No idea why this breaks, migration documentation does not mention anything about this but I will figure it out
             //break;
     }
@@ -146,7 +148,7 @@ std::string Utility::to_string( const sf::Keyboard::Key key )
  */
 void Utility::center_origin( sf::Sprite& sprite )
 {
-    sf::FloatRect bounds = sprite.getLocalBounds();
+    const sf::FloatRect bounds = sprite.getLocalBounds();
     sprite.setOrigin( sf::Vector2f(
         std::floor( bounds.position.x + bounds.size.x / 2.f ),
         std::floor( bounds.position.y + bounds.size.y / 2.f )
@@ -159,7 +161,7 @@ void Utility::center_origin( sf::Sprite& sprite )
  */
 void Utility::center_origin( sf::Text& text )
 {
-    sf::FloatRect bounds = text.getLocalBounds();
+    const sf::FloatRect bounds = text.getLocalBounds();
     text.setOrigin( sf::Vector2f(
         std::floor( bounds.position.x + bounds.size.x / 2.f ),
         std::floor( bounds.position.y + bounds.size.y / 2.f )
@@ -172,7 +174,7 @@ void Utility::center_origin( sf::Text& text )
  */
 void Utility::center_origin( Animation& animation )
 {
-    sf::FloatRect bounds = animation.get_local_bounds();
+    const sf::FloatRect bounds = animation.get_local_bounds();
     animation.setOrigin( sf::Vector2f(
         std::floor( bounds.position.x + bounds.size.x / 2.f ),
         std::floor( bounds.position.y + bounds.size.y / 2.f )
@@ -184,7 +186,7 @@ void Utility::center_origin( Animation& animation )
  * @param radian The radian value to convert
  * @return The radian value in degrees form
  */
-float Utility::to_degree( float radian )
+float Utility::to_degree( const float radian )
 {
     return 100.f / M_PI * radian;
 }
@@ -194,7 +196,7 @@ float Utility::to_degree( float radian )
  * @param degree The degree value to convert
  * @return The degree value in radian form
  */
-float Utility::to_radian( float degree )
+float Utility::to_radian( const float degree )
 {
     return M_PI / 100.f * degree;
 }
@@ -204,9 +206,9 @@ float Utility::to_radian( float degree )
  * @param exclusive_max The maximum value we wish to obtain
  * @return A value from 0 to Max
  */
-int Utility::random_int( int exclusive_max )
+int Utility::random_int( const int exclusive_max )
 {
-    std::uniform_int_distribution< > dist( 0, exclusive_max - 1 );
+    std::uniform_int_distribution dist( 0, exclusive_max - 1 );
     return dist( Random_Engine );
 }
 
@@ -215,7 +217,7 @@ int Utility::random_int( int exclusive_max )
  * @param vector The vecto's to calculate
  * @return X * X + Y * Y
  */
-float Utility::length( sf::Vector2f vector )
+float Utility::length( const sf::Vector2f vector )
 {
     return std::sqrt( vector.x * vector.x + vector.y * vector.y );
 }
@@ -223,7 +225,7 @@ float Utility::length( sf::Vector2f vector )
 /**
  * Unit calculator based on the length of a vector and a vector itself
  */
-sf::Vector2f Utility::unit_vector( sf::Vector2f vector )
+sf::Vector2f Utility::unit_vector( const sf::Vector2f vector )
 {
     assert( vector != sf::Vector2f( 0.f, 0.f ) );
     return vector / length( vector );

@@ -1,5 +1,4 @@
-#include <iostream>
-#include <ui/gui//states/State_Title.hpp>
+#include <ui/gui/states/State_Title.hpp>
 
 #include <gzc/util/logger/Logger.hpp>
 #include <ui/gui/Utility.hpp>
@@ -24,7 +23,7 @@ State_Title::State_Title( State_Stack& stack, const Context& context )
       , _show_text( true )
       , _text_effect_time( sf::Time::Zero )
 {
-    Logger logger( "State Title", "sokoban.log", true );
+    const Logger logger( "State Title", "sokoban.log", true );
     logger.log( Logger::Level::DEBUG, "Initializing Title Screen" );
 
     logger.log( Logger::Level::DEBUG, "Loading Title Screen Texture" );
@@ -35,7 +34,7 @@ State_Title::State_Title( State_Stack& stack, const Context& context )
 
     _title_text.setString( L"そこばん" );
     Utility::center_origin( _title_text );
-    sf::Vector2f pos( context._window->getView().getSize() / 2.f );
+    const sf::Vector2f pos( context._window->getView().getSize() / 2.f );
     _title_text.setPosition( sf::Vector2f( pos.x / 1.5f, 10.f ) );
     _title_text.setCharacterSize( 8 * 24 );
     _title_text.setFillColor( sf::Color::Cyan );
@@ -46,7 +45,7 @@ State_Title::State_Title( State_Stack& stack, const Context& context )
     _title_sub_text.setCharacterSize( 4 * 24 );
     _title_sub_text.setFillColor( sf::Color::Cyan );
 
-    _text.setString( "Press any key to start" );
+    _text.setString( "Press ENTER or SPACE to start" );
     Utility::center_origin( _text );
     _text.setPosition( sf::Vector2f( pos.x, pos.y + 150.f ) );
     _text.setCharacterSize( 32 );
@@ -72,7 +71,7 @@ void State_Title::draw()
  * @param dt The clock time
  * @return always true
  */
-bool State_Title::update( sf::Time dt )
+bool State_Title::update( const sf::Time dt )
 {
     _text_effect_time += dt;
     if ( _text_effect_time >= sf::seconds( 0.5f ) )

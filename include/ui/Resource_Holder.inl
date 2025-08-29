@@ -35,7 +35,7 @@ void Resource_Holder< Resource, Identifier >::load( Identifier id, const std::st
                                                     const Parameter& second_param )
 {
     // Create and load resource
-    std::unique_ptr< Resource > resource( new Resource( filename ) );
+    std::unique_ptr< Resource > resource( new Resource( filename, second_param ) );
     //if ( !resource->loadFromFile( filename, second_param ) )
     //{
     //    throw std::runtime_error( "Resource_Holder::load - Failed to load " + filename );

@@ -7,7 +7,7 @@
 
 namespace sokoban::ui::gui
 {
-    class Animation
+    class Animation final
             : public sf::Drawable
               , public sf::Transformable
     {

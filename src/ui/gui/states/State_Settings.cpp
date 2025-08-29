@@ -10,8 +10,6 @@
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include <cmath>
-
 using namespace sokoban::ui::gui;
 
 namespace
@@ -30,22 +28,22 @@ State_Settings::State_Settings( State_Stack& stack, Context context )
     , _background_sprite( context._textures->get( Textures::Title_Screen ) )
     , _settings_text( context._fonts->get( Fonts::Rampart_One ) )
 {
-    sf::Vector2f view_size = context._window->getView().getSize();
+    const sf::Vector2f view_size = context._window->getView().getSize();
 
     Utility::center_origin( _background_sprite );
     _background_sprite.setPosition( view_size / 2.f );
 
     _music_volume_button = std::make_shared< Button >( context );
-    _music_volume_button->set_text( std::to_string( ( int ) get_context()._music->get_volume() ) );
+    _music_volume_button->set_text( std::to_string( static_cast< int >( get_context()._music->get_volume() ) ) );
     _music_volume_button->set_toggle( true );
 
     _sound_effect_volume_button = std::make_shared< Button >( context );
-    _sound_effect_volume_button->set_text( std::to_string( ( int ) get_context()._sounds->get_volume() ) );
+    _sound_effect_volume_button->set_text( std::to_string( static_cast< int >( get_context()._sounds->get_volume() ) ) );
     _sound_effect_volume_button->set_toggle( true );
 
-    auto back_button = std::make_shared< Button >( context );
+    const auto back_button = std::make_shared< Button >( context );
     back_button->set_text( "Back" );
-    back_button->set_callback( [ this ]()
+    back_button->set_callback( [ this ]
     {
         request_stack_pop();
     } );
@@ -53,14 +51,14 @@ State_Settings::State_Settings( State_Stack& stack, Context context )
     _sound_effect_volume_button->setPosition( context._window->getView().getSize() / 2.f );
     _sound_effect_volume_button->setOrigin( sf::Vector2f( 100.f, 25.f ) );
 
-    auto sound_effect_label = std::make_shared< Label >( *get_context()._fonts, "Sound Effect Volume", 24.f );
+    const auto sound_effect_label = std::make_shared< Label >( *get_context()._fonts, "Sound Effect Volume", 24.f );
     sound_effect_label->setPosition( _sound_effect_volume_button->getPosition() - sf::Vector2f( 0, 25.f ) );
     sound_effect_label->setOrigin( sf::Vector2f( 100.f, 25.f ) );
 
     _music_volume_button->setPosition( _sound_effect_volume_button->getPosition() - sf::Vector2f( 0, 100.f ) );
     _music_volume_button->setOrigin( sf::Vector2f( 100.f, 25.f ) );
 
-    auto music_label = std::make_shared< Label >( *get_context()._fonts, "Music Volume", 24.f );
+    const auto music_label = std::make_shared< Label >( *get_context()._fonts, "Music Volume", 24.f );
     music_label->setPosition( _music_volume_button->getPosition() - sf::Vector2f( 0, 25.f ) );
     music_label->setOrigin( sf::Vector2f( 100.f, 25.f ) );
 
@@ -95,11 +93,11 @@ void State_Settings::draw()
  * @param dt The clock time
  * @return always true
  */
-bool State_Settings::update( sf::Time dt )
+bool State_Settings::update( const sf::Time dt )
 {
     ( void ) dt;
-    _music_volume_button->set_text( std::to_string( ( int ) get_context()._music->get_volume() ) );
-    _sound_effect_volume_button->set_text( std::to_string( ( int ) get_context()._sounds->get_volume() ) );
+    _music_volume_button->set_text( std::to_string( static_cast< int >( get_context()._music->get_volume() ) ) );
+    _sound_effect_volume_button->set_text( std::to_string( static_cast< int >( get_context()._sounds->get_volume() ) ) );
     return true;
 }
 
@@ -215,7 +213,7 @@ bool State_Settings::handle_event( const sf::Event& event )
  * Function to change the sound effect volume
  * @param val The value that we wish to increase or decrease the volume with
  */
-void State_Settings::change_sound_effect_volume( float val )
+void State_Settings::change_sound_effect_volume( const float val ) const
 {
     float vol = get_context()._sounds->get_volume() + val;
     if ( vol < 0.f )
@@ -233,7 +231,7 @@ void State_Settings::change_sound_effect_volume( float val )
  * Function to change the music volume
  * @param val The value we wish to increase or decrease the volume with
  */
-void State_Settings::change_music_volume( float val )
+void State_Settings::change_music_volume( const float val ) const
 {
     float vol = get_context()._music->get_volume() + val;
     if ( vol < 0.f )

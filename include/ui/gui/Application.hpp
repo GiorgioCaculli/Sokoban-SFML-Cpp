@@ -19,42 +19,39 @@ namespace sokoban::ui::gui
     using namespace gzc::util::logger;
 
     class Application
-            : private sf::NonCopyable
+            : sf::NonCopyable
     {
     public:
+        Application( uint16_t width, uint16_t height, std::string  title = "Sokoban");
         Application();
-
+        Application( const Application& application ) = delete;
+        Application &operator=( const Application& application ) = delete;
         ~Application();
 
         unsigned short run();
 
     private:
+        const uint16_t _width;
+        const uint16_t _height;
+        std::string _title;
+        const uint16_t _bits_per_pixel;
+        Logger _logger;
         static const sf::Time _time_per_frame; /** The amount of frames per second we wish to display */
         sf::RenderWindow _window; /** The window where the drawables are shown */
         sf::Font _default_font;
-        Texture_Holder _textures; /** The default texture holder */
-        Font_Holder _fonts; /** The default font holder */
-        Music_Player _music; /** The default music player */
-        Sound_Player _sounds; /** The default sound player */
-        State_Stack _state_stack; /** The stack containing the various states */
         sf::Text _statistics_text; /** Text with the FPS amount */
         sf::Time _statistics_update_time; /** Timer to update the various statistics */
         std::size_t _statistics_num_frames; /** Number of frames per second globally */
+        Music_Player _music; /** The default music player */
+        Sound_Player _sounds; /** The default sound player */
+        State_Stack _state_stack; /** The stack containing the various states */
+        Texture_Holder _textures; /** The default texture holder */
+        Font_Holder _fonts; /** The default font holder */
         void process_input();
-
         void update( const sf::Time& delta_time );
-
         void render();
-
         void update_statistics( sf::Time dt );
-
         void register_states();
-
-        const int _width;
-        const int _height;
-        const int _bits_per_pixel;
-
-        Logger _logger;
     };
 }
 

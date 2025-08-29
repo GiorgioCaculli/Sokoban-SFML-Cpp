@@ -11,9 +11,9 @@ using namespace gzc::util::logger;
 
 namespace
 {
-    const float Listener_Z = 0.f;
-    const float Attenuation = 8.f;
-    const float Min_Distance_2D = 0.f;
+    constexpr float Listener_Z = 0.f;
+    constexpr float Attenuation = 8.f;
+    constexpr float Min_Distance_2D = 0.f;
     const float Min_Distance_3D = std::sqrt( Min_Distance_2D * Min_Distance_2D + Listener_Z * Listener_Z );
 }
 
@@ -21,9 +21,7 @@ namespace
  * Default constructor for the Sound Player
  */
 Sound_Player::Sound_Player()
-    : _sound_buffers()
-      , _sounds()
-      , _volume( 100.f )
+    : _volume( 100.f )
 {
     _sound_buffers.load( Sound_Effect::Button_Beep_01, "res/sounds/button_beep_01.ogg" );
     _sound_buffers.load( Sound_Effect::Button_Beep_02, "res/sounds/button_beep_02.ogg" );
@@ -56,7 +54,7 @@ Sound_Player::Sound_Player()
  * Function meant to play a sound effect
  * @param effect The sound effect to play
  */
-void Sound_Player::play( Sound_Effect::ID effect )
+void Sound_Player::play( const Sound_Effect::ID effect )
 {
     play( effect, get_listener_position() );
 }
@@ -66,7 +64,7 @@ void Sound_Player::play( Sound_Effect::ID effect )
  * @param effect The sound effect to play
  * @param position The position that defines when a sound effect is played
  */
-void Sound_Player::play( Sound_Effect::ID effect, sf::Vector2f position )
+void Sound_Player::play( const Sound_Effect::ID effect, const sf::Vector2f position )
 {
     _sounds.emplace_back( _sound_buffers.get( effect ) );
     sf::Sound& sound = _sounds.back();
@@ -94,7 +92,7 @@ void Sound_Player::remove_stopped_sounds()
  * Set the sound effect position
  * @param position The position meant to be listened
  */
-void Sound_Player::set_listener_position( sf::Vector2f position )
+void Sound_Player::set_listener_position( const sf::Vector2f position )
 {
     sf::Listener::setPosition( sf::Vector3f( position.x, position.y, Listener_Z ) );
 }
@@ -113,7 +111,7 @@ sf::Vector2f Sound_Player::get_listener_position() const
  * Volume setter for the various sound effects
  * @param volume The value of volume to set
  */
-void Sound_Player::set_volume( float volume )
+void Sound_Player::set_volume( const float volume )
 {
     _volume = volume;
     for ( sf::Sound sound: _sounds )

@@ -4,7 +4,6 @@
 #include <ui/gui/Sound_Player.hpp>
 #include <ui/Resource_Holder.hpp>
 
-#include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 
@@ -15,15 +14,14 @@ using namespace sokoban::ui::gui;
  * Set the default states that characterize the button
  */
 Button::Button( State::Context context )
-    : _callback()
-      , _sprite( context._textures->get( Textures::Button ) )
+    : _sprite( context._textures->get( Textures::Button ) )
       , _text( context._fonts->get( Fonts::Rampart_One ) )
       , _is_toggled( false )
       , _sounds( *context._sounds )
 {
     change_texture( Normal );
 
-    sf::FloatRect bounds = _sprite.getLocalBounds();
+    const sf::FloatRect bounds = _sprite.getLocalBounds();
     _text.setPosition( sf::Vector2f( bounds.size.x / 2.f , bounds.size.y / 2.f ) );
 }
 
@@ -31,7 +29,7 @@ Button::Button( State::Context context )
  * Setter for the type of action a button will execute
  * @param callback The execution
  */
-void Button::set_callback( Button::Callback callback )
+void Button::set_callback( Callback callback )
 {
     _callback = std::move( callback );
 }
@@ -49,7 +47,7 @@ void Button::set_text( const std::string& text )
  * Setter meant to make the button toggleable
  * @param flag Whether it is toggleable or not
  */
-void Button::set_toggle( bool flag )
+void Button::set_toggle( const bool flag )
 {
     _is_toggled = flag;
 }
@@ -146,8 +144,8 @@ void Button::draw( sf::RenderTarget& target, sf::RenderStates states ) const
 /**
  * Function meant to change the texture of the button based on its current state
  */
-void Button::change_texture( Button::Type button_type )
+void Button::change_texture( const Type button_type )
 {
-    sf::IntRect texture_rect( sf::Vector2i( 0, 50 * button_type ), sf::Vector2i( 200, 50 ) );
+    const sf::IntRect texture_rect( sf::Vector2i( 0, 50 * button_type ), sf::Vector2i( 200, 50 ) );
     _sprite.setTextureRect( texture_rect );
 }

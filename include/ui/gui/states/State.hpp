@@ -45,7 +45,7 @@ namespace sokoban::ui::gui
             Sound_Player* _sounds;
         };
 
-        State( State_Stack& stack, Context context );
+        State( State_Stack& stack, const Context& context );
 
         virtual ~State();
 
@@ -56,11 +56,11 @@ namespace sokoban::ui::gui
         virtual bool handle_event( const sf::Event& event ) = 0;
 
     protected:
-        void request_stack_push( States::ID stateID );
+        void request_stack_push( States::ID stateID ) const;
 
-        void request_stack_pop();
+        void request_stack_pop() const;
 
-        void request_state_clear();
+        void request_state_clear() const;
 
         [[nodiscard]] Context get_context() const;
 

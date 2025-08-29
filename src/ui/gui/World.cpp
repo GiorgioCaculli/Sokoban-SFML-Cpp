@@ -33,11 +33,8 @@ namespace
 World::World( sf::RenderTarget& target, const core::Board& board, Font_Holder& fonts, Sound_Player& sounds )
     : _target( target )
       , _world_view( target.getDefaultView() )
-      , _textures()
       , _fonts( fonts )
       , _sounds( sounds )
-      , _scene_graph()
-      , _scene_layers()
       , _player_is_moving_up( false )
       , _player_is_moving_down( false )
       , _player_is_moving_left( false )
@@ -57,7 +54,7 @@ World::World( sf::RenderTarget& target, const core::Board& board, Font_Holder& f
 {
     _board = board;
     logger.log( Logger::Level::DEBUG, "Level Layout:" );
-    for ( core::Actor* actor: _board.get_world() )
+    for ( const core::Actor* actor: _board.get_world() )
     {
         logger.log( Logger::Level::DEBUG, actor->to_string() );
     }
@@ -78,11 +75,11 @@ World::World( sf::RenderTarget& target, const core::Board& board, Font_Holder& f
 World::~World()
 {
     delete _text;
-    for ( Scene_Node* layer: _scene_layers )
+    for ( const Scene_Node* layer: _scene_layers )
     {
         delete layer;
     }
-    for ( entity::Entity* entity: _entities )
+    for ( const entity::Entity* entity: _entities )
     {
         delete entity;
     }
@@ -101,28 +98,28 @@ World::~World()
  * Realtime updates the visually available entities
  * @param dt The clock time
  */
-void World::update( sf::Time dt )
+void World::update( const sf::Time dt )
 {
     ( void ) dt; /* TODO: USAGE */
-    float SPACE = 1.f;
-    sf::IntRect player_assets_coords;
-    float player_x_coords;
-    float player_y_coords;
-    float player_width_coords;
-    float player_height_coords;
+    constexpr float SPACE = 1.f;
+    sf::IntRect player_assets_coordinates;
+    float player_x_coordinates;
+    float player_y_coordinates;
+    float player_width_coordinates;
+    float player_height_coordinates;
     if ( _player_is_moving_up )
     {
-        auto player_asset_rect = _player_entity->get_player_face_map().find( entity::Entity_Player::Face::NORTH )->
+        const auto player_asset_rect = _player_entity->get_player_face_map().find( entity::Entity_Player::Face::NORTH )->
                 second;
-        player_x_coords = player_asset_rect.at( 0 );
-        player_y_coords = player_asset_rect.at( 1 );
-        player_width_coords = player_asset_rect.at( 2 );
-        player_height_coords = player_asset_rect.at( 3 );
-        player_assets_coords = sf::IntRect( sf::Vector2i( player_x_coords, player_y_coords ),
-                                            sf::Vector2i( player_width_coords,
-                                                          player_height_coords ) );
+        player_x_coordinates = player_asset_rect.at( 0 );
+        player_y_coordinates = player_asset_rect.at( 1 );
+        player_width_coordinates = player_asset_rect.at( 2 );
+        player_height_coordinates = player_asset_rect.at( 3 );
+        player_assets_coordinates = sf::IntRect( sf::Vector2i( player_x_coordinates, player_y_coordinates ),
+                                            sf::Vector2i( player_width_coordinates,
+                                                          player_height_coordinates ) );
         _player_sprite->set_texture( *_player_texture_sheet );
-        _player_sprite->set_texture( *_player_texture_sheet, player_assets_coords );
+        _player_sprite->set_texture( *_player_texture_sheet, player_assets_coordinates );
         if ( _board.check_wall_collision( _board_player, _board.TOP_COLLISION ) )
         {
             return;
@@ -130,13 +127,11 @@ void World::update( sf::Time dt )
         if ( _board.check_box_collision( _board.TOP_COLLISION ) )
         {
             return;
-        } else
+        }
+        for ( long unsigned int i = 0; i < _box_entities.size(); i++ )
         {
-            for ( long unsigned int i = 0; i < _box_entities.size(); i++ )
-            {
-                _box_sprites.at( i )->setPosition( sf::Vector2f( _box_actors.at( i )->get_x() * OFFSET,
-                                                                 _box_actors.at( i )->get_y() * OFFSET ) );
-            }
+            _box_sprites.at( i )->setPosition( sf::Vector2f( _box_actors.at( i )->get_x() * OFFSET,
+                                                             _box_actors.at( i )->get_y() * OFFSET ) );
         }
         _player_sprite->move( sf::Vector2f( 0.f, -SPACE * OFFSET ) );
         _player_entity->set_y( _player_entity->get_y() - SPACE );
@@ -144,16 +139,16 @@ void World::update( sf::Time dt )
     }
     if ( _player_is_moving_down )
     {
-        auto player_asset_rect = _player_entity->get_player_face_map().find( entity::Entity_Player::Face::SOUTH )->
+        const auto player_asset_rect = _player_entity->get_player_face_map().find( entity::Entity_Player::Face::SOUTH )->
                 second;
-        player_x_coords = player_asset_rect.at( 0 );
-        player_y_coords = player_asset_rect.at( 1 );
-        player_width_coords = player_asset_rect.at( 2 );
-        player_height_coords = player_asset_rect.at( 3 );
-        player_assets_coords = sf::IntRect( sf::Vector2i( player_x_coords, player_y_coords ), sf::Vector2i(
-                                                player_width_coords,
-                                                player_height_coords ) );
-        _player_sprite->set_texture( *_player_texture_sheet, player_assets_coords );
+        player_x_coordinates = player_asset_rect.at( 0 );
+        player_y_coordinates = player_asset_rect.at( 1 );
+        player_width_coordinates = player_asset_rect.at( 2 );
+        player_height_coordinates = player_asset_rect.at( 3 );
+        player_assets_coordinates = sf::IntRect( sf::Vector2i( player_x_coordinates, player_y_coordinates ), sf::Vector2i(
+                                                player_width_coordinates,
+                                                player_height_coordinates ) );
+        _player_sprite->set_texture( *_player_texture_sheet, player_assets_coordinates );
         if ( _board.check_wall_collision( _board_player, _board.BOTTOM_COLLISION ) )
         {
             return;
@@ -161,13 +156,11 @@ void World::update( sf::Time dt )
         if ( _board.check_box_collision( _board.BOTTOM_COLLISION ) )
         {
             return;
-        } else
+        }
+        for ( long unsigned int i = 0; i < _box_entities.size(); i++ )
         {
-            for ( long unsigned int i = 0; i < _box_entities.size(); i++ )
-            {
-                _box_sprites.at( i )->setPosition( sf::Vector2f( _box_actors.at( i )->get_x() * OFFSET,
-                                                                 _box_actors.at( i )->get_y() * OFFSET ) );
-            }
+            _box_sprites.at( i )->setPosition( sf::Vector2f( _box_actors.at( i )->get_x() * OFFSET,
+                                                             _box_actors.at( i )->get_y() * OFFSET ) );
         }
         _player_sprite->move( sf::Vector2f( 0.f, +SPACE * OFFSET ) );
         _player_entity->set_y( _player_entity->get_y() + SPACE );
@@ -175,15 +168,15 @@ void World::update( sf::Time dt )
     }
     if ( _player_is_moving_left )
     {
-        auto player_asset_rect = _player_entity->get_player_face_map().find( entity::Entity_Player::Face::WEST )->
+        const auto player_asset_rect = _player_entity->get_player_face_map().find( entity::Entity_Player::Face::WEST )->
                 second;
-        player_x_coords = player_asset_rect.at( 0 );
-        player_y_coords = player_asset_rect.at( 1 );
-        player_width_coords = player_asset_rect.at( 2 );
-        player_height_coords = player_asset_rect.at( 3 );
-        player_assets_coords = sf::IntRect( sf::Vector2i( player_x_coords, player_y_coords ), sf::Vector2i( player_width_coords,
-                                            player_height_coords ) );
-        _player_sprite->set_texture( *_player_texture_sheet, player_assets_coords );
+        player_x_coordinates = player_asset_rect.at( 0 );
+        player_y_coordinates = player_asset_rect.at( 1 );
+        player_width_coordinates = player_asset_rect.at( 2 );
+        player_height_coordinates = player_asset_rect.at( 3 );
+        player_assets_coordinates = sf::IntRect( sf::Vector2i( player_x_coordinates, player_y_coordinates ), sf::Vector2i( player_width_coordinates,
+                                            player_height_coordinates ) );
+        _player_sprite->set_texture( *_player_texture_sheet, player_assets_coordinates );
         if ( _board.check_wall_collision( _board_player, _board.LEFT_COLLISION ) )
         {
             return;
@@ -191,13 +184,11 @@ void World::update( sf::Time dt )
         if ( _board.check_box_collision( _board.LEFT_COLLISION ) )
         {
             return;
-        } else
+        }
+        for ( long unsigned int i = 0; i < _box_entities.size(); i++ )
         {
-            for ( long unsigned int i = 0; i < _box_entities.size(); i++ )
-            {
-                _box_sprites.at( i )->setPosition( sf::Vector2f( _box_actors.at( i )->get_x() * OFFSET,
-                                                   _box_actors.at( i )->get_y() * OFFSET ) );
-            }
+            _box_sprites.at( i )->setPosition( sf::Vector2f( _box_actors.at( i )->get_x() * OFFSET,
+                                                             _box_actors.at( i )->get_y() * OFFSET ) );
         }
         _player_sprite->move( sf::Vector2f( -SPACE * OFFSET, 0.f ) );
         _player_entity->set_x( _player_entity->get_x() - SPACE );
@@ -205,15 +196,15 @@ void World::update( sf::Time dt )
     }
     if ( _player_is_moving_right )
     {
-        auto player_asset_rect = _player_entity->get_player_face_map().find( entity::Entity_Player::Face::EAST )->
+        const auto player_asset_rect = _player_entity->get_player_face_map().find( entity::Entity_Player::Face::EAST )->
                 second;
-        player_x_coords = player_asset_rect.at( 0 );
-        player_y_coords = player_asset_rect.at( 1 );
-        player_width_coords = player_asset_rect.at( 2 );
-        player_height_coords = player_asset_rect.at( 3 );
-        player_assets_coords = sf::IntRect( sf::Vector2i( player_x_coords, player_y_coords ), sf::Vector2i( player_width_coords,
-                                            player_height_coords ) );
-        _player_sprite->set_texture( *_player_texture_sheet, player_assets_coords );
+        player_x_coordinates = player_asset_rect.at( 0 );
+        player_y_coordinates = player_asset_rect.at( 1 );
+        player_width_coordinates = player_asset_rect.at( 2 );
+        player_height_coordinates = player_asset_rect.at( 3 );
+        player_assets_coordinates = sf::IntRect( sf::Vector2i( player_x_coordinates, player_y_coordinates ), sf::Vector2i( player_width_coordinates,
+                                            player_height_coordinates ) );
+        _player_sprite->set_texture( *_player_texture_sheet, player_assets_coordinates );
         if ( _board.check_wall_collision( _board_player, _board.RIGHT_COLLISION ) )
         {
             return;
@@ -221,13 +212,11 @@ void World::update( sf::Time dt )
         if ( _board.check_box_collision( _board.RIGHT_COLLISION ) )
         {
             return;
-        } else
+        }
+        for ( long unsigned int i = 0; i < _box_entities.size(); i++ )
         {
-            for ( long unsigned int i = 0; i < _box_entities.size(); i++ )
-            {
-                _box_sprites.at( i )->setPosition( sf::Vector2f( _box_actors.at( i )->get_x() * OFFSET,
-                                                   _box_actors.at( i )->get_y() * OFFSET ) );
-            }
+            _box_sprites.at( i )->setPosition( sf::Vector2f( _box_actors.at( i )->get_x() * OFFSET,
+                                                             _box_actors.at( i )->get_y() * OFFSET ) );
         }
         _player_sprite->move( sf::Vector2f( +SPACE * OFFSET, 0.f ) );
         _board_player->set_x( _board_player->get_x() + SPACE );
@@ -254,10 +243,10 @@ void World::update( sf::Time dt )
 /**
  * Visually display the various scene nodes that make up the world
  */
-void World::draw()
+void World::draw() const
 {
     _target.setView( _world_view );
-    for ( Scene_Node* layer: _scene_layers )
+    for ( const Scene_Node* layer: _scene_layers )
     {
         _target.draw( *layer );
     }
@@ -270,15 +259,34 @@ void World::draw()
 void World::load_textures()
 {
     logger.log( Logger::Level::INFO, "Loading Textures..." );
-    _player_texture_sheet = new sf::Texture();
-    _player_texture_sheet->loadFromFile( "res/images/Spritesheet/character_spritesheet.png" );
-    _box_texture_sheet = new sf::Texture();
-    _box_texture_sheet->loadFromFile( "res/images/Spritesheet/boxes_spritesheet.png" );
-    _platform_texture_sheet = new sf::Texture();
-    _platform_texture_sheet->loadFromFile( "res/images/Spritesheet/platforms_spritesheet.png" );
-    _wall_texture_sheet = new sf::Texture();
-    _wall_texture_sheet->loadFromFile( "res/images/Spritesheet/wall_round_spritesheet.png" );
-    _background_texture = new sf::Texture();
+    _player_texture_sheet = new sf::Texture( "res/images/Spritesheet/character_spritesheet.png" );
+    _box_texture_sheet = new sf::Texture( "res/images/Spritesheet/boxes_spritesheet.png" );
+    _platform_texture_sheet = new sf::Texture( "res/images/Spritesheet/platforms_spritesheet.png" );
+    _wall_texture_sheet = new sf::Texture( "res/images/Spritesheet/wall_round_spritesheet.png" );
+
+    std::random_device rd;
+    std::mt19937 mt( rd() );
+
+    int min_within_enum = static_cast< int >( Background_Color::CONCRETE );
+    int max_within_enum = static_cast< int >( Background_Color::SAND );
+    switch ( std::uniform_int_distribution background_distribution( min_within_enum, max_within_enum ); static_cast< Background_Color >( background_distribution( mt ) ) )
+    {
+        case Background_Color::CONCRETE:
+            _background_texture = new sf::Texture( "res/images/PNG/GroundGravel_Concrete.png" );
+            break;
+        case Background_Color::DIRT:
+            _background_texture = new sf::Texture( "res/images/PNG/GroundGravel_Dirt.png" );
+            break;
+        case Background_Color::GRASS:
+            _background_texture = new sf::Texture( "res/images/PNG/GroundGravel_Grass.png" );
+            break;
+        case Background_Color::SAND:
+            _background_texture = new sf::Texture( "res/images/PNG/GroundGravel_Sand.png" );
+            break;
+        default:
+            _background_texture = new sf::Texture( "res/images/PNG/GroundGravel_Grass.png" );
+            break;
+    }
 }
 
 /**
@@ -316,39 +324,19 @@ void World::build_scene()
     int min_within_enum;
     int max_within_enum;
 
-    min_within_enum = static_cast< int >( Background_Color::CONCRETE );
-    max_within_enum = static_cast< int >( Background_Color::SAND );
-    std::uniform_int_distribution< int > background_distribution( min_within_enum, max_within_enum );
-    auto random_background_color = static_cast< Background_Color >( background_distribution( mt ) );
-    switch ( random_background_color )
-    {
-        case Background_Color::CONCRETE:
-            _background_texture->loadFromFile( "res/images/PNG/GroundGravel_Concrete.png" );
-            break;
-        case Background_Color::DIRT:
-            _background_texture->loadFromFile( "res/images/PNG/GroundGravel_Dirt.png" );
-            break;
-        case Background_Color::GRASS:
-            _background_texture->loadFromFile( "res/images/PNG/GroundGravel_Grass.png" );
-            break;
-        case Background_Color::SAND:
-            _background_texture->loadFromFile( "res/images/PNG/GroundGravel_Sand.png" );
-            break;
-    }
-
     min_within_enum = static_cast< int >( entity::Entity_Box::Color::BEIGE_LIGHT );
     max_within_enum = static_cast< int >( entity::Entity_Box::Color::YELLOW_LIGHT );
-    std::uniform_int_distribution< int > box_distribution( min_within_enum, max_within_enum );
+    std::uniform_int_distribution box_distribution( min_within_enum, max_within_enum );
     auto random_box_color = static_cast< entity::Entity_Box::Color >( box_distribution( mt ) );
 
     min_within_enum = static_cast< int >( entity::Entity_Platform::Color::BEIGE );
     max_within_enum = static_cast< int >( entity::Entity_Platform::Color::YELLOW );
-    std::uniform_int_distribution< int > platform_distribution( min_within_enum, max_within_enum );
+    std::uniform_int_distribution platform_distribution( min_within_enum, max_within_enum );
     auto random_platform_color = static_cast< entity::Entity_Platform::Color >( platform_distribution( mt ) );
 
     min_within_enum = static_cast< int >( entity::Entity_Wall::Color::BEIGE );
     max_within_enum = static_cast< int >( entity::Entity_Wall::Color::BROWN );
-    std::uniform_int_distribution< int > wall_distribution( min_within_enum, max_within_enum );
+    std::uniform_int_distribution wall_distribution( min_within_enum, max_within_enum );
     auto random_wall_color = static_cast< entity::Entity_Wall::Color >( wall_distribution( mt ) );
 
     int layers = 0;
@@ -363,10 +351,10 @@ void World::build_scene()
 
     for ( core::Actor* actor: _board.get_world() )
     {
-        float asset_coord_x;
-        float asset_coord_y;
-        float asset_coord_width;
-        float asset_coord_height;
+        float asset_coordinate_x;
+        float asset_coordinate_y;
+        float asset_coordinate_width;
+        float asset_coordinate_height;
 
         sf::IntRect asset_rect;
 
@@ -381,11 +369,11 @@ void World::build_scene()
             _player_entity = dynamic_cast< entity::Entity_Player * >( entity_actor );
             auto player_asset_rect = _player_entity->get_player_face_map().find( entity::Entity_Player::Face::SOUTH )->
                     second;
-            asset_coord_x = player_asset_rect.at( 0 );
-            asset_coord_y = player_asset_rect.at( 1 );
-            asset_coord_width = player_asset_rect.at( 2 );
-            asset_coord_height = player_asset_rect.at( 3 );
-            asset_rect = sf::IntRect( sf::Vector2i( asset_coord_x, asset_coord_y ), sf::Vector2i( asset_coord_width, asset_coord_height ) );
+            asset_coordinate_x = player_asset_rect.at( 0 );
+            asset_coordinate_y = player_asset_rect.at( 1 );
+            asset_coordinate_width = player_asset_rect.at( 2 );
+            asset_coordinate_height = player_asset_rect.at( 3 );
+            asset_rect = sf::IntRect( sf::Vector2i( asset_coordinate_x, asset_coordinate_y ), sf::Vector2i( asset_coordinate_width, asset_coordinate_height ) );
             actor_sprite = new Sprite_Node( *_player_texture_sheet, asset_rect );
             _player_sprite = actor_sprite;
         }
@@ -395,16 +383,16 @@ void World::build_scene()
             actor = dynamic_cast< entity::Entity_Platform * >( entity_actor );
             auto* platform_actor = dynamic_cast< entity::Entity_Platform * >( actor );
             auto platform_asset_rect = platform_actor->get_platform_color_map().find( random_platform_color )->second;
-            asset_coord_x = platform_asset_rect.at( 0 );
-            asset_coord_y = platform_asset_rect.at( 1 );
-            asset_coord_width = platform_asset_rect.at( 2 );
-            asset_coord_height = platform_asset_rect.at( 3 );
-            asset_rect = sf::IntRect( sf::Vector2i( asset_coord_x, asset_coord_y ), sf::Vector2i( asset_coord_width, asset_coord_height ) );
+            asset_coordinate_x = platform_asset_rect.at( 0 );
+            asset_coordinate_y = platform_asset_rect.at( 1 );
+            asset_coordinate_width = platform_asset_rect.at( 2 );
+            asset_coordinate_height = platform_asset_rect.at( 3 );
+            asset_rect = sf::IntRect( sf::Vector2i( asset_coordinate_x, asset_coordinate_y ), sf::Vector2i( asset_coordinate_width, asset_coordinate_height ) );
             actor_sprite = new Sprite_Node( *_platform_texture_sheet, asset_rect );
             /* If sprite size = 32x32 */
             actor_sprite->setOrigin( sf::Vector2f(
-                -( asset_coord_width / 2.f ),
-                -( asset_coord_height / 2.f ) )
+                -( asset_coordinate_width / 2.f ),
+                -( asset_coordinate_height / 2.f ) )
             );
         }
         if ( actor->get_type() == actor->BOX )
@@ -414,12 +402,12 @@ void World::build_scene()
             actor = dynamic_cast< entity::Entity_Box * >( entity_actor );
             auto* box_entity = dynamic_cast< entity::Entity_Box * >( actor );
             auto box_asset_rect = box_entity->get_box_color_map().find( random_box_color )->second;
-            asset_coord_x = box_asset_rect.at( 0 );
-            asset_coord_y = box_asset_rect.at( 1 );
-            asset_coord_width = box_asset_rect.at( 2 );
-            asset_coord_height = box_asset_rect.at( 3 );
-            sf::IntRect asset_rect( sf::Vector2i( asset_coord_x, asset_coord_y ), sf::Vector2i( asset_coord_width, asset_coord_height ) );
-            actor_sprite = new Sprite_Node( *_box_texture_sheet, asset_rect );
+            asset_coordinate_x = box_asset_rect.at( 0 );
+            asset_coordinate_y = box_asset_rect.at( 1 );
+            asset_coordinate_width = box_asset_rect.at( 2 );
+            asset_coordinate_height = box_asset_rect.at( 3 );
+            sf::IntRect asset_rectangle( sf::Vector2i( asset_coordinate_x, asset_coordinate_y ), sf::Vector2i( asset_coordinate_width, asset_coordinate_height ) );
+            actor_sprite = new Sprite_Node( *_box_texture_sheet, asset_rectangle );
             _box_sprites.push_back( actor_sprite );
             _box_entities.push_back( box_entity );
         }
@@ -429,11 +417,11 @@ void World::build_scene()
             actor = dynamic_cast< entity::Entity_Wall * >( entity_actor );
             auto* wall_actor = dynamic_cast< entity::Entity_Wall * >( actor );
             auto wall_asset_rect = wall_actor->get_wall_color_map().find( random_wall_color )->second;
-            asset_coord_x = wall_asset_rect.at( 0 );
-            asset_coord_y = wall_asset_rect.at( 1 );
-            asset_coord_width = wall_asset_rect.at( 2 );
-            asset_coord_height = wall_asset_rect.at( 3 );
-            asset_rect = sf::IntRect( sf::Vector2i( asset_coord_x, asset_coord_y ), sf::Vector2i( asset_coord_width, asset_coord_height ) );
+            asset_coordinate_x = wall_asset_rect.at( 0 );
+            asset_coordinate_y = wall_asset_rect.at( 1 );
+            asset_coordinate_width = wall_asset_rect.at( 2 );
+            asset_coordinate_height = wall_asset_rect.at( 3 );
+            asset_rect = sf::IntRect( sf::Vector2i( asset_coordinate_x, asset_coordinate_y ), sf::Vector2i( asset_coordinate_width, asset_coordinate_height ) );
             actor_sprite = new Sprite_Node( *_wall_texture_sheet, asset_rect );
         }
         actor_sprite->setPosition( sf::Vector2f( actor->get_x() * OFFSET, actor->get_y() * OFFSET ) );
@@ -458,7 +446,7 @@ bool World::is_board_completed() const
  * Move the player up
  * @param pressed Whether the up key is pressed
  */
-void World::move_up( bool pressed )
+void World::move_up( const bool pressed )
 {
     if ( pressed )
     {
@@ -471,7 +459,7 @@ void World::move_up( bool pressed )
  * Move the player down
  * @param pressed Whether the down key is pressed
  */
-void World::move_down( bool pressed )
+void World::move_down( const bool pressed )
 {
     if ( pressed )
     {
@@ -484,7 +472,7 @@ void World::move_down( bool pressed )
  * Move the player left
  * @param pressed Whether the left key is pressed
  */
-void World::move_left( bool pressed )
+void World::move_left( const bool pressed )
 {
     if ( pressed )
     {
@@ -497,7 +485,7 @@ void World::move_left( bool pressed )
  * Move the player right
  * @param pressed Whether the right key is pressed
  */
-void World::move_right( bool pressed )
+void World::move_right( const bool pressed )
 {
     if ( pressed )
     {
@@ -510,7 +498,7 @@ void World::move_right( bool pressed )
  * Setter for the number of resets done throughout the match
  * @param reset_counter The current number of resets
  */
-void World::set_reset_counter( int reset_counter )
+void World::set_reset_counter( const int reset_counter )
 {
     _reset_counter = reset_counter;
 }

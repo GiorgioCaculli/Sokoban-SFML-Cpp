@@ -1,7 +1,5 @@
 #include <ui/gui/components/Label.hpp>
 
-#include <ui/gui/Utility.hpp>
-
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 
@@ -13,7 +11,7 @@ using namespace sokoban::ui::gui;
  * @param text The text meant to be shown
  * @param character_size The character size
  */
-Label::Label( const sokoban::ui::Font_Holder& fonts, const std::string& text, const unsigned int character_size )
+Label::Label( const Font_Holder& fonts, const std::string& text, const unsigned int character_size )
     : _text( fonts.get( Fonts::Rampart_One ), text, character_size )
 {
 }

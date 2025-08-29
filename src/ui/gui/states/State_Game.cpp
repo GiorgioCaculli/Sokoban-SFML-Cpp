@@ -63,8 +63,6 @@ std::vector< boost::filesystem::path > get_all_levels()
 State_Game::State_Game( State_Stack& stack, Context context )
     : State( stack, context )
       , _window( *context._window )
-      , _levels()
-      , _level()
       , _text( context._fonts->get( Fonts::Connection_II ) )
 {
     _window.setKeyRepeatEnabled( true );
@@ -109,7 +107,7 @@ State_Game::~State_Game()
  * @param dt The clock time
  * @return always true
  */
-bool State_Game::update( sf::Time dt )
+bool State_Game::update( const sf::Time dt )
 {
     _world->update( dt );
     return true;

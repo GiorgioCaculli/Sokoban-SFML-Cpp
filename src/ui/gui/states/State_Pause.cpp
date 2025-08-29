@@ -7,8 +7,6 @@
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include <cmath>
-
 using namespace sokoban::ui::gui;
 
 /**
@@ -16,7 +14,7 @@ using namespace sokoban::ui::gui;
  * @param stack The stack containing the various states
  * @param context The context containing the various resources
  */
-State_Pause::State_Pause( State_Stack& stack, State::Context context )
+State_Pause::State_Pause( State_Stack& stack, Context context )
     : State( stack, context )
     , _background_sprite( context._textures->get( Textures::Title_Screen ) )
     , _paused_text( context._fonts->get( Fonts::Rampart_One ) )
@@ -31,23 +29,23 @@ State_Pause::State_Pause( State_Stack& stack, State::Context context )
     Utility::center_origin( _paused_text );
     _paused_text.setPosition( sf::Vector2f( view_size.x / 2.f, view_size.y / 2.f - 200.f ) );
 
-    auto resume_button = std::make_shared< Button >( context );
+    const auto resume_button = std::make_shared< Button >( context );
     resume_button->set_text( "Resume" );
-    resume_button->set_callback( [ this ]()
+    resume_button->set_callback( [ this ]
     {
         request_stack_pop();
     } );
 
-    auto settings_button = std::make_shared< Button >( context );
+    const auto settings_button = std::make_shared< Button >( context );
     settings_button->set_text( "Settings" );
-    settings_button->set_callback( [ this ]()
+    settings_button->set_callback( [ this ]
     {
         request_stack_push( States::Settings );
     } );
 
-    auto back_to_main_menu_button = std::make_shared< Button >( context );
+    const auto back_to_main_menu_button = std::make_shared< Button >( context );
     back_to_main_menu_button->set_text( "Main Menu" );
-    back_to_main_menu_button->set_callback( [ this ]()
+    back_to_main_menu_button->set_callback( [ this ]
     {
         request_stack_pop();
         request_stack_pop();
@@ -82,7 +80,7 @@ void State_Pause::draw()
  * @param dt The clock time
  * @return always true
  */
-bool State_Pause::update( sf::Time dt )
+bool State_Pause::update( const sf::Time dt )
 {
     ( void ) dt;
     return true;

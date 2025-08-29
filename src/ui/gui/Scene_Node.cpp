@@ -5,7 +5,6 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 
-#include <cmath>
 #include <cassert>
 #include <algorithm>
 
@@ -16,8 +15,7 @@ using namespace sokoban::ui::gui;
  * @param category The category that characterize the Scene node
  */
 Scene_Node::Scene_Node( const Category::Type category )
-    : _children()
-      , _parent( nullptr )
+    : _parent( nullptr )
       , _default_category( category )
 {
 }
@@ -26,7 +24,7 @@ Scene_Node::Scene_Node( const Category::Type category )
  * Function to append a new node child within the Scene node
  * @param child The new child to append
  */
-void Scene_Node::attach_child( Scene_Node::Ptr child )
+void Scene_Node::attach_child( Ptr child )
 {
     child->_parent = this;
     _children.push_back( std::move( child ) );
@@ -39,7 +37,7 @@ void Scene_Node::attach_child( Scene_Node::Ptr child )
  */
 Scene_Node::Ptr Scene_Node::detach_child( const Scene_Node& node )
 {
-    auto found = std::ranges::find_if( _children, [ & ]( Ptr& p )
+    const auto found = std::ranges::find_if( _children, [ & ]( const Ptr& p )
     {
         return p.get() == &node;
     } );
@@ -79,6 +77,10 @@ sf::Transform Scene_Node::get_world_transform() const
     return transform;
 }
 
+void Scene_Node::on_command( const Command& command, sf::Time dt )
+{
+}
+
 unsigned int Scene_Node::get_category() const
 {
     return _default_category;
@@ -90,9 +92,9 @@ void Scene_Node::update_current( const sf::Time dt, Command_Queue& commands )
     ( void ) commands;
 }
 
-void Scene_Node::update_children( const sf::Time dt, Command_Queue& commands )
+void Scene_Node::update_children( const sf::Time dt, Command_Queue& commands ) const
 {
-    for ( Ptr& child: _children )
+    for ( const Ptr& child: _children )
     {
         child->update( dt, commands );
     }

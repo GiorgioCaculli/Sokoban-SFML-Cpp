@@ -1,14 +1,30 @@
+#include <map>
+#include <SFML/Graphics/Color.hpp>
 #include <ui/gui/entities/Entity_Movable.hpp>
 
 using namespace sokoban::ui::gui::entity;
 
+
 /**
  * Constructor for a movable entity
- * @param asset_coords The asset's coordinates
+ * @param asset_coordinates The asset's coordinates
  */
-Entity_Movable::Entity_Movable( std::array< float, 4 > asset_coords )
-    : Entity( asset_coords )
-      , _direction()
+Entity_Movable::Entity_Movable( const std::array< float, 4 > asset_coordinates )
+    : Entity( asset_coordinates )
+{
+}
+
+Entity_Movable::Entity_Movable()
+    : Entity_Movable( std::array< float, 4 >() )
+{
+}
+
+Entity_Movable::Entity_Movable( Entity_Movable&& other ) noexcept
+    : Entity_Movable( other.get_asset_coordinates() )
+{
+}
+
+Entity_Movable::~Entity_Movable()
 {
 }
 
@@ -17,7 +33,7 @@ Entity_Movable::Entity_Movable( std::array< float, 4 > asset_coords )
  * @param dx Movement distance of the X axis
  * @param dy Movement distance of the Y axis
  */
-void Entity_Movable::set_direction( float dx, float dy )
+void Entity_Movable::set_direction( const float dx, const float dy )
 {
     _direction.x = dx;
     _direction.y = dy;
@@ -35,8 +51,8 @@ sf::Vector2f Entity_Movable::get_direction() const
 /**
  * Visual real-time update of a movable entity along with its commands
  */
-void Entity_Movable::update_current( sf::Time dt, Command_Queue& commands )
+void Entity_Movable::update_current( const sf::Time dt, Command_Queue& commands )
 {
-    Entity_Movable::move( _direction * dt.asSeconds() );
+    move( _direction * dt.asSeconds() );
     ( void ) commands;
 }

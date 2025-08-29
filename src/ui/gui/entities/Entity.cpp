@@ -7,8 +7,13 @@ using namespace sokoban::ui::gui::entity;
 /**
  * Entity constructor meant to initialize the asset's coordinates on the sprite sheet
  */
-Entity::Entity( std::array< float, 4 > asset_coords )
-    : _assets_coords( asset_coords )
+Entity::Entity( const std::array< float, 4 > asset_coordinates )
+    : _assets_coordinates( asset_coordinates )
+{
+}
+
+Entity::Entity()
+    : Entity( std::array< float, 4 >() )
 {
 }
 
@@ -17,7 +22,7 @@ Entity::Entity( std::array< float, 4 > asset_coords )
  * @param entity The entity to copy the information from
  */
 Entity::Entity( const Entity& entity )
-    : Entity( entity._assets_coords )
+    : Entity( entity._assets_coordinates )
 {
 }
 
@@ -30,7 +35,7 @@ Entity& Entity::operator=( const Entity& entity )
 {
     if ( &entity != this )
     {
-        _assets_coords = entity._assets_coords;
+        _assets_coordinates = entity._assets_coordinates;
     }
     return *this;
 }
@@ -45,24 +50,24 @@ Entity::~Entity()
  * Getter for the assets coordinates
  * @return Array of floats containing the asset's coordinates
  */
-std::array< float, 4 > Entity::get_asset_coords() const
+std::array< float, 4 > Entity::get_asset_coordinates() const
 {
-    return _assets_coords;
+    return _assets_coordinates;
 }
 
 /**
  * Setter for the asset's coordinates
- * @param asset_coords The assets to retrieve and set as new
+ * @param asset_coordinates The assets to retrieve and set as new
  */
-void Entity::set_asset_coords( std::array< float, 4 > asset_coords )
+void Entity::set_asset_coordinates( const std::array< float, 4 > asset_coordinates )
 {
-    _assets_coords = asset_coords;
+    _assets_coordinates = asset_coordinates;
 }
 
 /**
  * Visual real-time update of a movable entity along with its commands
  */
-void Entity::update_current( sf::Time dt, Command_Queue& commands )
+void Entity::update_current( const sf::Time dt, Command_Queue& commands )
 {
     ( void ) dt;
     ( void ) commands;

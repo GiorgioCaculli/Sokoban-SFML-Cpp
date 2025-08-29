@@ -19,7 +19,6 @@ Animation::Animation()
  */
 Animation::Animation( const sf::Texture& texture )
     : _sprite( texture )
-      , _frame_size()
       , _num_frames( 0 )
       , _current_frame( 0 )
       , _duration( sf::Time::Zero )
@@ -50,7 +49,7 @@ const sf::Texture* Animation::get_texture() const
  * Setter for the current frame size
  * @param frame_size The new frame size
  */
-void Animation::set_frame_size( sf::Vector2i frame_size )
+void Animation::set_frame_size( const sf::Vector2i frame_size )
 {
     _frame_size = frame_size;
 }
@@ -68,7 +67,7 @@ sf::Vector2i Animation::get_frame_size() const
  * Setter for the number of frames
  * @param num_frames The new number of frames
  */
-void Animation::set_num_frames( std::size_t num_frames )
+void Animation::set_num_frames( const std::size_t num_frames )
 {
     _num_frames = num_frames;
 }
@@ -86,7 +85,7 @@ std::size_t Animation::get_num_frames() const
  * Setter that defines whether the animation loops or not
  * @param flag Whether the animation loops or not
  */
-void Animation::set_repeating( bool flag )
+void Animation::set_repeating( const bool flag )
 {
     _repeat = flag;
 }

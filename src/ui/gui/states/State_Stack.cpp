@@ -9,11 +9,8 @@ using namespace sokoban::ui::gui;
  * Default constructor for the Stack containing the various states
  * @param context Globally accessible context containing the various resources
  */
-State_Stack::State_Stack( State::Context context )
-    : _stack()
-      , _pending_list()
-      , _context( context )
-      , _factories()
+State_Stack::State_Stack( const State::Context& context )
+    : _context( context )
 {
 }
 
@@ -21,7 +18,7 @@ State_Stack::State_Stack( State::Context context )
  * Realtime update the various states within the stack
  * @param dt The clock time
  */
-void State_Stack::update( sf::Time dt )
+void State_Stack::update( const sf::Time dt )
 {
     for ( const auto & itr : std::ranges::reverse_view(_stack))
     {
@@ -36,9 +33,9 @@ void State_Stack::update( sf::Time dt )
 /**
  * Visually display the various states within the stack
  */
-void State_Stack::draw()
+void State_Stack::draw() const
 {
-    for ( State::Ptr& state: _stack )
+    for ( const State::Ptr& state: _stack )
     {
         state->draw();
     }
@@ -99,9 +96,9 @@ bool State_Stack::is_empty() const
  * @param state_id The ID that characterizes the state
  * @return The State from its ID
  */
-State::Ptr State_Stack::create_state( States::ID state_id )
+State::Ptr State_Stack::create_state( const States::ID state_id )
 {
-    auto found = _factories.find( state_id );
+    const auto found = _factories.find( state_id );
     assert( found != _factories.end() );
     return found->second();
 }
@@ -111,7 +108,7 @@ State::Ptr State_Stack::create_state( States::ID state_id )
  */
 void State_Stack::apply_pending_changes()
 {
-    for ( Pending_Change change: _pending_list )
+    for ( const Pending_Change change: _pending_list )
     {
         switch ( change._action )
         {
@@ -134,7 +131,7 @@ void State_Stack::apply_pending_changes()
  * @param action The action that has to be executed
  * @param state_id The ID that characterizes the state that calls the action
  */
-State_Stack::Pending_Change::Pending_Change( State_Stack::Action action, States::ID state_id )
+State_Stack::Pending_Change::Pending_Change( const Action action, const States::ID state_id )
     : _action( action )
       , _state_id( state_id )
 {

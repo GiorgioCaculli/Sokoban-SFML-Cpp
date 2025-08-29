@@ -4,17 +4,14 @@
 #include <gzc/games/sokoban/core/Player.hpp>
 #include <ui/gui/entities/Entity_Movable.hpp>
 
-#include <SFML/Window/Event.hpp>
-
 #include <map>
 #include <array>
 #include <string>
-#include <ostream>
 
 
 namespace sokoban::ui::gui::entity
 {
-    class Entity_Player
+    class Entity_Player final
             : public core::Player
               , public Entity_Movable
     {

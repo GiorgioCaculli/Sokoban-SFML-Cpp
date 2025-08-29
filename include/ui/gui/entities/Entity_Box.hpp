@@ -7,13 +7,12 @@
 #include <map>
 #include <array>
 #include <string>
-#include <ostream>
 
 
 namespace sokoban::ui::gui::entity
 {
-    class Entity_Box
-            : public sokoban::core::Box
+    class Entity_Box final
+            : public core::Box
               , public Entity_Movable
     {
     public:

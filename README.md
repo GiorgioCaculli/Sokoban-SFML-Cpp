@@ -10,6 +10,7 @@
 
 ## Dependencies
 - [SFML 3.0.1](https://www.sfml-dev.org/)
+- [Boost Filesystem](https://www.boost.org/doc/libs/1_89_0/libs/filesystem/doc/index.htm)
 - [GzC Sokoban Core](https://www.gitlab.com/GiorgioCaculli/Sokoban-Cpp)
 - [GzC Utils](https://www.gitlab.com/GiorgioCaculli/Util-Cpp)
 

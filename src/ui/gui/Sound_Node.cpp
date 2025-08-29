@@ -9,8 +9,7 @@ using namespace sokoban::ui::gui;
  * @param player The Sound Player that interacts with the node
  */
 Sound_Node::Sound_Node( Sound_Player& player )
-    : Scene_Node()
-      , _sounds( player )
+    : _sounds( player )
 {
 }
 
@@ -19,7 +18,7 @@ Sound_Node::Sound_Node( Sound_Player& player )
  * @param sound The sound effect to play
  * @param position The position on the map
  */
-void Sound_Node::play_sound( Sound_Effect::ID sound, sf::Vector2f position )
+void Sound_Node::play_sound( const Sound_Effect::ID sound, const sf::Vector2f position ) const
 {
     _sounds.play( sound, position );
 }

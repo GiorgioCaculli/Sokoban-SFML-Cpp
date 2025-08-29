@@ -36,14 +36,14 @@ namespace sokoban::ui::gui
             Clear /** Clear the entirety of the stack */
         };
 
-        explicit State_Stack( State::Context context );
+        explicit State_Stack( const State::Context& context );
 
         template< typename T >
         void register_state( States::ID state_id );
 
         void update( sf::Time dt );
 
-        void draw();
+        void draw() const;
 
         void handle_event( const sf::Event& event );
 

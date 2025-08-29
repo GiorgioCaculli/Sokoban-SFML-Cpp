@@ -14,9 +14,7 @@ namespace
  * Default constructor for the music player
  */
 Music_Player::Music_Player()
-    : _music()
-      , _filenames()
-      , _volume( 100.f )
+    : _volume( 100.f )
 {
     _filenames[ Music::Field_Desolate_Domain ] = "res/music/Field_-_Desolate_Domain.ogg";
     _filenames[ Music::Field_Golden_Harvest ] = "res/music/Field_-_Golden_Harvest.ogg";
@@ -44,10 +42,9 @@ Music_Player::Music_Player()
  * Function that plays a song based on its ID
  * @param song The song we wish to play
  */
-void Music_Player::play( Music::ID song )
+void Music_Player::play( const Music::ID song )
 {
-    std::string filename = _filenames[ song ];
-    if ( !_music.openFromFile( filename ) )
+    if ( const std::string filename = _filenames[ song ]; !_music.openFromFile( filename ) )
     {
         logger.log( Logger::Level::ERROR, "Music " + filename + " could not be loaded" );
         throw std::runtime_error( "Music " + filename + " could not be loaded" );
@@ -69,7 +66,7 @@ void Music_Player::stop()
  * Function meant to pause a song
  * @param paused Whether the song is paused or not
  */
-void Music_Player::set_paused( bool paused )
+void Music_Player::set_paused( const bool paused )
 {
     if ( paused )
     {
@@ -84,7 +81,7 @@ void Music_Player::set_paused( bool paused )
  * Volume setter for the song
  * @param volume The value of the volume
  */
-void Music_Player::set_volume( float volume )
+void Music_Player::set_volume( const float volume )
 {
     _volume = volume;
     _music.setVolume( _volume );

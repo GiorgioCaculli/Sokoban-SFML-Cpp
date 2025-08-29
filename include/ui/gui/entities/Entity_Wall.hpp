@@ -7,13 +7,12 @@
 #include <map>
 #include <array>
 #include <string>
-#include <ostream>
 
 
 namespace sokoban::ui::gui::entity
 {
-    class Entity_Wall
-            : public sokoban::core::Wall
+    class Entity_Wall final
+            : public core::Wall
               , public Entity
     {
     public:
@@ -33,7 +32,7 @@ namespace sokoban::ui::gui::entity
 
         ~Entity_Wall() override;
 
-        std::string to_string() const;
+        std::string to_string() const override;
 
         const std::map< Color, std::array< float, 4 > >& get_wall_color_map() const;
 

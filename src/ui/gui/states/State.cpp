@@ -27,7 +27,7 @@ State::Context::Context( sf::RenderWindow& window, Texture_Holder& textures, Fon
  * @param stack The stack containing the state
  * @param context The context that can be accessed throughout each state
  */
-State::State( State_Stack& stack, State::Context context )
+State::State( State_Stack& stack, const Context& context )
     : _stack( &stack )
       , _context( context )
 {
@@ -43,7 +43,7 @@ State::~State()
  * Function meant to insert a state inside the stack based on its ID
  * @param stateID The unique ID of the state
  */
-void State::request_stack_push( States::ID stateID )
+void State::request_stack_push( const States::ID stateID ) const
 {
     _stack->push_state( stateID );
 }
@@ -51,7 +51,7 @@ void State::request_stack_push( States::ID stateID )
 /**
  * Function meant to remove a state from the stack
  */
-void State::request_stack_pop()
+void State::request_stack_pop() const
 {
     _stack->pop_state();
 }
@@ -59,7 +59,7 @@ void State::request_stack_pop()
 /**
  * Stack meant to clear out completely the stack
  */
-void State::request_state_clear()
+void State::request_state_clear() const
 {
     _stack->clear_states();
 }
