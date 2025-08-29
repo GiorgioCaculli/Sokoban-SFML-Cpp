@@ -1,3 +1,4 @@
+#include <iostream>
 #include <ui/gui//states/State_Title.hpp>
 
 #include <gzc/util/logger/Logger.hpp>
@@ -91,8 +92,11 @@ bool State_Title::handle_event( const sf::Event& event )
 {
     if ( const auto *keyReleased = event.getIf<sf::Event::KeyReleased>() )
     {
-        request_stack_pop();
-        request_stack_push( States::Menu );
+        if ( keyReleased->scancode == sf::Keyboard::Scancode::Enter || keyReleased->scancode == sf::Keyboard::Scancode::Space )
+        {
+            request_stack_pop();
+            request_stack_push( States::Menu );
+        }
     }
     return true;
 }

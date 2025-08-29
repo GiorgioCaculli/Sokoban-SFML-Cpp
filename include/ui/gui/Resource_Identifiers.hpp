@@ -1,13 +1,18 @@
 #ifndef SOKOBAN_RESOURCE_IDENTIFIERS_HPP
 #define SOKOBAN_RESOURCE_IDENTIFIERS_HPP
 
-namespace sf
-{
-    class Texture;
-    class Font;
-    class Shader;
-    class SoundBuffer;
-}
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Shader.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
+#include <SFML/Graphics/Texture.hpp>
+
+//namespace sf
+//{
+//    class Texture;
+//    class Font;
+//    class Shader;
+//    class SoundBuffer;
+//}
 
 
 namespace sokoban::ui

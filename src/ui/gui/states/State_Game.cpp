@@ -36,7 +36,7 @@ bool sort_alphabetically( const boost::filesystem::path& a, const boost::filesys
  */
 std::vector< boost::filesystem::path > get_all_levels()
 {
-    const boost::filesystem::path root = "assets/levels";
+    const boost::filesystem::path root = "res/levels";
     const std::string extension = ".lvl";
     std::vector< boost::filesystem::path > paths;
     if ( boost::filesystem::exists( root ) && boost::filesystem::is_directory( root ) )

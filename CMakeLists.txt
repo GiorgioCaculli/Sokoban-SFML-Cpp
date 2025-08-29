@@ -48,8 +48,9 @@ find_library(GZC_GAMES_SOKOBAN sokoban_core REQUIRED)
 
 set(SFML_STATIC_LIBRARIES OFF)
 find_package(SFML 3 REQUIRED COMPONENTS Audio Graphics Network System Window)
+find_package(Boost REQUIRED COMPONENTS filesystem)
 
-include_directories(${SFML_INCLUDE_DIRS} ${GZC_GAMES_SOKOBAN_INCLUDE_DIRS})
+include_directories(${SFML_INCLUDE_DIRS} ${GZC_GAMES_SOKOBAN_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 include_directories(include)
 
 add_executable(Sokoban
@@ -82,4 +83,4 @@ add_executable(Sokoban
         src/ui/gui/components/Container.cpp
         src/ui/gui/components/Label.cpp)
 
-target_link_libraries(Sokoban PUBLIC ${GZC_GAMES_SOKOBAN} ${GZC_UTIL_LOGGER} ${GZC_UTIL_SERIALIZE} SFML::Audio SFML::Graphics SFML::Network SFML::System SFML::Window)
+target_link_libraries(Sokoban PUBLIC ${GZC_GAMES_SOKOBAN} ${GZC_UTIL_LOGGER} ${GZC_UTIL_SERIALIZE} SFML::Audio SFML::Graphics SFML::Network SFML::System SFML::Window ${Boost_LIBRARIES})
