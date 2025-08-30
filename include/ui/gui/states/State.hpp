@@ -4,6 +4,7 @@
 
 #include <ui/gui/states/State_Identifiers.hpp>
 #include <ui/gui/Resource_Identifiers.hpp>
+#include <ui/gui/Resource_Bundle.hpp>
 
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Event.hpp>
@@ -36,13 +37,14 @@ namespace sokoban::ui::gui
         struct Context
         {
             Context( sf::RenderWindow& window, Texture_Holder& textures, Font_Holder& fonts,
-                     Music_Player& music, Sound_Player& sounds );
+                     Music_Player& music, Sound_Player& sounds, Resource_Bundle& resources );
 
             sf::RenderWindow* _window;
             Texture_Holder* _textures;
             Font_Holder* _fonts;
             Music_Player* _music;
             Sound_Player* _sounds;
+            Resource_Bundle* _resource_bundle;
         };
 
         State( State_Stack& stack, const Context& context );

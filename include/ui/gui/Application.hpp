@@ -13,7 +13,7 @@
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include <ui/gui/ResourceBundle.hpp>
+#include <ui/gui/Resource_Bundle.hpp>
 
 
 namespace sokoban::ui::gui
@@ -38,7 +38,6 @@ namespace sokoban::ui::gui
         std::string _title;
         const uint16_t _bits_per_pixel;
         Logger _logger;
-        Resource_Bundle _resource_bundle;
         static const sf::Time _time_per_frame; /** The amount of frames per second we wish to display */
         sf::RenderWindow _window; /** The window where the drawables are shown */
         sf::Font _default_font;
@@ -50,6 +49,7 @@ namespace sokoban::ui::gui
         State_Stack _state_stack; /** The stack containing the various states */
         Texture_Holder _textures; /** The default texture holder */
         Font_Holder _fonts; /** The default font holder */
+        Resource_Bundle _resource_bundle;
         void process_input();
         void update( const sf::Time& delta_time );
         void render();

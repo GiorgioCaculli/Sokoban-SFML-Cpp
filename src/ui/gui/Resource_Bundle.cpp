@@ -1,4 +1,4 @@
-#include <ui/gui/ResourceBundle.hpp>
+#include <ui/gui/Resource_Bundle.hpp>
 #include <utility>
 
 Resource_Bundle::Resource_Bundle( std::string path, const std::string& locale )

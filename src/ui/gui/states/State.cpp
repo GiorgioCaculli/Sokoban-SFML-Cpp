@@ -11,14 +11,16 @@ using namespace sokoban::ui::gui;
  * @param fonts The various fonts used throughout the usage of the software
  * @param music The various songs that can be heard
  * @param sounds The various sound effects played
+ * @param resource_bundle The various strings to load based on the detected language
  */
 State::Context::Context( sf::RenderWindow& window, Texture_Holder& textures, Font_Holder& fonts, Music_Player& music,
-                         Sound_Player& sounds )
+                         Sound_Player& sounds, Resource_Bundle& resource_bundle )
     : _window( &window )
       , _textures( &textures )
       , _fonts( &fonts )
       , _music( &music )
       , _sounds( &sounds )
+      , _resource_bundle( &resource_bundle )
 {
 }
 
