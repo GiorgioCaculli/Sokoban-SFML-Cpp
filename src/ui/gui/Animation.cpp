@@ -138,12 +138,12 @@ sf::FloatRect Animation::get_global_bounds() const
  * Realtime update each frame of the animation
  * @param dt The clock time
  */
-void Animation::update( sf::Time dt )
+void Animation::update( const sf::Time dt )
 {
-    sf::Time time_per_frame = _duration / static_cast< float >( _num_frames );
+    const sf::Time time_per_frame = _duration / static_cast< float >( _num_frames );
     _elapsed_time += dt;
 
-    sf::Vector2i texture_bounds( _sprite.getTexture().getSize() );
+    const sf::Vector2i texture_bounds( _sprite.getTexture().getSize() );
     sf::IntRect texture_rect = _sprite.getTextureRect();
 
     if ( _current_frame == 0 )
