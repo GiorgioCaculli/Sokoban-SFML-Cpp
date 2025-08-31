@@ -18,7 +18,7 @@ namespace sokoban::ui::gui
 {
     class Sound_Player;
 
-    class Button
+    class Button final
             : public Component
     {
     public:

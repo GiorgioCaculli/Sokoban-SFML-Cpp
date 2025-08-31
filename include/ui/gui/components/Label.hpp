@@ -10,7 +10,7 @@
 
 namespace sokoban::ui::gui
 {
-    class Label
+    class Label final
             : public Component
     {
     public:

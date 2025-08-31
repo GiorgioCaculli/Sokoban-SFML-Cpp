@@ -26,7 +26,7 @@ namespace sokoban::ui::gui
 
         Component();
 
-        virtual ~Component();
+        ~Component() override;
 
         virtual bool is_selectable() const = 0;
 

@@ -9,7 +9,7 @@
 
 namespace sokoban::ui::gui
 {
-    class State_Title
+    class State_Title final
             : public State
     {
     public:

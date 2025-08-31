@@ -49,7 +49,7 @@ namespace sokoban::ui::gui
         State_Stack _state_stack; /** The stack containing the various states */
         Texture_Holder _textures; /** The default texture holder */
         Font_Holder _fonts; /** The default font holder */
-        Resource_Bundle _resource_bundle;
+        Resource_Bundle _resource_bundle; /* The default resource bundle holding translated strings */
         void process_input();
         void update( const sf::Time& delta_time );
         void render();

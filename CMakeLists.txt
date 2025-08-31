@@ -65,6 +65,7 @@ add_executable(Sokoban
         src/ui/gui/Sprite_Node.cpp
         src/ui/gui/Utility.cpp
         src/ui/gui/World.cpp
+        src/ui/gui/Resource_Bundle.cpp
         src/ui/gui/states/State.cpp
         src/ui/gui/states/State_Game.cpp
         src/ui/gui/states/State_Menu.cpp
@@ -82,6 +83,8 @@ add_executable(Sokoban
         src/ui/gui/components/Button.cpp
         src/ui/gui/components/Container.cpp
         src/ui/gui/components/Label.cpp
-        src/ui/gui/Resource_Bundle.cpp)
+        src/net/Packet.cpp
+        src/net/Client.cpp
+        src/net/Server.cpp)
 
 target_link_libraries(Sokoban PUBLIC ${GZC_GAMES_SOKOBAN} ${GZC_UTIL_LOGGER} ${GZC_UTIL_SERIALIZE} SFML::Audio SFML::Graphics SFML::Network SFML::System SFML::Window ${Boost_LIBRARIES})

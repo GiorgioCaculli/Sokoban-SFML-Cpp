@@ -9,7 +9,7 @@
 
 namespace sokoban::ui::gui
 {
-    class State_Menu
+    class State_Menu final
             : public State
     {
     public:

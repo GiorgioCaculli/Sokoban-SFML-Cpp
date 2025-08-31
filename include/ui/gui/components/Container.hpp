@@ -9,7 +9,7 @@
 
 namespace sokoban::ui::gui
 {
-    class Container
+    class Container final
             : public Component
     {
     public:

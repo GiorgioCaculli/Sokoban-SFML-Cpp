@@ -10,7 +10,7 @@
 
 namespace sokoban::ui::gui
 {
-    class State_Pause
+    class State_Pause final
             : public State
     {
     public:

@@ -11,7 +11,7 @@
 
 namespace sokoban::ui::gui
 {
-    class State_Settings
+    class State_Settings final
             : public State
     {
     public:

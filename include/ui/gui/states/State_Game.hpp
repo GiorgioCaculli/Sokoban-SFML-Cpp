@@ -10,7 +10,7 @@
 
 namespace sokoban::ui::gui
 {
-    class State_Game
+    class State_Game final
             : public State
     {
     public:
