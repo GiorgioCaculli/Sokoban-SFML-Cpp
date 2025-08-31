@@ -28,9 +28,9 @@ namespace
  * @param key The key to be converted
  * @return The key in textual form
  */
-std::string Utility::to_string( const sf::Keyboard::Key key )
+std::string Utility::to_string( const sf::Keyboard::Scancode key )
 {
-#define BOOK_KEY_TO_STRING_CASE( KEY ) case sf::Keyboard::Key::KEY: return #KEY;
+#define BOOK_KEY_TO_STRING_CASE( KEY ) case sf::Keyboard::Scancode::KEY: return #KEY;
 
     switch ( key )
     {
@@ -100,10 +100,6 @@ std::string Utility::to_string( const sf::Keyboard::Key key )
         BOOK_KEY_TO_STRING_CASE( Home )
         BOOK_KEY_TO_STRING_CASE( Insert )
         BOOK_KEY_TO_STRING_CASE( Delete )
-        BOOK_KEY_TO_STRING_CASE( Add )
-        BOOK_KEY_TO_STRING_CASE( Subtract )
-        BOOK_KEY_TO_STRING_CASE( Multiply )
-        BOOK_KEY_TO_STRING_CASE( Divide )
         BOOK_KEY_TO_STRING_CASE( Left )
         BOOK_KEY_TO_STRING_CASE( Right )
         BOOK_KEY_TO_STRING_CASE( Up )
@@ -133,10 +129,10 @@ std::string Utility::to_string( const sf::Keyboard::Key key )
         BOOK_KEY_TO_STRING_CASE( F13 )
         BOOK_KEY_TO_STRING_CASE( F14 )
         BOOK_KEY_TO_STRING_CASE( F15 )
-    BOOK_KEY_TO_STRING_CASE( Pause )
-    default:
-        break;
-        //case sf::Keyboard::KeyCount: // TODO: No idea why this breaks, migration documentation does not mention anything about this but I will figure it out
+        BOOK_KEY_TO_STRING_CASE( Pause )
+        default:
+            break;
+            //case sf::Keyboard::KeyCount: // TODO: No idea why this breaks, migration documentation does not mention anything about this but I will figure it out
             //break;
     }
     return "";

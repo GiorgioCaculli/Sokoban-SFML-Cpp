@@ -89,6 +89,11 @@ bool State_Title::update( const sf::Time dt )
  */
 bool State_Title::handle_event( const sf::Event& event )
 {
+    return _callback_start_game( event );
+}
+
+bool State_Title::_callback_start_game( const sf::Event& event ) const
+{
     if ( const auto *keyReleased = event.getIf<sf::Event::KeyReleased>() )
     {
         if ( keyReleased->scancode == sf::Keyboard::Scancode::Enter || keyReleased->scancode == sf::Keyboard::Scancode::Space )

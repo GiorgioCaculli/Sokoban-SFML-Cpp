@@ -85,6 +85,10 @@ add_executable(Sokoban
         src/ui/gui/components/Label.cpp
         src/net/Packet.cpp
         src/net/Client.cpp
-        src/net/Server.cpp)
+        src/net/Server.cpp
+        src/input/Keyboard.cpp
+        src/input/Keyboard.hpp
+        src/input/Mouse.cpp
+        src/input/Mouse.hpp)
 
 target_link_libraries(Sokoban PUBLIC ${GZC_GAMES_SOKOBAN} ${GZC_UTIL_LOGGER} ${GZC_UTIL_SERIALIZE} SFML::Audio SFML::Graphics SFML::Network SFML::System SFML::Window ${Boost_LIBRARIES})
