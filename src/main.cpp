@@ -25,16 +25,16 @@ int main( int argc, char* argv[ ] )
 
     std::cout << std::endl;
 
-    Logger logger( "main", "sokoban.log", true );
+    const Logger logger( "main", "sokoban.log", true );
     remove( logger.get_file_name().c_str() );
 
     logger.log( Logger::Level::INFO, "Starting Menu..." );
 
-    Menu menu;
+    const Menu menu;
 
     logger.log( Logger::Level::INFO, "Running Game..." );
 
-    int res = menu.launch_application();
+    const int res = menu.launch_application();
 
     logger.log( Logger::Level::INFO, "Closing Sokoban..." );
 

@@ -41,6 +41,10 @@ State_Settings::State_Settings( State_Stack& stack, Context context )
     _sound_effect_volume_button->set_text( std::to_string( static_cast< int >( get_context()._sounds->get_volume() ) ) );
     _sound_effect_volume_button->set_toggle( true );
 
+    _network_button = std::make_shared< Button >( context );
+    _network_button->set_text( "Enable Network" );
+    _network_button->set_toggle( true );
+
     const auto back_button = std::make_shared< Button >( context );
     back_button->set_text( "Back" );
     back_button->set_callback( [ this ]
@@ -69,6 +73,7 @@ State_Settings::State_Settings( State_Stack& stack, Context context )
     _container.pack( music_label );
     _container.pack( _sound_effect_volume_button );
     _container.pack( sound_effect_label );
+    _container.pack( _network_button );
     _container.pack( back_button );
 
     _settings_text.setString( "Settings" );

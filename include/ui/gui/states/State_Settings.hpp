@@ -29,6 +29,7 @@ namespace sokoban::ui::gui
         Container _container; /** The container containing the various components */
         Button::Ptr _music_volume_button; /** The music volume button */
         Button::Ptr _sound_effect_volume_button; /** The sound effect volume button */
+        Button::Ptr _network_button; /** Button to activate network features */
         void change_sound_effect_volume( float val ) const;
 
         void change_music_volume( float val ) const;
