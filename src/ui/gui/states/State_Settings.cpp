@@ -33,6 +33,7 @@ State_Settings::State_Settings( State_Stack& stack, Context context )
     Utility::center_origin( _background_sprite );
     _background_sprite.setPosition( view_size / 2.f );
 
+    /* Initialize buttons */
     _music_volume_button = std::make_shared< Button >( context );
     _music_volume_button->set_text( std::to_string( static_cast< int >( get_context()._music->get_volume() ) ) );
     _music_volume_button->set_toggle( true );
@@ -42,8 +43,8 @@ State_Settings::State_Settings( State_Stack& stack, Context context )
     _sound_effect_volume_button->set_toggle( true );
 
     _network_button = std::make_shared< Button >( context );
-    _network_button->set_text( "Enable Network" );
-    _network_button->set_toggle( true );
+    _network_button->set_text( "Disabled" );
+    _network_button->set_toggle( false );
 
     const auto back_button = std::make_shared< Button >( context );
     back_button->set_text( "Back" );
@@ -52,27 +53,36 @@ State_Settings::State_Settings( State_Stack& stack, Context context )
         request_stack_pop();
     } );
 
-    _sound_effect_volume_button->setPosition( context._window->getView().getSize() / 2.f );
+    /* Position buttons and related labels */
+    _sound_effect_volume_button->setPosition( sf::Vector2f( view_size.x / 2.f, ( view_size.y / 2.f ) - 100.f ) );
     _sound_effect_volume_button->setOrigin( sf::Vector2f( 100.f, 25.f ) );
 
     const auto sound_effect_label = std::make_shared< Label >( *get_context()._fonts, "Sound Effect Volume", 24.f );
     sound_effect_label->setPosition( _sound_effect_volume_button->getPosition() - sf::Vector2f( 0, 25.f ) );
     sound_effect_label->setOrigin( sf::Vector2f( 100.f, 25.f ) );
 
-    _music_volume_button->setPosition( _sound_effect_volume_button->getPosition() - sf::Vector2f( 0, 100.f ) );
+    _music_volume_button->setPosition( _sound_effect_volume_button->getPosition() + sf::Vector2f( 0, 100.f ) );
     _music_volume_button->setOrigin( sf::Vector2f( 100.f, 25.f ) );
 
     const auto music_label = std::make_shared< Label >( *get_context()._fonts, "Music Volume", 24.f );
     music_label->setPosition( _music_volume_button->getPosition() - sf::Vector2f( 0, 25.f ) );
     music_label->setOrigin( sf::Vector2f( 100.f, 25.f ) );
 
-    back_button->setPosition( _sound_effect_volume_button->getPosition() + sf::Vector2f( 0, 100.f ) );
+    _network_button->setPosition( _music_volume_button->getPosition() + sf::Vector2f( 0, 100.f ) );
+    _network_button->setOrigin( sf::Vector2f( 100.f, 25.f ) );
+
+    const auto network_label = std::make_shared< Label >( *get_context()._fonts, "Enable Network", 24.f );
+    network_label->setPosition( _network_button->getPosition() - sf::Vector2f( 0, 25.f ) );
+    network_label->setOrigin( sf::Vector2f( 100.f, 25.f ) );
+
+    back_button->setPosition( _network_button->getPosition() + sf::Vector2f( 0, 100.f ) );
     back_button->setOrigin( sf::Vector2f( 100.f, 25.f ) );
 
-    _container.pack( _music_volume_button );
-    _container.pack( music_label );
-    _container.pack( _sound_effect_volume_button );
     _container.pack( sound_effect_label );
+    _container.pack( _sound_effect_volume_button );
+    _container.pack( music_label );
+    _container.pack( _music_volume_button );
+    _container.pack( network_label );
     _container.pack( _network_button );
     _container.pack( back_button );
 
