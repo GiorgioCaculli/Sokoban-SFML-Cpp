@@ -21,7 +21,7 @@ Application::Application( const uint16_t width, const uint16_t height, std::stri
       , _title( std::move( title ) )
       , _bits_per_pixel( 32 )
       , _logger( "Application", "sokoban.log", true )
-      , _window( sf::VideoMode( sf::Vector2u( _width, _height ), _bits_per_pixel ), _title, sf::State::Fullscreen )
+      , _window( sf::VideoMode( sf::Vector2u( _width, _height ), _bits_per_pixel ), _title, sf::State::Windowed )
       , _default_font( sf::Font( "res/fonts/KodomoRounded.otf" ) )
       , _statistics_text( sf::Text( _default_font, "", 32 ) )
       , _statistics_num_frames( 0 )

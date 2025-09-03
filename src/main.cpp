@@ -2,6 +2,7 @@
 #include <gzc/util/logger/Logger.hpp>
 
 #include <iostream>
+#include <vector>
 
 using namespace sokoban::ui;
 using namespace gzc::util::logger;
@@ -14,13 +15,20 @@ using namespace gzc::util::logger;
  * which will be used to start the application.
  * If no exception is caught, the program will return 0, otherwise -1.
  */
-int main( int argc, char* argv[ ] )
+int main( const int argc, char* argv[ ] )
 {
+    bool debugging = false;
     std::cout << "Calling: ";
+    std::vector< std::string > args( argc );
 
     for ( int i = 0; i < argc; i++ )
     {
         std::cout << argv[ i ] << " ";
+        args[ i ] = argv[ i ];
+        if ( args[ i ].find( "--debug" ) != std::string::npos || args[ i ].find( "-d" ) != std::string::npos )
+        {
+            debugging = true;
+        }
     }
 
     std::cout << std::endl;
@@ -30,11 +38,21 @@ int main( int argc, char* argv[ ] )
 
     logger.log( Logger::Level::INFO, "Starting Menu..." );
 
-    const Menu menu;
+    int res = 0;
 
-    logger.log( Logger::Level::INFO, "Running Game..." );
+    if ( debugging )
+    {
+        const Menu menu( true );
+        logger.log( Logger::Level::INFO, "Running Game in debug mode" );
 
-    const int res = menu.launch_application();
+        res = menu.launch_application();
+    } else
+    {
+        const Menu menu;
+        logger.log( Logger::Level::INFO, "Running Game..." );
+
+        res = menu.launch_application();
+    }
 
     logger.log( Logger::Level::INFO, "Closing Sokoban..." );
 

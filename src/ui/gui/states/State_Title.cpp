@@ -89,18 +89,26 @@ bool State_Title::update( const sf::Time dt )
  */
 bool State_Title::handle_event( const sf::Event& event )
 {
-    return _callback_start_game( event );
-}
-
-bool State_Title::_callback_start_game( const sf::Event& event ) const
-{
     if ( const auto *keyReleased = event.getIf<sf::Event::KeyReleased>() )
     {
         if ( keyReleased->scancode == sf::Keyboard::Scancode::Enter || keyReleased->scancode == sf::Keyboard::Scancode::Space )
         {
             request_stack_pop();
             request_stack_push( States::Menu );
+            return true;
         }
     }
+    /*return get_context()._keyboard->pressing( sf::Keyboard::Scancode::Enter, [ this ]
+    {
+        return _callback_start_game();
+    } );*/
+    return false;
+}
+
+/* TODO: Call this when the keyboard Interactions work works */
+bool State_Title::_callback_start_game() const
+{
+    request_stack_pop();
+    request_stack_push( States::Menu );
     return true;
 }

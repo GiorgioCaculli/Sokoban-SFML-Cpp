@@ -21,6 +21,7 @@ State::Context::Context( sf::RenderWindow& window, Texture_Holder& textures, Fon
       , _music( &music )
       , _sounds( &sounds )
       , _resource_bundle( &resource_bundle )
+      , _keyboard( new input::Keyboard() )
 {
 }
 

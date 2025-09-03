@@ -28,7 +28,7 @@ namespace sokoban::ui::gui
         sf::Text _title_sub_text; /** The sub text translating Sokoban from Japanese */
         bool _show_text; /** Bool that states whether the text has to be hidden or not */
         sf::Time _text_effect_time; /** Timer for the text to blink */
-        bool _callback_start_game( const sf::Event& event ) const;
+        bool _callback_start_game() const;
     };
 }
 

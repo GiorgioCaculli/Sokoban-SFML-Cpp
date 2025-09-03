@@ -11,6 +11,8 @@
 
 #include <memory>
 
+#include "input/Keyboard.hpp"
+
 /**
  * Pre declaration of the SFML RenderWindow class
  */
@@ -45,6 +47,7 @@ namespace sokoban::ui::gui
             Music_Player* _music;
             Sound_Player* _sounds;
             Resource_Bundle* _resource_bundle;
+            input::Keyboard *_keyboard;
         };
 
         State( State_Stack& stack, const Context& context );

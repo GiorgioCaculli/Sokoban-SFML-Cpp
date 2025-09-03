@@ -2,17 +2,24 @@
 #define SOKOBAN_KEYBOARD_HPP
 #include <SFML/Window/Event.hpp>
 
+#include <functional>
+
 namespace sokoban::input
 {
     class Keyboard
     {
     private:
-        bool _is_key_pressed;
-        bool _is_key_released;
-        bool _is_key_held;
+        sf::Event::KeyPressed *_key_pressed;
+        sf::Event::KeyReleased *_key_released;
     public:
         Keyboard();
         ~Keyboard();
+        bool pressing( sf::Keyboard::Scancode, std::function<bool()>&& ) const;
+        bool releasing( sf::Keyboard::Scancode, std::function<bool()>&& ) const;
+        template< typename T >
+        std::string to_string( const T& value );
+
+        std::string to_string( sf::Keyboard::Scancode key );
     };
 }
 
