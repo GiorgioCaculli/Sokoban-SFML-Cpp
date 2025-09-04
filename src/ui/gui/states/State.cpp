@@ -12,16 +12,17 @@ using namespace sokoban::ui::gui;
  * @param music The various songs that can be heard
  * @param sounds The various sound effects played
  * @param resource_bundle The various strings to load based on the detected language
+ * @param keyboard The default keyboard input handler
  */
 State::Context::Context( sf::RenderWindow& window, Texture_Holder& textures, Font_Holder& fonts, Music_Player& music,
-                         Sound_Player& sounds, Resource_Bundle& resource_bundle )
+                         Sound_Player& sounds, Resource_Bundle& resource_bundle, input::Keyboard& keyboard )
     : _window( &window )
       , _textures( &textures )
       , _fonts( &fonts )
       , _music( &music )
       , _sounds( &sounds )
       , _resource_bundle( &resource_bundle )
-      , _keyboard( new input::Keyboard() )
+      , _keyboard( &keyboard )
 {
 }
 

@@ -50,6 +50,7 @@ namespace sokoban::ui::gui
         Texture_Holder _textures; /** The default texture holder */
         Font_Holder _fonts; /** The default font holder */
         Resource_Bundle _resource_bundle; /* The default resource bundle holding translated strings */
+        input::Keyboard _keyboard; /* Default Keyboard input handler */
         void process_input();
         void update( const sf::Time& delta_time );
         void render();

@@ -18,9 +18,10 @@ State_Menu::State_Menu( State_Stack& stack, Context context )
     : State( stack, context )
     , _background_sprite( context._textures->get( Textures::Title_Screen ) )
 {
+    const auto window_view_size = context._window->getView().getSize();
     //sf::Font &font = context._fonts->get( Fonts::Rampart_One );
     Utility::center_origin( _background_sprite );
-    _background_sprite.setPosition( context._window->getView().getSize() / 2.f );
+    _background_sprite.setPosition( window_view_size / 2.f );
 
     const auto play_button = std::make_shared< Button >( context );
     play_button->set_text( "Play" );
@@ -44,7 +45,7 @@ State_Menu::State_Menu( State_Stack& stack, Context context )
         get_context()._window->close();
     } );
 
-    settings_button->setPosition( context._window->getView().getSize() / 2.f );
+    settings_button->setPosition( window_view_size / 2.f );
     settings_button->setOrigin( sf::Vector2f( 100.f, 25.f ) );
     play_button->setPosition( settings_button->getPosition() - sf::Vector2f( 0, 100.f ) );
     play_button->setOrigin( sf::Vector2f( 100.f, 25.f ) );

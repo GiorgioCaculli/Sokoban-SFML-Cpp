@@ -39,7 +39,7 @@ namespace sokoban::ui::gui
         struct Context
         {
             Context( sf::RenderWindow& window, Texture_Holder& textures, Font_Holder& fonts,
-                     Music_Player& music, Sound_Player& sounds, Resource_Bundle& resources );
+                     Music_Player& music, Sound_Player& sounds, Resource_Bundle& resources, input::Keyboard& keyboard );
 
             sf::RenderWindow* _window;
             Texture_Holder* _textures;
