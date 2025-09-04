@@ -3,19 +3,18 @@
 #include <SFML/Window/Event.hpp>
 
 #include <functional>
+#include <vector>
 
 namespace sokoban::input
 {
     class Keyboard
     {
     private:
-        sf::Event::KeyPressed *_key_pressed;
-        sf::Event::KeyReleased *_key_released;
     public:
         Keyboard();
         ~Keyboard();
-        bool pressing( sf::Keyboard::Scancode, std::function<bool()>&& ) const;
-        bool releasing( sf::Keyboard::Scancode, std::function<bool()>&& ) const;
+        bool pressing( const sf::Event&, const std::vector< sf::Keyboard::Scancode >&, std::function<bool()>&& ) const;
+        bool releasing( const sf::Event&, const std::vector< sf::Keyboard::Scancode >&, std::function<bool()>&& ) const;
         template< typename T >
         std::string to_string( const T& value );
 

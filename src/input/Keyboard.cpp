@@ -1,33 +1,37 @@
 #include <input/Keyboard.hpp>
 
+#include <algorithm>
+
 using namespace sokoban::input;
 
 Keyboard::Keyboard()
-    : _key_pressed( new sf::Event::KeyPressed )
-    , _key_released( new sf::Event::KeyReleased )
 {
 }
 
 Keyboard::~Keyboard()
 {
-    delete _key_pressed;
-    delete _key_released;
 }
 
-bool Keyboard::pressing( const sf::Keyboard::Scancode key, std::function<bool()>&& c ) const
+bool Keyboard::pressing( const sf::Event& event, const std::vector< sf::Keyboard::Scancode >& keys, std::function<bool()>&& c ) const
 {
-    if ( _key_pressed->scancode == key )
+    if ( const auto *key_pressed = event.getIf<sf::Event::KeyPressed>())
     {
-        return c();
+        if ( !keys.empty() && std::ranges::find( keys, key_pressed->scancode) != keys.end() )
+        {
+            return c();
+        }
     }
     return false;
 }
 
-bool Keyboard::releasing( const sf::Keyboard::Scancode key, std::function<bool()>&& c ) const
+bool Keyboard::releasing( const sf::Event& event, const std::vector< sf::Keyboard::Scancode >& keys, std::function<bool()>&& c ) const
 {
-    if ( _key_released->scancode == key )
+    if ( const auto *key_released = event.getIf<sf::Event::KeyReleased>())
     {
-        return c();
+        if ( !keys.empty() && std::ranges::find( keys, key_released->scancode) != keys.end() )
+        {
+            return c();
+        }
     }
     return false;
 }
