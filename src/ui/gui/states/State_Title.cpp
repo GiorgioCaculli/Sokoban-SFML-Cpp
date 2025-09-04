@@ -1,3 +1,4 @@
+#include <iostream>
 #include <ui/gui/states/State_Title.hpp>
 
 #include <gzc/util/logger/Logger.hpp>
@@ -100,10 +101,21 @@ bool State_Title::handle_event( const sf::Event& event )
     }*/
     get_context()._keyboard->releasing( event, { sf::Keyboard::Scancode::Enter, sf::Keyboard::Scancode::Space }, [ this ]
     {
+        return _callback_start_game();
+    } );
+    return false;
+}
 
+bool State_Title::_callback_start_game() const
+{
+    try
+    {
         request_stack_pop();
         request_stack_push( States::Menu );
         return true;
-    } );
-    return false;
+    } catch ( const std::exception& e )
+    {
+        std::cerr << e.what() << std::endl;
+        return false;
+    }
 }
