@@ -13,9 +13,10 @@ using namespace sokoban::ui::gui;
  * @param sounds The various sound effects played
  * @param resource_bundle The various strings to load based on the detected language
  * @param keyboard The default keyboard input handler
+ * @param mouse The default mouse input handler
  */
 State::Context::Context( sf::RenderWindow& window, Texture_Holder& textures, Font_Holder& fonts, Music_Player& music,
-                         Sound_Player& sounds, Resource_Bundle& resource_bundle, input::Keyboard& keyboard )
+                         Sound_Player& sounds, Resource_Bundle& resource_bundle, input::Keyboard& keyboard, input::Mouse& mouse )
     : _window( &window )
       , _textures( &textures )
       , _fonts( &fonts )
@@ -23,6 +24,7 @@ State::Context::Context( sf::RenderWindow& window, Texture_Holder& textures, Fon
       , _sounds( &sounds )
       , _resource_bundle( &resource_bundle )
       , _keyboard( &keyboard )
+      , _mouse( &mouse )
 {
 }
 

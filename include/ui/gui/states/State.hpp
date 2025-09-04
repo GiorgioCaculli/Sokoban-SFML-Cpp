@@ -12,6 +12,7 @@
 #include <memory>
 
 #include "input/Keyboard.hpp"
+#include "input/Mouse.hpp"
 
 /**
  * Pre declaration of the SFML RenderWindow class
@@ -39,7 +40,7 @@ namespace sokoban::ui::gui
         struct Context
         {
             Context( sf::RenderWindow& window, Texture_Holder& textures, Font_Holder& fonts,
-                     Music_Player& music, Sound_Player& sounds, Resource_Bundle& resources, input::Keyboard& keyboard );
+                     Music_Player& music, Sound_Player& sounds, Resource_Bundle& resources, input::Keyboard& keyboard, input::Mouse& mouse );
 
             sf::RenderWindow* _window;
             Texture_Holder* _textures;
@@ -48,6 +49,7 @@ namespace sokoban::ui::gui
             Sound_Player* _sounds;
             Resource_Bundle* _resource_bundle;
             input::Keyboard *_keyboard;
+            input::Mouse *_mouse;
         };
 
         State( State_Stack& stack, const Context& context );

@@ -90,6 +90,7 @@ bool State_Title::update( const sf::Time dt )
  */
 bool State_Title::handle_event( const sf::Event& event )
 {
+    const auto context = get_context();
     /*if ( const auto *keyReleased = event.getIf<sf::Event::KeyReleased>() )
     {
         if ( keyReleased->scancode == sf::Keyboard::Scancode::Enter || keyReleased->scancode == sf::Keyboard::Scancode::Space )
@@ -99,7 +100,11 @@ bool State_Title::handle_event( const sf::Event& event )
             return true;
         }
     }*/
-    get_context()._keyboard->releasing( event, { sf::Keyboard::Scancode::Enter, sf::Keyboard::Scancode::Space }, [ this ]
+    context._keyboard->releasing( event, { sf::Keyboard::Scancode::Enter, sf::Keyboard::Scancode::Space }, [ this ]
+    {
+        return _callback_start_game();
+    } );
+    context._mouse->releasing( event, sf::Mouse::Button::Left, _background_sprite, [ this ]
     {
         return _callback_start_game();
     } );

@@ -25,7 +25,7 @@ Application::Application( const uint16_t width, const uint16_t height, std::stri
       , _default_font( sf::Font( "res/fonts/KodomoRounded.otf" ) )
       , _statistics_text( sf::Text( _default_font, "", 32 ) )
       , _statistics_num_frames( 0 )
-      , _state_stack( State::Context( _window, _textures, _fonts, _music, _sounds, _resource_bundle, _keyboard ) )
+      , _state_stack( State::Context( _window, _textures, _fonts, _music, _sounds, _resource_bundle, _keyboard, _mouse ) )
 {
     _logger.log( Logger::Level::DEBUG, "Setting KeyRepeatedEnabled = false" );
     _window.setKeyRepeatEnabled( false );

@@ -47,9 +47,9 @@ State_Settings::State_Settings( State_Stack& stack, Context context )
     _network_button->set_text( "Disabled" );
     _network_button->set_toggle( false );
 
-    const auto back_button = std::make_shared< Button >( context );
-    back_button->set_text( "Back" );
-    back_button->set_callback( [ this ]
+    _back_button = std::make_shared< Button >( context );
+    _back_button->set_text( "Back" );
+    _back_button->set_callback( [ this ]
     {
         request_stack_pop();
     } );
@@ -76,8 +76,8 @@ State_Settings::State_Settings( State_Stack& stack, Context context )
     network_label->setPosition( _network_button->getPosition() - sf::Vector2f( 0, 25.f ) );
     network_label->setOrigin( sf::Vector2f( 100.f, 25.f ) );
 
-    back_button->setPosition( _network_button->getPosition() + sf::Vector2f( 0, 100.f ) );
-    back_button->setOrigin( sf::Vector2f( 100.f, 25.f ) );
+    _back_button->setPosition( _network_button->getPosition() + sf::Vector2f( 0, 100.f ) );
+    _back_button->setOrigin( sf::Vector2f( 100.f, 25.f ) );
 
     _container.pack( sound_effect_label );
     _container.pack( _sound_effect_volume_button );
@@ -85,7 +85,7 @@ State_Settings::State_Settings( State_Stack& stack, Context context )
     _container.pack( _music_volume_button );
     _container.pack( network_label );
     _container.pack( _network_button );
-    _container.pack( back_button );
+    _container.pack( _back_button );
 
     _settings_text.setString( "Settings" );
     _settings_text.setCharacterSize( 64.f );
@@ -127,6 +127,12 @@ bool State_Settings::handle_event( const sf::Event& event )
 {
     bool is_setting_volume = false;
     const auto context = get_context();
+
+    context._mouse->releasing( event, sf::Mouse::Button::Left, *_back_button, [ this ]
+    {
+        request_stack_pop();
+        return true;
+    } );
 
     if ( _sound_effect_volume_button->is_active() )
     {
