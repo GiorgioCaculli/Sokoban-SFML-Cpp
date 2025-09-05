@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.19)
-project(Sokoban VERSION 1.1.0 DESCRIPTION "GzC Sokoban Game")
+project(Sokoban VERSION 1.1.1 DESCRIPTION "GzC Sokoban Game")
 
 include(GNUInstallDirs)
 
@@ -42,9 +42,8 @@ set(CPACK_PACKAGE_EXECUTABLES "SokobanSDL" "${CMAKE_PROJECT_DESCRIPTION}")
 
 file(COPY ${CMAKE_SOURCE_DIR}/res DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-find_library(GZC_UTIL_LOGGER util_logger REQUIRED)
-find_library(GZC_UTIL_SERIALIZE util_serialize REQUIRED)
-find_library(GZC_GAMES_SOKOBAN sokoban_core REQUIRED)
+find_library(GZC_UTIL gzc_util REQUIRED)
+find_library(GZC_GAMES_SOKOBAN gzc_sokoban REQUIRED)
 
 set(SFML_STATIC_LIBRARIES OFF)
 find_package(SFML 3 REQUIRED COMPONENTS Audio Graphics Network System Window)
@@ -90,4 +89,4 @@ add_executable(Sokoban
         src/input/Mouse.cpp
         src/input/Gamepad.cpp)
 
-target_link_libraries(Sokoban PUBLIC ${GZC_GAMES_SOKOBAN} ${GZC_UTIL_LOGGER} ${GZC_UTIL_SERIALIZE} SFML::Audio SFML::Graphics SFML::Network SFML::System SFML::Window ${Boost_LIBRARIES})
+target_link_libraries(Sokoban PUBLIC ${GZC_GAMES_SOKOBAN} ${GZC_UTIL} SFML::Audio SFML::Graphics SFML::Network SFML::System SFML::Window ${Boost_LIBRARIES})
