@@ -3,6 +3,7 @@
 #include <SFML/Window/Event.hpp>
 
 #include <functional>
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Transformable.hpp>
 
 #include <ui/gui/components/Component.hpp>
@@ -16,8 +17,10 @@ namespace sokoban::input
         ~Mouse();
         bool pressing( const sf::Event&, const sf::Mouse::Button&, const sf::Transformable&, std::function<bool()>&& );
         bool pressing( const sf::Event&, const sf::Mouse::Button&, const ui::gui::Component::Ptr&, std::function<bool()>&& );
+        bool pressing( const sf::Event&, const sf::Mouse::Button&, const sf::RenderWindow&, std::function<bool()>&& );
         bool releasing( const sf::Event&, const sf::Mouse::Button&, const sf::Transformable&, std::function<bool()>&& );
         bool releasing( const sf::Event&, const sf::Mouse::Button&, const ui::gui::Component::Ptr&, std::function<bool()>&& );
+        bool releasing( const sf::Event&, const sf::Mouse::Button&, const sf::RenderWindow&, std::function<bool()>&& );
     };
 }
 

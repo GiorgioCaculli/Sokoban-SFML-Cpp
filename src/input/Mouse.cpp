@@ -12,7 +12,7 @@ bool Mouse::pressing( const sf::Event& event, const sf::Mouse::Button& button, c
 {
     if ( const auto *buttonPressed = event.getIf<sf::Event::MouseButtonPressed>() )
     {
-        if ( buttonPressed->button == button && item.getPosition().x >= buttonPressed->position.x && item.getPosition().y >= buttonPressed->position.y )
+        if ( buttonPressed->button == button && buttonPressed->position.x <= item.getPosition().x && buttonPressed->position.y <= item.getPosition().y )
         {
             return c();
         }
@@ -25,7 +25,19 @@ bool Mouse::pressing( const sf::Event& event, const sf::Mouse::Button& button, c
 {
     if ( const auto *buttonPressed = event.getIf<sf::Event::MouseButtonPressed>() )
     {
-        if ( buttonPressed->button == button && item->getPosition().x >= buttonPressed->position.x && item->getPosition().y >= buttonPressed->position.y )
+        if ( buttonPressed->button == button && buttonPressed->position.x <= item->getPosition().x && buttonPressed->position.y <= item->getPosition().y )
+        {
+            return c();
+        }
+    }
+    return false;
+}
+
+bool Mouse::pressing( const sf::Event& event, const sf::Mouse::Button& button, const sf::RenderWindow& item, std::function<bool()>&& c )
+{
+    if ( const auto *buttonPressed = event.getIf<sf::Event::MouseButtonPressed>() )
+    {
+        if ( buttonPressed->button == button && buttonPressed->position.x <= item.getSize().x && buttonPressed->position.y <= item.getSize().y )
         {
             return c();
         }
@@ -37,7 +49,7 @@ bool Mouse::releasing( const sf::Event& event, const sf::Mouse::Button& button, 
 {
     if ( const auto *buttonReleased = event.getIf<sf::Event::MouseButtonReleased>() )
     {
-        if ( buttonReleased->button == button && item.getPosition().x >= buttonReleased->position.x && item.getPosition().y >= buttonReleased->position.y )
+        if ( buttonReleased->button == button && buttonReleased->position.x <= item.getPosition().x && buttonReleased->position.y <= item.getPosition().y )
         {
             return c();
         }
@@ -50,7 +62,19 @@ bool Mouse::releasing( const sf::Event& event, const sf::Mouse::Button& button, 
 {
     if ( const auto *buttonPressed = event.getIf<sf::Event::MouseButtonReleased>() )
     {
-        if ( buttonPressed->button == button && item->getPosition().x >= buttonPressed->position.x && item->getPosition().y >= buttonPressed->position.y )
+        if ( buttonPressed->button == button && buttonPressed->position.x <= item->getPosition().x && buttonPressed->position.y <= item->getPosition().y )
+        {
+            return c();
+        }
+    }
+    return false;
+}
+
+bool Mouse::releasing( const sf::Event& event, const sf::Mouse::Button& button, const sf::RenderWindow& item, std::function<bool()>&& c )
+{
+    if ( const auto *buttonReleased = event.getIf<sf::Event::MouseButtonReleased>() )
+    {
+        if ( buttonReleased->button == button && buttonReleased->position.x <= item.getSize().x && buttonReleased->position.y <= item.getSize().y)
         {
             return c();
         }

@@ -17,7 +17,7 @@ Menu::Menu( const bool debugging )
         logger.log( Logger::Level::INFO, "Init Main Frame" );
         if ( _debugging )
         {
-            Application app( 800, 600, "Sokoban Debug");
+            Application app( 1600, 900, "Sokoban Debug");
             _res = app.run();
         }
         else

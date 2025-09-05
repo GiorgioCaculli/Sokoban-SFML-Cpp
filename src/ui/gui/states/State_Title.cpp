@@ -107,15 +107,7 @@ bool State_Title::handle_keyboard_events( const sf::Event& event )
 bool State_Title::handle_mouse_events( const sf::Event& event )
 {
     const auto context = get_context();
-    context._mouse->releasing( event, sf::Mouse::Button::Left, _background_sprite, [ this ]
-    {
-        return _callback_start_game();
-    } );
-    context._mouse->releasing( event, sf::Mouse::Button::Left, _title_text, [ this ]
-    {
-        return _callback_start_game();
-    } );
-    context._mouse->releasing( event, sf::Mouse::Button::Left, _title_sub_text, [ this ]
+    context._mouse->releasing( event, sf::Mouse::Button::Left, *context._window, [ this ]
     {
         return _callback_start_game();
     } );

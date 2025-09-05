@@ -202,10 +202,6 @@ bool State_Game::handle_keyboard_events( const sf::Event& event )
     {
         if ( _world->is_board_completed() )
         {
-            if ( keyPressed->scancode == sf::Keyboard::Scancode::Enter )
-            {
-                next_level();
-            }
         } else
         {
             if ( keyPressed->scancode == sf::Keyboard::Scancode::R )
@@ -236,6 +232,10 @@ bool State_Game::handle_keyboard_events( const sf::Event& event )
     {
         if ( _world->is_board_completed() )
         {
+            if ( keyReleased->scancode == sf::Keyboard::Scancode::Enter )
+            {
+                next_level();
+            }
         } else
         {
             if ( keyReleased->scancode == sf::Keyboard::Scancode::Escape )
@@ -256,7 +256,7 @@ bool State_Game::handle_keyboard_events( const sf::Event& event )
             }
         }
     }
-    return true;
+    return false;
 }
 
 bool State_Game::handle_mouse_events( const sf::Event& event )
@@ -264,7 +264,7 @@ bool State_Game::handle_mouse_events( const sf::Event& event )
     const auto context = get_context();
     if ( _world->is_board_completed() )
     {
-        context._mouse->pressing( event, sf::Mouse::Button::Left, _text, [ this ]
+        context._mouse->releasing( event, sf::Mouse::Button::Left, *context._window, [ this ]
         {
             next_level();
             return true;
