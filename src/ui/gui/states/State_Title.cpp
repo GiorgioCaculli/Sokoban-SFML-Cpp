@@ -90,26 +90,38 @@ bool State_Title::update( const sf::Time dt )
  */
 bool State_Title::handle_event( const sf::Event& event )
 {
+    return handle_keyboard_events( event ) || handle_mouse_events( event );
+}
+
+
+bool State_Title::handle_keyboard_events( const sf::Event& event )
+{
     const auto context = get_context();
-    /*if ( const auto *keyReleased = event.getIf<sf::Event::KeyReleased>() )
-    {
-        if ( keyReleased->scancode == sf::Keyboard::Scancode::Enter || keyReleased->scancode == sf::Keyboard::Scancode::Space )
-        {
-            request_stack_pop();
-            request_stack_push( States::Menu );
-            return true;
-        }
-    }*/
     context._keyboard->releasing( event, { sf::Keyboard::Scancode::Enter, sf::Keyboard::Scancode::Space }, [ this ]
-    {
-        return _callback_start_game();
-    } );
-    context._mouse->releasing( event, sf::Mouse::Button::Left, _background_sprite, [ this ]
     {
         return _callback_start_game();
     } );
     return false;
 }
+
+bool State_Title::handle_mouse_events( const sf::Event& event )
+{
+    const auto context = get_context();
+    context._mouse->releasing( event, sf::Mouse::Button::Left, _background_sprite, [ this ]
+    {
+        return _callback_start_game();
+    } );
+    context._mouse->releasing( event, sf::Mouse::Button::Left, _title_text, [ this ]
+    {
+        return _callback_start_game();
+    } );
+    context._mouse->releasing( event, sf::Mouse::Button::Left, _title_sub_text, [ this ]
+    {
+        return _callback_start_game();
+    } );
+    return false;
+}
+
 
 bool State_Title::_callback_start_game() const
 {

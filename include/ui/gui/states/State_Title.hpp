@@ -29,6 +29,8 @@ namespace sokoban::ui::gui
         bool _show_text; /** Bool that states whether the text has to be hidden or not */
         sf::Time _text_effect_time; /** Timer for the text to blink */
         bool _callback_start_game() const;
+        bool handle_keyboard_events(const sf::Event& event) override;
+        bool handle_mouse_events(const sf::Event& event) override;
     };
 }
 

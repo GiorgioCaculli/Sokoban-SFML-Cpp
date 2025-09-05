@@ -23,38 +23,38 @@ State_Menu::State_Menu( State_Stack& stack, Context context )
     Utility::center_origin( _background_sprite );
     _background_sprite.setPosition( window_view_size / 2.f );
 
-    const auto play_button = std::make_shared< Button >( context );
-    play_button->set_text( "Play" );
-    play_button->set_callback( [ this ]
+    _play_button = std::make_shared< Button >( context );
+    _play_button->set_text( "Play" );
+    _play_button->set_callback( [ this ]
     {
         request_stack_pop();
         request_stack_push( States::Game );
     } );
 
-    const auto settings_button = std::make_shared< Button >( context );
-    settings_button->set_text( "Settings" );
-    settings_button->set_callback( [ this ]
+    _settings_button = std::make_shared< Button >( context );
+    _settings_button->set_text( "Settings" );
+    _settings_button->set_callback( [ this ]
     {
         request_stack_push( States::Settings );
     } );
 
-    const auto exit_button = std::make_shared< Button >( context );
-    exit_button->set_text( "Exit" );
-    exit_button->set_callback( [ this ]
+    _exit_button = std::make_shared< Button >( context );
+    _exit_button->set_text( "Exit" );
+    _exit_button->set_callback( [ this ]
     {
         get_context()._window->close();
     } );
 
-    settings_button->setPosition( window_view_size / 2.f );
-    settings_button->setOrigin( sf::Vector2f( 100.f, 25.f ) );
-    play_button->setPosition( settings_button->getPosition() - sf::Vector2f( 0, 100.f ) );
-    play_button->setOrigin( sf::Vector2f( 100.f, 25.f ) );
-    exit_button->setPosition( settings_button->getPosition() + sf::Vector2f( 0, 100.f ) );
-    exit_button->setOrigin( sf::Vector2f( 100.f, 25.f ) );
+    _settings_button->setPosition( window_view_size / 2.f );
+    _settings_button->setOrigin( sf::Vector2f( 100.f, 25.f ) );
+    _play_button->setPosition( _settings_button->getPosition() - sf::Vector2f( 0, 100.f ) );
+    _play_button->setOrigin( sf::Vector2f( 100.f, 25.f ) );
+    _exit_button->setPosition( _settings_button->getPosition() + sf::Vector2f( 0, 100.f ) );
+    _exit_button->setOrigin( sf::Vector2f( 100.f, 25.f ) );
 
-    _container.pack( play_button );
-    _container.pack( settings_button );
-    _container.pack( exit_button );
+    _container.pack( _play_button );
+    _container.pack( _settings_button );
+    _container.pack( _exit_button );
 }
 
 /**
@@ -87,6 +87,33 @@ bool State_Menu::update( const sf::Time dt )
  */
 bool State_Menu::handle_event( const sf::Event& event )
 {
+    return handle_keyboard_events( event ) || handle_mouse_events( event );
+}
+
+bool State_Menu::handle_keyboard_events( const sf::Event& event )
+{
     _container.handle_event( event );
+    return false;
+}
+
+bool State_Menu::handle_mouse_events( const sf::Event& event )
+{
+    const auto context = get_context();
+    context._mouse->pressing( event, sf::Mouse::Button::Left, _play_button, [ this ]
+    {
+        request_stack_pop();
+        request_stack_push( States::Game );
+        return false;
+    } );
+    context._mouse->pressing( event, sf::Mouse::Button::Right, _settings_button, [ this ]
+    {
+        request_stack_push( States::Settings );
+        return true;
+    } );
+    context._mouse->pressing( event, sf::Mouse::Button::Left, _exit_button, [ this ]
+    {
+        get_context()._window->close();
+        return true;
+    } );
     return false;
 }

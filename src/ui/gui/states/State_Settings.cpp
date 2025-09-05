@@ -125,14 +125,48 @@ bool State_Settings::update( const sf::Time dt )
  */
 bool State_Settings::handle_event( const sf::Event& event )
 {
+    return handle_keyboard_events( event ) || handle_mouse_events( event );
+}
+
+/**
+ * Function to change the sound effect volume
+ * @param val The value that we wish to increase or decrease the volume with
+ */
+void State_Settings::change_sound_effect_volume( const float val ) const
+{
+    float vol = get_context()._sounds->get_volume() + val;
+    if ( vol < 0.f )
+    {
+        vol = 100.f;
+    }
+    if ( vol > 100.f )
+    {
+        vol = 0.f;
+    }
+    get_context()._sounds->set_volume( vol );
+}
+
+/**
+ * Function to change the music volume
+ * @param val The value we wish to increase or decrease the volume with
+ */
+void State_Settings::change_music_volume( const float val ) const
+{
+    float vol = get_context()._music->get_volume() + val;
+    if ( vol < 0.f )
+    {
+        vol = 100.f;
+    } else if ( vol > 100.f )
+    {
+        vol = 0.f;
+    }
+    get_context()._music->set_volume( vol );
+}
+
+bool State_Settings::handle_keyboard_events( const sf::Event& event )
+{
     bool is_setting_volume = false;
     const auto context = get_context();
-
-    context._mouse->releasing( event, sf::Mouse::Button::Left, *_back_button, [ this ]
-    {
-        request_stack_pop();
-        return true;
-    } );
 
     if ( _sound_effect_volume_button->is_active() )
     {
@@ -242,37 +276,13 @@ bool State_Settings::handle_event( const sf::Event& event )
     return false;
 }
 
-/**
- * Function to change the sound effect volume
- * @param val The value that we wish to increase or decrease the volume with
- */
-void State_Settings::change_sound_effect_volume( const float val ) const
+bool State_Settings::handle_mouse_events( const sf::Event& event )
 {
-    float vol = get_context()._sounds->get_volume() + val;
-    if ( vol < 0.f )
+    const auto context = get_context();
+    context._mouse->releasing( event, sf::Mouse::Button::Left, _back_button, [ this ]
     {
-        vol = 100.f;
-    }
-    if ( vol > 100.f )
-    {
-        vol = 0.f;
-    }
-    get_context()._sounds->set_volume( vol );
-}
-
-/**
- * Function to change the music volume
- * @param val The value we wish to increase or decrease the volume with
- */
-void State_Settings::change_music_volume( const float val ) const
-{
-    float vol = get_context()._music->get_volume() + val;
-    if ( vol < 0.f )
-    {
-        vol = 100.f;
-    } else if ( vol > 100.f )
-    {
-        vol = 0.f;
-    }
-    get_context()._music->set_volume( vol );
+        request_stack_pop();
+        return true;
+    } );
+    return false;
 }

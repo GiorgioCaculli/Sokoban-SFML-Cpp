@@ -5,15 +5,19 @@
 #include <functional>
 #include <SFML/Graphics/Transformable.hpp>
 
+#include <ui/gui/components/Component.hpp>
+
 namespace sokoban::input
 {
     class Mouse
     {
-        public:
+    public:
         Mouse();
         ~Mouse();
         bool pressing( const sf::Event&, const sf::Mouse::Button&, const sf::Transformable&, std::function<bool()>&& );
+        bool pressing( const sf::Event&, const sf::Mouse::Button&, const ui::gui::Component::Ptr&, std::function<bool()>&& );
         bool releasing( const sf::Event&, const sf::Mouse::Button&, const sf::Transformable&, std::function<bool()>&& );
+        bool releasing( const sf::Event&, const sf::Mouse::Button&, const ui::gui::Component::Ptr&, std::function<bool()>&& );
     };
 }
 

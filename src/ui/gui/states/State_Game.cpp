@@ -146,65 +146,7 @@ void State_Game::draw()
  */
 bool State_Game::handle_event( const sf::Event& event )
 {
-    if ( const auto *keyPressed = event.getIf<sf::Event::KeyPressed>() )
-    {
-        if ( _world->is_board_completed() )
-        {
-            if ( keyPressed->scancode == sf::Keyboard::Scancode::Enter )
-            {
-                next_level();
-            }
-        } else
-        {
-            if ( keyPressed->scancode == sf::Keyboard::Scancode::Escape )
-            {
-                request_stack_push( States::Pause );
-            } else if ( keyPressed->scancode == sf::Keyboard::Scancode::R )
-            {
-                reset_board();
-            } else if ( keyPressed->scancode == sf::Keyboard::Scancode::S )
-            {
-                next_level();
-            } else if ( keyPressed->scancode == sf::Keyboard::Scancode::X )
-            {
-                prev_level();
-            }
-            if ( keyPressed->scancode == sf::Keyboard::Scancode::Up )
-            {
-                _world->move_up( true );
-            } else if ( keyPressed->scancode == sf::Keyboard::Scancode::Down )
-            {
-                _world->move_down( true );
-            } else if ( keyPressed->scancode == sf::Keyboard::Scancode::Left )
-            {
-                _world->move_left( true );
-            } else if ( keyPressed->scancode == sf::Keyboard::Scancode::Right )
-            {
-                _world->move_right( true );
-            }
-        }
-    } else if ( const auto *keyReleased = event.getIf<sf::Event::KeyReleased>() )
-    {
-        if ( _world->is_board_completed() )
-        {
-        } else
-        {
-            if ( keyReleased->scancode == sf::Keyboard::Scancode::Up )
-            {
-                _world->move_up( false );
-            } else if ( keyReleased->scancode == sf::Keyboard::Scancode::Down )
-            {
-                _world->move_down( false );
-            } else if ( keyReleased->scancode == sf::Keyboard::Scancode::Left )
-            {
-                _world->move_left( false );
-            } else if ( keyReleased->scancode == sf::Keyboard::Scancode::Right )
-            {
-                _world->move_right( false );
-            }
-        }
-    }
-    return true;
+    return handle_keyboard_events( event ) || handle_mouse_events( event );
 }
 
 /**
@@ -252,4 +194,81 @@ void State_Game::prev_level()
     _world = new World( _window, core::Board( _level ), *get_context()._fonts, *get_context()._sounds );
     reset_counter = 0;
     _world->set_reset_counter( reset_counter );
+}
+bool State_Game::handle_keyboard_events( const sf::Event& event )
+{
+    const auto context = get_context();
+    if ( const auto *keyPressed = event.getIf<sf::Event::KeyPressed>() )
+    {
+        if ( _world->is_board_completed() )
+        {
+            if ( keyPressed->scancode == sf::Keyboard::Scancode::Enter )
+            {
+                next_level();
+            }
+        } else
+        {
+            if ( keyPressed->scancode == sf::Keyboard::Scancode::R )
+            {
+                reset_board();
+            } else if ( keyPressed->scancode == sf::Keyboard::Scancode::S )
+            {
+                next_level();
+            } else if ( keyPressed->scancode == sf::Keyboard::Scancode::X )
+            {
+                prev_level();
+            }
+            if ( keyPressed->scancode == sf::Keyboard::Scancode::Up )
+            {
+                _world->move_up( true );
+            } else if ( keyPressed->scancode == sf::Keyboard::Scancode::Down )
+            {
+                _world->move_down( true );
+            } else if ( keyPressed->scancode == sf::Keyboard::Scancode::Left )
+            {
+                _world->move_left( true );
+            } else if ( keyPressed->scancode == sf::Keyboard::Scancode::Right )
+            {
+                _world->move_right( true );
+            }
+        }
+    } else if ( const auto *keyReleased = event.getIf<sf::Event::KeyReleased>() )
+    {
+        if ( _world->is_board_completed() )
+        {
+        } else
+        {
+            if ( keyReleased->scancode == sf::Keyboard::Scancode::Escape )
+            {
+                request_stack_push( States::Pause );
+            } else if ( keyReleased->scancode == sf::Keyboard::Scancode::Up )
+            {
+                _world->move_up( false );
+            } else if ( keyReleased->scancode == sf::Keyboard::Scancode::Down )
+            {
+                _world->move_down( false );
+            } else if ( keyReleased->scancode == sf::Keyboard::Scancode::Left )
+            {
+                _world->move_left( false );
+            } else if ( keyReleased->scancode == sf::Keyboard::Scancode::Right )
+            {
+                _world->move_right( false );
+            }
+        }
+    }
+    return true;
+}
+
+bool State_Game::handle_mouse_events( const sf::Event& event )
+{
+    const auto context = get_context();
+    if ( _world->is_board_completed() )
+    {
+        context._mouse->pressing( event, sf::Mouse::Button::Left, _text, [ this ]
+        {
+            next_level();
+            return true;
+        } );
+    }
+    return false;
 }

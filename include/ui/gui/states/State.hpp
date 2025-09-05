@@ -40,7 +40,8 @@ namespace sokoban::ui::gui
         struct Context
         {
             Context( sf::RenderWindow& window, Texture_Holder& textures, Font_Holder& fonts,
-                     Music_Player& music, Sound_Player& sounds, Resource_Bundle& resources, input::Keyboard& keyboard, input::Mouse& mouse );
+                     Music_Player& music, Sound_Player& sounds, Resource_Bundle& resources, input::Keyboard& keyboard,
+                     input::Mouse& mouse );
 
             sf::RenderWindow* _window;
             Texture_Holder* _textures;
@@ -48,8 +49,8 @@ namespace sokoban::ui::gui
             Music_Player* _music;
             Sound_Player* _sounds;
             Resource_Bundle* _resource_bundle;
-            input::Keyboard *_keyboard;
-            input::Mouse *_mouse;
+            input::Keyboard* _keyboard;
+            input::Mouse* _mouse;
         };
 
         State( State_Stack& stack, const Context& context );
@@ -70,6 +71,10 @@ namespace sokoban::ui::gui
         void request_state_clear() const;
 
         [[nodiscard]] Context get_context() const;
+
+        virtual bool handle_keyboard_events( const sf::Event& event ) = 0;
+
+        virtual bool handle_mouse_events( const sf::Event& event ) = 0;
 
     private:
         State_Stack* _stack; /** The stack containing the various states */

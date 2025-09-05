@@ -32,8 +32,9 @@ namespace sokoban::ui::gui
         Button::Ptr _network_button; /** Button to activate network features */
         Button::Ptr _back_button;
         void change_sound_effect_volume( float val ) const;
-
         void change_music_volume( float val ) const;
+        bool handle_keyboard_events(const sf::Event& event) override;
+        bool handle_mouse_events(const sf::Event& event) override;
     };
 }
 

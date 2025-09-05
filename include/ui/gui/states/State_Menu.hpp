@@ -7,6 +7,8 @@
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
+#include "ui/gui/components/Button.hpp"
+
 namespace sokoban::ui::gui
 {
     class State_Menu final
@@ -24,6 +26,11 @@ namespace sokoban::ui::gui
     private:
         sf::Sprite _background_sprite; /** The background sprite */
         Container _container; /** Container storing the various components */
+        Button::Ptr _play_button;
+        Button::Ptr _settings_button;
+        Button::Ptr _exit_button;
+        bool handle_keyboard_events(const sf::Event& event) override;
+        bool handle_mouse_events(const sf::Event& event) override;
     };
 }
 

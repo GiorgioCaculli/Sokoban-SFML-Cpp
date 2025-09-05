@@ -7,6 +7,8 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
 
+#include "ui/gui/components/Button.hpp"
+
 
 namespace sokoban::ui::gui
 {
@@ -14,7 +16,7 @@ namespace sokoban::ui::gui
             : public State
     {
     public:
-        State_Pause( State_Stack& stack, Context context );
+        State_Pause( State_Stack& stack, const Context& context );
 
         void draw() override;
 
@@ -26,6 +28,14 @@ namespace sokoban::ui::gui
         sf::Sprite _background_sprite; /** The background sprite */
         sf::Text _paused_text; /** The text stating that the game is paused */
         Container _container; /** Container containing the various components */
+        Button::Ptr _resume_button;
+        Button::Ptr _settings_button;
+        Button::Ptr _back_to_main_menu_button;
+        bool handle_keyboard_events(const sf::Event& event) override;
+        bool handle_mouse_events(const sf::Event& event) override;
+        bool _resume_button_callback() const;
+        bool _settings_button_callback() const;
+        bool _back_to_main_menu_button_callback() const;
     };
 }
 

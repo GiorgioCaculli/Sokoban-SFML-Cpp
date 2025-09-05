@@ -5,12 +5,10 @@
 using namespace sokoban::input;
 
 Keyboard::Keyboard()
-{
-}
+= default;
 
 Keyboard::~Keyboard()
-{
-}
+= default;
 
 bool Keyboard::pressing( const sf::Event& event, const std::vector< sf::Keyboard::Scancode >& keys, std::function<bool()>&& c ) const
 {

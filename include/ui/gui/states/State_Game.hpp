@@ -35,6 +35,8 @@ namespace sokoban::ui::gui
         void next_level();
 
         void prev_level();
+        bool handle_keyboard_events(const sf::Event& event) override;
+        bool handle_mouse_events(const sf::Event& event) override;
     };
 }
 

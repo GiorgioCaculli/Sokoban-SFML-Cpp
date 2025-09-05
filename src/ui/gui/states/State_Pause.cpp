@@ -14,12 +14,12 @@ using namespace sokoban::ui::gui;
  * @param stack The stack containing the various states
  * @param context The context containing the various resources
  */
-State_Pause::State_Pause( State_Stack& stack, Context context )
+State_Pause::State_Pause( State_Stack& stack, const Context& context )
     : State( stack, context )
     , _background_sprite( context._textures->get( Textures::Title_Screen ) )
     , _paused_text( context._fonts->get( Fonts::Rampart_One ) )
 {
-    sf::Vector2f view_size = context._window->getView().getSize();
+    const sf::Vector2f view_size = context._window->getView().getSize();
 
     Utility::center_origin( _background_sprite );
     _background_sprite.setPosition( view_size / 2.f );
@@ -29,39 +29,37 @@ State_Pause::State_Pause( State_Stack& stack, Context context )
     Utility::center_origin( _paused_text );
     _paused_text.setPosition( sf::Vector2f( view_size.x / 2.f, view_size.y / 2.f - 200.f ) );
 
-    const auto resume_button = std::make_shared< Button >( context );
-    resume_button->set_text( "Resume" );
-    resume_button->set_callback( [ this ]
+    _resume_button = std::make_shared< Button >( context );
+    _resume_button->set_text( "Resume" );
+    _resume_button->set_callback( [ this ]
     {
-        request_stack_pop();
+        _resume_button_callback();
     } );
 
-    const auto settings_button = std::make_shared< Button >( context );
-    settings_button->set_text( "Settings" );
-    settings_button->set_callback( [ this ]
+    _settings_button = std::make_shared< Button >( context );
+    _settings_button->set_text( "Settings" );
+    _settings_button->set_callback( [ this ]
     {
-        request_stack_push( States::Settings );
+        _settings_button_callback();
     } );
 
-    const auto back_to_main_menu_button = std::make_shared< Button >( context );
-    back_to_main_menu_button->set_text( "Main Menu" );
-    back_to_main_menu_button->set_callback( [ this ]
+    _back_to_main_menu_button = std::make_shared< Button >( context );
+    _back_to_main_menu_button->set_text( "Main Menu" );
+    _back_to_main_menu_button->set_callback( [ this ]
     {
-        request_stack_pop();
-        request_stack_pop();
-        request_stack_push( States::Menu );
+        _back_to_main_menu_button_callback();
     } );
 
-    settings_button->setPosition( context._window->getView().getSize() / 2.f );
-    settings_button->setOrigin( sf::Vector2f( 100.f, 25.f ) );
-    resume_button->setPosition( settings_button->getPosition() - sf::Vector2f( 0, 100.f ) );
-    resume_button->setOrigin( sf::Vector2f( 100.f, 25.f ) );
-    back_to_main_menu_button->setPosition( settings_button->getPosition() + sf::Vector2f( 0, 100.f ) );
-    back_to_main_menu_button->setOrigin( sf::Vector2f( 100.f, 25.f ) );
+    _settings_button->setPosition( context._window->getView().getSize() / 2.f );
+    _settings_button->setOrigin( sf::Vector2f( 100.f, 25.f ) );
+    _resume_button->setPosition( _settings_button->getPosition() - sf::Vector2f( 0, 100.f ) );
+    _resume_button->setOrigin( sf::Vector2f( 100.f, 25.f ) );
+    _back_to_main_menu_button->setPosition( _settings_button->getPosition() + sf::Vector2f( 0, 100.f ) );
+    _back_to_main_menu_button->setOrigin( sf::Vector2f( 100.f, 25.f ) );
 
-    _container.pack( resume_button );
-    _container.pack( settings_button );
-    _container.pack( back_to_main_menu_button );
+    _container.pack( _resume_button );
+    _container.pack( _settings_button );
+    _container.pack( _back_to_main_menu_button );
 }
 
 /**
@@ -93,6 +91,11 @@ bool State_Pause::update( const sf::Time dt )
  */
 bool State_Pause::handle_event( const sf::Event& event )
 {
+    return handle_keyboard_events( event ) || handle_mouse_events( event );
+}
+
+bool State_Pause::handle_keyboard_events( const sf::Event& event )
+{
     const auto context = get_context();
     _container.handle_event( event );
     context._keyboard->releasing( event, { sf::Keyboard::Scancode::Escape }, [ this ]
@@ -101,4 +104,42 @@ bool State_Pause::handle_event( const sf::Event& event )
         return true;
     } );
     return false;
+}
+
+bool State_Pause::handle_mouse_events( const sf::Event& event )
+{
+    const auto context = get_context();
+    context._mouse->pressing( event, sf::Mouse::Button::Left, _resume_button, [ this ]
+    {
+        return _resume_button_callback();
+    } );
+    context._mouse->pressing( event, sf::Mouse::Button::Right, _settings_button, [ this ]
+    {
+        return _settings_button_callback();
+    } );
+    context._mouse->pressing( event, sf::Mouse::Button::Middle, _back_to_main_menu_button, [ this ]
+    {
+        return _back_to_main_menu_button_callback();
+    } );
+    return false;
+}
+
+bool State_Pause::_resume_button_callback() const
+{
+    request_stack_pop();
+    return true;
+}
+
+bool State_Pause::_settings_button_callback() const
+{
+    request_stack_push( States::Settings );
+    return true;
+}
+
+bool State_Pause::_back_to_main_menu_button_callback() const
+{
+    request_stack_pop();
+    request_stack_pop();
+    request_stack_push( States::Menu );
+    return true;
 }
