@@ -4,7 +4,6 @@
 #include <ui/Resource_Holder.hpp>
 #include <ui/gui/Resource_Identifiers.hpp>
 
-#include <SFML/System/NonCopyable.hpp>
 #include <SFML/Audio/Music.hpp>
 
 #include <map>
@@ -14,7 +13,6 @@
 namespace sokoban::ui::gui
 {
     class Music_Player
-            : private sf::NonCopyable
     {
     public:
         Music_Player();

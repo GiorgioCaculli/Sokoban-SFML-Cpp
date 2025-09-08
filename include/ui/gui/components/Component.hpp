@@ -1,7 +1,6 @@
 #ifndef SOKOBAN_COMPONENT_HPP
 #define SOKOBAN_COMPONENT_HPP
 
-#include <SFML/System/NonCopyable.hpp>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Transformable.hpp>
 
@@ -18,7 +17,6 @@ namespace sokoban::ui::gui
     class Component
             : public sf::Drawable
               , public sf::Transformable
-              , sf::NonCopyable
     {
     public:
         /** Generic declaration of a shared pointer meant to define a base nature to said pointer */

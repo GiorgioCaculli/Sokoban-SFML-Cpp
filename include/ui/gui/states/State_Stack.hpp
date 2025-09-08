@@ -3,14 +3,11 @@
 
 #include <ui/gui/states/State.hpp>
 #include <ui/gui/states/State_Identifiers.hpp>
-#include <ui/gui/Resource_Identifiers.hpp>
 
 #include <SFML/System/Time.hpp>
-#include <SFML/System/NonCopyable.hpp>
 
 #include <map>
 #include <vector>
-#include <utility>
 #include <functional>
 
 namespace sf
@@ -23,7 +20,6 @@ namespace sf
 namespace sokoban::ui::gui
 {
     class State_Stack
-            : private sf::NonCopyable
     {
     public:
         /**

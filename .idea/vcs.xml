@@ -3,6 +3,5 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/SFML" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/SFML/build/_deps/sheenbidi-src" vcs="Git" />
   </component>
 </project>

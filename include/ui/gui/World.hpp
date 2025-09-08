@@ -7,18 +7,14 @@
 #include <ui/gui/Sprite_Node.hpp>
 #include <ui/gui/entities/Entity.hpp>
 #include <ui/gui/entities/Entity_Box.hpp>
-#include <ui/gui/entities/Entity_Wall.hpp>
 #include <ui/gui/entities/Entity_Player.hpp>
-#include <ui/gui/entities/Entity_Platform.hpp>
 #include <ui/gui/Sound_Player.hpp>
 #include <gzc/games/sokoban/core/Board.hpp>
 
-#include <SFML/System/NonCopyable.hpp>
 #include <SFML/Graphics/View.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Text.hpp>
 
-#include <queue>
 #include <vector>
 
 namespace sf
@@ -30,7 +26,6 @@ namespace sf
 namespace sokoban::ui::gui
 {
     class World
-            : private sf::NonCopyable
     {
     public:
         World( sf::RenderTarget& target, const core::Board& board, Font_Holder& fonts, Sound_Player& sounds );

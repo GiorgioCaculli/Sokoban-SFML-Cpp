@@ -4,7 +4,6 @@
 #include <ui/Category.hpp>
 
 #include <SFML/System/Time.hpp>
-#include <SFML/System/NonCopyable.hpp>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Transformable.hpp>
 
@@ -21,7 +20,6 @@ namespace sokoban::ui::gui
     class Scene_Node
             : public sf::Transformable
               , public sf::Drawable
-              , sf::NonCopyable
     {
     public:
         typedef std::unique_ptr< Scene_Node > Ptr;

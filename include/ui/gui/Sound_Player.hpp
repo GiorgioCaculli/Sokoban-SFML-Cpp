@@ -5,8 +5,6 @@
 #include <ui/gui/Resource_Identifiers.hpp>
 
 #include <SFML/System/Vector2.hpp>
-#include <SFML/System/NonCopyable.hpp>
-#include <SFML/Audio/SoundBuffer.hpp>
 #include <SFML/Audio/Sound.hpp>
 
 #include <list>
@@ -15,7 +13,6 @@
 namespace sokoban::ui::gui
 {
     class Sound_Player
-            : sf::NonCopyable
     {
     public:
         Sound_Player();

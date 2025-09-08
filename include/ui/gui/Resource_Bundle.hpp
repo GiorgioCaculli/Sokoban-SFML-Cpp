@@ -14,7 +14,7 @@ private:
     std::pmr::vector< std::string > _strings;
 
 public:
-    explicit Resource_Bundle( std::string path, const std::string& locale = "en_US.UTF8" );
+    explicit Resource_Bundle( std::string path, const std::string& locale = "en_US.UTF-8" );
     Resource_Bundle();
     ~Resource_Bundle();
     std::string get_string( const std::string& key ) const;

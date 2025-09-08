@@ -6,12 +6,13 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Text.hpp>
 
-#include <cmath>
-#include <ctime>
 #include <random>
 #include <utility>
 #include <sstream>
 #include <iostream>
+
+#include <ui/gui/entities/Entity_Platform.hpp>
+#include <ui/gui/entities/Entity_Wall.hpp>
 
 using namespace sokoban::ui::gui;
 using namespace gzc::util::logger;
