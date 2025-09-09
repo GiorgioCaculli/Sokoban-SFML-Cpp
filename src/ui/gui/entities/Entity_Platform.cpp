@@ -13,36 +13,36 @@ Entity_Platform::Entity_Platform( float x, float y )
     constexpr float SPRITE_SHEET_PLACEMENT_Y_COORDINATE = 0;
     /* TODO: Apply FOR loop + mapping for cleaner generation, need to overcome the single naming issue (mapping) */
     /* TODO: The sprite for the platforms is half the size of all other sprites, needs readaptation + removal of the /2 in such a redundant way */
-    const std::array< float, 4 > platform_beige_asset = {
+    const std::array platform_beige_asset = {
         SPRITE_SHEET_SPRITE_OFFSET * 0, SPRITE_SHEET_PLACEMENT_Y_COORDINATE, SPRITE_SHEET_SPRITE_OFFSET / 2, SPRITE_SHEET_SPRITE_OFFSET / 2
     };
 
-    const std::array< float, 4 > platform_black_asset = {
+    const std::array platform_black_asset = {
         SPRITE_SHEET_SPRITE_OFFSET * 1, SPRITE_SHEET_PLACEMENT_Y_COORDINATE, SPRITE_SHEET_SPRITE_OFFSET / 2, SPRITE_SHEET_SPRITE_OFFSET / 2
     };
 
-    const std::array< float, 4 > platform_blue_asset = {
+    const std::array platform_blue_asset = {
         SPRITE_SHEET_SPRITE_OFFSET * 2, SPRITE_SHEET_PLACEMENT_Y_COORDINATE, SPRITE_SHEET_SPRITE_OFFSET / 2, SPRITE_SHEET_SPRITE_OFFSET / 2
     };
 
-    const std::array< float, 4 > platform_brown_asset = {
+    const std::array platform_brown_asset = {
         SPRITE_SHEET_SPRITE_OFFSET * 3, SPRITE_SHEET_PLACEMENT_Y_COORDINATE, SPRITE_SHEET_SPRITE_OFFSET / 2, SPRITE_SHEET_SPRITE_OFFSET / 2
     };
 
-    const std::array< float, 4 > platform_white_asset = {
+    const std::array platform_white_asset = {
         SPRITE_SHEET_SPRITE_OFFSET * 4, SPRITE_SHEET_PLACEMENT_Y_COORDINATE, SPRITE_SHEET_SPRITE_OFFSET / 2, SPRITE_SHEET_SPRITE_OFFSET / 2
     };
 
-    const std::array< float, 4 > platform_purple_asset = {
+    const std::array platform_purple_asset = {
         SPRITE_SHEET_SPRITE_OFFSET * 5, SPRITE_SHEET_PLACEMENT_Y_COORDINATE, SPRITE_SHEET_SPRITE_OFFSET / 2, SPRITE_SHEET_SPRITE_OFFSET / 2
     };
 
-    const std::array< float, 4 > platform_red_asset = {
-        SPRITE_SHEET_SPRITE_OFFSET * 6, 0, SPRITE_SHEET_SPRITE_OFFSET, SPRITE_SHEET_SPRITE_OFFSET
+    const std::array platform_red_asset = {
+        SPRITE_SHEET_SPRITE_OFFSET * 6, SPRITE_SHEET_PLACEMENT_Y_COORDINATE, SPRITE_SHEET_SPRITE_OFFSET / 2, SPRITE_SHEET_SPRITE_OFFSET / 2
     };
 
-    const std::array< float, 4 > platform_yellow_asset = {
-        SPRITE_SHEET_SPRITE_OFFSET * 7, 0, SPRITE_SHEET_SPRITE_OFFSET, SPRITE_SHEET_SPRITE_OFFSET
+    const std::array platform_yellow_asset = {
+        SPRITE_SHEET_SPRITE_OFFSET * 7, SPRITE_SHEET_PLACEMENT_Y_COORDINATE, SPRITE_SHEET_SPRITE_OFFSET / 2, SPRITE_SHEET_SPRITE_OFFSET / 2
     };
     _platform_color_map = std::map< Color, std::array< float, 4 > >
     {

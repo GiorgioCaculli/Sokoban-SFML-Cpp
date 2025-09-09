@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.19)
-project(Sokoban VERSION 1.1.1 DESCRIPTION "GzC Sokoban Game")
+cmake_minimum_required(VERSION 3.20)
+project(SokobanSFML VERSION 1.2.0 DESCRIPTION "GzC Sokoban Game")
 
 include(GNUInstallDirs)
 
@@ -52,7 +52,7 @@ find_package(Boost REQUIRED CONFIG COMPONENTS filesystem)
 include_directories(${SFML_INCLUDE_DIRS} ${GZC_GAMES_SOKOBAN_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 include_directories(include)
 
-add_executable(Sokoban
+add_executable(SokobanSFML
         src/main.cpp
         src/ui/Menu.cpp
         src/ui/gui/Animation.cpp
@@ -89,4 +89,4 @@ add_executable(Sokoban
         src/input/Mouse.cpp
         src/input/Gamepad.cpp)
 
-target_link_libraries(Sokoban PUBLIC ${GZC_GAMES_SOKOBAN} ${GZC_UTIL} SFML::Audio SFML::Graphics SFML::Network SFML::System SFML::Window ${Boost_LIBRARIES})
+target_link_libraries(SokobanSFML PUBLIC ${GZC_GAMES_SOKOBAN} ${GZC_UTIL} SFML::Audio SFML::Graphics SFML::Network SFML::System SFML::Window ${Boost_LIBRARIES})
