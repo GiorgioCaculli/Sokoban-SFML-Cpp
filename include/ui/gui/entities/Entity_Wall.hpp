@@ -12,7 +12,7 @@
 namespace sokoban::ui::gui::entity
 {
     class Entity_Wall final
-            : public core::Wall
+            : public gzc::sokoban::core::Wall
               , public Entity
     {
     public:

@@ -31,7 +31,7 @@ namespace
  * @param fonts The various fonts used
  * @param sounds The various sound effects
  */
-World::World( sf::RenderTarget& target, const core::Board& board, Font_Holder& fonts, Sound_Player& sounds )
+World::World( sf::RenderTarget& target, const gzc::sokoban::core::Board& board, Font_Holder& fonts, Sound_Player& sounds )
     : _target( target )
       , _world_view( target.getDefaultView() )
       , _fonts( fonts )
@@ -55,7 +55,7 @@ World::World( sf::RenderTarget& target, const core::Board& board, Font_Holder& f
 {
     _board = board;
     logger.log( Logger::Level::DEBUG, "Level Layout:" );
-    for ( const core::Actor* actor: _board.get_world() )
+    for ( const gzc::sokoban::core::Actor* actor: _board.get_world() )
     {
         logger.log( Logger::Level::DEBUG, actor->to_string() );
     }
@@ -309,7 +309,7 @@ void World::build_scene()
 
     logger.log( Logger::Level::INFO, "Board size: " + std::to_string( _board.get_world().size() ) );
     _box_sprites = std::vector< Sprite_Node * >();
-    _box_actors = std::vector< core::Box * >();
+    _box_actors = std::vector< gzc::sokoban::core::Box * >();
     _box_entities = std::vector< entity::Entity_Box * >();
 
     logger.log( Logger::Level::INFO, "Building Scene..." );
@@ -350,7 +350,7 @@ void World::build_scene()
 
     layers++;
 
-    for ( core::Actor* actor: _board.get_world() )
+    for ( gzc::sokoban::core::Actor* actor: _board.get_world() )
     {
         float asset_coordinate_x;
         float asset_coordinate_y;
@@ -365,7 +365,7 @@ void World::build_scene()
 
         if ( actor->get_type() == actor->PLAYER )
         {
-            _board_player = dynamic_cast< core::Player * >( actor );
+            _board_player = dynamic_cast< gzc::sokoban::core::Player * >( actor );
             entity_actor = new entity::Entity_Player( actor->get_x(), actor->get_y() );
             _player_entity = dynamic_cast< entity::Entity_Player * >( entity_actor );
             auto player_asset_rect = _player_entity->get_player_face_map().find( entity::Entity_Player::Face::SOUTH )->
@@ -398,7 +398,7 @@ void World::build_scene()
         }
         if ( actor->get_type() == actor->BOX )
         {
-            _box_actors.push_back( dynamic_cast< core::Box * >( actor ) );
+            _box_actors.push_back( dynamic_cast< gzc::sokoban::core::Box * >( actor ) );
             entity_actor = new entity::Entity_Box( actor->get_x(), actor->get_y() );
             actor = dynamic_cast< entity::Entity_Box * >( entity_actor );
             auto* box_entity = dynamic_cast< entity::Entity_Box * >( actor );

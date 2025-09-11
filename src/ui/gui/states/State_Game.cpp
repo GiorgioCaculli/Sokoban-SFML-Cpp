@@ -91,7 +91,7 @@ State_Game::State_Game( State_Stack& stack, Context context )
     _text.setFont( context._fonts->get( Fonts::Connection_II ) );
     _level = _levels.at( current_level );
     logger.log( Logger::Level::DEBUG, "Level loaded: " + _level );
-    _world = new World( *context._window, core::Board( _level ), *context._fonts, *context._sounds );
+    _world = new World( *context._window, gzc::sokoban::core::Board( _level ), *context._fonts, *context._sounds );
 }
 
 /**
@@ -155,7 +155,7 @@ bool State_Game::handle_event( const sf::Event& event )
 void State_Game::reset_board()
 {
     delete _world;
-    _world = new World( _window, core::Board( _level ), *get_context()._fonts, *get_context()._sounds );
+    _world = new World( _window, gzc::sokoban::core::Board( _level ), *get_context()._fonts, *get_context()._sounds );
     reset_counter++;
     _world->set_reset_counter( reset_counter );
 }
@@ -173,7 +173,7 @@ void State_Game::next_level()
     }
     _level = _levels.at( current_level );
     delete _world;
-    _world = new World( _window, core::Board( _level ), *get_context()._fonts, *get_context()._sounds );
+    _world = new World( _window, gzc::sokoban::core::Board( _level ), *get_context()._fonts, *get_context()._sounds );
     reset_counter = 0;
     _world->set_reset_counter( reset_counter );
 }
@@ -191,7 +191,7 @@ void State_Game::prev_level()
     }
     _level = _levels.at( current_level );
     delete _world;
-    _world = new World( _window, core::Board( _level ), *get_context()._fonts, *get_context()._sounds );
+    _world = new World( _window, gzc::sokoban::core::Board( _level ), *get_context()._fonts, *get_context()._sounds );
     reset_counter = 0;
     _world->set_reset_counter( reset_counter );
 }

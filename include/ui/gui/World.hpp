@@ -28,7 +28,7 @@ namespace sokoban::ui::gui
     class World
     {
     public:
-        World( sf::RenderTarget& target, const core::Board& board, Font_Holder& fonts, Sound_Player& sounds );
+        World( sf::RenderTarget& target, const gzc::sokoban::core::Board& board, Font_Holder& fonts, Sound_Player& sounds );
 
         ~World();
 
@@ -74,13 +74,13 @@ namespace sokoban::ui::gui
         bool _player_is_moving_left; /** Whether the player is moving left */
         bool _player_is_moving_right; /** Whether the player is moving right */
         sf::FloatRect _world_bounds; /** The accessible limits of the window */
-        core::Board _board; /** The Board containing all the actors */
+        gzc::sokoban::core::Board _board; /** The Board containing all the actors */
         Sprite_Node* _player_sprite; /** The player sprite */
-        core::Player* _board_player; /** The player within the board */
+        gzc::sokoban::core::Player* _board_player; /** The player within the board */
         entity::Entity_Player* _player_entity;
         /** The player entity containing the various assets coordinates */
         std::vector< Sprite_Node * > _box_sprites; /** The various box sprites */
-        std::vector< core::Box * > _box_actors; /** The various box actors within the board */
+        std::vector< gzc::sokoban::core::Box * > _box_actors; /** The various box actors within the board */
         std::vector< entity::Entity_Box * > _box_entities;
         /** The various box entities containing the assets' coordinates */
         std::vector< entity::Entity * > _entities; /** The entirety of the entities present in the world */

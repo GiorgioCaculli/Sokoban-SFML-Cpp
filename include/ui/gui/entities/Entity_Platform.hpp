@@ -12,7 +12,7 @@
 namespace sokoban::ui::gui::entity
 {
     class Entity_Platform final
-            : public core::Platform
+            : public gzc::sokoban::core::Platform
               , public Entity
     {
     public:

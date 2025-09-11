@@ -1,7 +1,7 @@
 #include <ui/gui/entities/Entity_Box.hpp>
 
 using namespace sokoban::ui::gui::entity;
-using namespace sokoban::core;
+using namespace gzc::sokoban::core;
 
 
 /**

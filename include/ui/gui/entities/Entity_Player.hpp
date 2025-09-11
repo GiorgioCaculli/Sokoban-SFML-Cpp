@@ -12,7 +12,7 @@
 namespace sokoban::ui::gui::entity
 {
     class Entity_Player final
-            : public core::Player
+            : public gzc::sokoban::core::Player
               , public Entity_Movable
     {
     public:

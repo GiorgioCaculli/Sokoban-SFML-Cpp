@@ -12,7 +12,7 @@
 namespace sokoban::ui::gui::entity
 {
     class Entity_Box final
-            : public core::Box
+            : public gzc::sokoban::core::Box
               , public Entity_Movable
     {
     public:
