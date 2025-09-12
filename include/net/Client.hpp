@@ -12,6 +12,8 @@ namespace sokoban::net
         Packet _p;
     public:
         Client();
+        Client( const Client& c );
+        Client& operator=( const Client& c );
         ~Client();
         bool send_packet( const Packet& p ) const;
     };

@@ -7,6 +7,8 @@ namespace sokoban::net
     {
     public:
         Packet();
+        Packet( const Packet &p );
+        Packet& operator=( const Packet &p );
         ~Packet();
     };
 }
