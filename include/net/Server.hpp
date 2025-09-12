@@ -1,5 +1,7 @@
-#ifndef SOKOBAN_SERVER_HPP
-#define SOKOBAN_SERVER_HPP
+#ifndef SOKOBAN_SFML_SERVER_HPP
+#define SOKOBAN_SFML_SERVER_HPP
+
+#include <gzc/games/sokoban/net/ServerDedicated.hpp>
 
 #include <string>
 
@@ -7,7 +9,7 @@
 
 namespace sokoban::net
 {
-    class Server
+    class Server : gzc::sokoban::net::ServerDedicated
     {
     private:
         unsigned short _tcp_port;
@@ -25,4 +27,4 @@ namespace sokoban::net
     };
 }
 
-#endif //SOKOBAN_SERVER_HPP
+#endif //SOKOBAN_SFML_SERVER_HPP
