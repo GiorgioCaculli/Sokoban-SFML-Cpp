@@ -1,5 +1,11 @@
 #include <net/Packet.hpp>
 
-namespace sokoban::net
+using namespace sokoban::net;
+
+Packet::Packet()
+{
+}
+
+Packet::~Packet()
 {
 }

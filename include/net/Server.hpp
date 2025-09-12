@@ -3,13 +3,11 @@
 
 #include <gzc/games/sokoban/net/ServerDedicated.hpp>
 
-#include <string>
-
 #include <SFML/Network.hpp>
 
 namespace sokoban::net
 {
-    class Server : gzc::sokoban::net::ServerDedicated
+    class Server : public gzc::sokoban::net::ServerDedicated
     {
     private:
         unsigned short _tcp_port;
@@ -22,7 +20,7 @@ namespace sokoban::net
         Server();
         Server( const Server& server );
         Server& operator=( const Server& server );
-        ~Server();
+        ~Server() override;
         bool run() const;
     };
 }

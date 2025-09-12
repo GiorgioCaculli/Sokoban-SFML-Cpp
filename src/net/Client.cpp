@@ -1,6 +1,17 @@
+#include "net/Packet.hpp"
 #include <net/Client.hpp>
 
-namespace sokoban::net
+using namespace sokoban::net;
+
+Client::Client()
 {
-} // net
-// sokoban
+}
+
+Client::~Client()
+{
+}
+
+bool Client::send_packet( const Packet& p ) const
+{
+    return false;
+}
