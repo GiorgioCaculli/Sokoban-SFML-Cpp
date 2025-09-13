@@ -11,6 +11,7 @@
 #include <boost/filesystem.hpp>
 
 #include <algorithm>
+#include <memory>
 #include <vector>
 
 using namespace sokoban::ui::gui;
@@ -88,16 +89,14 @@ State_Game::State_Game( State_Stack& stack, Context context )
     _text.setFont( context._fonts->get( Fonts::Connection_II ) );
     _level = _levels.at( current_level );
     logger.log( Logger::Level::DEBUG, "Level loaded: " + _level );
-    _world = new World( *context._window, gzc::sokoban::core::Board( _level ), *context._fonts, *context._sounds );
+    _world = std::make_shared< World >( *context._window, gzc::sokoban::core::Board( _level ), *context._fonts, *context._sounds );
 }
 
 /**
  * Default destructor for the Game state
  */
 State_Game::~State_Game()
-{
-    delete _world;
-}
+= default;
 
 /**
  * Realtime update of the visually available Game window
@@ -151,8 +150,7 @@ bool State_Game::handle_event( const sf::Event& event )
  */
 void State_Game::reset_board()
 {
-    delete _world;
-    _world = new World( _window, gzc::sokoban::core::Board( _level ), *get_context()._fonts, *get_context()._sounds );
+    _world = std::make_shared< World >( _window, gzc::sokoban::core::Board( _level ), *get_context()._fonts, *get_context()._sounds );
     reset_counter++;
     _world->set_reset_counter( reset_counter );
 }
@@ -169,8 +167,7 @@ void State_Game::next_level()
         return;
     }
     _level = _levels.at( current_level );
-    delete _world;
-    _world = new World( _window, gzc::sokoban::core::Board( _level ), *get_context()._fonts, *get_context()._sounds );
+    _world = std::make_shared< World >( _window, gzc::sokoban::core::Board( _level ), *get_context()._fonts, *get_context()._sounds );
     reset_counter = 0;
     _world->set_reset_counter( reset_counter );
 }
@@ -187,14 +184,35 @@ void State_Game::prev_level()
         return;
     }
     _level = _levels.at( current_level );
-    delete _world;
-    _world = new World( _window, gzc::sokoban::core::Board( _level ), *get_context()._fonts, *get_context()._sounds );
+    _world = std::make_shared< World >( _window, gzc::sokoban::core::Board( _level ), *get_context()._fonts, *get_context()._sounds );
     reset_counter = 0;
     _world->set_reset_counter( reset_counter );
 }
+
 bool State_Game::handle_keyboard_events( const sf::Event& event )
 {
     const auto context = get_context();
+
+    context._keyboard->releasing(event, { sf::Keyboard::Scancode::R }, [ this ]
+    {
+        reset_board();
+        return true;
+    });
+
+    context._keyboard->releasing(event, { sf::Keyboard::Scancode::S }, [ this ]
+    {
+        next_level();
+        return true;
+    });
+
+    context._keyboard->releasing(event, { sf::Keyboard::Scancode::X }, [ this ]
+    {
+        prev_level();
+        return true;
+    });
+
+    /* TODO: Rewrite this IF - ELSE chain 'properly' */
+
     if ( const auto *keyPressed = event.getIf<sf::Event::KeyPressed>() )
     {
         if ( _world->is_board_completed() )
@@ -202,16 +220,6 @@ bool State_Game::handle_keyboard_events( const sf::Event& event )
             /* Temporarily no reason for the world to do anything immediate on key pressed */
         } else
         {
-            if ( keyPressed->scancode == sf::Keyboard::Scancode::R )
-            {
-                reset_board();
-            } else if ( keyPressed->scancode == sf::Keyboard::Scancode::S )
-            {
-                next_level();
-            } else if ( keyPressed->scancode == sf::Keyboard::Scancode::X )
-            {
-                prev_level();
-            }
             if ( keyPressed->scancode == sf::Keyboard::Scancode::Up )
             {
                 _world->move_up( true );

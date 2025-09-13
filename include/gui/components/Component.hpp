@@ -20,7 +20,7 @@ namespace sokoban::ui::gui
     {
     public:
         /** Generic declaration of a shared pointer meant to define a base nature to said pointer */
-        typedef std::shared_ptr< Component > Ptr;
+        using Ptr= std::shared_ptr< Component >;
 
         Component();
 

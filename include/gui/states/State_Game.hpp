@@ -17,28 +17,22 @@ namespace sokoban::ui::gui
     {
     public:
         State_Game( State_Stack& stack, Context context );
-
         ~State_Game() override;
-
         bool update( sf::Time dt ) override;
-
         void draw() override;
-
         bool handle_event( const sf::Event& event ) override;
 
     private:
         unsigned long current_level = 0;
         int reset_counter = 0;
         const gzc::util::logger::Logger logger = gzc::util::logger::Logger("State Game", "sokoban.log", true );
-        World* _world; /** The map that has to be displayed */
+        std::shared_ptr< World > _world; /** The map that has to be displayed */
         sf::RenderWindow& _window; /** The window where everything has to be drawn into */
         std::vector< std::string > _levels; /** The various levels throughout the game */
         std::string _level; /** The level that is currently being played */
         sf::Text _text; /** The textual information present on the screen */
         void reset_board();
-
         void next_level();
-
         void prev_level();
         bool handle_keyboard_events(const sf::Event& event) override;
         bool handle_mouse_events(const sf::Event& event) override;
