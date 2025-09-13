@@ -38,7 +38,7 @@ namespace sokoban::ui::gui
         sf::Vector2f unit_vector( sf::Vector2f vector );
     };
 
-#include "ui/Utility.inl"
+#include <ui/Utility.inl>
 }
 
 

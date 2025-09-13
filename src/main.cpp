@@ -40,19 +40,10 @@ int main( const int argc, char* argv[ ] )
 
     int res = 0;
 
-    if ( debugging )
-    {
-        const Menu menu( true );
-        logger.log( Logger::Level::INFO, "Running Game in debug mode" );
+    const Menu menu( debugging );
+    logger.log( Logger::Level::INFO, "Running Game in debug mode" );
 
-        res = menu.launch_application();
-    } else
-    {
-        const Menu menu;
-        logger.log( Logger::Level::INFO, "Running Game..." );
-
-        res = menu.launch_application();
-    }
+    res = menu.launch_application();
 
     logger.log( Logger::Level::INFO, "Closing Sokoban..." );
 
