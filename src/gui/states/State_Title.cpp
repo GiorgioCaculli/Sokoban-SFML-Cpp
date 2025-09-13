@@ -1,0 +1,130 @@
+#include <iostream>
+#include <gui/states/State_Title.hpp>
+
+#include <gzc/util/logger/Logger.hpp>
+#include <gui/Utility.hpp>
+#include <ui/Resource_Holder.hpp>
+
+#include <SFML/Graphics/RenderWindow.hpp>
+
+using namespace sokoban::ui::gui;
+using namespace gzc::util::logger;
+
+/**
+ * Default constructor for the Title state
+ * @param stack The stack containing the various states
+ * @param context The context containing the various resources
+ */
+State_Title::State_Title( State_Stack& stack, const Context& context )
+    : State( stack, context )
+      , _background_sprite( context._textures->get( Textures::Title_Screen ) )
+      , _text( context._fonts->get( Fonts::Rampart_One ) )
+      , _title_text( context._fonts->get( Fonts::Kodomo_Rounded ) )
+      , _title_sub_text( context._fonts->get( Fonts::Kodomo_Rounded ) )
+      , _show_text( true )
+      , _text_effect_time( sf::Time::Zero )
+{
+    const Logger logger( "State Title", "sokoban.log", true );
+    logger.log( Logger::Level::DEBUG, "Initializing Title Screen" );
+
+    logger.log( Logger::Level::DEBUG, "Loading Title Screen Texture" );
+    Utility::center_origin( _background_sprite );
+    _background_sprite.setPosition( context._window->getView().getSize() / 2.f );
+
+    logger.log( Logger::Level::DEBUG, "Loading Title Screen Text" );
+
+    _title_text.setString( L"そこばん" );
+    Utility::center_origin( _title_text );
+    const sf::Vector2f pos( context._window->getView().getSize() / 2.f );
+    _title_text.setPosition( sf::Vector2f( pos.x / 1.5f, 10.f ) );
+    _title_text.setCharacterSize( 8 * 24 );
+    _title_text.setFillColor( sf::Color::Cyan );
+
+    _title_sub_text.setString( "Sokoban" );
+    Utility::center_origin( _title_sub_text );
+    _title_sub_text.setPosition( sf::Vector2f( pos.x / 1.2f, _title_text.getPosition().y + 200.f ) );
+    _title_sub_text.setCharacterSize( 4 * 24 );
+    _title_sub_text.setFillColor( sf::Color::Cyan );
+
+    _text.setString( "Press ENTER or SPACE to start" );
+    Utility::center_origin( _text );
+    _text.setPosition( sf::Vector2f( pos.x, pos.y + 150.f ) );
+    _text.setCharacterSize( 32 );
+}
+
+/**
+ * Visually display the various components within the state
+ */
+void State_Title::draw()
+{
+    sf::RenderWindow& window = *get_context()._window;
+    window.draw( _background_sprite );
+    window.draw( _title_text );
+    window.draw( _title_sub_text );
+    if ( _show_text )
+    {
+        window.draw( _text );
+    }
+}
+
+/**
+ * Realtime update each component
+ * @param dt The clock time
+ * @return always true
+ */
+bool State_Title::update( const sf::Time dt )
+{
+    _text_effect_time += dt;
+    if ( _text_effect_time >= sf::seconds( 0.5f ) )
+    {
+        _show_text = !_show_text;
+        _text_effect_time = sf::Time::Zero;
+    }
+    return true;
+}
+
+/**
+ * Event handler for the current state
+ * @param event The event to manage
+ * @return always true
+ */
+bool State_Title::handle_event( const sf::Event& event )
+{
+    return handle_keyboard_events( event ) || handle_mouse_events( event );
+}
+
+
+bool State_Title::handle_keyboard_events( const sf::Event& event )
+{
+    const auto context = get_context();
+    context._keyboard->releasing( event, { sf::Keyboard::Scancode::Enter, sf::Keyboard::Scancode::Space }, [ this ]
+    {
+        return _callback_start_game();
+    } );
+    return false;
+}
+
+bool State_Title::handle_mouse_events( const sf::Event& event )
+{
+    const auto context = get_context();
+    context._mouse->releasing( event, sf::Mouse::Button::Left, *context._window, [ this ]
+    {
+        return _callback_start_game();
+    } );
+    return false;
+}
+
+
+bool State_Title::_callback_start_game() const
+{
+    try
+    {
+        request_stack_pop();
+        request_stack_push( States::Menu );
+        return true;
+    } catch ( const std::exception& e )
+    {
+        std::cerr << e.what() << std::endl;
+        return false;
+    }
+}

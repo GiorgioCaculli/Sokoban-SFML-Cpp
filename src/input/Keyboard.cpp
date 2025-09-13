@@ -141,10 +141,11 @@ std::string Keyboard::to_string( const sf::Keyboard::Scancode key )
         BOOK_KEY_TO_STRING_CASE( F14 )
         BOOK_KEY_TO_STRING_CASE( F15 )
         BOOK_KEY_TO_STRING_CASE( Pause )
+            /*case sf::Keyboard::KeyCount:
+            // TODO: No idea why this breaks, migration documentation does not mention anything about this but I will figure it out
+            //break;*/
         default:
             break;
-            //case sf::Keyboard::KeyCount: // TODO: No idea why this breaks, migration documentation does not mention anything about this but I will figure it out
-            //break;
     }
     return "";
 }

@@ -1,6 +1,6 @@
 #include <ui/Menu.hpp>
 
-#include <ui/gui/Application.hpp>
+#include <gui/Application.hpp>
 
 #include <gzc/util/logger/Logger.hpp>
 

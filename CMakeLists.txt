@@ -55,33 +55,33 @@ include_directories(include)
 add_executable(SokobanSFML
         src/main.cpp
         src/ui/Menu.cpp
-        src/ui/gui/Animation.cpp
-        src/ui/gui/Application.cpp
-        src/ui/gui/Music_Player.cpp
-        src/ui/gui/Scene_Node.cpp
-        src/ui/gui/Sound_Node.cpp
-        src/ui/gui/Sound_Player.cpp
-        src/ui/gui/Sprite_Node.cpp
-        src/ui/gui/Utility.cpp
-        src/ui/gui/World.cpp
-        src/ui/gui/Resource_Bundle.cpp
-        src/ui/gui/states/State.cpp
-        src/ui/gui/states/State_Game.cpp
-        src/ui/gui/states/State_Menu.cpp
-        src/ui/gui/states/State_Pause.cpp
-        src/ui/gui/states/State_Settings.cpp
-        src/ui/gui/states/State_Stack.cpp
-        src/ui/gui/states/State_Title.cpp
-        src/ui/gui/entities/Entity.cpp
-        src/ui/gui/entities/Entity_Box.cpp
-        src/ui/gui/entities/Entity_Movable.cpp
-        src/ui/gui/entities/Entity_Platform.cpp
-        src/ui/gui/entities/Entity_Player.cpp
-        src/ui/gui/entities/Entity_Wall.cpp
-        src/ui/gui/components/Component.cpp
-        src/ui/gui/components/Button.cpp
-        src/ui/gui/components/Container.cpp
-        src/ui/gui/components/Label.cpp
+        src/gui/Animation.cpp
+        src/gui/Application.cpp
+        src/gui/Music_Player.cpp
+        src/gui/Scene_Node.cpp
+        src/gui/Sound_Node.cpp
+        src/gui/Sound_Player.cpp
+        src/gui/Sprite_Node.cpp
+        src/gui/Utility.cpp
+        src/gui/World.cpp
+        src/gui/Resource_Bundle.cpp
+        src/gui/states/State.cpp
+        src/gui/states/State_Game.cpp
+        src/gui/states/State_Menu.cpp
+        src/gui/states/State_Pause.cpp
+        src/gui/states/State_Settings.cpp
+        src/gui/states/State_Stack.cpp
+        src/gui/states/State_Title.cpp
+        src/gui/entities/Entity.cpp
+        src/gui/entities/Entity_Box.cpp
+        src/gui/entities/Entity_Movable.cpp
+        src/gui/entities/Entity_Platform.cpp
+        src/gui/entities/Entity_Player.cpp
+        src/gui/entities/Entity_Wall.cpp
+        src/gui/components/Component.cpp
+        src/gui/components/Button.cpp
+        src/gui/components/Container.cpp
+        src/gui/components/Label.cpp
         src/net/Packet.cpp
         src/net/Client.cpp
         src/net/Server.cpp

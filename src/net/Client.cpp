@@ -1,4 +1,4 @@
-#include "net/Packet.hpp"
+#include <net/Packet.hpp>
 #include <net/Client.hpp>
 
 using namespace sokoban::net;

@@ -8,7 +8,7 @@ Mouse::Mouse()
 Mouse::~Mouse()
 = default;
 
-bool Mouse::pressing( const sf::Event& event, const sf::Mouse::Button& button, const sf::Transformable& item, std::function<bool()>&& c )
+bool Mouse::pressing( const sf::Event& event, const sf::Mouse::Button& button, const sf::Transformable& item, const std::function<bool()>&& c )
 {
     if ( const auto *buttonPressed = event.getIf<sf::Event::MouseButtonPressed>() )
     {
@@ -21,7 +21,7 @@ bool Mouse::pressing( const sf::Event& event, const sf::Mouse::Button& button, c
 }
 
 bool Mouse::pressing( const sf::Event& event, const sf::Mouse::Button& button, const ui::gui::Component::Ptr& item,
-    std::function<bool()>&& c )
+    const std::function<bool()>&& c )
 {
     if ( const auto *buttonPressed = event.getIf<sf::Event::MouseButtonPressed>() )
     {
@@ -33,7 +33,7 @@ bool Mouse::pressing( const sf::Event& event, const sf::Mouse::Button& button, c
     return false;
 }
 
-bool Mouse::pressing( const sf::Event& event, const sf::Mouse::Button& button, const sf::RenderWindow& item, std::function<bool()>&& c )
+bool Mouse::pressing( const sf::Event& event, const sf::Mouse::Button& button, const sf::RenderWindow& item, const std::function<bool()>&& c )
 {
     if ( const auto *buttonPressed = event.getIf<sf::Event::MouseButtonPressed>() )
     {
@@ -45,7 +45,7 @@ bool Mouse::pressing( const sf::Event& event, const sf::Mouse::Button& button, c
     return false;
 }
 
-bool Mouse::releasing( const sf::Event& event, const sf::Mouse::Button& button, const sf::Transformable& item, std::function<bool()>&& c)
+bool Mouse::releasing( const sf::Event& event, const sf::Mouse::Button& button, const sf::Transformable& item, const std::function<bool()>&& c)
 {
     if ( const auto *buttonReleased = event.getIf<sf::Event::MouseButtonReleased>() )
     {
@@ -58,7 +58,7 @@ bool Mouse::releasing( const sf::Event& event, const sf::Mouse::Button& button, 
 }
 
 bool Mouse::releasing( const sf::Event& event, const sf::Mouse::Button& button, const ui::gui::Component::Ptr& item,
-    std::function<bool()>&& c )
+    const std::function<bool()>&& c )
 {
     if ( const auto *buttonPressed = event.getIf<sf::Event::MouseButtonReleased>() )
     {
@@ -70,7 +70,7 @@ bool Mouse::releasing( const sf::Event& event, const sf::Mouse::Button& button, 
     return false;
 }
 
-bool Mouse::releasing( const sf::Event& event, const sf::Mouse::Button& button, const sf::RenderWindow& item, std::function<bool()>&& c )
+bool Mouse::releasing( const sf::Event& event, const sf::Mouse::Button& button, const sf::RenderWindow& item, const std::function<bool()>&& c )
 {
     if ( const auto *buttonReleased = event.getIf<sf::Event::MouseButtonReleased>() )
     {

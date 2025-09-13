@@ -40,7 +40,7 @@ namespace sokoban::ui
         void insert_resource( Identifier id, std::unique_ptr< Resource > resource );
     };
 
-#include "Resource_Holder.inl"
+#include <ui/Resource_Holder.inl>
 }
 
 
