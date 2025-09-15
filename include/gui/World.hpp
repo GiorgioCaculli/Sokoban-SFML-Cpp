@@ -17,6 +17,7 @@
 #include <SFML/Graphics/Text.hpp>
 
 #include <vector>
+#include <memory>
 
 namespace sf
 {
@@ -72,28 +73,28 @@ namespace sokoban::ui::gui
         Font_Holder& _fonts; /** Default font holder */
         Sound_Player& _sounds; /** Default Sound Player */
         Scene_Node _scene_graph; /** Main scene node */
-        std::vector< Scene_Node * > _scene_layers; /** Various Scene layers */
+        std::vector< std::shared_ptr< Scene_Node > > _scene_layers; /** Various Scene layers */
         bool _player_is_moving_up; /** Whether the player is moving up */
         bool _player_is_moving_down; /** Whether the player is moving down */
         bool _player_is_moving_left; /** Whether the player is moving left */
         bool _player_is_moving_right; /** Whether the player is moving right */
         sf::FloatRect _world_bounds; /** The accessible limits of the window */
         gzc::sokoban::core::Board _board; /** The Board containing all the actors */
-        Sprite_Node* _player_sprite; /** The player sprite */
-        gzc::sokoban::core::Player* _board_player; /** The player within the board */
-        entity::Entity_Player* _player_entity;
+        std::shared_ptr< Sprite_Node > _player_sprite; /** The player sprite */
+        std::shared_ptr< gzc::sokoban::core::Player > _board_player; /** The player within the board */
+        std::shared_ptr< entity::Entity_Player > _player_entity;
         /** The player entity containing the various assets coordinates */
-        std::vector< Sprite_Node * > _box_sprites; /** The various box sprites */
-        std::vector< gzc::sokoban::core::Box * > _box_actors; /** The various box actors within the board */
-        std::vector< entity::Entity_Box * > _box_entities;
+        std::vector< std::shared_ptr< Sprite_Node > > _box_sprites; /** The various box sprites */
+        std::vector< std::shared_ptr< gzc::sokoban::core::Box > > _box_actors; /** The various box actors within the board */
+        std::vector< std::shared_ptr< entity::Entity_Box > > _box_entities;
         /** The various box entities containing the assets' coordinates */
-        std::vector< entity::Entity * > _entities; /** The entirety of the entities present in the world */
-        sf::Texture* _box_texture_sheet; /** The box texture */
-        sf::Texture* _platform_texture_sheet; /** The platform texture */
-        sf::Texture* _wall_texture_sheet; /** The wall texture */
-        sf::Texture* _player_texture_sheet; /** The player texture */
-        sf::Texture* _background_texture; /** The background texture */
-        sf::Text* _text; /** The visually visible text */
+        std::vector< std::shared_ptr< entity::Entity > > _entities; /** The entirety of the entities present in the world */
+        std::shared_ptr< sf::Texture > _box_texture_sheet; /** The box texture */
+        std::shared_ptr< sf::Texture > _platform_texture_sheet; /** The platform texture */
+        std::shared_ptr< sf::Texture > _wall_texture_sheet; /** The wall texture */
+        std::shared_ptr< sf::Texture > _player_texture_sheet; /** The player texture */
+        std::shared_ptr< sf::Texture > _background_texture; /** The background texture */
+        std::shared_ptr< sf::Text > _text; /** The visually visible text */
         int _reset_counter; /** The amount of resets */
         void load_textures();
 

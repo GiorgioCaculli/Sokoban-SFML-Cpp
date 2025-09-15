@@ -7,7 +7,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Text.hpp>
 
-#include <iostream>
+#include <gzc/games/sokoban/core/Board.hpp>
 #include <random>
 #include <sstream>
 #include <utility>
@@ -41,7 +41,8 @@ World::World(sf::RenderTarget &target, const gzc::sokoban::core::Board &board,
       _text(nullptr), _reset_counter(0) {
   _board = board;
   logger.log(Logger::Level::DEBUG, "Level Layout:");
-  for (const gzc::sokoban::core::Actor *actor : _board.get_world()) {
+  for (const std::shared_ptr<gzc::sokoban::core::Actor> &actor :
+       _board.get_world()) {
     logger.log(Logger::Level::DEBUG, actor->to_string());
   }
   /*step_buffer.loadFromFile( "res/sounds/footsteps_outdoor_boots.ogg" );
@@ -59,20 +60,8 @@ World::World(sf::RenderTarget &target, const gzc::sokoban::core::Board &board,
  * Default destructor for the World
  */
 World::~World() {
-  delete _text;
-  for (const Scene_Node *layer : _scene_layers) {
-    delete layer;
-  }
-  for (const entity::Entity *entity : _entities) {
-    delete entity;
-  }
   _scene_layers.clear();
   _entities.clear();
-  delete _player_texture_sheet;
-  delete _box_texture_sheet;
-  delete _platform_texture_sheet;
-  delete _wall_texture_sheet;
-  delete _background_texture;
   _box_sprites.clear();
   _box_entities.clear();
 }
@@ -89,6 +78,7 @@ void World::update(const sf::Time dt) {
   float player_y_coordinates;
   float player_width_coordinates;
   float player_height_coordinates;
+  using enum gzc::sokoban::core::Board::Collision;
   if (_player_is_moving_up) {
     const auto player_asset_rect = _player_entity->get_player_face_map()
                                        .find(entity::Entity_Player::Face::NORTH)
@@ -103,10 +93,10 @@ void World::update(const sf::Time dt) {
     _player_sprite->set_texture(*_player_texture_sheet);
     _player_sprite->set_texture(*_player_texture_sheet,
                                 player_assets_coordinates);
-    if (_board.check_wall_collision(_board_player, _board.TOP_COLLISION)) {
+    if (_board.check_wall_collision(_board_player, TOP)) {
       return;
     }
-    if (_board.check_box_collision(_board.TOP_COLLISION)) {
+    if (_board.check_box_collision(TOP)) {
       return;
     }
     for (long unsigned int i = 0; i < _box_entities.size(); i++) {
@@ -131,10 +121,10 @@ void World::update(const sf::Time dt) {
         sf::Vector2i(player_width_coordinates, player_height_coordinates));
     _player_sprite->set_texture(*_player_texture_sheet,
                                 player_assets_coordinates);
-    if (_board.check_wall_collision(_board_player, _board.BOTTOM_COLLISION)) {
+    if (_board.check_wall_collision(_board_player, BOTTOM)) {
       return;
     }
-    if (_board.check_box_collision(_board.BOTTOM_COLLISION)) {
+    if (_board.check_box_collision(BOTTOM)) {
       return;
     }
     for (long unsigned int i = 0; i < _box_entities.size(); i++) {
@@ -159,10 +149,10 @@ void World::update(const sf::Time dt) {
         sf::Vector2i(player_width_coordinates, player_height_coordinates));
     _player_sprite->set_texture(*_player_texture_sheet,
                                 player_assets_coordinates);
-    if (_board.check_wall_collision(_board_player, _board.LEFT_COLLISION)) {
+    if (_board.check_wall_collision(_board_player, LEFT)) {
       return;
     }
-    if (_board.check_box_collision(_board.LEFT_COLLISION)) {
+    if (_board.check_box_collision(LEFT)) {
       return;
     }
     for (long unsigned int i = 0; i < _box_entities.size(); i++) {
@@ -187,10 +177,10 @@ void World::update(const sf::Time dt) {
         sf::Vector2i(player_width_coordinates, player_height_coordinates));
     _player_sprite->set_texture(*_player_texture_sheet,
                                 player_assets_coordinates);
-    if (_board.check_wall_collision(_board_player, _board.RIGHT_COLLISION)) {
+    if (_board.check_wall_collision(_board_player, RIGHT)) {
       return;
     }
-    if (_board.check_box_collision(_board.RIGHT_COLLISION)) {
+    if (_board.check_box_collision(RIGHT)) {
       return;
     }
     for (long unsigned int i = 0; i < _box_entities.size(); i++) {
@@ -218,7 +208,7 @@ void World::update(const sf::Time dt) {
  */
 void World::draw() const {
   _target.setView(_world_view);
-  for (const Scene_Node *layer : _scene_layers) {
+  for (const std::shared_ptr<Scene_Node> &layer : _scene_layers) {
     _target.draw(*layer);
   }
   _target.draw(*_text);
@@ -229,14 +219,14 @@ void World::draw() const {
  */
 void World::load_textures() {
   logger.log(Logger::Level::INFO, "Loading Textures...");
-  _player_texture_sheet =
-      new sf::Texture("res/images/Spritesheet/character_spritesheet.png");
-  _box_texture_sheet =
-      new sf::Texture("res/images/Spritesheet/boxes_spritesheet.png");
-  _platform_texture_sheet =
-      new sf::Texture("res/images/Spritesheet/platforms_spritesheet.png");
-  _wall_texture_sheet =
-      new sf::Texture("res/images/Spritesheet/wall_round_spritesheet.png");
+  _player_texture_sheet = std::make_shared<sf::Texture>(
+      "res/images/Spritesheet/character_spritesheet.png");
+  _box_texture_sheet = std::make_shared<sf::Texture>(
+      "res/images/Spritesheet/boxes_spritesheet.png");
+  _platform_texture_sheet = std::make_shared<sf::Texture>(
+      "res/images/Spritesheet/platforms_spritesheet.png");
+  _wall_texture_sheet = std::make_shared<sf::Texture>(
+      "res/images/Spritesheet/wall_round_spritesheet.png");
 
   std::random_device rd;
   std::mt19937 mt(rd());
@@ -247,24 +237,24 @@ void World::load_textures() {
               min_within_enum, max_within_enum);
           static_cast<Background_Color>(background_distribution(mt))) {
   case Background_Color::CONCRETE:
-    _background_texture =
-        new sf::Texture("res/images/PNG/GroundGravel_Concrete.png");
+    _background_texture = std::make_shared<sf::Texture>(
+        "res/images/PNG/GroundGravel_Concrete.png");
     break;
   case Background_Color::DIRT:
     _background_texture =
-        new sf::Texture("res/images/PNG/GroundGravel_Dirt.png");
+        std::make_shared<sf::Texture>("res/images/PNG/GroundGravel_Dirt.png");
     break;
   case Background_Color::GRASS:
     _background_texture =
-        new sf::Texture("res/images/PNG/GroundGravel_Grass.png");
+        std::make_shared<sf::Texture>("res/images/PNG/GroundGravel_Grass.png");
     break;
   case Background_Color::SAND:
     _background_texture =
-        new sf::Texture("res/images/PNG/GroundGravel_Sand.png");
+        std::make_shared<sf::Texture>("res/images/PNG/GroundGravel_Sand.png");
     break;
   default:
     _background_texture =
-        new sf::Texture("res/images/PNG/GroundGravel_Grass.png");
+        std::make_shared<sf::Texture>("res/images/PNG/GroundGravel_Grass.png");
     break;
   }
 }
@@ -278,20 +268,21 @@ void World::build_scene() {
   _player_is_moving_down = false;
   _player_is_moving_left = false;
   _player_is_moving_right = false;
-  _text = new sf::Text(_fonts.get(Fonts::Connection_II));
+  _text = std::make_shared<sf::Text>(_fonts.get(Fonts::Connection_II));
   _text->setPosition(sf::Vector2f(_target.getSize().x - 350.f, 20.f));
   _text->setCharacterSize(24);
   _text->setFillColor(sf::Color::Black);
 
   logger.log(Logger::Level::INFO,
-             "Board size: " + std::to_string(_board.get_world().size()));
-  _box_sprites = std::vector<Sprite_Node *>();
-  _box_actors = std::vector<gzc::sokoban::core::Box *>();
-  _box_entities = std::vector<entity::Entity_Box *>();
+             std::format("{}: {} ", "Board size: ",
+                         std::to_string(_board.get_world().size())));
+  _box_sprites = std::vector<std::shared_ptr<Sprite_Node>>();
+  _box_actors = std::vector<std::shared_ptr<gzc::sokoban::core::Box>>();
+  _box_entities = std::vector<std::shared_ptr<entity::Entity_Box>>();
 
   logger.log(Logger::Level::INFO, "Building Scene...");
   std::size_t world_size = _board.get_world().size() + 1;
-  _scene_layers = std::vector<Scene_Node *>();
+  _scene_layers = std::vector<std::shared_ptr<Scene_Node>>();
   std::stringstream ss;
   ss << "Initializing " << std::to_string(world_size) << " Scene nodes...";
   logger.log(Logger::Level::DEBUG, ss.str());
@@ -327,14 +318,14 @@ void World::build_scene() {
   sf::IntRect textureRect(_world_bounds);
   _background_texture->setRepeated(true);
 
-  auto *backgroundSprite = new Sprite_Node(*_background_texture, textureRect);
+  auto backgroundSprite = std::make_shared< Sprite_Node >(*_background_texture, textureRect);
   backgroundSprite->setPosition(
       sf::Vector2f(_world_bounds.position.x, _world_bounds.position.y));
   _scene_layers.push_back(backgroundSprite);
 
   layers++;
 
-  for (gzc::sokoban::core::Actor *actor : _board.get_world()) {
+  for (std::shared_ptr<gzc::sokoban::core::Actor> actor : _board.get_world()) {
     float asset_coordinate_x;
     float asset_coordinate_y;
     float asset_coordinate_width;
@@ -342,14 +333,16 @@ void World::build_scene() {
 
     sf::IntRect asset_rect;
 
-    Sprite_Node *actor_sprite = nullptr;
+    std::shared_ptr< Sprite_Node > actor_sprite = nullptr;
 
-    entity::Entity *entity_actor = nullptr;
+    std::shared_ptr< entity::Entity > entity_actor = nullptr;
 
     if (actor->get_type() == actor->PLAYER) {
-      _board_player = dynamic_cast<gzc::sokoban::core::Player *>(actor);
-      entity_actor = new entity::Entity_Player(actor->get_x(), actor->get_y());
-      _player_entity = dynamic_cast<entity::Entity_Player *>(entity_actor);
+      _board_player =
+          dynamic_pointer_cast<gzc::sokoban::core::Player>(
+              actor);
+      entity_actor = std::make_shared<entity::Entity_Player >(actor->get_x(), actor->get_y());
+      _player_entity = dynamic_pointer_cast<entity::Entity_Player>(entity_actor);
       auto player_asset_rect = _player_entity->get_player_face_map()
                                    .find(entity::Entity_Player::Face::SOUTH)
                                    ->second;
@@ -360,14 +353,15 @@ void World::build_scene() {
       asset_rect = sf::IntRect(
           sf::Vector2i(asset_coordinate_x, asset_coordinate_y),
           sf::Vector2i(asset_coordinate_width, asset_coordinate_height));
-      actor_sprite = new Sprite_Node(*_player_texture_sheet, asset_rect);
+      actor_sprite = std::make_shared< Sprite_Node >(*_player_texture_sheet, asset_rect);
       _player_sprite = actor_sprite;
     }
     if (actor->get_type() == actor->PLATFORM) {
       entity_actor =
-          new entity::Entity_Platform(actor->get_x(), actor->get_y());
-      actor = dynamic_cast<entity::Entity_Platform *>(entity_actor);
-      auto *platform_actor = dynamic_cast<entity::Entity_Platform *>(actor);
+          std::make_shared<entity::Entity_Platform>(actor->get_x(), actor->get_y());
+      actor = dynamic_pointer_cast<entity::Entity_Platform>(entity_actor);
+      auto platform_actor =
+          dynamic_pointer_cast<entity::Entity_Platform>(actor);
       auto platform_asset_rect = platform_actor->get_platform_color_map()
                                      .find(random_platform_color)
                                      ->second;
@@ -378,16 +372,16 @@ void World::build_scene() {
       asset_rect = sf::IntRect(
           sf::Vector2i(asset_coordinate_x, asset_coordinate_y),
           sf::Vector2i(asset_coordinate_width, asset_coordinate_height));
-      actor_sprite = new Sprite_Node(*_platform_texture_sheet, asset_rect);
+      actor_sprite = std::make_shared<Sprite_Node>(*_platform_texture_sheet, asset_rect);
       /* If sprite size = 32x32 */
       actor_sprite->setOrigin(sf::Vector2f(-(asset_coordinate_width / 2.f),
                                            -(asset_coordinate_height / 2.f)));
     }
     if (actor->get_type() == actor->BOX) {
-      _box_actors.push_back(dynamic_cast<gzc::sokoban::core::Box *>(actor));
-      entity_actor = new entity::Entity_Box(actor->get_x(), actor->get_y());
-      actor = dynamic_cast<entity::Entity_Box *>(entity_actor);
-      auto *box_entity = dynamic_cast<entity::Entity_Box *>(actor);
+      _box_actors.push_back(dynamic_pointer_cast<gzc::sokoban::core::Box>(actor));
+      entity_actor = std::make_shared<entity::Entity_Box>(actor->get_x(), actor->get_y());
+      actor = dynamic_pointer_cast<entity::Entity_Box>(entity_actor);
+      auto box_entity = dynamic_pointer_cast<entity::Entity_Box>(actor);
       auto box_asset_rect =
           box_entity->get_box_color_map().find(random_box_color)->second;
       asset_coordinate_x = box_asset_rect.at(0);
@@ -397,14 +391,14 @@ void World::build_scene() {
       sf::IntRect asset_rectangle(
           sf::Vector2i(asset_coordinate_x, asset_coordinate_y),
           sf::Vector2i(asset_coordinate_width, asset_coordinate_height));
-      actor_sprite = new Sprite_Node(*_box_texture_sheet, asset_rectangle);
+      actor_sprite = std::make_shared<Sprite_Node>(*_box_texture_sheet, asset_rectangle);
       _box_sprites.push_back(actor_sprite);
       _box_entities.push_back(box_entity);
     }
     if (actor->get_type() == actor->WALL) {
-      entity_actor = new entity::Entity_Wall(actor->get_x(), actor->get_y());
-      actor = dynamic_cast<entity::Entity_Wall *>(entity_actor);
-      auto *wall_actor = dynamic_cast<entity::Entity_Wall *>(actor);
+      entity_actor = std::make_shared<entity::Entity_Wall>(actor->get_x(), actor->get_y());
+      actor = dynamic_pointer_cast<entity::Entity_Wall>(entity_actor);
+      auto wall_actor = dynamic_pointer_cast<entity::Entity_Wall>(actor);
       auto wall_asset_rect =
           wall_actor->get_wall_color_map().find(random_wall_color)->second;
       asset_coordinate_x = wall_asset_rect.at(0);
@@ -414,7 +408,7 @@ void World::build_scene() {
       asset_rect = sf::IntRect(
           sf::Vector2i(asset_coordinate_x, asset_coordinate_y),
           sf::Vector2i(asset_coordinate_width, asset_coordinate_height));
-      actor_sprite = new Sprite_Node(*_wall_texture_sheet, asset_rect);
+      actor_sprite = std::make_shared<Sprite_Node>(*_wall_texture_sheet, asset_rect);
     }
     actor_sprite->setPosition(
         sf::Vector2f(actor->get_x() * OFFSET, actor->get_y() * OFFSET));
@@ -423,10 +417,9 @@ void World::build_scene() {
     layers++;
   }
 
-  logger.log(Logger::Level::INFO,
-             std::format( "{}: {}", "Number of layers loaded", std::to_string(layers)
-            )
-        );
+  logger.log(
+      Logger::Level::INFO,
+      std::format("{}: {}", "Number of layers loaded", std::to_string(layers)));
 }
 
 /**
