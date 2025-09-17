@@ -1,6 +1,14 @@
+#include "gui/Music_Player.hpp"
+#include "gui/Resource_Bundle.hpp"
+#include "gui/Resource_Identifiers.hpp"
+#include "gui/Sound_Player.hpp"
+#include "input/Keyboard.hpp"
+#include "input/Mouse.hpp"
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <gui/states/State.hpp>
 
 #include <gui/states/State_Stack.hpp>
+#include <memory>
 
 using namespace sokoban::ui::gui;
 
@@ -15,17 +23,25 @@ using namespace sokoban::ui::gui;
  * @param keyboard The default keyboard input handler
  * @param mouse The default mouse input handler
  */
-State::Context::Context( sf::RenderWindow& window, Texture_Holder& textures, Font_Holder& fonts, Music_Player& music,
-                         Sound_Player& sounds, Resource_Bundle& resource_bundle, input::Keyboard& keyboard, input::Mouse& mouse )
-    : _window( &window )
-      , _textures( &textures )
-      , _fonts( &fonts )
-      , _music( &music )
-      , _sounds( &sounds )
-      , _resource_bundle( &resource_bundle )
-      , _keyboard( &keyboard )
-      , _mouse( &mouse )
+State::Context::Context( const sf::RenderWindow& window, const Texture_Holder& textures, const Font_Holder& fonts, const Music_Player& music,
+                         const Sound_Player& sounds, const Resource_Bundle& resource_bundle, const input::Keyboard& keyboard, const input::Mouse& mouse )
+    : _window( nullptr )
+      , _textures( nullptr )
+      , _fonts( nullptr )
+      , _music( nullptr )
+      , _sounds( nullptr )
+      , _resource_bundle( nullptr )
+      , _keyboard( nullptr )
+      , _mouse( nullptr )
 {
+    _window = std::make_shared<sf::RenderWindow>( window );
+    _textures = std::make_shared<Texture_Holder>( textures );
+    _fonts = std::make_shared<Font_Holder>( fonts );
+    _music = std::make_shared<Music_Player>( music );
+    _sounds = std::make_shared<Sound_Player>( sounds );
+    _resource_bundle = std::make_shared<Resource_Bundle>( resource_bundle );
+    _keyboard = std::make_shared<input::Keyboard>( keyboard );
+    _mouse = std::make_shared<input::Mouse>( mouse );
 }
 
 /**
@@ -49,7 +65,7 @@ State::~State()
  * Function meant to insert a state inside the stack based on its ID
  * @param stateID The unique ID of the state
  */
-void State::request_stack_push( const States::ID stateID ) const
+void State::request_stack_push( const States::ID& stateID ) const
 {
     _stack->push_state( stateID );
 }

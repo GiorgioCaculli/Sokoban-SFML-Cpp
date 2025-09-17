@@ -268,7 +268,7 @@ void World::build_scene() {
   _player_is_moving_down = false;
   _player_is_moving_left = false;
   _player_is_moving_right = false;
-  _text = std::make_shared<sf::Text>(_fonts.get(Fonts::Connection_II));
+  _text = std::make_shared<sf::Text>(_fonts.get(Fonts::ID::Connection_II));
   _text->setPosition(sf::Vector2f(_target.getSize().x - 350.f, 20.f));
   _text->setCharacterSize(24);
   _text->setFillColor(sf::Color::Black);

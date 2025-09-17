@@ -15,7 +15,11 @@ namespace sokoban::ui::gui
     class Sound_Player
     {
     public:
+        explicit Sound_Player( float volume );
         Sound_Player();
+        Sound_Player( const Sound_Player& s );
+        Sound_Player& operator=( const Sound_Player& s );
+        ~Sound_Player();
 
         void play( Sound_Effect::ID effect );
 

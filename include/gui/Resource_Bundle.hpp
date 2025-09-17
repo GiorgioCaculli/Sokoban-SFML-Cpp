@@ -16,6 +16,8 @@ private:
 public:
     explicit Resource_Bundle( std::string path, const std::string& locale = "en_US.UTF-8" );
     Resource_Bundle();
+    Resource_Bundle( const Resource_Bundle& r );
+    Resource_Bundle& operator=( const Resource_Bundle& r );
     ~Resource_Bundle();
     std::string get_string( const std::string& key ) const;
     std::string get_path() const;

@@ -16,8 +16,8 @@ using namespace sokoban::ui::gui;
  */
 State_Pause::State_Pause( State_Stack& stack, const Context& context )
     : State( stack, context )
-    , _background_sprite( context._textures->get( Textures::Title_Screen ) )
-    , _paused_text( context._fonts->get( Fonts::Rampart_One ) )
+    , _background_sprite( context._textures->get( Textures::ID::Title_Screen ) )
+    , _paused_text( context._fonts->get( Fonts::ID::Rampart_One ) )
 {
     const sf::Vector2f view_size = context._window->getView().getSize();
 
@@ -132,7 +132,7 @@ bool State_Pause::_resume_button_callback() const
 
 bool State_Pause::_settings_button_callback() const
 {
-    request_stack_push( States::Settings );
+    request_stack_push( States::ID::Settings );
     return true;
 }
 
@@ -140,6 +140,6 @@ bool State_Pause::_back_to_main_menu_button_callback() const
 {
     request_stack_pop();
     request_stack_pop();
-    request_stack_push( States::Menu );
+    request_stack_push( States::ID::Menu );
     return true;
 }

@@ -7,10 +7,22 @@ using namespace sokoban::input;
 Keyboard::Keyboard()
 = default;
 
+Keyboard::Keyboard( const Keyboard& k )
+= default;
+
+Keyboard& Keyboard::operator=( const Keyboard& k )
+{
+    if( this != &k )
+    {
+        /* Fill with variables to copy */
+    }
+    return *this;
+}
+
 Keyboard::~Keyboard()
 = default;
 
-bool Keyboard::pressing( const sf::Event& event, const std::vector< sf::Keyboard::Scancode >& keys, std::function<bool()>&& c ) const
+bool Keyboard::pressing( const sf::Event& event, const std::vector< sf::Keyboard::Scancode >& keys, const std::function<bool()>&& c ) const
 {
     if ( const auto *key_pressed = event.getIf<sf::Event::KeyPressed>())
     {
@@ -22,7 +34,7 @@ bool Keyboard::pressing( const sf::Event& event, const std::vector< sf::Keyboard
     return false;
 }
 
-bool Keyboard::releasing( const sf::Event& event, const std::vector< sf::Keyboard::Scancode >& keys, std::function<bool()>&& c ) const
+bool Keyboard::releasing( const sf::Event& event, const std::vector< sf::Keyboard::Scancode >& keys, const std::function<bool()>&& c ) const
 {
     if ( const auto *key_released = event.getIf<sf::Event::KeyReleased>())
     {

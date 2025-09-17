@@ -19,8 +19,8 @@ using namespace sokoban::ui::gui;
  */
 State_Settings::State_Settings( State_Stack& stack, Context context )
     : State( stack, context )
-      , _background_sprite( context._textures->get( Textures::Title_Screen ) )
-      , _settings_text( context._fonts->get( Fonts::Rampart_One ) )
+      , _background_sprite( context._textures->get( Textures::ID::Title_Screen ) )
+      , _settings_text( context._fonts->get( Fonts::ID::Rampart_One ) )
 {
     const sf::Vector2f view_size = context._window->getView().getSize();
 

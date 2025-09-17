@@ -1,10 +1,6 @@
 #ifndef SOKOBAN_MENU_HPP
 #define SOKOBAN_MENU_HPP
 
-#include <vector>
-#include <string>
-
-
 namespace sokoban::ui
 {
     class Menu

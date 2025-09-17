@@ -16,7 +16,7 @@ using namespace sokoban::ui::gui;
  */
 State_Menu::State_Menu( State_Stack& stack, Context context )
     : State( stack, context )
-    , _background_sprite( context._textures->get( Textures::Title_Screen ) )
+    , _background_sprite( context._textures->get( Textures::ID::Title_Screen ) )
 {
     const auto window_view_size = context._window->getView().getSize();
     //sf::Font &font = context._fonts->get( Fonts::Rampart_One );
@@ -28,14 +28,14 @@ State_Menu::State_Menu( State_Stack& stack, Context context )
     _play_button->set_callback( [ this ]
     {
         request_stack_pop();
-        request_stack_push( States::Game );
+        request_stack_push( States::ID::Game );
     } );
 
     _settings_button = std::make_shared< Button >( context );
     _settings_button->set_text( "Settings" );
     _settings_button->set_callback( [ this ]
     {
-        request_stack_push( States::Settings );
+        request_stack_push( States::ID::Settings );
     } );
 
     _exit_button = std::make_shared< Button >( context );
@@ -102,12 +102,12 @@ bool State_Menu::handle_mouse_events( const sf::Event& event )
     context._mouse->pressing( event, sf::Mouse::Button::Left, _play_button, [ this ]
     {
         request_stack_pop();
-        request_stack_push( States::Game );
+        request_stack_push( States::ID::Game );
         return false;
     } );
     context._mouse->pressing( event, sf::Mouse::Button::Right, _settings_button, [ this ]
     {
-        request_stack_push( States::Settings );
+        request_stack_push( States::ID::Settings );
         return true;
     } );
     context._mouse->pressing( event, sf::Mouse::Button::Left, _exit_button, [ this ]

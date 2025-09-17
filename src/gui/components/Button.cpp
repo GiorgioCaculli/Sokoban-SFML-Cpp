@@ -14,8 +14,8 @@ using namespace sokoban::ui::gui;
  * Set the default states that characterize the button
  */
 Button::Button( State::Context context )
-    : _sprite( context._textures->get( Textures::Button ) )
-      , _text( context._fonts->get( Fonts::Rampart_One ) )
+    : _sprite( context._textures->get( Textures::ID::Button ) )
+      , _text( context._fonts->get( Fonts::ID::Rampart_One ) )
       , _is_toggled( false )
       , _sounds( *context._sounds )
 {
@@ -68,7 +68,7 @@ void Button::select()
     Component::select();
 
     change_texture( Selected );
-    _sounds.play( Sound_Effect::Button_Click_02 );
+    _sounds.play( Sound_Effect::ID::Button_Click_02 );
 }
 
 /**
@@ -99,7 +99,7 @@ void Button::activate()
     {
         deactivate();
     }
-    _sounds.play( Sound_Effect::Button_Click_01 );
+    _sounds.play( Sound_Effect::ID::Button_Click_01 );
 }
 
 /**

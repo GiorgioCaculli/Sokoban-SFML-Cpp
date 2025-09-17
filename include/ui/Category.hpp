@@ -6,7 +6,7 @@ namespace sokoban::ui::Category
     /**
              * Various types of actors and effects could be initialized
              */
-    enum Type
+    enum class Type
     {
         None = 0, /** Absolute nothing */
         Scene = 1 << 0, /** The actual Scene */

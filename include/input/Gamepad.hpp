@@ -9,6 +9,8 @@ namespace sokoban::input
     private:
     public:
         Gamepad();
+        Gamepad( const Gamepad& g );
+        Gamepad& operator=( const Gamepad& g );
         ~Gamepad();
     };
 }

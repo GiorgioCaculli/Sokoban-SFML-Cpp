@@ -1,3 +1,4 @@
+#include "ui/Category.hpp"
 #include <gui/Sound_Node.hpp>
 
 #include <gui/Sound_Player.hpp>
@@ -27,7 +28,7 @@ void Sound_Node::play_sound( const Sound_Effect::ID sound, const sf::Vector2f po
  * Category getter that characterizes the current node
  * @return Its category being a sound effect
  */
-unsigned int Sound_Node::get_category() const
+sokoban::ui::Category::Type Sound_Node::get_category() const
 {
-    return Category::Sound_Effect;
+    return Category::Type::Sound_Effect;
 }

@@ -12,7 +12,7 @@ using namespace sokoban::ui::gui;
  * @param character_size The character size
  */
 Label::Label( const Font_Holder& fonts, const std::string& text, const unsigned int character_size )
-    : _text( fonts.get( Fonts::Rampart_One ), text, character_size )
+    : _text( fonts.get( Fonts::ID::Rampart_One ), text, character_size )
 {
 }
 

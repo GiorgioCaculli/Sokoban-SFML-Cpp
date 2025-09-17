@@ -1,3 +1,4 @@
+#include <format>
 #include <gui/Resource_Bundle.hpp>
 #include <utility>
 
@@ -17,6 +18,22 @@ Resource_Bundle::Resource_Bundle( std::string path, const std::string& locale )
 Resource_Bundle::Resource_Bundle()
     : Resource_Bundle( "res/locale/strings.json", "en_US.UTF-8")
 {
+}
+
+/* TODO: Remove hard coded EN_US locale string */
+Resource_Bundle::Resource_Bundle( const Resource_Bundle& r )
+: Resource_Bundle(r.get_path(), "en_US.UTF-8" )
+{
+}
+
+Resource_Bundle& Resource_Bundle::operator=( const Resource_Bundle& r )
+{
+    if( this != &r )
+    {
+        _path = r._path;
+        _locale = r._locale;
+    }
+    return *this;
 }
 
 Resource_Bundle::~Resource_Bundle()

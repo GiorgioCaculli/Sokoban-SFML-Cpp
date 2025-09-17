@@ -17,10 +17,10 @@ using namespace gzc::util::logger;
  */
 State_Title::State_Title( State_Stack& stack, const Context& context )
     : State( stack, context )
-      , _background_sprite( context._textures->get( Textures::Title_Screen ) )
-      , _text( context._fonts->get( Fonts::Rampart_One ) )
-      , _title_text( context._fonts->get( Fonts::Kodomo_Rounded ) )
-      , _title_sub_text( context._fonts->get( Fonts::Kodomo_Rounded ) )
+      , _background_sprite( context._textures->get( Textures::ID::Title_Screen ) )
+      , _text( context._fonts->get( Fonts::ID::Rampart_One ) )
+      , _title_text( context._fonts->get( Fonts::ID::Kodomo_Rounded ) )
+      , _title_sub_text( context._fonts->get( Fonts::ID::Kodomo_Rounded ) )
       , _show_text( true )
       , _text_effect_time( sf::Time::Zero )
 {
@@ -120,7 +120,7 @@ bool State_Title::_callback_start_game() const
     try
     {
         request_stack_pop();
-        request_stack_push( States::Menu );
+        request_stack_push( States::ID::Menu );
         return true;
     } catch ( const std::exception& e )
     {

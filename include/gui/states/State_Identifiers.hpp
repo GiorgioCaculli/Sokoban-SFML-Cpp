@@ -7,7 +7,7 @@ namespace sokoban::ui::gui::States
     /**
      * ID of each state that characterizes it
      */
-    enum ID
+    enum class ID
     {
         None, /** No nature whatsoever */
         Title, /** The title screen */

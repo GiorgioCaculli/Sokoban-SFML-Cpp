@@ -14,6 +14,8 @@ namespace sokoban::input
     {
     public:
         Mouse();
+        Mouse( const Mouse& m );
+        Mouse& operator=( const Mouse& m );
         ~Mouse();
         bool pressing( const sf::Event&, const sf::Mouse::Button&, const sf::Transformable&, const std::function<bool()>&& );
         bool pressing( const sf::Event&, const sf::Mouse::Button&, const ui::gui::Component::Ptr&, const std::function<bool()>&& );

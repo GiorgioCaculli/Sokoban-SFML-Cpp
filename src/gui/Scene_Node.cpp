@@ -1,3 +1,4 @@
+#include "ui/Category.hpp"
 #include <gui/Scene_Node.hpp>
 
 #include <gui/Utility.hpp>
@@ -82,7 +83,7 @@ void Scene_Node::on_command( const Command& command, sf::Time dt ) const
     /* Execute command based on time */
 }
 
-unsigned int Scene_Node::get_category() const
+sokoban::ui::Category::Type Scene_Node::get_category() const
 {
     return _default_category;
 }

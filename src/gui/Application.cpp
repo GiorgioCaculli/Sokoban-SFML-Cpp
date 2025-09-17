@@ -35,17 +35,17 @@ Application::Application( const uint16_t width, const uint16_t height, std::stri
     _window.setVerticalSyncEnabled( true );
 
     _logger.log( Logger::Level::DEBUG, "Loading fonts" );
-    _fonts.load( Fonts::Kodomo_Rounded, "res/fonts/KodomoRounded.otf" );
-    _fonts.load( Fonts::Connection_II, "res/fonts/ConnectionIi-2wj8.otf" );
-    _fonts.load( Fonts::Free_Font, "res/fonts/freefont/FreeSansBold.ttf" );
-    _fonts.load( Fonts::Rampart_One, "res/fonts/RampartOne-Regular.ttf" );
+    _fonts.load( Fonts::ID::Kodomo_Rounded, "res/fonts/KodomoRounded.otf" );
+    _fonts.load( Fonts::ID::Connection_II, "res/fonts/ConnectionIi-2wj8.otf" );
+    _fonts.load( Fonts::ID::Free_Font, "res/fonts/freefont/FreeSansBold.ttf" );
+    _fonts.load( Fonts::ID::Rampart_One, "res/fonts/RampartOne-Regular.ttf" );
 
     _logger.log( Logger::Level::DEBUG, "Loading Title Screen Texture" );
-    _textures.load( Textures::Title_Screen, "res/images/Sample_Sokoban.png" );
-    _textures.load( Textures::Button, "res/images/Buttons.png" );
+    _textures.load( Textures::ID::Title_Screen, "res/images/Sample_Sokoban.png" );
+    _textures.load( Textures::ID::Button, "res/images/Buttons.png" );
 
     _logger.log( Logger::Level::DEBUG, "Initializing stastistics text" );
-    _statistics_text.setFont( _fonts.get( Fonts::Connection_II ) );
+    _statistics_text.setFont( _fonts.get( Fonts::ID::Connection_II ) );
     _statistics_text.setPosition( sf::Vector2f( _width / 2.5f, 5.f ) );
     _statistics_text.setCharacterSize( 10u );
     _statistics_text.setFillColor( sf::Color::Yellow );
@@ -54,10 +54,10 @@ Application::Application( const uint16_t width, const uint16_t height, std::stri
     register_states();
 
     _logger.log( Logger::Level::DEBUG, "Setting Title as first State to load" );
-    _state_stack.push_state( States::Title );
+    _state_stack.push_state( States::ID::Title );
 
     _logger.log( Logger::Level::DEBUG, "Playing Default Song" );
-    _music.play( Music::Town_Pleasant_peasants );
+    _music.play( Music::ID::Town_Pleasant_peasants );
 }
 
 /**
@@ -162,17 +162,17 @@ unsigned short Application::run()
 void Application::register_states()
 {
     _logger.log( Logger::Level::DEBUG, "Registering Title State" );
-    _state_stack.register_state< State_Title >( States::Title );
+    _state_stack.register_state< State_Title >( States::ID::Title );
 
     _logger.log( Logger::Level::DEBUG, "Registering Menu State" );
-    _state_stack.register_state< State_Menu >( States::Menu );
+    _state_stack.register_state< State_Menu >( States::ID::Menu );
 
     _logger.log( Logger::Level::DEBUG, "Registering Game State" );
-    _state_stack.register_state< State_Game >( States::Game );
+    _state_stack.register_state< State_Game >( States::ID::Game );
 
     _logger.log( Logger::Level::DEBUG, "Registering Settings State" );
-    _state_stack.register_state< State_Settings >( States::Settings );
+    _state_stack.register_state< State_Settings >( States::ID::Settings );
 
     _logger.log( Logger::Level::DEBUG, "Registering Pause State" );
-    _state_stack.register_state< State_Pause >( States::Pause );
+    _state_stack.register_state< State_Pause >( States::ID::Pause );
 }

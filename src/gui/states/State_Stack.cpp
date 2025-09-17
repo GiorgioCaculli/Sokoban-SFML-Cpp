@@ -112,13 +112,14 @@ void State_Stack::apply_pending_changes()
     {
         switch ( change._action )
         {
-            case Action::Push:
+            using enum sokoban::ui::gui::State_Stack::Action;
+            case Push:
                 _stack.push_back( create_state( change._state_id ) );
                 break;
-            case Action::Pop:
+            case Pop:
                 _stack.pop_back();
                 break;
-            case Action::Clear:
+            case Clear:
                 _stack.clear();
                 break;
         }

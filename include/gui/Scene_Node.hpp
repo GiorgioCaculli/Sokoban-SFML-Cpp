@@ -25,7 +25,7 @@ namespace sokoban::ui::gui
         using Ptr = std::unique_ptr<Scene_Node>;
         using Pair = std::pair<Scene_Node *, Scene_Node *>;
 
-        explicit Scene_Node( Category::Type category = Category::None );
+        explicit Scene_Node( Category::Type category = Category::Type::None );
 
         void attach_child( Ptr child );
 
@@ -39,7 +39,7 @@ namespace sokoban::ui::gui
 
         void on_command( const Command& command, sf::Time dt ) const;
 
-        virtual unsigned int get_category() const;
+        virtual Category::Type get_category() const;
 
         virtual sf::FloatRect get_bounding_rect() const;
 

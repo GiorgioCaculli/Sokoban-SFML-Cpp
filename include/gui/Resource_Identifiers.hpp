@@ -24,7 +24,7 @@ namespace sokoban::ui
             /**
              * The various textures for each actor and entity
              */
-            enum ID
+            enum class ID
             {
                 Player, /** The player texture */
                 Box, /** The box texture */
@@ -41,7 +41,7 @@ namespace sokoban::ui
          */
         namespace Shaders
         {
-            enum ID
+            enum class ID
             {
                 Brightness_Pass, /** The Brightness levels */
                 Down_Sample_Pass, /** The samples downscaling */
@@ -55,7 +55,7 @@ namespace sokoban::ui
          */
         namespace Fonts
         {
-            enum ID
+            enum class ID
             {
                 Connection_II, /** Minecraft-like font */
                 Kodomo_Rounded, /** Kiddie Japanese font */
@@ -69,7 +69,7 @@ namespace sokoban::ui
          */
         namespace Sound_Effect
         {
-            enum ID
+            enum class ID
             {
                 Player_Footsteps_Outdoor_Boots,
                 Player_Footsteps_Outdoor_Boots_On_Wood,
@@ -102,7 +102,7 @@ namespace sokoban::ui
          */
         namespace Music
         {
-            enum ID
+            enum class ID
             {
                 Field_Desolate_Domain,
                 Field_Golden_Harvest,
@@ -131,11 +131,10 @@ namespace sokoban::ui
     template< typename Resource, typename Identifier >
     class Resource_Holder;
 
-    typedef Resource_Holder< sf::Texture, gui::Textures::ID > Texture_Holder; /** The texture holder */
-    typedef Resource_Holder< sf::Font, gui::Fonts::ID > Font_Holder; /** The font holder */
-    typedef Resource_Holder< sf::Shader, gui::Shaders::ID > Shader_Holder; /** The shader holder */
-    typedef Resource_Holder< sf::SoundBuffer, gui::Sound_Effect::ID > Sound_Buffer_Holder;
-    /** The sound effects holder */
+    using Texture_Holder = Resource_Holder< sf::Texture, gui::Textures::ID >; /** The texture holder */
+    using Font_Holder = Resource_Holder< sf::Font, gui::Fonts::ID >; /** The font holder */
+    using Shader_Holder = Resource_Holder< sf::Shader, gui::Shaders::ID >; /** The shader holder */
+    using Sound_Buffer_Holder = Resource_Holder< sf::SoundBuffer, gui::Sound_Effect::ID >; /** The sound effects holder */
 }
 
 

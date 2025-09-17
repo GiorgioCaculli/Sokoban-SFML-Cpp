@@ -5,6 +5,18 @@ using namespace sokoban::input;
 Mouse::Mouse()
 = default;
 
+Mouse::Mouse( const Mouse& m )
+= default;
+
+Mouse& Mouse::operator=( const Mouse& m )
+{
+    if( this != &m )
+    {
+        /* Fill with variables to copy */
+    }
+    return *this;
+}
+
 Mouse::~Mouse()
 = default;
 

@@ -1,3 +1,4 @@
+#include "gui/Resource_Identifiers.hpp"
 #include <boost/filesystem/path.hpp>
 #include <gui/states/State_Game.hpp>
 
@@ -58,13 +59,13 @@ std::vector< boost::filesystem::path > get_all_levels()
  * @param stack The stack containing the various states
  * @param context The context containing the various resources
  */
-State_Game::State_Game( State_Stack& stack, Context context )
+State_Game::State_Game( State_Stack& stack, const Context& context )
     : State( stack, context )
       , _window( *context._window )
-      , _text( context._fonts->get( Fonts::Connection_II ) )
+      , _text( context._fonts->get( Fonts::ID::Connection_II ) )
 {
     _window.setKeyRepeatEnabled( true );
-    context._music->play( Music::Town_Peaceful_Place );
+    context._music->play( Music::ID::Town_Peaceful_Place );
     _text.setFillColor( sf::Color::Black );
     logger.log( Logger::Level::INFO, "Init levels" );
     _levels = std::vector< std::string >();
@@ -86,7 +87,7 @@ State_Game::State_Game( State_Stack& stack, Context context )
         logger.log( Logger::Level::INFO, lvl );
     }
     current_level = 0;
-    _text.setFont( context._fonts->get( Fonts::Connection_II ) );
+    _text.setFont( context._fonts->get( Fonts::ID::Connection_II ) );
     _level = _levels.at( current_level );
     logger.log( Logger::Level::DEBUG, "Level loaded: " + _level );
     _world = std::make_shared< World >( *context._window, gzc::sokoban::core::Board( _level ), *context._fonts, *context._sounds );
@@ -246,7 +247,7 @@ bool State_Game::handle_keyboard_events( const sf::Event& event )
         {
             if ( keyReleased->scancode == sf::Keyboard::Scancode::Escape )
             {
-                request_stack_push( States::Pause );
+                request_stack_push( States::ID::Pause );
             } else if ( keyReleased->scancode == sf::Keyboard::Scancode::Up )
             {
                 _world->move_up( false );

@@ -20,34 +20,54 @@ namespace
 /**
  * Default constructor for the Sound Player
  */
-Sound_Player::Sound_Player()
-    : _volume( 100.f )
+Sound_Player::Sound_Player( const float volume )
+: _volume( volume )
 {
-    _sound_buffers.load( Sound_Effect::Button_Beep_01, "res/sounds/button_beep_01.ogg" );
-    _sound_buffers.load( Sound_Effect::Button_Beep_02, "res/sounds/button_beep_02.ogg" );
-    _sound_buffers.load( Sound_Effect::Button_Click_01, "res/sounds/button_click_01.ogg" );
-    _sound_buffers.load( Sound_Effect::Button_Click_02, "res/sounds/button_click_02.ogg" );
-    _sound_buffers.load( Sound_Effect::Button_Click_03, "res/sounds/button_click_03.ogg" );
-    _sound_buffers.load( Sound_Effect::Button_Pop_01, "res/sounds/button_pop_01.ogg" );
-    _sound_buffers.load( Sound_Effect::Button_Pop_02, "res/sounds/button_pop_02.ogg" );
-    _sound_buffers.load( Sound_Effect::Player_Footsteps_Outdoor_Boots, "res/sounds/footsteps_outdoor_boots.ogg" );
-    _sound_buffers.load( Sound_Effect::Player_Footsteps_Outdoor_Boots_On_Wood,
+    using enum Sound_Effect::ID;
+    _sound_buffers.load( Button_Beep_01, "res/sounds/button_beep_01.ogg" );
+    _sound_buffers.load( Button_Beep_02, "res/sounds/button_beep_02.ogg" );
+    _sound_buffers.load( Button_Click_01, "res/sounds/button_click_01.ogg" );
+    _sound_buffers.load( Button_Click_02, "res/sounds/button_click_02.ogg" );
+    _sound_buffers.load( Button_Click_03, "res/sounds/button_click_03.ogg" );
+    _sound_buffers.load( Button_Pop_01, "res/sounds/button_pop_01.ogg" );
+    _sound_buffers.load( Button_Pop_02, "res/sounds/button_pop_02.ogg" );
+    _sound_buffers.load( Player_Footsteps_Outdoor_Boots, "res/sounds/footsteps_outdoor_boots.ogg" );
+    _sound_buffers.load( Player_Footsteps_Outdoor_Boots_On_Wood,
                          "res/sounds/footsteps_outdoor_boots_on_wood.ogg" );
-    _sound_buffers.load( Sound_Effect::Player_Footsteps_Shoes_Fast_01, "res/sounds/footsteps_shoes_fast_01.ogg" );
-    _sound_buffers.load( Sound_Effect::Player_Footsteps_Shoes_On_Wood_01, "res/sounds/footsteps_shoes_on_wood_01.ogg" );
-    _sound_buffers.load( Sound_Effect::Player_Footsteps_Shoes_On_Wood_02, "res/sounds/footsteps_shoes_on_wood_02.ogg" );
-    _sound_buffers.load( Sound_Effect::Player_Footsteps_Snow_01, "res/sounds/footsteps_snow_01.ogg" );
-    _sound_buffers.load( Sound_Effect::Player_Footsteps_Snow_02, "res/sounds/footsteps_snow_02.ogg" );
-    _sound_buffers.load( Sound_Effect::Player_Footsteps_Soft_Fast, "res/sounds/footsteps_soft_fast.ogg" );
-    _sound_buffers.load( Sound_Effect::Player_Footsteps_Stair_Ascent_Creaky,
+    _sound_buffers.load( Player_Footsteps_Shoes_Fast_01, "res/sounds/footsteps_shoes_fast_01.ogg" );
+    _sound_buffers.load( Player_Footsteps_Shoes_On_Wood_01, "res/sounds/footsteps_shoes_on_wood_01.ogg" );
+    _sound_buffers.load( Player_Footsteps_Shoes_On_Wood_02, "res/sounds/footsteps_shoes_on_wood_02.ogg" );
+    _sound_buffers.load( Player_Footsteps_Snow_01, "res/sounds/footsteps_snow_01.ogg" );
+    _sound_buffers.load( Player_Footsteps_Snow_02, "res/sounds/footsteps_snow_02.ogg" );
+    _sound_buffers.load( Player_Footsteps_Soft_Fast, "res/sounds/footsteps_soft_fast.ogg" );
+    _sound_buffers.load( Player_Footsteps_Stair_Ascent_Creaky,
                          "res/sounds/footsteps_stair_ascent_creaky.ogg" );
-    _sound_buffers.load( Sound_Effect::Player_Footsteps_Water_01, "res/sounds/footsteps_water_01.ogg" );
-    _sound_buffers.load( Sound_Effect::Player_Footsteps_Water_02, "res/sounds/footsteps_water_02.ogg" );
+    _sound_buffers.load( Player_Footsteps_Water_01, "res/sounds/footsteps_water_01.ogg" );
+    _sound_buffers.load( Player_Footsteps_Water_02, "res/sounds/footsteps_water_02.ogg" );
     for ( sf::Sound sound: _sounds )
     {
         sound.setVolume( _volume );
     }
     sf::Listener::setDirection( sf::Vector3f( 0.f, 0.f, -1.f ) );
+}
+
+Sound_Player::Sound_Player()
+    : Sound_Player( 100.f )
+{
+}
+
+Sound_Player::Sound_Player( const Sound_Player& s )
+: Sound_Player( s.get_volume() )
+{
+}
+
+Sound_Player& Sound_Player::operator=( const Sound_Player& s )
+{
+    if( this != &s )
+    {
+        _volume = s.get_volume();
+    }
+    return *this;
 }
 
 /**

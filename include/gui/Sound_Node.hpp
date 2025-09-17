@@ -1,6 +1,7 @@
 #ifndef SOKOBAN_SOUND_NODE_HPP
 #define SOKOBAN_SOUND_NODE_HPP
 
+#include "ui/Category.hpp"
 #include <gui/Scene_Node.hpp>
 #include <gui/Resource_Identifiers.hpp>
 
@@ -17,7 +18,7 @@ namespace sokoban::ui::gui
 
         void play_sound( Sound_Effect::ID sound, sf::Vector2f position ) const;
 
-        unsigned int get_category() const override;
+        Category::Type get_category() const override;
 
     private:
         Sound_Player& _sounds; /** The sound player for the current sound node */

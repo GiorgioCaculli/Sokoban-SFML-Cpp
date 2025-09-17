@@ -16,7 +16,7 @@ namespace sokoban::ui::gui
             : public State
     {
     public:
-        State_Game( State_Stack& stack, Context context );
+        State_Game( State_Stack& stack, const Context& context );
         ~State_Game() override;
         bool update( sf::Time dt ) override;
         void draw() override;

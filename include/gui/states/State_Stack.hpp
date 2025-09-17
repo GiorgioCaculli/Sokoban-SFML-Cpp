@@ -58,7 +58,7 @@ namespace sokoban::ui::gui
 
         struct Pending_Change
         {
-            explicit Pending_Change( Action action, States::ID state_id = States::None );
+            explicit Pending_Change( Action action, States::ID state_id = States::ID::None );
 
             Action _action;
             States::ID _state_id;

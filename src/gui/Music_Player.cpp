@@ -16,26 +16,27 @@ namespace
 Music_Player::Music_Player()
     : _volume( 100.f )
 {
-    _filenames[ Music::Field_Desolate_Domain ] = "res/music/Field_-_Desolate_Domain.ogg";
-    _filenames[ Music::Field_Golden_Harvest ] = "res/music/Field_-_Golden_Harvest.ogg";
-    _filenames[ Music::Field_Greatest_Nation ] = "res/music/Field_-_Greatest_Nation.ogg";
-    _filenames[ Music::Field_Hades_Holiday ] = "res/music/Field_-_Hades_Holiday.ogg";
-    _filenames[ Music::Field_Homeland_Return ] = "res/music/Field_-_Homeland_Return.ogg";
-    _filenames[ Music::Field_Shattered_Land ] = "res/music/Field_-_Shattered_Lands.ogg";
-    _filenames[ Music::Theme_Courting_The_Princess ] = "res/music/Theme_-_Courting_The_Princess.ogg";
-    _filenames[ Music::Theme_Festival_Fun ] = "res/music/Theme_-_Festival_Fun.ogg";
-    _filenames[ Music::Theme_Funeral_March ] = "res/music/Theme_-_Funeral_March.ogg";
-    _filenames[ Music::Theme_Tournament_Time ] = "res/music/Theme_-_Tournament_Time.ogg";
-    _filenames[ Music::Town_Childhood_Home ] = "res/music/Town_-_Childhood_Home.ogg";
-    _filenames[ Music::Town_Fancy_Castle ] = "res/music/Town_-_Fancy_Castle.ogg";
-    _filenames[ Music::Town_Little_Village ] = "res/music/Town_-_Little_Village.ogg";
-    _filenames[ Music::Town_Nice_Day_Out ] = "res/music/Town_-_Nice_Day_Out.ogg";
-    _filenames[ Music::Town_Old_Palace ] = "res/music/Town_-_Old_Palace.ogg";
-    _filenames[ Music::Town_Peaceful_Place ] = "res/music/Town_-_Peaceful_Place.ogg";
-    _filenames[ Music::Town_Pleasant_peasants ] = "res/music/Town_-_Pleasant_Peasants.ogg";
-    _filenames[ Music::Town_Shop_Hopping ] = "res/music/Town_-_Shop_Hopping.ogg";
-    _filenames[ Music::Town_Spooky_Manor ] = "res/music/Town_-_Spooky_Manor.ogg";
-    _filenames[ Music::Town_Tavern_Tune ] = "res/music/Town_-_Tavern_Tune.ogg";
+    using enum Music::ID;
+    _filenames[ Field_Desolate_Domain ] = "res/music/Field_-_Desolate_Domain.ogg";
+    _filenames[ Field_Golden_Harvest ] = "res/music/Field_-_Golden_Harvest.ogg";
+    _filenames[ Field_Greatest_Nation ] = "res/music/Field_-_Greatest_Nation.ogg";
+    _filenames[ Field_Hades_Holiday ] = "res/music/Field_-_Hades_Holiday.ogg";
+    _filenames[ Field_Homeland_Return ] = "res/music/Field_-_Homeland_Return.ogg";
+    _filenames[ Field_Shattered_Land ] = "res/music/Field_-_Shattered_Lands.ogg";
+    _filenames[ Theme_Courting_The_Princess ] = "res/music/Theme_-_Courting_The_Princess.ogg";
+    _filenames[ Theme_Festival_Fun ] = "res/music/Theme_-_Festival_Fun.ogg";
+    _filenames[ Theme_Funeral_March ] = "res/music/Theme_-_Funeral_March.ogg";
+    _filenames[ Theme_Tournament_Time ] = "res/music/Theme_-_Tournament_Time.ogg";
+    _filenames[ Town_Childhood_Home ] = "res/music/Town_-_Childhood_Home.ogg";
+    _filenames[ Town_Fancy_Castle ] = "res/music/Town_-_Fancy_Castle.ogg";
+    _filenames[ Town_Little_Village ] = "res/music/Town_-_Little_Village.ogg";
+    _filenames[ Town_Nice_Day_Out ] = "res/music/Town_-_Nice_Day_Out.ogg";
+    _filenames[ Town_Old_Palace ] = "res/music/Town_-_Old_Palace.ogg";
+    _filenames[ Town_Peaceful_Place ] = "res/music/Town_-_Peaceful_Place.ogg";
+    _filenames[ Town_Pleasant_peasants ] = "res/music/Town_-_Pleasant_Peasants.ogg";
+    _filenames[ Town_Shop_Hopping ] = "res/music/Town_-_Shop_Hopping.ogg";
+    _filenames[ Town_Spooky_Manor ] = "res/music/Town_-_Spooky_Manor.ogg";
+    _filenames[ Town_Tavern_Tune ] = "res/music/Town_-_Tavern_Tune.ogg";
 }
 
 /**
