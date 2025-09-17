@@ -3,23 +3,33 @@
 
 using namespace sokoban::net;
 
+Client::Client( const std::string_view& username )
+: gzc::sokoban::net::Client( username )
+{
+}
+
 Client::Client()
-= default;
+: Client( "SFMLGio" )
+{
+}
 
 Client::Client( const Client& c )
-= default;
+: Client( c.get_username() )
+{
+}
 
 Client& Client::operator=( const Client& c )
 {
     if( &c != this )
     {
-        /* Copy client info */
+        /* Fetch parent = operator output */
     }
     return *this;
 }
 
 Client::~Client()
-= default;
+{
+}
 
 bool Client::send_packet( const Packet& p ) const
 {

@@ -4,19 +4,20 @@
 #include <gzc/games/sokoban/net/ServerDedicated.hpp>
 
 #include <SFML/Network.hpp>
+#include <sys/types.h>
 
 namespace sokoban::net
 {
     class Server : public gzc::sokoban::net::ServerDedicated
     {
     private:
-        unsigned short _tcp_port;
-        unsigned short _udp_port;
-        sf::TcpListener* _tcp_listener;
-        sf::UdpSocket* _udp_socket;
+        u_int16_t _tcp_port;
+        u_int16_t _udp_port;
+        std::shared_ptr< sf::TcpListener > _tcp_listener;
+        std::shared_ptr< sf::UdpSocket > _udp_socket;
         bool init() const;
     public:
-        explicit Server( unsigned short tcp_port, unsigned short udp_port );
+        explicit Server( u_int16_t tcp_port, u_int16_t udp_port );
         Server();
         Server( const Server& server );
         Server& operator=( const Server& server );

@@ -1,13 +1,16 @@
+#include <gzc/games/sokoban/net/ServerDedicated.hpp>
 #include <net/Server.hpp>
+#include <sys/types.h>
 
 using namespace sokoban::net;
 
-Server::Server( const unsigned short tcp_port, const unsigned short udp_port )
-    : _tcp_port( tcp_port )
+Server::Server( u_int16_t tcp_port, u_int16_t udp_port )
+    : gzc::sokoban::net::ServerDedicated( "SFML", "localhost", tcp_port)
+    , _tcp_port( tcp_port )
     , _udp_port( udp_port )
 {
-    _tcp_listener = new sf::TcpListener();
-    _udp_socket = new sf::UdpSocket();
+    _tcp_listener = std::make_shared< sf::TcpListener >();
+    _udp_socket = std::make_shared< sf::UdpSocket >();
 }
 
 Server::Server()
@@ -31,10 +34,7 @@ Server& Server::operator=( const Server& server )
 }
 
 Server::~Server()
-{
-    delete _tcp_listener;
-    delete _udp_socket;
-}
+= default;
 
 bool Server::init() const
 {

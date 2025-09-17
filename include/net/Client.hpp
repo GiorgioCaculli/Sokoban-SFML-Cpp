@@ -1,8 +1,10 @@
 #ifndef SOKOBAN_SFML_CLIENT_HPP
 #define SOKOBAN_SFML_CLIENT_HPP
 
-#include <net/Packet.hpp>
+#include <string>
+#include <string_view>
 #include <gzc/games/sokoban/net/Client.hpp>
+#include <net/Packet.hpp>
 
 namespace sokoban::net
 {
@@ -11,6 +13,7 @@ namespace sokoban::net
     private:
         Packet _p;
     public:
+        explicit Client( const std::string_view& username );
         Client();
         Client( const Client& c );
         Client& operator=( const Client& c );
