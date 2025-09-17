@@ -39,18 +39,18 @@ namespace sokoban::ui::gui
          */
         struct Context
         {
-            Context( const sf::RenderWindow& window, const Texture_Holder& textures, const Font_Holder& fonts,
-                     const Music_Player& music, const Sound_Player& sounds, const Resource_Bundle& resources, const input::Keyboard& keyboard,
-                     const input::Mouse& mouse );
+            Context( sf::RenderWindow& window, Texture_Holder& textures, Font_Holder& fonts,
+                     Music_Player& music, Sound_Player& sounds, Resource_Bundle& resources, input::Keyboard& keyboard,
+                     input::Mouse& mouse );
 
-            std::shared_ptr<sf::RenderWindow> _window;
-            std::shared_ptr<Texture_Holder> _textures;
-            std::shared_ptr<Font_Holder> _fonts;
-            std::shared_ptr<Music_Player> _music;
-            std::shared_ptr<Sound_Player> _sounds;
-            std::shared_ptr<Resource_Bundle> _resource_bundle;
-            std::shared_ptr<input::Keyboard> _keyboard;
-            std::shared_ptr<input::Mouse> _mouse;
+            sf::RenderWindow* _window;
+            Texture_Holder* _textures;
+            Font_Holder* _fonts;
+            Music_Player* _music;
+            Sound_Player* _sounds;
+            Resource_Bundle* _resource_bundle;
+            input::Keyboard* _keyboard;
+            input::Mouse* _mouse;
         };
 
         State( State_Stack& stack, const Context& context );

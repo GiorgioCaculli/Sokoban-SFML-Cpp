@@ -70,6 +70,9 @@ Sound_Player& Sound_Player::operator=( const Sound_Player& s )
     return *this;
 }
 
+Sound_Player::~Sound_Player()
+= default;
+
 /**
  * Function meant to play a sound effect
  * @param effect The sound effect to play
